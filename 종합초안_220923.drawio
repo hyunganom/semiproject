@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2022-09-25T05:15:13.910Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36" etag="2nQoQw22skQ143TEtz4u" version="20.3.6" type="github" pages="2">
+<mxfile host="app.diagrams.net" modified="2022-10-14T08:41:32.098Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36" etag="AVsmv7j_4qvTdZS_hZbT" version="20.3.6" type="github" pages="2">
   <diagram id="vN-ewSu5FtDSZQEM9Zyt" name="종합초안">
-    <mxGraphModel dx="5331" dy="5824" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="4681" math="0" shadow="0">
+    <mxGraphModel dx="4722" dy="5481" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="4681" math="0" shadow="0">
       <root>
         <mxCell id="Z_-gwSel0BhFd-GCLUsK-0" />
         <mxCell id="Z_-gwSel0BhFd-GCLUsK-1" parent="Z_-gwSel0BhFd-GCLUsK-0" />
@@ -1017,7 +1017,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="WrGfa6jN7qA5CExpLRrJ" name="종합초안0913">
-    <mxGraphModel dx="15047" dy="9958" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="3412" dy="3793" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1591,7 +1591,7 @@
           <mxGeometry x="-150" y="-770" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="c4PSDrWCTjAzSYfdbTyV-143" value="회원상세&lt;br&gt;member_detail.jsp" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" parent="1" vertex="1">
-          <mxGeometry x="130" y="-1220" width="120" height="60" as="geometry" />
+          <mxGeometry x="40" y="-1210" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="c4PSDrWCTjAzSYfdbTyV-144" value="회원수정&lt;br&gt;member_update.jsp" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" parent="1" vertex="1">
           <mxGeometry x="113" y="-1030" width="120" height="50" as="geometry" />
