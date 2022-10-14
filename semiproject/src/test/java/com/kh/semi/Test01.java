@@ -15,6 +15,7 @@ public class Test01 {
 		String sql = "insert into test1(no, name) values(1,'가나다')";
 		jdbcTemplate.update(sql);////////
 		//박정민
+		//박정민
 	}
 
 }
