@@ -13,7 +13,7 @@ public class Test01 {
 	@org.junit.jupiter.api.Test
 	public void test() {
 		String sql = "insert into test1(no, name) values(1,'가나다')";
-		jdbcTemplate.update(sql);
+		jdbcTemplate.update(sql);//
 	}
 
 }
