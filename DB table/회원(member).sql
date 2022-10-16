@@ -15,9 +15,9 @@
 --포인트(member_point) : 0으로 기본 설정
 --가입일시(member_joindate) : 가입 시점의 시각, sysdate로 기본 설정
 --로그인일시(member_logindate) : 로그인 시점의 시각
+-- 회원 탈퇴 여부 (member_withdrawal) : 문자(1byte), 기본적으로 null이며 회원 탈퇴 요청시에 문자열 Y가 입력되도록 (회원 탈퇴를 회원 정보 삭제가 아닌 비활성화로 할 예정)
+-- 회원 탈퇴 일시 (member_withdrawaldate) : 날짜, 회원 탈퇴 요청시에 sysdate 값이 입력되도록
 
-
--- 테이블 생성
 -- 테이블 생성
 create table member(
 member_id varchar2(20) primary key check(regexp_like(member_id, '^[a-z][a-z0-9]{7,19}$') and regexp_like(member_id, '[a-z]') and regexp_like(member_id, '[0-9]')),
@@ -33,7 +33,9 @@ member_gender varchar2(6) check(member_gender in ('남자', '여자')),
 member_grade varchar2(9) default '일반' not null check(member_grade in ('일반', 'VIP', '관리자')),
 member_point number default 0 check(member_point >= 0),
 member_joindate date default sysdate not null,
-member_logindate date
+member_logindate date,
+member_withdrawal char(1) check(member_withdrawal = 'Y'),
+member_withdrawaldate date
 );
 
 -- 테이블 삭제
@@ -45,7 +47,7 @@ member_id, member_pw, member_name, member_email,
 member_tel, member_post, member_base_address, member_detail_address, 
 member_birth, member_gender, member_grade)
 values(
-'eomhyunyoung1', '@Qadmin1234', '관리자', 'admin@kh.com', 
+'tester1', '1234', '관리자', 'admin@kh.com', 
 '010-0000-0000', 39960, '경기도 성남시 판교역로', '166 카카오 판교아지트 A동 3층', 
 '1980-01-01', '남자', '관리자'
 );
