@@ -9,7 +9,8 @@
 -- 쿠폰 사용일(coupon_use_date) 쿠폰 이용 날짜
 
 
-create table coupon_use (
+
+create table coupon_use(
 coupon_use_no number primary key,
 coupon_use_order_no references orders(order_no),
 coupon_origin_no references coupon_list(coupon_list_no),
