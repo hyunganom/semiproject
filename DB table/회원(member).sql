@@ -35,7 +35,7 @@ member_detail_address varchar2(150),
 member_birth date,
 member_gender varchar2(6) 
 check(member_gender in ('남자', '여자')),
-member_grade varchar2(6) default '일반' not null
+member_grade varchar2(9) default '일반' not null
 check(member_grade in ('일반', 'VIP', '관리자')),
 member_point number default 0 check(member_point >= 0),
 member_joindate date default sysdate not null,
@@ -44,8 +44,6 @@ member_logindate date
 
 -- 테이블 삭제
 drop table member;
-
--- 시퀀스 삭제
 
 
 
