@@ -14,7 +14,7 @@ coupon_use_no number primary key,
 coupon_use_order_no references orders(order_no),
 coupon_origin_no references coupon_list(coupon_list_no),
 coupon_use_id references member(member_id),
-coupon_use_date date default sysdate not null,
+coupon_use_date date default sysdate not null
 );
                         
 drop table coupon;
