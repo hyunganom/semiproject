@@ -2,7 +2,7 @@
 --주문하는 회원의 정보
 
 --구성요소
--- 주문번호(order_no) yyyymmdd0000 형식, 시퀀스번호 1000부터 생성
+-- 주문번호(order_no) yyyymmdd0000 형식, yymmss000000 (날짜+시퀀스 번호)
 -- 주문자 아이디(order_id) 영어숫자 10자이내, 위의 테이블(멤버)지워지면 이 컬럼도 삭제됨(on delete cascade)
 -- 수취인 이름(order_name) 한글 10자이내
 -- 수취인 우편번호(order_post) 숫자5~6자
@@ -13,6 +13,8 @@
 -- 주문날짜(order_date) -주문된 시점의 데이터베이스 시각, 주문시에는 주문시각으로 설정
 -- 주문 상태(order_status) 다음 항목 중 (결제완료 주문취소) 필수선택
 -- 주문상태 변경일(order_changedate) 주문 상태가 변경된 시점을 각각 sysdate로 설정
+-- 할인전금액(order_price) 할인 적용전 총 금액
+-- 총결제금액 (order_payprice) 할인 적용후 최종 금액 
 
 create table orders(
 order_no number primary key,
@@ -25,7 +27,9 @@ order_tel char(11) not null,
 order_memo varchar2(3000),
 order_date date default sysdate,
 order_status varchar2(16) default '결제완료' not null check(order_status in('결제완료', '주문취소', '취소완료')),
-order_changedate date
+order_changedate date,
+order_price number not null,
+order_payprice number not null,
 );
 
 drop table orders;
