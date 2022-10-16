@@ -17,9 +17,7 @@ public class Test01 {
 		jdbcTemplate.update(sql);
 
 		jdbcTemplate.update(sql);////////
-		//박정민
-		//박정민
-		//박정민
+		//지원 테스트
 
 	}
 
