@@ -20,6 +20,6 @@ public class OrdersDto {
 	private Date orderDate;
 	private String orderStatus;
 	private Date orderChangeDate;
-	
+	//
 
 }
