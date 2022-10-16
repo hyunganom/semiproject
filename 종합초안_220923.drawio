@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-10-16T05:36:08.805Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36" etag="7Zbf9KT2mL0AFJCKKU0b" version="20.4.1" type="github" pages="2">
+<mxfile host="app.diagrams.net" modified="2022-10-16T05:36:23.637Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36" etag="iHAVoomjBdMMcoSMS2n5" version="20.4.1" type="github" pages="2">
   <diagram id="vN-ewSu5FtDSZQEM9Zyt" name="종합초안">
     <mxGraphModel dx="4722" dy="5481" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="4681" math="0" shadow="0">
       <root>
@@ -1591,7 +1591,7 @@
           <mxGeometry x="-150" y="-770" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="c4PSDrWCTjAzSYfdbTyV-143" value="회원상세&lt;br&gt;member_detail.jsp" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" parent="1" vertex="1">
-          <mxGeometry x="-17" y="-1200" width="120" height="60" as="geometry" />
+          <mxGeometry y="-1240" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="c4PSDrWCTjAzSYfdbTyV-144" value="회원수정&lt;br&gt;member_update.jsp" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" parent="1" vertex="1">
           <mxGeometry x="113" y="-1030" width="120" height="50" as="geometry" />
