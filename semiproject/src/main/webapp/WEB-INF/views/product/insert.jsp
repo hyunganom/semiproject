@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,16 +17,12 @@
 	<form action = "insert" method = "post">
 	<div>
 		상위 카테고리 번호 : 
-		<select name = "categoryHigh">
-			<option>
-		</select>
+		<input name = "categoryHighNo">
 	</div>
 	
 	<div>
 		하위 카테고리 번호 :
-		<select name = "categoryLow">
-			<option>
-		</select>
+		<input name = "categoryLowNo">
 	</div>
 	
 	<div>
