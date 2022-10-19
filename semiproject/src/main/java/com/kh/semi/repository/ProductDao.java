@@ -32,6 +32,9 @@ public interface ProductDao {
 	// 추상 메소드 - 관리자 상품 수정
 	boolean updateProduct(ProductDto productDto);
 	
+	// 추상 메소드 - 관리자 상품 비활성화
+	
+	void connectAttachment(int productNo, int attachmentNo);
 	// 추상 메소드 - 상품 수정시 수정시간 갱신
 	void updateProductRegistTime(int productNo);
 	

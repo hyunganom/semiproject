@@ -127,6 +127,13 @@ public class ProductDaoImpl implements ProductDao {
 		}
 	};
 
+	@Override
+	public void connectAttachment(int productNo, int attachmentNo) {
+		String sql = "insert into product_attachment VALUES(?, ?)";
+		Object[] param = {productNo, attachmentNo};	
+		jdbcTemplate.update(sql, param);
+	}
+
 	// 추상 메소드 오버라이딩 - 관리자 상품 상세
 	@Override
 	public ProductDto selectOneProduct(int productNo) {
