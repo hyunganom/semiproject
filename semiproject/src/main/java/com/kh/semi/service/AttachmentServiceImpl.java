@@ -10,11 +10,12 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import com.kh.semi.entity.AttachmentDto;
 import com.kh.semi.repository.AttachmentDao;
 
-
+@Service
 public class AttachmentServiceImpl implements AttachmentService{
 	
 	@Autowired
