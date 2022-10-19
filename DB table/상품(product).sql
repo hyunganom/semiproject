@@ -7,7 +7,8 @@
 -- 상품 정보(product_information) : 문자(500 byte), 필수 입력
 -- 상품 재고(product_inventory) : 숫자, 기본값을 0으로, 0 이상의 숫자만 입력 가능, 필수 입력
 -- 상품 별점(product_good) : 숫자, 기본값은 0으로
--- 상품 등록일(product_register) : 날짜, 기본값은 sysdate로
+-- 상품 등록일(product_registtime) : 날짜, 기본값은 sysdate로
+-- 상품 수정일(product_updatetime) : 날짜, 상품 정보 수정시 갱신되는 항목
 
 -- 테이블 생성
 create table product (
@@ -19,8 +20,9 @@ product_price number not null,
 product_information varchar2(500) not null,
 product_inventory number default 0 not null check(product_inventory >= 0),
 product_good number default 0,
-product_registdate date default sysdate
-);
+product_registdate date default sysdate,
+product_updatetime date
+); 
 
 -- 테이블 삭제
 drop table product;
@@ -47,3 +49,10 @@ select * from product order by product_no desc;
 -- 상품 검색 조회
 select * from product where instr(#1, ?) > 0 order by product_no desc;
 select * from product where instr(product_name, '테') > 0 order by product_no desc;
+
+-- 상품 상세 조회
+select * from product where product_no = ?;
+select * from product where product_no = 73;
+
+-- 상품 수정
+update product set category_high_no = ?, category_low_no = ?, product_name = ?, product_price = ?, product_information = ?, product_inventory = ? where product_no = ?;
