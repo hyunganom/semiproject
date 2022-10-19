@@ -50,43 +50,39 @@ public class ProductController {
 	// 2. 상품 등록 처리
 	@PostMapping("/insert")
 	public String insert(@ModelAttribute ProductDto productDto,
-			List<MultipartFile> attachment,
+			MultipartFile attachment,
+			AttachmentDto attachmentDto,
 			RedirectAttributes attr) throws IllegalStateException, IOException {
 		
 		// 관리자 상품 등록(INSERT)을 위한 다음 시퀀스 번호 반환
 		int productNo = productDao.nextSequence();
-		
+		int attachmentNo = attachmentDao.sequence();
 		// View에서 입력받은 productDto로 DB 처리 - 관리자 상품 등록(INSERT)
 		productDao.insertProduct(productDto);
 		
-		// 관리자 상품 등록(INSERT) 처리 후 해당 상품 페이지로 강제 이동(redirect)
-		attr.addAttribute("productNo", productNo);
 		
 		//첨부파일 DB연결
-		for(MultipartFile file : attachment) {
-			if(!file.isEmpty()) {
-				
-				//첨부파일 시퀀스 발급
-				int attachmentNo = attachmentDao.sequence();
-				//DB등록
-				attachmentDao.insert(AttachmentDto.builder()
-						.attachmentNo(attachmentNo)
-						.attachmentName(file.getOriginalFilename())
-						.attachmentType(file.getContentType())
-						.attachmentSize(file.getSize())
-					.build());
-				
-				//파일저장
-				File target = new File(directory, String.valueOf(attachmentNo));
-				System.out.println(target.getAbsolutePath());
-				file.transferTo(target);
-				
-				//product_attachment 연결테이블 정보 저장
-				attachmentDao.connectAttachment(productNo, attachmentNo);
-			}
-			
-		}
+		//첨부파일 시퀀스 발급
 		
+		//DB등록
+		attachmentDao.insert(AttachmentDto.builder()
+				.attachmentNo(attachmentNo)
+				.attachmentName(attachment.getOriginalFilename())
+				.attachmentType(attachment.getContentType())
+				.attachmentSize(attachment.getSize())
+			.build());
+		
+		//파일저장
+		File target = new File(directory, String.valueOf(attachmentNo));
+		System.out.println(target.getAbsolutePath());
+		attachment.transferTo(target);
+		//product_attachment 연결테이블 정보 저장
+		productDao.connectAttachment(productNo+1, attachmentNo);
+		
+		
+		// 관리자 상품 등록(INSERT) 처리 후 해당 상품 페이지로 강제 이동(redirect)
+		attr.addAttribute("productNo", productNo);
+				
 		return "redirect:product/detail";
 	}
 	

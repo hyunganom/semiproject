@@ -31,4 +31,6 @@ public interface ProductDao {
 	// 추상 메소드 - 관리자 상품 수정
 	
 	// 추상 메소드 - 관리자 상품 비활성화
+	
+	void connectAttachment(int productNo, int attachmentNo);
 }

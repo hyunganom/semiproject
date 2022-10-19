@@ -103,4 +103,11 @@ public class ProductDaoImpl implements ProductDao {
 		return jdbcTemplate.query(sql, mapper, param);
 	}
 
+	@Override
+	public void connectAttachment(int productNo, int attachmentNo) {
+		String sql = "insert into product_attachment VALUES(?, ?)";
+		Object[] param = {productNo, attachmentNo};	
+		jdbcTemplate.update(sql, param);
+	}
+
 }
