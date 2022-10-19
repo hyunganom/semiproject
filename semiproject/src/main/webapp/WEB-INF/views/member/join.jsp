@@ -4,9 +4,22 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원가입</title>
 </head>
 <body>
-
+	<h1>회원가입 정보 입력</h1>
+	<form action="join" method="post">
+		아이디 <input name="memberId" type="text" required> <br><br>
+		비밀번호 <input name="memberPw" type="password" required> <br><br>
+		이름 <input name="memberName" type="text" required> <br><br>
+		이메일 <input name="memberEmail" type="email" required> <br><br>
+		전화번호 <input name="memberTel" type="tel" required> <br><br>
+		우편번호 <input name="memberPost" type="text"> <br><br>
+		기본주소 <input name="memberBaseAddress" type="text"> <br><br>
+		상세주소 <input name="memberDetailAddress" type="text"> <br><br>
+		생년월일 <input name="memberBirth" type="date"> <br><br>
+		성별 <input name="memberGender" type="text"> <br><br>
+		<button>가입하기</button>
+	</form>
 </body>
 </html>
