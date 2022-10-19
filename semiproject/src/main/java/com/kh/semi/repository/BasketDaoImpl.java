@@ -29,12 +29,16 @@ public class BasketDaoImpl implements BasketDao{
 		jdbcTemplate.update(sql,param);
 	}
 
-	//장바구니 수량수정
+	//장바구니 옵션/수량수정
 	@Override
 	public boolean update(BasketDto basketDto) {
-		String sql = "update basket set basket_count_number=?, "
-				+ "basket_adddate=sysdate where basket_product_no=?";
+		String sql = "update basket set "
+				+ "basket_count_number=?, "
+				+ "basket_product_option=?, "
+				+ "basket_adddate=sysdate "
+				+ "where basket_product_no=?";
 		Object[] param = {basketDto.getBasketCountNumber(),
+				basketDto.getBasketProductOption(),
 				basketDto.getBasketProductNo()};
 		return jdbcTemplate.update(sql, param)>0;
 	}

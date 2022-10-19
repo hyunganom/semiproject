@@ -11,4 +11,5 @@ public class PaymentDto {
 	private String paymentOrderNo;
 	private int paymentProductNo;
 	private int paymentCount, paymentPrice;
+	private String paymentOption;
 } 
