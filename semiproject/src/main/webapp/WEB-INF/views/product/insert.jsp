@@ -14,7 +14,7 @@
 		<h1>상품 등록</h1>
 	</div>
 	
-	<form action = "insert" method = "post">
+	<form action = "insert" method = "post" enctype = "multipart/form-data">
 	<div>
 		상위 카테고리 번호 : 
 		<input name = "categoryHighNo">
@@ -44,6 +44,12 @@
 		상품 재고 : 
 		<input type = "number" name = "productInventory">
 	</div>
+	
+	<div>
+		상품 이미지 : 
+		<input type = "file" name = "attachment" accept = ".png, .jpg" multiple > 
+	</div>
+	
 	<div>
 		<button type = "submit">등록</button>
 	</div>
