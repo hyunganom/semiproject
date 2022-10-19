@@ -19,6 +19,6 @@ public class AttachmentDto {
 	private int attachmentNo; 		//첨부파일 번호
 	private String attachmentName; 	//첨부파일명
 	private String attachmentType;	//첨부파일 유형
-	private int attachmentSize;		//첨부파일 크기
+	private Long attachmentSize;		//첨부파일 크기
 	private Date attachmentDate;	//첨부파일 업로드 시각
 }
