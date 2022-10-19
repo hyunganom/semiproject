@@ -12,5 +12,5 @@ public class BasketDto {
 	private String basketId;
 	private int basketProductNo, basketCountNumber;
 	private Date basketAddDate;
-	
+	private String basketProductOption;
 }
