@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +17,6 @@ import com.kh.semi.entity.AttachmentDto;
 import com.kh.semi.entity.ProductDto;
 import com.kh.semi.repository.AttachmentDao;
 import com.kh.semi.repository.ProductDao;
-import com.kh.semi.vo.ProductListSearchVO;
 
 @Controller
 @RequestMapping("/product")
@@ -38,10 +36,7 @@ public class ProductController {
 	// 상품 등록 Mapping
 	// 1. 상품 등록 페이지로 연결
 	@GetMapping("/insert")
-	public String insert(Model model) {
-		
-		// 모든 상품 카테고리 항목 조회 결과를 Model에 첨부 (아직 해결하지 못한 문제)
-//		model.addAttribute("categoryList", productDao.selectCategoryList());
+	public String insert() {
 		
 		// 상품 등록 페이지(insert.jsp) 연결
 		return "product/insert";
@@ -90,19 +85,5 @@ public class ProductController {
 		return "redirect:product/detail";
 	}
 	
-	// 3. 상품 목록 Mapping
-	@GetMapping("/list")
-	public String selectList(Model model, @ModelAttribute ProductListSearchVO productListSearchVO) {
-		
-		// 검색 조회인지 전체 조회인지 판정 - 검색 조회이면 true, 전체 조회이면 false를 반환
-		if(productListSearchVO.isSearch()) { // 검색 조회라면
-			// ProductListSearchVO의 type과 keyword를 매개변수로 검색 조회 실행 결과를 model에 첨부
-			model.addAttribute("productList", productDao.searchListProduct(productListSearchVO.getType(), productListSearchVO.getKeyword()));
-		}
-		else { // 검색 조회가 아니라면(전체 조회라면)
-			// 전체 조회 실행 결과를 model에 첨부
-			model.addAttribute("productList", productDao.allListProduct());
-		}
-		return "product/list";
-	}
+	// 3. 상품 
 }

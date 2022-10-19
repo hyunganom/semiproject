@@ -12,6 +12,6 @@ import lombok.ToString;
 public class CategoryHighDto {
 
 	// 필드
-	private int categoryHighNo;  // 상위 카테고리 번호
-	private String categoryHighName;  // 상위 카테고리 이름
+	int categoryHighNo;  // 상위 카테고리 번호
+	String categoryHighName;  // 상위 카테고리 이름
 }
