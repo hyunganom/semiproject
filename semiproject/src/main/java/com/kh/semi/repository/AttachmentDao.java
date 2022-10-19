@@ -13,6 +13,9 @@ public interface AttachmentDao {
 	boolean delete(int attachmentNo); // 첨부파일 삭제
 	
 	
+	//첨부파일 관련 기능
+	void connectAttachment(int productNo, int attachmentNo);
+	
 	//2022-10-19 sql 뷰생성 권한안줘서 생성불가 일단
 	//상품 첨부파일 관련(product_attachment_view)
 //	List<AttachmentDto> selectProductAttachmentList(int productNo);
