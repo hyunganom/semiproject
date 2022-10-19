@@ -9,13 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/order")
 public class OrdersController {
-
-	@GetMapping("/basket")
-	public String basket() {
-		//회원아이디로 조회 후 해당 장바구니 테이블에
-		//들어있는 정보를 찍어주는 기능필요
-		return "basket";
-	}
 	
 	@GetMapping("/order_ck")
 	public String order() {
