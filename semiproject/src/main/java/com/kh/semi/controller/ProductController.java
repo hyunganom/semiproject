@@ -139,7 +139,7 @@ public class ProductController {
 	// 2. 상품 수정 DB 처리
 	@PostMapping("/edit")
 	public String edit(@ModelAttribute ProductDto productDto, RedirectAttributes attr) {
-		
+		 
 		// View에서 입력받은 productDto로 DB 처리 - 관리자 상품 수정(UPDATE)
 		// 상품 정보 수정 처리가 되었는지 판정
 		boolean isUpdated = productDao.updateProduct(productDto);
