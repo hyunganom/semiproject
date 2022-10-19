@@ -2,7 +2,6 @@ package com.kh.semi.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -51,7 +51,6 @@ public class ProductController {
 	@PostMapping("/insert")
 	public String insert(@ModelAttribute ProductDto productDto,
 			MultipartFile attachment,
-			AttachmentDto attachmentDto,
 			RedirectAttributes attr) throws IllegalStateException, IOException {
 		
 		// 관리자 상품 등록(INSERT)을 위한 다음 시퀀스 번호 반환
@@ -77,7 +76,7 @@ public class ProductController {
 		System.out.println(target.getAbsolutePath());
 		attachment.transferTo(target);
 		//product_attachment 연결테이블 정보 저장
-		productDao.connectAttachment(productNo+1, attachmentNo);
+		attachmentDao.productConnectAttachment(productNo+1, attachmentNo);
 		
 		
 		// 관리자 상품 등록(INSERT) 처리 후 해당 상품 페이지로 강제 이동(redirect)
@@ -88,7 +87,8 @@ public class ProductController {
 	
 	// 3. 상품 목록 Mapping
 	@GetMapping("/list")
-	public String selectList(Model model, @ModelAttribute ProductListSearchVO productListSearchVO) {
+	public String selectList(Model model, @ModelAttribute ProductListSearchVO productListSearchVO
+			) {
 		
 		// 검색 조회인지 전체 조회인지 판정 - 검색 조회이면 true, 전체 조회이면 false를 반환
 		if(productListSearchVO.isSearch()) { // 검색 조회라면
@@ -101,7 +101,7 @@ public class ProductController {
 		}
 		return "product/list";
 	}
-
+	
 	
 	// 상품 상세 Mapping
 	@GetMapping("/detail")

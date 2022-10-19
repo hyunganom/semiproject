@@ -13,9 +13,10 @@
 
 <div align = "center">
 
-<table border = "1" width = "1000">
+<table border = "1" width = "1000" >
 	<tbody>
 		<tr>
+			<th>이미지</th>
 			<th>상품 번호</th>
 			<th>상위 카테고리 번호</th>
 			<th>하위 카테고리 번호</th>
@@ -27,6 +28,9 @@
 		</tr>
 		<c:forEach var = "productList" items = "${productList}">
 		<tr>
+			<td><!-- 이미지 다운 -->
+				<img width=50 height="50" src="/attachment/download?attachmentNo=${productList.productNo}">
+			</td>
 			<td>${productList.productNo}</td>
 			<td>${productList.categoryHighNo}</td>
 			<td>${productList.categoryLowNo}</td>
