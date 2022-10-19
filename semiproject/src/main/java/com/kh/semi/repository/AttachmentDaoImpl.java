@@ -94,9 +94,7 @@ public class AttachmentDaoImpl implements AttachmentDao{
 
 	@Override
 	public void connectAttachment(int productNo, int attachmentNo) {
-		String sql = "insert into product_attachment("
-				+ "product_origin_no, product_attachment_no"
-				+ ") values(?, ?)";
+		String sql = "insert into product_attachment VALUES(?, ?)";
 		Object[] param = {productNo, attachmentNo};
 		jdbcTemplate.update(sql, param);
 		

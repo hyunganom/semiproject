@@ -13,7 +13,7 @@
 
 <div align = "center">
 
-<table border = "1" width = "900">
+<table border = "1" width = "1000">
 	<tbody>
 		<tr>
 			<th>상품 번호</th>
@@ -30,18 +30,30 @@
 			<td>${productList.productNo}</td>
 			<td>${productList.categoryHighNo}</td>
 			<td>${productList.categoryLowNo}</td>
-			<td>${productList.productName}</td>
+			<td>
+				<a href = "detail?productNo=${productList.productNo}">${productList.productName}</a>
+			</td>
 			<td>${productList.productPrice}</td>
 			<td>${productList.productInformation}</td>
 			<td>${productList.productInventory}</td>
 			<td>${productList.productGood}</td>
+			<td><a href = "edit?productNo=${productList.productNo}">수정</a></td>
+			<td><a href = "delete?productNo=${productList.productNo}">삭제</a></td>
 		</tr>
 		</c:forEach>
 	</tbody>	
 </table>
 
-</div>
+<form action = "list" method = "get">
+	<%-- 일단 상품명 조회만 추가했으며 차후 테이블 조인을 통해 카테고리 이름으로도 조회가 가능하도록 바꿀 예정 --%>
+	<select name = "type">
+		<option value = "product_name" <c:if test = "${productListSearchVO.type == 'product_name'}">selected</c:if>>상품명</option>
+	</select>
+	<input name = "keyword">
+	<button type = "submit">검색</button>
+</form>
 
+</div>
 
 </body>
 </html>
