@@ -27,10 +27,16 @@ public interface ProductDao {
 	List<ProductDto> searchListProduct(String type, String keyword);
 	
 	// 추상 메소드 - 관리자 상품 상세
+	ProductDto selectOneProduct(int productNo);
 	
 	// 추상 메소드 - 관리자 상품 수정
+	boolean updateProduct(ProductDto productDto);
 	
 	// 추상 메소드 - 관리자 상품 비활성화
 	
 	void connectAttachment(int productNo, int attachmentNo);
+	// 추상 메소드 - 상품 수정시 수정시간 갱신
+	void updateProductRegistTime(int productNo);
+	
+	// 추상 메소드 - 관리자 상품 삭제(비활성화)
 }
