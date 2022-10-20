@@ -61,7 +61,7 @@
             </table>
             
             <div class="row center">
-            	<a href="order/order_ck" class="btn btn-positive">주문하기</a>
+            	<a href="order_ck" class="btn btn-positive">주문하기</a>
             </div>
             
         </div>
