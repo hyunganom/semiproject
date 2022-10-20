@@ -131,7 +131,7 @@ public class MemberController {
 	public String logout(HttpSession session) {
 		session.removeAttribute("loginId");
 		return "redirect:/";
-	}
-	
+	}	
+
 	
 }

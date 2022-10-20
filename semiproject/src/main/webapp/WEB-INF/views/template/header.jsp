@@ -50,10 +50,11 @@
 
 	<div class = "row">
 	<%-- 필요한 하이퍼링크 작성(절대경로로) --%>
+	<a href = "/mypage/order_list">마이페이지</a>
 	<a href = "">주문</a>
 	<a href = "/member/list">회원 목록</a>
-	<a href = "/product/list">상품 목록</a>
-	
+	<a href = "/product/list">상품 목록</a> 
+
 	</div>
 
 <hr>
