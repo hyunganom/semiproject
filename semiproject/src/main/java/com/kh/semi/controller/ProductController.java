@@ -81,7 +81,7 @@ public class ProductController {
 		// 관리자 상품 등록(INSERT) 처리 후 해당 상품 페이지로 강제 이동(redirect)
 		attr.addAttribute("productNo", productNo);
 				
-		return "redirect:product/detail";
+		return "redirect:detail";
 	}
 	
 	// 3. 상품 목록 Mapping
