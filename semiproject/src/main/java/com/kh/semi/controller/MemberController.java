@@ -115,7 +115,7 @@ public class MemberController {
 		String memberId = (String)session.getAttribute("loginId");
 		try {
 			memberDao.changePassword(memberId, memberPw);
-			return "redirect:change_pw_uccess";
+			return "redirect:change_pw_success";
 		}
 		catch (Exception e) {
 			return "redirect:change_pw?error";
