@@ -21,5 +21,5 @@ public class ProductDto {
 	private int productPrice; // 상품 가격
 	private String productInformation; // 상품 정보
 	private int productInventory; // 상품 재고
-	private int productGood; // 상품 별점
+	private int productGood; // 상품 별점 
 }

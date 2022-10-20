@@ -10,42 +10,49 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.semi.entity.AttachmentDto;
 
+
+//첨부파일 조회 등록 기능
 @Repository
 public class AttachmentDaoImpl implements AttachmentDao{
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	private RowMapper<AttachmentDto> mapper  = (rs, rowNum) -> {
-		return AttachmentDto.builder()
-				.attachmentNo(rs.getInt("attachment_no"))
-				.attachmentName(rs.getString("attachment_name"))
-				.attachmentType(rs.getString("attachment_type"))
-				.attachmentSize(rs.getInt("attachment_size"))
-				.attachmentDate(rs.getDate("attachmet_date"))
-			.build();
+	//전체 조회를 위한 mapper
+	private RowMapper<AttachmentDto> productMapper  = (rs, rowNum) -> {
+		AttachmentDto dto = new AttachmentDto();
+		dto.setAttachmentNo(rs.getInt("attachment_no"));
+		dto.setAttachmentName(rs.getString("attachment_name"));
+		dto.setAttachmentType(rs.getString("attachment_type"));
+		dto.setAttachmentSize(rs.getLong("attachment_size"));
+		dto.setAttachmentDate(rs.getDate("attachment_date"));
+		return dto;
 	};
-	
-	private ResultSetExtractor<AttachmentDto> extractor = (rs) -> {
+	//단일조회를 위한 mapper
+	private ResultSetExtractor<AttachmentDto> productExtractor = (rs) -> {
+			AttachmentDto dto = new AttachmentDto();
 			if(rs.next()) {
-				return AttachmentDto.builder()
-						.attachmentNo(rs.getInt("attachment_no"))
-						.attachmentName(rs.getString("attachment_name"))
-						.attachmentType(rs.getString("attachment_type"))
-						.attachmentSize(rs.getInt("attachment_size"))
-						.attachmentDate(rs.getDate("attachmet_date"))
-					.build();
+				dto.setAttachmentNo(rs.getInt("attachment_no"));
+				dto.setAttachmentName(rs.getString("attachment_name"));
+				dto.setAttachmentType(rs.getString("attachment_type"));
+				dto.setAttachmentSize(rs.getLong("attachment_size"));
+				dto.setAttachmentDate(rs.getDate("attachment_date"));
+				return dto;
 			}else {
 				return null;
 			}
 	}; 
 
+	
+	//시퀀스 번호를 발급받기위한 메소드
 	@Override
 	public int sequence() {
 		String sql = "select attachment_seq.nextval from dual";
 		return jdbcTemplate.queryForObject(sql, int.class);
 	}
 
+	
+	//등록 구문
 	@Override
 	public void insert(AttachmentDto attachmentDto) {
 		String sql = "insert into attachment("
@@ -62,18 +69,19 @@ public class AttachmentDaoImpl implements AttachmentDao{
 						
 		}
 
+	//첨부파일 조회
 	@Override
 	public List<AttachmentDto> selectList() {
 		String sql = "select * from attachment";
-		return jdbcTemplate.query(sql, mapper);
+		return jdbcTemplate.query(sql, productMapper);
 	}
 
+	//첨부파일 단일 조회
 	@Override
 	public AttachmentDto selectOne(int attachmentNo) {
-		String sql = "select * from attachment "
-				+ "where attachment_no = ?";
+		String sql = "select * from attachment where attachment_no = ?";
 		Object[] param = {attachmentNo};
-		return jdbcTemplate.query(sql, extractor, param);
+		return jdbcTemplate.query(sql, productExtractor, param);
 	}
 
 	@Override
@@ -82,13 +90,26 @@ public class AttachmentDaoImpl implements AttachmentDao{
 		return false;
 	}
 
+
+	@Override
+	public void productConnectAttachment(int productNo, int attachmentNo) {
+		String sql = "insert into product_attachment VALUES(?, ?)";
+		Object[] param = {productNo, attachmentNo};
+		jdbcTemplate.update(sql, param);
+		
+	}
+
+
+	@Override
+	public List<AttachmentDto> selectProductAttachmentList(int productOriginNo) {
+		String sql = "select * from product_attachment_view "
+				+ "where product_origin_no = ?";
+		Object[] param = {productOriginNo};
+		return jdbcTemplate.query(sql, productMapper, param);
+	}
+
+
 	
-//	@Override
-//	public List<AttachmentDto> selectBoardAttachmentList(int boardNo) {
-//		String sql = "select * from board_attachment_view "
-//						+ "where board_no = ?";
-//		Object[] param = {boardNo};
-//		return jdbcTemplate.query(sql, mapper, param);
-//	}
+	
 	
 }

@@ -12,6 +12,7 @@ public class CouponDto {
 	private String couponId;
 	private Date couponStartdate; 
 	private Date couponEnddate; 
-	private String couponYn;    
+	private String couponYn;
+	private int couponIssue;
 }
      
