@@ -161,10 +161,9 @@
         </div>
 
         <div class="row">
-            <input type="radio">신용카드
-            <input type="radio">실시간 계좌이체
-            <input type="radio">가상계좌
-            <input type="radio">무통장입금
+            <input type="radio" name="orderType" value="신용카드">신용카드
+            <input type="radio" name="orderType" value="실시간 계좌이체">실시간 계좌이체
+            <input type="radio" name="orderType" value="무통장입금">무통장입금
         </div>
 
         <div class="row center">
