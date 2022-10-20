@@ -17,7 +17,7 @@ public class OrdersController {
 		//회원아이디로 장바구니 정보 조회 및 model 출력준비
 		//주문자정보(이름, 전화번호, 이메일 등) model 출력준비
 		//배송정보(기본배송지) model 출력준비
-		return "order";
+		return "order/order";
 	}
 	
 	@PostMapping("/order_ck")
