@@ -9,4 +9,6 @@ public interface MemberDao {
 	
 	List<MemberDto> selectList();
 	List<MemberDto> selectList(String type, String keyword);
+	MemberDto selectOne(String memberId);
+	
 }
