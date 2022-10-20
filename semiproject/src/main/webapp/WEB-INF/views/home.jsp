@@ -23,6 +23,9 @@
 			<h2><a href="member/login">회원 로그인</a></h2>
 		</c:otherwise>
 	</c:choose>
+
+	<h2><a href="basket">장바구니</a></h2>
 	
 <%-- footer.jsp 불러오기 --%>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
+
