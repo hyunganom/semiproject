@@ -7,6 +7,7 @@
 -- 쿠폰 발행일(coupon_startdate) 쿠폰 발행 날짜, 지정 설정
 -- 쿠폰 만료일(coupon_enddate) 쿠폰 만료 날짜, 지정 설정
 -- 쿠폰 사용여부(coupon_yn) 1글자, y,n 중 하나로 설정
+-- 쿠폰 발급번호(coupon_issue) 기본키, 중복설정방지
 
 create table coupon(
 coupon_no references coupon_list(coupon_list_no) on delete cascade,
@@ -18,3 +19,5 @@ coupon_yn char(1)
 
 -- 테이블 삭제
 drop table coupon;
+
+create sequence coupon_seq;
