@@ -15,6 +15,9 @@
 
 <table border = "1" width = "1000" >
 	<tbody>
+		<tr align = "right">
+			<td colspan = "15"><a href = "insert">등록</a></td>
+		</tr>
 		<tr>
 			<th>이미지</th>
 			<th>상품 번호</th>
@@ -25,6 +28,10 @@
 			<th>상품 정보</th>
 			<th>상품 재고</th>
 			<th>상품 별점</th>
+			<th>상품 등록일</th>
+			<th>상품 수정일</th>
+			<th>상품 상태</th>
+			<th colspan = "3">관리자 명령</th>
 		</tr>
 		
 		<c:forEach var = "productList" items = "${productList}">
@@ -43,11 +50,18 @@
 			<td>${productList.productInformation}</td>
 			<td>${productList.productInventory}</td>
 			<td>${productList.productGood}</td>
+			<td>${productList.productRegisttime}</td>
+			<td>${productList.productUpdatetime}</td>
+			<td>${productList.productInactive}</td>
 			<td><a href = "edit?productNo=${productList.productNo}">수정</a></td>
-			<td><a href = "delete?productNo=${productList.productNo}">삭제</a></td>
+			<td><a href = "delete?productNo=${productList.productNo}">삭제<br>(비활성화)</a></td>
+			<td><a href = "deleteAdmin?productNo=${productList.productNo}">삭제<br>(DELETE)</a></td>
 		</tr>
 		</c:forEach>
 		
+		<tr align = "right">
+			<td colspan = "15"><a href = "insert">등록</a></td>
+		</tr>
 	</tbody>	
 </table>
 
