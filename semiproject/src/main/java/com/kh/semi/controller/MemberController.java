@@ -1,6 +1,6 @@
 package com.kh.semi.controller;
 
-import java.util.List;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,6 +49,13 @@ public class MemberController {
 			model.addAttribute("list", memberDao.selectList());
 		}
 		return "member/list";
+	}
+	
+	@GetMapping("/detail")
+	public String detail(Model model, @RequestParam String memberId) {
+		MemberDto memberDto = memberDao.selectOne(memberId);
+		model.addAttribute("memberDto", memberDto);
+		return "member/detail";
 	}
 	
 	@GetMapping("/login")

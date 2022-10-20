@@ -10,7 +10,7 @@
 <title>상품 등록</title>
 </head>
 <body>
-	<div>
+	<div class = "container-800">
 		<h1>상품 등록</h1>
 	</div>
 	

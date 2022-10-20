@@ -5,7 +5,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -46,7 +48,7 @@ public class MemberDaoImpl implements MemberDao{
 			dto.setMemberPost(rs.getString("member_post"));
 			dto.setMemberBaseAddress(rs.getString("member_base_address"));
 			dto.setMemberDetailAddress(rs.getString("member_detail_address"));
-			dto.setMemberBirth(rs.getDate("member_birth"));
+			dto.setMemberBirth(rs.getString("member_birth"));
 			dto.setMemberGender(rs.getString("member_gender"));
 			dto.setMemberGrade(rs.getString("member_grade"));
 			dto.setMemberPoint(rs.getInt("member_point"));
@@ -70,6 +72,42 @@ public class MemberDaoImpl implements MemberDao{
 		sql = sql.replace("#1", type);
 		Object[] param = {keyword};
 		return jdbcTemplate.query(sql, mapper, param);
+	}
+	
+	private ResultSetExtractor<MemberDto> extractor = new ResultSetExtractor<MemberDto>() {
+		@Override
+		public MemberDto extractData(ResultSet rs) throws SQLException, DataAccessException {
+			if(rs.next()) {
+				MemberDto dto = new MemberDto();
+				dto.setMemberId(rs.getString("member_id"));
+				dto.setMemberPw(rs.getString("member_pw"));
+				dto.setMemberName(rs.getString("member_name"));
+				dto.setMemberEmail(rs.getString("member_email"));
+				dto.setMemberTel(rs.getString("member_tel"));
+				dto.setMemberPost(rs.getString("member_post"));
+				dto.setMemberBaseAddress(rs.getString("member_base_address"));
+				dto.setMemberDetailAddress(rs.getString("member_detail_address"));
+				dto.setMemberBirth(rs.getString("member_birth"));
+				dto.setMemberGender(rs.getString("member_gender"));
+				dto.setMemberGrade(rs.getString("member_grade"));
+				dto.setMemberPoint(rs.getInt("member_point"));
+				dto.setMemberJoindate(rs.getDate("member_joindate"));
+				dto.setMemberLogindate(rs.getDate("member_logindate"));
+				dto.setMemberWithdrawal(rs.getString("member_withdrawal"));
+				dto.setMemberWithdrawalDate(rs.getDate("member_withdrawaldate"));
+				return dto;
+			}
+			else {
+				return null;
+			}
+		}
+	};
+
+	@Override
+	public MemberDto selectOne(String memberId) {
+		String sql = "select * from member where member_id = ?";
+		Object[] param = {memberId};
+		return jdbcTemplate.query(sql, extractor, param);
 	}
 	
 }

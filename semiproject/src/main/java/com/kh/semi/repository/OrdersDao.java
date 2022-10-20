@@ -5,7 +5,7 @@ import java.util.List;
 import com.kh.semi.entity.OrdersDto;
 
 public interface OrdersDao {
-	
+
 	//1. 주문 등록
 	void insert(OrdersDto ordesDto);
 	 
@@ -23,6 +23,5 @@ public interface OrdersDao {
 	
 	//4. 주문 삭제(주문번호로 검색 후 해당 주문건 삭제)
 	boolean delete(int orderNo);
-	
 	
 }
