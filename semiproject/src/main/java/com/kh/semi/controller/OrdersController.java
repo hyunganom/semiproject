@@ -29,7 +29,7 @@ public class OrdersController {
 	public String basket() {
 		//회원아이디로 조회 후 해당 장바구니 테이블에
 		//들어있는 정보를 찍어주는 기능필요
-		return "basket";
+		return "order/basket";
 	}
 
 	
