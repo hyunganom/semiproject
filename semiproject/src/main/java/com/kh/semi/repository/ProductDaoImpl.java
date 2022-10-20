@@ -55,13 +55,11 @@ public class ProductDaoImpl implements ProductDao {
 	// 추상 메소드 오버라이딩 - 관리자 상품 등록(INSERT)
 	@Override
 	public void insertProduct(ProductDto productDto) {
-		
-		// 다음 시퀀스 번호 반환
-		int productNo = nextSequence();
-		
 		// 상품 등록 SQL
 		String sql = "insert into product(product_no, category_high_no, category_low_no, product_name, product_price, product_information, product_inventory) values(?, ?, ?, ?, ?, ?, ?)";
-		Object[] param = new Object[] {productNo, productDto.getCategoryHighNo(), productDto.getCategoryLowNo(), productDto.getProductName(), productDto.getProductPrice(), productDto.getProductInformation(), productDto.getProductInventory()};
+		// ProductDto의 getter값으로 바인드 변수 배열 생성
+		Object[] param = new Object[] {productDto.getProductNo(), productDto.getCategoryHighNo(), productDto.getCategoryLowNo(), productDto.getProductName(), productDto.getProductPrice(), productDto.getProductInformation(), productDto.getProductInventory()};
+		// 등록 실행
 		jdbcTemplate.update(sql, param);
 	}
 	

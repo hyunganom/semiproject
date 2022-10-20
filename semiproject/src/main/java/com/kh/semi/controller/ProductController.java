@@ -55,13 +55,17 @@ public class ProductController {
 		
 		// 관리자 상품 등록(INSERT)을 위한 다음 시퀀스 번호 반환
 		int productNo = productDao.nextSequence();
-		int attatchmentNo = attachmentDao.sequence();
-		// View에서 입력받은 productDto로 DB 처리 - 관리자 상품 등록(INSERT)
+		
+		// 반환한 시퀀스 번호를 View에서 입력받은 ProductDto의 productNo로 설정
+		productDto.setProductNo(productNo);
+		
+		// productNo가 설정된 productDto로 DB 처리 - 관리자 상품 등록(INSERT)
 		productDao.insertProduct(productDto);
 		
 		
 		//첨부파일 DB연결
 		//첨부파일 시퀀스 발급
+		int attatchmentNo = attachmentDao.sequence();
 		
 		//DB등록
 		attachmentDao.insert(AttachmentDto.builder()
@@ -76,7 +80,7 @@ public class ProductController {
 		System.out.println(target.getAbsolutePath());
 		attachment.transferTo(target);
 		//product_attachment 연결테이블 정보 저장
-		attachmentDao.productConnectAttachment(productNo+1, attatchmentNo);
+		attachmentDao.productConnectAttachment(productNo, attatchmentNo);
 		
 		
 		// 관리자 상품 등록(INSERT) 처리 후 해당 상품 페이지로 강제 이동(redirect)
