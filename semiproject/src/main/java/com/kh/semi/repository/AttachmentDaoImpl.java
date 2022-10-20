@@ -1,5 +1,7 @@
 package com.kh.semi.repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.kh.semi.entity.AttachmentDto;
+import com.kh.semi.vo.ProductAttachmentVO;
 
 
 //첨부파일 조회 등록 기능
@@ -19,25 +22,25 @@ public class AttachmentDaoImpl implements AttachmentDao{
 	private JdbcTemplate jdbcTemplate;
 	
 	//전체 조회를 위한 mapper
-	private RowMapper<AttachmentDto> mapper  = (rs, rowNum) -> {
-		return AttachmentDto.builder()
-				.attachmentNo(rs.getInt("attachment_no"))
-				.attachmentName(rs.getString("attachment_name"))
-				.attachmentType(rs.getString("attachment_type"))
-				.attachmentSize(rs.getLong("attachment_size"))
-				.attachmentDate(rs.getDate("attachmet_date"))
-			.build();
+	private RowMapper<AttachmentDto> productMapper  = (rs, rowNum) -> {
+		AttachmentDto dto = new AttachmentDto();
+		dto.setAttachmentNo(rs.getInt("attachment_no"));
+		dto.setAttachmentName(rs.getString("attachment_name"));
+		dto.setAttachmentType(rs.getString("attachment_type"));
+		dto.setAttachmentSize(rs.getLong("attachment_size"));
+		dto.setAttachmentDate(rs.getDate("attachment_date"));
+		return dto;
 	};
 	//단일조회를 위한 mapper
-	private ResultSetExtractor<AttachmentDto> extractor = (rs) -> {
+	private ResultSetExtractor<AttachmentDto> productExtractor = (rs) -> {
+			AttachmentDto dto = new AttachmentDto();
 			if(rs.next()) {
-				return AttachmentDto.builder()
-						.attachmentNo(rs.getInt("attachment_no"))
-						.attachmentName(rs.getString("attachment_name"))
-						.attachmentType(rs.getString("attachment_type"))
-						.attachmentSize(rs.getLong("attachment_size"))
-						.attachmentDate(rs.getDate("attachmet_date"))
-					.build();
+				dto.setAttachmentNo(rs.getInt("attachment_no"));
+				dto.setAttachmentName(rs.getString("attachment_name"));
+				dto.setAttachmentType(rs.getString("attachment_type"));
+				dto.setAttachmentSize(rs.getLong("attachment_size"));
+				dto.setAttachmentDate(rs.getDate("attachment_date"));
+				return dto;
 			}else {
 				return null;
 			}
@@ -73,16 +76,15 @@ public class AttachmentDaoImpl implements AttachmentDao{
 	@Override
 	public List<AttachmentDto> selectList() {
 		String sql = "select * from attachment";
-		return jdbcTemplate.query(sql, mapper);
+		return jdbcTemplate.query(sql, productMapper);
 	}
 
 	//첨부파일 단일 조회
 	@Override
 	public AttachmentDto selectOne(int attachmentNo) {
-		String sql = "select * from attachment "
-				+ "where attachment_no = ?";
+		String sql = "select * from attachment where attachment_no = ?";
 		Object[] param = {attachmentNo};
-		return jdbcTemplate.query(sql, extractor, param);
+		return jdbcTemplate.query(sql, productExtractor, param);
 	}
 
 	@Override
@@ -93,7 +95,7 @@ public class AttachmentDaoImpl implements AttachmentDao{
 
 
 	@Override
-	public void connectAttachment(int productNo, int attachmentNo) {
+	public void productConnectAttachment(int productNo, int attachmentNo) {
 		String sql = "insert into product_attachment VALUES(?, ?)";
 		Object[] param = {productNo, attachmentNo};
 		jdbcTemplate.update(sql, param);
@@ -101,15 +103,44 @@ public class AttachmentDaoImpl implements AttachmentDao{
 	}
 
 
+	@Override
+	public List<AttachmentDto> selectProductAttachmentList(int productOriginNo) {
+		String sql = "select * from product_attachment_view "
+				+ "where product_origin_no = ?";
+		Object[] param = {productOriginNo};
+		return jdbcTemplate.query(sql, productMapper, param);
+	}
 
 	
-	
+
 //	@Override
-//	public List<AttachmentDto> selectBoardAttachmentList(int boardNo) {
-//		String sql = "select * from board_attachment_view "
-//						+ "where board_no = ?";
-//		Object[] param = {boardNo};
-//		return jdbcTemplate.query(sql, mapper, param);
+//	public List<ProductAttachmentVO> selectProductAttachmentList(int productOriginNo) {
+//		String sql = "select*from product_attachment_view where product_origin_no=?";
+//		Object[] param = {productOriginNo};
+//		return jdbcTemplate.query(sql, mapperVO, param);
 //	}
+	
+////	@Override
+////	public List<AttachmentDto> selectBoardAttachmentList2(int boardNo) {
+////		String sql = "select*from product_attachment_view where product_origin_no=?";
+////		Object[] param = {boardNo};
+////		return jdbcTemplate.query(sql, mapper, param);
+////	}
+//	
+//	private RowMapper<ProductAttachmentVO> mapperVO = new RowMapper<>() {
+//		@Override
+//		public ProductAttachmentVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+//			return ProductAttachmentVO.builder()
+//						.attachmentNo(rs.getInt("attachment_no"))
+//						.attachmentName(rs.getString("attachment_name"))
+//						.attachmentType(rs.getString("attachment_type"))
+//						.attachmentSize(rs.getLong("attachment_size"))
+//						.attachmentTime(rs.getDate("attachment_time"))
+//						.productOriginNo(rs.getInt("product_origin_no"))
+//						.productAttachmentNo(rs.getInt("product_attachment_no"))
+//					.build();
+//		}
+//	};
+	
 	
 }

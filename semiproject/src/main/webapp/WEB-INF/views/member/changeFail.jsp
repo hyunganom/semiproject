@@ -4,9 +4,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>개인정보 변경 실패</title>
 </head>
 <body>
-
+	<div align="center">
+		<h1>존재하지 않는 회원입니다.</h1>
+		<h2><a href="list">목록 보기</a></h2>
+	</div>
 </body>
 </html>

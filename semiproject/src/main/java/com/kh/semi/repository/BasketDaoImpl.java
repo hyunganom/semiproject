@@ -55,17 +55,17 @@ public class BasketDaoImpl implements BasketDao{
 	
 	//장바구니 상품조회(매개변수:회원ID)
 	@Override
-	public List<BasketDto> selectList(String basketId) {
+	public List<BasketDto> selectList(String memberId) {
 		String sql = "select * from basket where basket_id=?";
-		Object[] param = {basketId};
+		Object[] param = {memberId};
 		return jdbcTemplate.query(sql,  mapper, param);
 	}
 
 	//장바구니 상품삭제(매개변수:상품번호)
 	@Override
-	public boolean delete(int basketProductNo) {
+	public boolean delete(int productNo) {
 		String sql = "delete basket where basket_product_no=?";
-		Object[] param= {basketProductNo};
+		Object[] param= {productNo};
 		return jdbcTemplate.update(sql, param)>0;
 	}
 	

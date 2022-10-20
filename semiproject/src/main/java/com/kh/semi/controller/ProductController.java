@@ -35,8 +35,8 @@ public class ProductController {
 	//첨부파일 업로드 다운로드 경로
 	private final File directory = new File("D:\\test");
 	
-	// 상품 등록 Mapping
-	// 1. 상품 등록 페이지로 연결
+	// 1. 상품 등록 Mapping
+	// 1) 상품 등록 페이지로 연결
 	@GetMapping("/insert")
 	public String insert(Model model) {
 		
@@ -47,16 +47,15 @@ public class ProductController {
 		return "product/insert";
 	}
 	
-	// 2. 상품 등록 처리
+	// 2) 상품 등록 처리
 	@PostMapping("/insert")
 	public String insert(@ModelAttribute ProductDto productDto,
 			MultipartFile attachment,
-			AttachmentDto attachmentDto,
 			RedirectAttributes attr) throws IllegalStateException, IOException {
 		
 		// 관리자 상품 등록(INSERT)을 위한 다음 시퀀스 번호 반환
 		int productNo = productDao.nextSequence();
-		int attachmentNo = attachmentDao.sequence();
+		int attatchmentNo = attachmentDao.sequence();
 		// View에서 입력받은 productDto로 DB 처리 - 관리자 상품 등록(INSERT)
 		productDao.insertProduct(productDto);
 		
@@ -66,56 +65,61 @@ public class ProductController {
 		
 		//DB등록
 		attachmentDao.insert(AttachmentDto.builder()
-				.attachmentNo(attachmentNo)
+				.attachmentNo(attatchmentNo)
 				.attachmentName(attachment.getOriginalFilename())
 				.attachmentType(attachment.getContentType())
 				.attachmentSize(attachment.getSize())
 			.build());
 		
 		//파일저장
-		File target = new File(directory, String.valueOf(attachmentNo));
+		File target = new File(directory, String.valueOf(attatchmentNo));
 		System.out.println(target.getAbsolutePath());
 		attachment.transferTo(target);
 		//product_attachment 연결테이블 정보 저장
-		productDao.connectAttachment(productNo+1, attachmentNo);
+		attachmentDao.productConnectAttachment(productNo+1, attatchmentNo);
 		
 		
 		// 관리자 상품 등록(INSERT) 처리 후 해당 상품 페이지로 강제 이동(redirect)
 		attr.addAttribute("productNo", productNo);
-				
-		return "redirect:product/detail";
+		return "redirect:detail";
 	}
 	
-	// 3. 상품 목록 Mapping
+	// 3) 상품 목록 Mapping
 	@GetMapping("/list")
 	public String selectList(Model model, @ModelAttribute ProductListSearchVO productListSearchVO) {
 		
-		// 검색 조회인지 전체 조회인지 판정 - 검색 조회이면 true, 전체 조회이면 false를 반환
-		if(productListSearchVO.isSearch()) { // 검색 조회라면
-			// ProductListSearchVO의 type과 keyword를 매개변수로 검색 조회 실행 결과를 model에 첨부
-			model.addAttribute("productList", productDao.searchListProduct(productListSearchVO.getType(), productListSearchVO.getKeyword()));
-		}
-		else { // 검색 조회가 아니라면(전체 조회라면)
-			// 전체 조회 실행 결과를 model에 첨부
-			model.addAttribute("productList", productDao.allListProduct());
-		}
+		// View에서 입력받은 ProductListSearchVO를 매개변수로 조회 결과에 따른 상품의 총 수 반환
+		// - 검색 조회일 경우 검색 조회의 결과에 대한 count(*)의 값 반환
+		// - 전체 조회일 경우 전체 조회의 결과에 대한 count(*)의 값 반환
+		int countTotalProduct = productDao.countTotalProduct(productListSearchVO);
+		
+		// 반환한 상품의 총 수를 다시 ProductListSearchVO의 등록된 상품의 총 수(countTotalProduct) 필드의 값으로 설정
+		productListSearchVO.setCountTotalProduct(countTotalProduct);
+		
+		// 설정된 ProductListSearchVO로 통합 조회를 실행한 후 그 결과를 Model에 첨부
+		model.addAttribute("productList", productDao.selectListProduct(productListSearchVO));
+		
+		// 상품 수정 페이지(list.jsp)로 연결
 		return "product/list";
 	}
-
 	
-	// 상품 상세 Mapping
+	
+	// 2. 상품 상세 Mapping
 	@GetMapping("/detail")
 	public String detail(Model model, @RequestParam int productNo) {
 		
 		// 하이퍼링크로 받은 productNo로 상세 조회 실행 후 그 결과를 Model에 첨부
 		model.addAttribute("productDto", productDao.selectOneProduct(productNo));
 		
+		// 첨부파일 뷰테이블 조회
+		model.addAttribute("attachmentDto",attachmentDao.selectProductAttachmentList(productNo));
+		
 		// 상품 상세 페이지(detail.jsp)로 연결
 		return "product/detail";
 	}
 	
-	// 상품 수정 Mapping
-	// 1. 상품 수정 페이지로 연결
+	// 3. 상품 수정 Mapping
+	// 1) 상품 수정 페이지로 연결
 	@GetMapping("/edit")
 	public String edit(Model model, @RequestParam int productNo) {
 		
@@ -133,7 +137,7 @@ public class ProductController {
 		return "product/edit";		
 	}
 	
-	// 2. 상품 수정 DB 처리
+	// 2) 상품 수정 DB 처리
 	@PostMapping("/edit")
 	public String edit(@ModelAttribute ProductDto productDto, RedirectAttributes attr) {
 		 
@@ -150,8 +154,33 @@ public class ProductController {
 			return "redirect:detail";
 		}
 		else {
-			// 상품 수정 페이지로 강제 이동(임시)
+			// 상품 수정 Mapping으로 강제 이동(임시)
 			return "redirect:edit";
 		}
+	}
+	
+	// 3. 상품 삭제(비활성화) Mapping
+	@GetMapping("/delete")
+	public String delete(@RequestParam int productNo) {
+		
+		// 하이퍼링크로 받은 productNo로 상세 조회 실행
+		ProductDto productDto = productDao.selectOneProduct(productNo);
+		
+		// 상세 조회한 ProductDto의 현재 상품 비활성화 상태의 반대값으로 상품 비활성화 상태 수정(UPDATE)
+		productDao.deleteProduct(productNo, !productDto.isProductInactive());
+		
+		// 상품 목록 Mapping으로 강제 이동(redirect)
+		return "redirect:list";
+	}
+	
+	// 4. 상품 삭제(DELETE) Mapping (더미데이터 삭제용)
+	@GetMapping("/deleteAdmin")
+	public String deleteAdmin(@RequestParam int productNo) {
+		
+		// 하이퍼링크로 받은 productNo로 상품 삭제(DELETE) 실행
+		productDao.deleteProduct(productNo);
+		
+		// 상품 삭제 후 상품 목록 Mapping으로 강제 이동(redirect)
+		return "redirect:list";
 	}
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.semi.entity.ProductDto;
 import com.kh.semi.vo.ProductCategoryListVO;
+import com.kh.semi.vo.ProductListSearchVO;
 
 @Repository
 public class ProductDaoImpl implements ProductDao {
@@ -51,7 +52,7 @@ public class ProductDaoImpl implements ProductDao {
 		return productNo;
 	}
 
-	// 추상 메소드 오버라이딩 - 관리자 상품 등록
+	// 추상 메소드 오버라이딩 - 관리자 상품 등록(INSERT)
 	@Override
 	public void insertProduct(ProductDto productDto) {
 		
@@ -64,7 +65,15 @@ public class ProductDaoImpl implements ProductDao {
 		jdbcTemplate.update(sql, param);
 	}
 	
-	// ProductDto에 대한 RowMapper
+	// 추상 메소드 오버라이딩 - 상품 이미지 첨부파일 기록 등록(INSERT)
+	@Override
+	public void connectAttachment(int productNo, int attachmentNo) {
+		String sql = "insert into product_attachment VALUES(?, ?)";
+		Object[] param = {productNo, attachmentNo};	
+		jdbcTemplate.update(sql, param);
+	}
+	
+	// ProductDto에 대한 RowMapper (product_inactive 추가)
 	private RowMapper<ProductDto> mapper = new RowMapper<>() {
 		@Override
 		public ProductDto mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -77,35 +86,48 @@ public class ProductDaoImpl implements ProductDao {
 						.productInformation(rs.getString("product_information"))
 						.productInventory(rs.getInt("product_inventory"))
 						.productGood(rs.getInt("product_good"))
+						.productRegisttime(rs.getDate("product_registtime"))
+						.productUpdatetime(rs.getDate("product_updatetime"))
+						.productInactive(rs.getBoolean("product_inactive"))
 					.build();
 		}
 	};
 
-	// 추상 메소드 오버라아딩 - 관리자 상품 조회
+	// 추상 메소드 오버라이딩 - 관리자 상품 조회(SELECT)
 	// 1) 통합 조회
 	@Override
-	public List<ProductDto> selectListProduct() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ProductDto> selectListProduct(ProductListSearchVO productListSearchVO) {
+		// 검색 조회인지 전체 조회인지 판정
+		if(productListSearchVO.isSearch()) { // 검색 조회라면
+			// 매개변수인 productListSearchVO의 type과 keyword를 반환하여 검색 조회 실행
+			return searchListProduct(productListSearchVO);
+		}
+		else { // 전체 조회라면
+			// 전체 조회 실행
+			return allListProduct(productListSearchVO);
+		}
 	}
 
 	// 2) 전체 조회
 	@Override
-	public List<ProductDto> allListProduct() {
-		String sql = "select * from product order by product_no desc";
-		return jdbcTemplate.query(sql, mapper);
+	public List<ProductDto> allListProduct(ProductListSearchVO productListSearchVO) {
+		// Top N Query SQL문 - 전체 조회시 한 페이지에 조회될 레코드의 수를 제한
+		String sql = "select * from (select TMP.*, rownum rn from (select * from product order by product_no desc)TMP) where rn between ? and ?";
+		Object[] param = new Object[] {productListSearchVO.rownumStart(), productListSearchVO.rownumEnd()};
+		return jdbcTemplate.query(sql, mapper, param);
 	}
 
 	// 3) 검색 조회
 	@Override
-	public List<ProductDto> searchListProduct(String type, String keyword) {
-		String sql = "select * from product where instr(#1, ?) > 0 order by product_no desc";
-		sql = sql.replace("#1", type);
-		Object[] param = new Object[] {keyword};
+	public List<ProductDto> searchListProduct(ProductListSearchVO productListSearchVO) {
+		// Top N Query SQL문 - 전체 조회시 한 페이지에 조회될 레코드의 수를 제한
+		String sql = "select * from (select TMP.*, rownum rn from (select * from product where instr(#1, ?) > 0 order by product_no desc)TMP) where rn between ? and ?";
+		sql = sql.replace("#1", productListSearchVO.getType());
+		Object[] param = new Object[] {productListSearchVO.getKeyword(), productListSearchVO.rownumStart(), productListSearchVO.rownumEnd()};
 		return jdbcTemplate.query(sql, mapper, param);
 	}
 	
-	// ProductDto에 대한 ResultSetExtractor
+	// ProductDto에 대한 ResultSetExtractor (product_inactive 추가)
 	private ResultSetExtractor<ProductDto> extractor = new ResultSetExtractor<>() {
 		@Override
 		public ProductDto extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -119,6 +141,9 @@ public class ProductDaoImpl implements ProductDao {
 						.productInformation(rs.getString("product_information"))
 						.productInventory(rs.getInt("product_inventory"))
 						.productGood(rs.getInt("product_good"))
+						.productRegisttime(rs.getDate("product_registtime"))
+						.productUpdatetime(rs.getDate("product_updatetime"))
+						.productInactive(rs.getBoolean("product_inactive"))
 					.build();
 			}
 			else {
@@ -127,14 +152,7 @@ public class ProductDaoImpl implements ProductDao {
 		}
 	};
 
-	@Override
-	public void connectAttachment(int productNo, int attachmentNo) {
-		String sql = "insert into product_attachment VALUES(?, ?)";
-		Object[] param = {productNo, attachmentNo};	
-		jdbcTemplate.update(sql, param);
-	}
-
-	// 추상 메소드 오버라이딩 - 관리자 상품 상세
+	// 추상 메소드 오버라이딩 - 관리자 상품 상세(DETAIL)
 	@Override
 	public ProductDto selectOneProduct(int productNo) {
 		String sql = "select * from product where product_no = ?";
@@ -142,7 +160,7 @@ public class ProductDaoImpl implements ProductDao {
 		return jdbcTemplate.query(sql, extractor, param);
 	}
 
-	// 추상 메소드 오버라이딩 - 관리자 상품 수정
+	// 추상 메소드 오버라이딩 - 관리자 상품 수정(UPDATE)
 	@Override
 	public boolean updateProduct(ProductDto productDto) {
 		String sql = "update product set "
@@ -171,5 +189,51 @@ public class ProductDaoImpl implements ProductDao {
 		String sql = "update product set product_updatetime = sysdate where product_no = ?";
 		Object[] param = new Object[] {productNo};
 		jdbcTemplate.update(sql, param);
+	}
+
+	// 추상 메소드 오버라이딩 - 관리자 상품 삭제(비활성화로 UPDATE)
+	@Override
+	public boolean deleteProduct(int productNo, boolean isInactiveProduct) {
+		String sql = "update product set product_inactive = ? where product_no = ?";
+		String isInactive = isInactiveProduct ? "Y" : null;
+		Object[] param = new Object[] {isInactive, productNo};
+		return jdbcTemplate.update(sql, param) > 0;
+	}
+
+	// 추상 메소드 오버라이딩 - 관리자 상품 삭제(DELETE)
+	@Override
+	public boolean deleteProduct(int productNo) {
+		String sql = "delete product where product_no = ?";
+		Object[] param = new Object[] {productNo};
+		return jdbcTemplate.update(sql, param) > 0;
+	}
+
+	// 추상 메소드 - 상품 총 갯수
+	// 1) 통합 조회시 상품의 총 갯수
+	@Override
+	public int countTotalProduct(ProductListSearchVO productListSearchVO) {
+		// 검색 조회인지 판정
+		if(productListSearchVO.isSearch()) { // 검색 조회라면
+			return countSearchProduct(productListSearchVO);
+		}
+		else { // 검색 조회가 아니라면(전체 조회라면)
+			return countAllProduct();
+		}
+	}
+
+	// 2) 전체 조회시 상품의 총 갯수
+	@Override
+	public int countAllProduct() {
+		String sql = "select count(*) from product";
+		return jdbcTemplate.queryForObject(sql, int.class);
+	}
+
+	// 3) 검색 조회시 상품의 총 갯수
+	@Override
+	public int countSearchProduct(ProductListSearchVO productListSearchVO) {
+		String sql = "select count(*) from product where instr(#1, ?) > 0";
+		sql = sql.replace("#1", productListSearchVO.getType());
+		Object[] param = new Object[] {productListSearchVO.getKeyword()};
+		return jdbcTemplate.queryForObject(sql, int.class, param);
 	}
 }
