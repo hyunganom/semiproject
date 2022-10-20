@@ -172,4 +172,12 @@ public class ProductDaoImpl implements ProductDao {
 		Object[] param = new Object[] {productNo};
 		jdbcTemplate.update(sql, param);
 	}
+
+	// 추상 메소드 오버라이딩 - 관리자 상품 삭제(비활성화)
+	@Override
+	public boolean deleteProduct(int productNo, boolean isInactiveProduct) {
+		String sql = "update product set product_inactive = ? where product_no = ?";
+		Object[] param = new Object[] {isInactiveProduct, productNo};
+		return jdbcTemplate.update(sql, param) > 0;
+	}
 }
