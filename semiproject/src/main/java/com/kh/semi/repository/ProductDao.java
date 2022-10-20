@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kh.semi.entity.ProductDto;
 import com.kh.semi.vo.ProductCategoryListVO;
+import com.kh.semi.vo.ProductListSearchVO;
 
 public interface ProductDao {
 
@@ -21,13 +22,13 @@ public interface ProductDao {
 	
 	// 추상 메소드 - 관리자 상품 조회(SELECT)
 	// 1) 통합 조회
-	List<ProductDto> selectListProduct();
+	List<ProductDto> selectListProduct(ProductListSearchVO productListSearchVO);
 	
 	// 2) 전체 조회
-	List<ProductDto> allListProduct();
+	List<ProductDto> allListProduct(ProductListSearchVO productListSearchVO);
 	
 	// 3) 검색 조회
-	List<ProductDto> searchListProduct(String type, String keyword);
+	List<ProductDto> searchListProduct(ProductListSearchVO productListSearchVO);
 	
 	// 추상 메소드 - 관리자 상품 상세(DETAIL)
 	ProductDto selectOneProduct(int productNo);
@@ -43,4 +44,14 @@ public interface ProductDao {
 	
 	// 추상 메소드 - 관리자 상품 삭제(DELETE)
 	boolean deleteProduct(int productNo);
+	
+	// 추상 메소드 - 상품 총 갯수
+	// 1) 통합 조회시 상품의 총 갯수
+	int countTotalProduct(ProductListSearchVO productListSearchVO);
+	
+	// 2) 전체 조회시 상품의 총 갯수
+	int countAllProduct();
+	
+	// 3) 검색 조회시 상품의 총 갯수
+	int countSearchProduct(ProductListSearchVO productListSearchVO);
 }
