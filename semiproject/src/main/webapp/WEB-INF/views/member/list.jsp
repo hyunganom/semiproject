@@ -79,13 +79,16 @@
 					<td>${memberDto.memberGender}</td>
 					<td>${memberDto.memberGrade}</td>
 					<td>${memberDto.memberWithdrawal}</td>
-					<td><a href="detail?memberId=${memberDto.memberId}">상세</a></td>
+					<td>
+						<a href="detail?memberId=${memberDto.memberId}">상세</a>
+						<a href="change?memberId=${memberDto.memberId}">수정</a>
+					</td>
 				</tr>
 				</c:forEach>
 			</tbody>
 			<tfoot>
 				<tr>
-					<td colspan="6" align="right">
+					<td colspan="9" align="right">
 						총 ${list.size()}개의 결과
 					</td>
 				</tr>

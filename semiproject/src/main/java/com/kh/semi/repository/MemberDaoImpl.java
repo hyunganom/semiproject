@@ -110,4 +110,28 @@ public class MemberDaoImpl implements MemberDao{
 		return jdbcTemplate.query(sql, extractor, param);
 	}
 	
+	@Override
+	public boolean update(MemberDto memberDto) {
+		String sql = "update member set member_name = ?, member_email = ?, "
+				+ "member_tel = ?, member_post = ?, member_base_address = ?, "
+				+ "member_detail_address = ?, member_grade = ?, member_point = ? "
+				+ "where member_id = ?";
+		Object[] param = {
+				memberDto.getMemberName(), memberDto.getMemberEmail(), 
+				memberDto.getMemberTel(), memberDto.getMemberPost(), 
+				memberDto.getMemberBaseAddress(), memberDto.getMemberDetailAddress(), 
+				memberDto.getMemberGrade(), memberDto.getMemberPoint(), 
+				memberDto.getMemberId()
+		};
+		return jdbcTemplate.update(sql, param) > 0;
+	}
+	
+	@Override
+	public boolean changePassword(String memberId, String memberPw) {
+		String sql = "update member set member_pw = ? where member_id = ?";
+		Object[] param = {memberPw, memberId};
+		return jdbcTemplate.update(sql, param) > 0;
+	}
+	
+	
 }

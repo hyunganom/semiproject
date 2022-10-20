@@ -11,4 +11,6 @@ public interface MemberDao {
 	List<MemberDto> selectList(String type, String keyword);
 	MemberDto selectOne(String memberId);
 	
+	boolean update(MemberDto memberDto);
+	boolean changePassword(String memberId, String memberPw);
 }
