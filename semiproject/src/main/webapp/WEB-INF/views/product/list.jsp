@@ -26,10 +26,12 @@
 			<th>상품 재고</th>
 			<th>상품 별점</th>
 		</tr>
+		
 		<c:forEach var = "productList" items = "${productList}">
+		
 		<tr>
 			<td><!-- 이미지 다운 -->
-				<img width=50 height="50" src="/attachment/download?attachmentNo=${productList.productNo}">
+				<img width=50 height=50 src="/attachment/download?attachmentNo=${productList.productNo}">
 			</td>
 			<td>${productList.productNo}</td>
 			<td>${productList.categoryHighNo}</td>
@@ -45,6 +47,7 @@
 			<td><a href = "delete?productNo=${productList.productNo}">삭제</a></td>
 		</tr>
 		</c:forEach>
+		
 	</tbody>	
 </table>
 
