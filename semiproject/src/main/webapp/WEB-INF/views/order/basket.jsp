@@ -5,13 +5,6 @@
 	<jsp:param value="장바구니" name="title"/>
 </jsp:include>
 
-    <style>
-        .table.table-border > thead > tr > th{
-            border-left:none;
-            border-right:none;
-        }
-    </style>
-
     <div class="container-900 mt-50">
         <div class="row left">
             <h1>장바구니</h1>

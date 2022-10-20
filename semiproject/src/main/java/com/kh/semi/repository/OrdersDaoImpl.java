@@ -1,7 +1,10 @@
 package com.kh.semi.repository;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -13,39 +16,116 @@ public class OrdersDaoImpl implements OrdersDao{
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
+	//1. 주문 등록
 	@Override
 	public void insert(OrdersDto ordersDto) {
-		String sql = "insert into orders("
-				+ "order_no, order_id, order_name, order_post, order_base_address, "
-				+ "order_detail_address, order_tel, order_memo, order_date, order_status, "
-				+ "order_changedate, order_price, order_payprice"
-			+ ") values(orders_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "insert into orders(order_no, order_id, order_name,"
+				+ "order_post, order_base_address, order_detail_address, "
+				+ "order_tel, order_memo, order_date, order_status, "
+				+ "order_changedate, order_price, order_payprice) values("
+				+ "orders_seq.nextval, ?, ?, ?, ?,?,?,?,sysdate,?,sysdate,?,?)";
 		Object[] param = {
-				ordersDto.getOrderName(), ordersDto.getOrderPost(),
-				ordersDto.getOrderBaseAddress(), ordersDto.getOrderDetailAddress(), 
-				ordersDto.getOrderTel(), 	ordersDto.getOrderMemo()
+				ordersDto.getOrderId(),	ordersDto.getOrderName(),
+				ordersDto.getOrderPost(), ordersDto.getOrderBaseAddress(),
+				ordersDto.getOrderDetailAddress(), ordersDto.getOrderTel(),
+				ordersDto.getOrderMemo(), ordersDto.getOrderStatus(), 
+				ordersDto.getOrderPrice(), ordersDto.getOrderPayPrice()
 		};
 		jdbcTemplate.update(sql, param);
 	}
+
+	//2. 주문 수정
+	//2-1. 배송지 정보를 변경
+	//(일단 수취인 이름, 우편번호, 기본주소, 상세주소, 휴대폰, 배송요청사항)
+	@Override
+	public boolean updateInfo(OrdersDto ordersDto) {
+		String sql = "update orders set order_name=?, order_post=?,"
+				+ "order_base_address=?, order_detail_address=?, "
+				+ "order_tel=?, order_memo=? where order_no=?";
+		Object[] param = {
+				ordersDto.getOrderName(),
+				ordersDto.getOrderPost(),
+				ordersDto.getOrderBaseAddress(),
+				ordersDto.getOrderDetailAddress(),
+				ordersDto.getOrderTel(),
+				ordersDto.getOrderMemo(), ordersDto.getOrderNo()};
+		return jdbcTemplate.update(sql, param)>0;
+	}
+
+	//2-2. 주문상태, 주문상태변경일을 변경
+	@Override
+	public boolean updateStatus(String orderStatus, int orderNo) {
+		String sql = "update orders set order_status=?, order_changedate=sysdate "
+				+ "where order_no=?";
+		Object[] param = {orderStatus, orderNo};
+		return jdbcTemplate.update(sql, param)>0;
+	}
 	
-	private RowMapper<OrdersDto> mapper = new RowMapper<OrdersDto>() {
-		
-		public OrdersDto mapRow(java.sql.ResultSet rs, int rowNum) throws java.sql.SQLException {
+	//mapper 생성
+	private RowMapper<OrdersDto> mapper = (rs, idx) ->{
+		OrdersDto ordersDto = new OrdersDto();
+		ordersDto.setOrderNo(rs.getInt("order_no"));
+		ordersDto.setOrderId(rs.getString("order_id"));
+		ordersDto.setOrderName(rs.getString("order_name"));
+		ordersDto.setOrderPost(rs.getString("order_post"));
+		ordersDto.setOrderBaseAddress(rs.getString("order_base_address"));
+		ordersDto.setOrderDetailAddress(rs.getString("order_detail_address"));
+		ordersDto.setOrderTel(rs.getString("order_tel"));
+		ordersDto.setOrderMemo(rs.getString("order_memo"));
+		ordersDto.setOrderDate(rs.getDate("order_date"));
+		ordersDto.setOrderStatus(rs.getString("order_status"));
+		ordersDto.setOrderChangeDate(rs.getDate("order_changedate"));
+		ordersDto.setOrderPrice(rs.getInt("order_price"));
+		ordersDto.setOrderPayPrice(rs.getInt("order_payprice"));
+		return ordersDto;
+	};
+	
+	//extractor 생성
+	private ResultSetExtractor<OrdersDto> extractor = (rs) ->{
+		if(rs.next()) {
 			OrdersDto ordersDto = new OrdersDto();
 			ordersDto.setOrderNo(rs.getInt("order_no"));
 			ordersDto.setOrderId(rs.getString("order_id"));
 			ordersDto.setOrderName(rs.getString("order_name"));
 			ordersDto.setOrderPost(rs.getString("order_post"));
 			ordersDto.setOrderBaseAddress(rs.getString("order_base_address"));
-			ordersDto.setOrderDetailAddress(rs.getString("oders_detailaddress"));
-			ordersDto.setOrderMemo(rs.getString("order_meno"));
+			ordersDto.setOrderDetailAddress(rs.getString("order_detail_address"));
+			ordersDto.setOrderTel(rs.getString("order_tel"));
+			ordersDto.setOrderMemo(rs.getString("order_memo"));
 			ordersDto.setOrderDate(rs.getDate("order_date"));
 			ordersDto.setOrderStatus(rs.getString("order_status"));
 			ordersDto.setOrderChangeDate(rs.getDate("order_changedate"));
 			ordersDto.setOrderPrice(rs.getInt("order_price"));
-			ordersDto.setOrderPayPrice(rs.getInt("order_pay_price"));
-			return ordersDto;			
+			ordersDto.setOrderPayPrice(rs.getInt("order_payprice"));
+			return ordersDto;
+		}else {
+			return null;
 		}
 	};
+	
+
+	//3. 주문 조회
+	//3-1. 전체 주문내역 조회
+	@Override
+	public List<OrdersDto> selectList() {
+		String sql = "select * from orders order by order_no asc";
+		return jdbcTemplate.query(sql, mapper);
+	}
+	
+	//3-2. 주문번호로 검색 후 해당건 조회
+	@Override
+	public OrdersDto selectOne(int orderNo) {
+		String sql = "select * from orders where order_no=?";
+		Object[] param= {orderNo};
+		return jdbcTemplate.query(sql, extractor, param);
+	}
+
+	//4. 주문 삭제(주문번호로 검색 후 해당 주문건 삭제)
+	@Override
+	public boolean delete(int orderNo) {
+		String sql = "delete orders where order_no=?";
+		Object[] param = {orderNo};
+		return jdbcTemplate.update(sql, param)>0;
+	}
 
 }
