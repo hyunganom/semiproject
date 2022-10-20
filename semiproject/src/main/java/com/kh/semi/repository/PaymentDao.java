@@ -16,7 +16,14 @@ public interface PaymentDao {
 	//3. 조회
 	List<PaymentDto> selectList();
 	
-	//4. 삭제(상품번호로 조회 후 삭제)
+	//3-1 조회(주문번호로 조회)
+	PaymentDto selectOne(int orderNo);
+	
+	//4. 삭제(주문번호로 조회 후 삭제)
 	// 나중에 넘어오는 값 확인 후 매개변수 수정 예정
-	boolean delete(int payment_product_no);
+	boolean delete(int orderNo); 
+	
+	//4-1. 삭제(주문번호와 상품번호로 조회 후 삭제)
+	// 나중에 넘어오는 값 확인 후 매개변수 수정 예정 
+	boolean delete(int orderNo, int productNo);
 }

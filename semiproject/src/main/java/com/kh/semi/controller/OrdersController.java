@@ -16,7 +16,7 @@ import com.kh.semi.repository.OrdersDao;
 @Controller
 @RequestMapping("/order")
 public class OrdersController {
-	
+
 	private OrdersDao ordersDao;
 	
 	@GetMapping("/insert")

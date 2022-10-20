@@ -22,4 +22,8 @@ public class ProductDto {
 	private String productInformation; // 상품 정보
 	private int productInventory; // 상품 재고
 	private int productGood; // 상품 별점 
+	
+	// 상품 비활성화를 위한 필드
+	// - getter 메소드가 isProductInactive() 형태
+	private boolean productInactive; // 상품 비활성화 여부 -> true일 때 char로 변환
 }
