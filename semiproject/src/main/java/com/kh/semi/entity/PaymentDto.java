@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class PaymentDto {
 	private int paymentNo;
-	private String paymentOrderNo;
+	private int paymentOrderNo;
 	private int paymentProductNo;
 	private int paymentCount, paymentPrice;
 	private String paymentOption;

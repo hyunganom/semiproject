@@ -39,4 +39,5 @@ public interface ProductDao {
 	void updateProductRegistTime(int productNo);
 	
 	// 추상 메소드 - 관리자 상품 삭제(비활성화)
+	boolean deleteProduct(int productNo, boolean isProductInactive);
 }
