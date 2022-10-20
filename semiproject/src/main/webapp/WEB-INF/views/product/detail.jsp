@@ -13,6 +13,10 @@
 <table>
 <tbody>
 	<tr>
+		<th>상품 이미지</th>
+		<td></td>
+	</tr>
+	<tr>
 		<th>상품 번호</th>
 		<td>${productDto.productNo}</td>
 	</tr>
@@ -46,7 +50,15 @@
 	</tr>
 	<tr>
 		<th>상품 등록일</th>
-		<td>??</td>
+		<td>${productDto.productRegisttime}</td>
+	</tr>
+	<tr>
+		<th>상품 수정일</th>
+		<td>${productDto.productUpdatetime}</td>
+	</tr>
+	<tr>
+		<th>상품 상태</th>
+		<td>${productDto.productInactive}</td>
 	</tr>
 	<tr>
 		<th>상품이미지</th>
@@ -61,6 +73,7 @@
 	<tr>
 		<th><a href = "/product/edit?productNo=${productDto.productNo}">수정</a></th>
 		<th><a href = "/product/delete?productNo=${productDto.productNo}">삭제</a></th>
+		<th><a href = "/product/list">목록</a></th>
 	</tr>
 </tfoot>
 </table>

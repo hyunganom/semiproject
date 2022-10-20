@@ -2,9 +2,8 @@
     pageEncoding="UTF-8"%>
     
 <jsp:include page="/WEB-INF/views/template/header.jsp">
-	<jsp:param value="마이페이지" name="title"/>
+	<jsp:param value="장바구니" name="title"/>
 </jsp:include>
-
 
     <div class="container-900 mt-50">
         <div class="row left">
@@ -18,7 +17,7 @@
                         <th class="w-5">
                             <input type="checkbox">
                         </th>
-                        <th class="w-50">상품 정보</th>
+                        <th class="w-50 sideline">상품 정보</th>
                         <th class="w-15">수량</th>
                         <th class="w-15">주문금액</th>
                         <th class="w-15">배송비</th>
@@ -50,6 +49,20 @@
                 </tfoot>
             </table>
             
+            <table>
+            	<tbody>
+            		<tr>
+            			<td>총 주문 상품<span>(개수)</span>개</td>
+            		</tr>
+            		<tr>
+            			
+            		</tr>
+            	</tbody>
+            </table>
+            
+            <div class="row center">
+            	<a href="order/order_ck" class="btn btn-positive">주문하기</a>
+            </div>
             
         </div>
     </div>
