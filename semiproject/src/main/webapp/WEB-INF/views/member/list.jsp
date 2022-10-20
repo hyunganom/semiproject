@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -64,6 +65,7 @@
 					<th>성별</th>
 					<th>등급</th>
 					<th>회원탈퇴여부</th>
+					<th>메뉴</th>
 				</tr>
 			</thead>
 			<tbody align="center">
@@ -77,12 +79,16 @@
 					<td>${memberDto.memberGender}</td>
 					<td>${memberDto.memberGrade}</td>
 					<td>${memberDto.memberWithdrawal}</td>
+					<td>
+						<a href="detail?memberId=${memberDto.memberId}">상세</a>
+						<a href="change?memberId=${memberDto.memberId}">수정</a>
+					</td>
 				</tr>
 				</c:forEach>
 			</tbody>
 			<tfoot>
 				<tr>
-					<td colspan="6" align="right">
+					<td colspan="9" align="right">
 						총 ${list.size()}개의 결과
 					</td>
 				</tr>

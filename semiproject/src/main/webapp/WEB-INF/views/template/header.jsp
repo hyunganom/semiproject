@@ -23,10 +23,10 @@
 	</title>
 	
 	<%-- static의 CSS 적용 --%>
-	<link rel = "stylesheet" type = "text/css" href = "./css/reset.css">
-    <link rel = "stylesheet" type = "text/css" href = "./css/commons.css">
-    <link rel = "stylesheet" type = "text/css" href = "./css/layout.css">
-    <!-- <link rel = "stylesheet" type = "text/css" href = "./css/test.css"> -->
+	<link rel = "stylesheet" type = "text/css" href = "/css/reset.css">
+    <link rel = "stylesheet" type = "text/css" href = "/css/commons.css">
+    <link rel = "stylesheet" type = "text/css" href = "/css/layout.css">
+    <!-- <link rel = "stylesheet" type = "text/css" href = "/css/test.css"> -->
     
     <%-- Font Awesome CDN --%>
     <link rel="stylesheet" type = "text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -50,12 +50,12 @@
 
 	<div class = "row">
 	<%-- 필요한 하이퍼링크 작성(절대경로로) --%>
+	<a href = "/mypage/order_list">마이페이지</a>
 	<a href = "">주문</a>
-	<a href = "">회원 목록</a>
-	<a href = "/product/list">상품 목록</a>
-	
+	<a href = "/member/list">회원 목록</a>
+	<a href = "/product/list">상품 목록</a> 
+
 	</div>
 
-</div>
-
 <hr>
+
