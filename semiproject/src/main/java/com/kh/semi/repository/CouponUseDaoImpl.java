@@ -30,8 +30,8 @@ public class CouponUseDaoImpl implements CouponUseDao {
 	//쿠폰 사용내역 추가
 	@Override
 	public void insert(CouponUseDto couponUseDto) {
-		String sql = "insert into coupon_use(coupon_use_no, coupon_use_order_no )"
-								+"(coupon_origin_no, coupon_use_id, coupon_use_date "
+		String sql = "insert into coupon_use(coupon_use_no, coupon_use_order_no, "
+								+"coupon_origin_no, coupon_use_id, coupon_use_date) "
 							+ "values(coupon_use_seq.nextval, ?, ?, ?, sysdate)";
 		Object []param = {
 				couponUseDto.getCouponUseNo(),
