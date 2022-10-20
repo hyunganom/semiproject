@@ -5,6 +5,7 @@
 	<jsp:param value="주문서 작성" name="title"/>
 	</jsp:include>
 	
-	<h1>주문서 작성</h1>
+	
+	<h1>주문하기</h1>
     
     <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
