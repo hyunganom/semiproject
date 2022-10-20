@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>메인 홈페이지</title>
-</head>
-<body>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%-- header.jsp 불러오기 --%>
+<jsp:include page="/WEB-INF/views/template/header.jsp">
+	<jsp:param value="메인페이지" name="title"/>
+</jsp:include>
+
 	<h1>샐러드</h1>
 	
 	<h2>loginId = ${sessionScope.loginId}</h2>
@@ -24,5 +24,5 @@
 		</c:otherwise>
 	</c:choose>
 	
-</body>
-</html>
+<%-- footer.jsp 불러오기 --%>
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
