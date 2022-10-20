@@ -94,15 +94,17 @@ public class PaymentDaoImpl implements PaymentDao{
 	@Override
 	public boolean delete(int orderNo) {
 		String sql = "delete payment where payment_order_no=?";
-		return false;
+		Object[] param = {orderNo};
+		return jdbcTemplate.update(sql, param)>0;
 	}
 	
 	//4-1. 삭제(주문번호와 상품번호로 조회 후 삭제)
 	// 나중에 넘어오는 값 확인 후 매개변수 수정 예정 
 	@Override
 	public boolean delete(int orderNo, int productNo) {
-		// TODO Auto-generated method stub
-		return false;
+		String sql = "delete payment where payment_order_no=? and payment_product_no=?";
+		Object[] param = {orderNo, productNo};
+		return jdbcTemplate.update(sql, param)>0;
 	}
 
 }
