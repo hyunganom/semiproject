@@ -55,7 +55,10 @@ public class CouponDaoImpl implements CouponDao{
 					+ "coupon_issue=? "
 						+"where coupon_no=?";
 		Object[] param = {
-					couponDto.getCouponId()
+					couponDto.getCouponId(),
+					couponDto.getCouponYn(),
+					couponDto.getCouponIssue(),
+					couponDto.getCouponNo()
 					};
 		return jdbcTemplate.update(sql, param) < 0;
 	}
@@ -68,7 +71,7 @@ public class CouponDaoImpl implements CouponDao{
 		return jdbcTemplate.query(sql, mapper,param);
 	}
 	
-	//쿠폰 삭제(매개변수 : 쿠폰번호)
+	//쿠폰 삭제
 	@Override
 	public boolean delete(int couponNo) {
 		String sql = "delete coupon where coupon_no=?";
