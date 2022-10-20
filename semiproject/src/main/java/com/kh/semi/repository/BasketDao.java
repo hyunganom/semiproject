@@ -16,6 +16,7 @@ public interface BasketDao {
 	List<BasketDto> selectList(String basketId);
 	
 	//4. 삭제(상품번호로 삭제)
+	// 나중에 넘어오는 값 확인 후 매개변수 수정 예정
 	boolean delete(int basketProductNo);
 
 	
