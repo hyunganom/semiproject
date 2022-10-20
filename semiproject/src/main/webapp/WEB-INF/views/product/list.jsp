@@ -13,6 +13,8 @@
 
 <div align = "center">
 
+<h3>${productListSearchVO.toString()}</h3>
+
 <table border = "1" width = "1000" >
 	<tbody>
 		<tr align = "right">
@@ -64,6 +66,55 @@
 		</tr>
 	</tbody>	
 </table>
+
+<%-- 페이지 이동 --%>
+<div class = "row">
+	<%-- 첫 페이지인지 판정 --%>
+	<c:choose>
+		<c:when test = "${productListSearchVO.isFirst()}"> <%-- 첫 페이지라면 --%>
+			<a href = "">&laquo;</a>  <%-- 현재 주소 유지 --%>
+		</c:when>
+		<c:otherwise> <%-- 그렇지 않다면(첫 페이지가 아니라면) --%>
+			<a href = "list?pageNow=${productListSearchVO.blockFirst()}">&laquo;</a> <%-- 첫 페이지로 이동 --%>
+		</c:otherwise>
+	</c:choose>
+	
+	<%-- 이전 페이지의 존재 여부 판정 --%>
+	<c:choose>
+		<c:when test = "${productListSearchVO.hasPrev()}"> <%-- 이전 페이지가 존재한다면 --%>
+			<a href = "list?pageNow=${productListSearchVO.blockPrev()}">&lt;</a> <%-- 이전 페이지로 이동 --%>
+		</c:when>
+		<c:otherwise> <%-- 그렇지 않다면(이전 페이지가 존재하지 않는다면) --%>
+			<a href = "#">&lt;</a> <%-- 현재 주소 유지 --%>
+		</c:otherwise>
+	</c:choose>
+	
+	<%-- 페이지 블럭 표시 --%>
+	<c:forEach var = "i" begin = "${productListSearchVO.blockStart()}" end = "${productListSearchVO.blockEnd()}" step = "1">
+		<a href = "list?pageNow=${i}">${i}</a>
+	</c:forEach>
+	
+	<%-- 다음 페이지의 존재 여부 판정 --%>
+	<c:choose>
+		<c:when test = "${productListSearchVO.hasNext()}"> <%-- 다음 페이지가 존재한다면 --%>
+			<a href = "list?pageNow=${productListSearchVO.blockNext()}">&gt;</a> <%-- 다음 페이지로 이동 --%>
+		</c:when>
+		<c:otherwise> <%-- 그렇지 않다면(다음 페이지가 존재하지 않는다면) --%>
+			<a href = "">&gt;</a> <%-- 현재 주소 유지 --%>
+		</c:otherwise>
+	</c:choose>
+	
+	<%-- 마지막 페이지인지 판정 --%>
+	<c:choose>
+		<c:when test = "${productListSearchVO.isLast()}"> <%-- 마지막 페이지라면 --%>
+			<a href = "#">&raquo;</a> <%-- 현재 주소 유지 --%>
+		</c:when>
+		<c:otherwise>
+			<a href = "list?pageNow=${productListSearchVO.blockLast()}">&raquo;</a>
+		</c:otherwise>
+	</c:choose>
+</div>
+
 
 <form action = "list" method = "get">
 	<%-- 일단 상품명 조회만 추가했으며 차후 테이블 조인을 통해 카테고리 이름으로도 조회가 가능하도록 바꿀 예정 --%>

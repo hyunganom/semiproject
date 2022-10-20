@@ -85,18 +85,18 @@ public class ProductController {
 	
 	// 3) 상품 목록 Mapping
 	@GetMapping("/list")
-	public String selectList(Model model, @ModelAttribute ProductListSearchVO productListSearchVO
-			) {
+	public String selectList(Model model, @ModelAttribute ProductListSearchVO productListSearchVO) {
 		
-		// 검색 조회인지 전체 조회인지 판정 - 검색 조회이면 true, 전체 조회이면 false를 반환
-		if(productListSearchVO.isSearch()) { // 검색 조회라면
-			// ProductListSearchVO의 type과 keyword를 매개변수로 검색 조회 실행 결과를 model에 첨부
-			model.addAttribute("productList", productDao.searchListProduct(productListSearchVO.getType(), productListSearchVO.getKeyword()));
-		}
-		else { // 검색 조회가 아니라면(전체 조회라면)
-			// 전체 조회 실행 결과를 model에 첨부
-			model.addAttribute("productList", productDao.allListProduct());
-		}
+		// View에서 입력받은 ProductListSearchVO를 매개변수로 조회 결과에 따른 상품의 총 수 반환
+		// - 검색 조회일 경우 검색 조회의 결과에 대한 count(*)의 값 반환
+		// - 전체 조회일 경우 전체 조회의 결과에 대한 count(*)의 값 반환
+		int countTotalProduct = productDao.countTotalProduct(productListSearchVO);
+		
+		// 반환한 상품의 총 수를 다시 ProductListSearchVO의 등록된 상품의 총 수(countTotalProduct) 필드의 값으로 설정
+		productListSearchVO.setCountTotalProduct(countTotalProduct);
+		
+		// 설정된 ProductListSearchVO로 통합 조회를 실행한 후 그 결과를 Model에 첨부
+		model.addAttribute("productList", productDao.selectListProduct(productListSearchVO));
 		
 		// 상품 수정 페이지(list.jsp)로 연결
 		return "product/list";
