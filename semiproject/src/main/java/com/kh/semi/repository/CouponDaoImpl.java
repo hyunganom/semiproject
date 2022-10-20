@@ -32,8 +32,8 @@ public class CouponDaoImpl implements CouponDao{
 	@Override
 	public void insert(CouponDto couponDto) {
 		String sql = "insert into coupon "
-					+ "coupon_no, coupon_id, coupon_startdate, "
-					+ "coupon_enddate, coupon_yn, coupon_issue"
+					+ "(coupon_no, coupon_id, coupon_startdate, "
+					+ "coupon_enddate, coupon_yn, coupon_issue) "
 						+ "values (?, ?, sysdate, ?, coupon_seq.nextval)";
 		Object[] param = {
 					couponDto.getCouponId(),
