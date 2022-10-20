@@ -15,7 +15,6 @@
 	
 	<c:choose>
 		<c:when test="${login}">
-			<h2><a href="member/list">회원 목록</a></h2>
 			<h2><a href="member/logout">회원 로그아웃</a></h2>
 		</c:when>
 		<c:otherwise>
