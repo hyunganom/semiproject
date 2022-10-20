@@ -1,5 +1,7 @@
 package com.kh.semi.repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.kh.semi.entity.AttachmentDto;
+import com.kh.semi.vo.ProductAttachmentVO;
 
 
 //첨부파일 조회 등록 기능
@@ -108,8 +111,36 @@ public class AttachmentDaoImpl implements AttachmentDao{
 		return jdbcTemplate.query(sql, productMapper, param);
 	}
 
-
 	
+
+//	@Override
+//	public List<ProductAttachmentVO> selectProductAttachmentList(int productOriginNo) {
+//		String sql = "select*from product_attachment_view where product_origin_no=?";
+//		Object[] param = {productOriginNo};
+//		return jdbcTemplate.query(sql, mapperVO, param);
+//	}
+	
+////	@Override
+////	public List<AttachmentDto> selectBoardAttachmentList2(int boardNo) {
+////		String sql = "select*from product_attachment_view where product_origin_no=?";
+////		Object[] param = {boardNo};
+////		return jdbcTemplate.query(sql, mapper, param);
+////	}
+//	
+//	private RowMapper<ProductAttachmentVO> mapperVO = new RowMapper<>() {
+//		@Override
+//		public ProductAttachmentVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+//			return ProductAttachmentVO.builder()
+//						.attachmentNo(rs.getInt("attachment_no"))
+//						.attachmentName(rs.getString("attachment_name"))
+//						.attachmentType(rs.getString("attachment_type"))
+//						.attachmentSize(rs.getLong("attachment_size"))
+//						.attachmentTime(rs.getDate("attachment_time"))
+//						.productOriginNo(rs.getInt("product_origin_no"))
+//						.productAttachmentNo(rs.getInt("product_attachment_no"))
+//					.build();
+//		}
+//	};
 	
 	
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +10,6 @@
 <body>
 
 <div align = "center">
-
 <table>
 <tbody>
 	<tr>
@@ -47,6 +47,14 @@
 	<tr>
 		<th>상품 등록일</th>
 		<td>??</td>
+	</tr>
+	<tr>
+		<th>상품이미지</th>
+		<td>
+			<c:forEach var="attachmentDto" items="${attachmentDto}">
+			<img width=50 height=50 src="/attachment/download?attachmentNo=${attachmentDto.attachmentNo}">
+			</c:forEach>
+		</td>
 	</tr>
 </tbody>
 <tfoot>

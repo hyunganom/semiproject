@@ -55,6 +55,7 @@ public class ProductController {
 		
 		// 관리자 상품 등록(INSERT)을 위한 다음 시퀀스 번호 반환
 		int productNo = productDao.nextSequence();
+		int attatchmentNo = attachmentDao.sequence();
 		// View에서 입력받은 productDto로 DB 처리 - 관리자 상품 등록(INSERT)
 		productDao.insertProduct(productDto);
 		
@@ -64,18 +65,18 @@ public class ProductController {
 		
 		//DB등록
 		attachmentDao.insert(AttachmentDto.builder()
-				.attachmentNo(productNo+1)
+				.attachmentNo(attatchmentNo)
 				.attachmentName(attachment.getOriginalFilename())
 				.attachmentType(attachment.getContentType())
 				.attachmentSize(attachment.getSize())
 			.build());
 		
 		//파일저장
-		File target = new File(directory, String.valueOf(productNo+1));
+		File target = new File(directory, String.valueOf(attatchmentNo));
 		System.out.println(target.getAbsolutePath());
 		attachment.transferTo(target);
 		//product_attachment 연결테이블 정보 저장
-		attachmentDao.productConnectAttachment(productNo+1, productNo+1);
+		attachmentDao.productConnectAttachment(productNo+1, attatchmentNo);
 		
 		
 		// 관리자 상품 등록(INSERT) 처리 후 해당 상품 페이지로 강제 이동(redirect)
@@ -108,6 +109,9 @@ public class ProductController {
 		
 		// 하이퍼링크로 받은 productNo로 상세 조회 실행 후 그 결과를 Model에 첨부
 		model.addAttribute("productDto", productDao.selectOneProduct(productNo));
+		
+		// 첨부파일 뷰테이블 조회
+		model.addAttribute("attachmentDto",attachmentDao.selectProductAttachmentList(productNo));
 		
 		// 상품 상세 페이지(detail.jsp)로 연결
 		return "product/detail";
