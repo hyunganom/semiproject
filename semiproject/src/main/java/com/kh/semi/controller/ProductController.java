@@ -40,6 +40,9 @@ public class ProductController {
 	@GetMapping("/insert")
 	public String insert(Model model) {
 		
+		// 상위 카테고리 항목을 조회하여 Model에 첨부
+		model.addAttribute("categoryHighList", productDao.selectCategoryHighList());
+		
 		// 상품 등록 페이지(insert.jsp) 연결
 		return "product/insert";
 	}
