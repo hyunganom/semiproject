@@ -12,8 +12,8 @@ inquire_no number primary key,
 inquire_id varchar2(20) references member(member_id) on delete set null,
 inquire_title varchar2(300) not null,
 inquire_content varchar2(4000) not null,
-inquire_writedate date default sysdate,
-inquire_updatedate date
+inquire_writetime date default sysdate,
+inquire_updatetime date
 );
 
 -- 테이블 삭제
@@ -24,3 +24,13 @@ create sequence inquire_seq;
 
 -- 시퀀스 삭제
 drop sequence inquire_seq;
+
+-- 시퀀스 번호 발급
+select inquire_seq.nextval from dual;
+
+-- 문의글 등록
+insert into inquire(inquire_no, inquire_id, inquire_title, inquire_content) values(inquire_seq.nextval, 'hello111', '바꿔주세요', '바꿔줘');
+insert into inquire(inquire_no, inquire_id, inquire_title, inquire_content) values(?, ?, ?, ?);
+
+-- 문의글 조회(최신순)
+select * from inquire order by inquire_no desc;
