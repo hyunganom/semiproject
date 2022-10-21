@@ -88,7 +88,7 @@ public class ProductController {
 		return "redirect:detail";
 	}
 	
-	// 3) 상품 목록 Mapping
+	// 2. 상품 목록 Mapping
 	@GetMapping("/list")
 	public String selectList(Model model, @ModelAttribute ProductListSearchVO productListSearchVO) {
 		
@@ -108,7 +108,7 @@ public class ProductController {
 	}
 	
 	
-	// 2. 상품 상세 Mapping
+	// 3. 상품 상세 Mapping
 	@GetMapping("/detail")
 	public String detail(Model model, @RequestParam int productNo) {
 		
@@ -122,7 +122,7 @@ public class ProductController {
 		return "product/detail";
 	}
 	
-	// 3. 상품 수정 Mapping
+	// 4. 상품 수정 Mapping
 	// 1) 상품 수정 페이지로 연결
 	@GetMapping("/edit")
 	public String edit(Model model, @RequestParam int productNo) {
@@ -163,7 +163,7 @@ public class ProductController {
 		}
 	}
 	
-	// 3. 상품 삭제(비활성화) Mapping
+	// 5. 상품 삭제(비활성화) Mapping
 	@GetMapping("/delete")
 	public String delete(@RequestParam int productNo) {
 		
@@ -177,7 +177,7 @@ public class ProductController {
 		return "redirect:list";
 	}
 	
-	// 4. 상품 삭제(DELETE) Mapping (더미데이터 삭제용)
+	// 6. 상품 삭제(DELETE) Mapping (더미데이터 삭제용)
 	@GetMapping("/deleteAdmin")
 	public String deleteAdmin(@RequestParam int productNo) {
 		
