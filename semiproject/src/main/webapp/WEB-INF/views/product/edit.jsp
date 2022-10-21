@@ -1,12 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>상품 수정 페이지</title>
-</head>
-<body>
+
+<jsp:include page="/WEB-INF/views/template/header.jsp">
+	<jsp:param value="상품 수정 페이지" name="title"/>
+</jsp:include>
 
 <div>
 
@@ -44,5 +41,4 @@
 
 </div>
 
-</body>
-</html>
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

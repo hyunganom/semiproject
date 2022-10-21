@@ -40,6 +40,9 @@ public class ProductController {
 	@GetMapping("/insert")
 	public String insert(Model model) {
 		
+		// 상위 카테고리 항목을 조회하여 Model에 첨부
+		model.addAttribute("categoryHighList", productDao.selectCategoryHighList());
+		
 		// 상품 등록 페이지(insert.jsp) 연결
 		return "product/insert";
 	}
@@ -74,7 +77,7 @@ public class ProductController {
 		
 		//파일저장
 		File target = new File(directory, String.valueOf(attatchmentNo));
-		directory.mkdir();//폴더 생성 명령
+		directory.mkdirs();//폴더 생성 명령
 		attachment.transferTo(target);
 		//product_attachment 연결테이블 정보 저장
 		attachmentDao.productConnectAttachment(productNo, attatchmentNo);

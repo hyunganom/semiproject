@@ -3,17 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>상품 목록</title>
-</head>
-<body>
+<jsp:include page="/WEB-INF/views/template/header.jsp">
+	<jsp:param value="상품 목록 페이지" name="title"/>
+</jsp:include>
 
 <div align = "center">
-
-<h3>${productListSearchVO.toString()}</h3>
 
 <%-- 검색창 --%>
 <form action = "list" method = "get">
@@ -123,5 +117,4 @@
 
 </div>
 
-</body>
-</html>
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
