@@ -7,6 +7,9 @@ import com.kh.semi.entity.PaymentDto;
 public interface PaymentDao {
 	//결제(&통계)
 	
+	//주문번호 불러오기
+	int sequence();
+	
 	//1. 등록(추가)
 	void insert(PaymentDto paymentDto);
 	

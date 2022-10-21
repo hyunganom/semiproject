@@ -3,13 +3,13 @@
     
 <%-- header.jsp 불러오기 --%>
 <jsp:include page="/WEB-INF/views/template/header.jsp">
-	<jsp:param value="회원정보 변경 실패" name="title"/>
+	<jsp:param value="회원 탈퇴 완료" name="title"/>
 </jsp:include>
 
-	<div align="center">
-		<h1>존재하지 않는 회원입니다.</h1>
-		<h2><a href="list">목록 보기</a></h2>
-	</div>
-	
+<h1>탈퇴가 완료되었습니다.</h1>
+
+<h2><a href="/">메인페이지</a></h2>
+<h2><a href="https://www.google.com">Google</a></h2>
+
 <%-- footer.jsp 불러오기 --%>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

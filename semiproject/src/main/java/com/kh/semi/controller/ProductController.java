@@ -2,6 +2,7 @@ package com.kh.semi.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,8 +33,9 @@ public class ProductController {
 	@Autowired
 	private AttachmentDao attachmentDao;
 	
-	//첨부파일 업로드 다운로드 경로
-	private final File directory = new File("D:\\saluv\\product");
+	//첨부파일 업로드 경로
+	private final File tumbnailDirectory = new File("D:\\saluv\\productTumbnail");
+	private final File detailDirectory = new File("D:\\saluv\\productDeatail");
 	
 	// 1. 상품 등록 Mapping
 	// 1) 상품 등록 페이지로 연결
@@ -50,7 +52,8 @@ public class ProductController {
 	// 2) 상품 등록 처리
 	@PostMapping("/insert")
 	public String insert(@ModelAttribute ProductDto productDto,
-			MultipartFile attachment,
+			@RequestParam List<MultipartFile> attachment,
+			@RequestParam List<MultipartFile> attachment1,
 			RedirectAttributes attr) throws IllegalStateException, IOException {
 		
 		// 관리자 상품 등록(INSERT)을 위한 다음 시퀀스 번호 반환
@@ -63,25 +66,50 @@ public class ProductController {
 		productDao.insertProduct(productDto);
 		
 		
-		//첨부파일 DB연결
-		//첨부파일 시퀀스 발급
-		int attatchmentNo = attachmentDao.sequence();
 		
-		//DB등록
-		attachmentDao.insert(AttachmentDto.builder()
-				.attachmentNo(attatchmentNo)
-				.attachmentName(attachment.getOriginalFilename())
-				.attachmentType(attachment.getContentType())
-				.attachmentSize(attachment.getSize())
-			.build());
+		//첨부파일 썸네일 이미지 등록
+		for(MultipartFile file : attachment) {
+			if(!file.isEmpty()) {
+			//1)첨부파일 시퀀스 발급
+			int attatchmentNo = attachmentDao.sequence();
+			//첨부 DB등록
+			attachmentDao.insert(AttachmentDto.builder()
+					.attachmentNo(attatchmentNo)
+					.attachmentName(file.getOriginalFilename())
+					.attachmentType(file.getContentType())
+					.attachmentSize(file.getSize())
+				.build());
+			
+			//2)파일저장
+			File target = new File(tumbnailDirectory, String.valueOf(attatchmentNo));
+			tumbnailDirectory.mkdirs();//3)폴더 생성 명령
+			file.transferTo(target);
+			//4)product_attachment 연결테이블 정보 저장
+			attachmentDao.productConnectAttachment(productNo, attatchmentNo);
+			}
+		}
 		
-		//파일저장
-		File target = new File(directory, String.valueOf(attatchmentNo));
-		directory.mkdirs();//폴더 생성 명령
-		attachment.transferTo(target);
-		//product_attachment 연결테이블 정보 저장
-		attachmentDao.productConnectAttachment(productNo, attatchmentNo);
-		
+		//상품설명이미지 등록
+		for(MultipartFile file : attachment1) {
+			if(!file.isEmpty()) {
+			//첨부파일 시퀀스 발급
+			int attatchmentNo = attachmentDao.sequence();
+			//첨부 DB등록
+			attachmentDao.insert(AttachmentDto.builder()
+					.attachmentNo(attatchmentNo)
+					.attachmentName(file.getOriginalFilename())
+					.attachmentType(file.getContentType())
+					.attachmentSize(file.getSize())
+				.build());
+			
+			//파일저장
+			File target = new File(detailDirectory, String.valueOf(attatchmentNo));
+			detailDirectory.mkdirs();//폴더 생성 명령
+			file.transferTo(target);
+			//product_explaim 연결테이블 정보 저장
+			attachmentDao.explainConnectAttachment(productNo, attatchmentNo);
+			}
+		}
 		
 		// 관리자 상품 등록(INSERT) 처리 후 해당 상품 페이지로 강제 이동(redirect)
 		attr.addAttribute("productNo", productNo);
@@ -115,8 +143,11 @@ public class ProductController {
 		// 하이퍼링크로 받은 productNo로 상세 조회 실행 후 그 결과를 Model에 첨부
 		model.addAttribute("productDto", productDao.selectOneProduct(productNo));
 		
-		// 첨부파일 뷰테이블 조회
-		model.addAttribute("attachmentDto",attachmentDao.selectProductAttachmentList(productNo));
+		//상품썸네일 이미지 뷰테이블 조회
+		model.addAttribute("productTumbnailList",attachmentDao.selectProductAttachmentList(productNo));
+		
+		//상품썸네일 이미지 뷰테이블 조회
+		model.addAttribute("productDetailList",attachmentDao.selectProductExplainList(productNo));
 		
 		// 상품 상세 페이지(detail.jsp)로 연결
 		return "product/detail";
