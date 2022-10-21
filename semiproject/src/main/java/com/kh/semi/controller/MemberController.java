@@ -135,13 +135,5 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
-	@GetMapping("/mypage")
-	public String mypage(HttpSession session, Model model) {
-		String loginId = (String) session.getAttribute("loginId");
-		MemberDto memberDto = memberDao.selectOne(loginId);
-		model.addAttribute("memberDto", memberDto);
-		return "member/detail";
-	}
-	
 	
 }

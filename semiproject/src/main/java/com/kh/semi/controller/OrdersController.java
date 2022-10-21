@@ -29,7 +29,7 @@ public class OrdersController {
 	public String basket() {
 		//회원아이디로 조회 후 해당 장바구니 테이블에
 		//들어있는 정보를 찍어주는 기능필요
-		return "basket";
+		return "order/basket";
 	}
 
 	
@@ -50,12 +50,22 @@ public class OrdersController {
 		//입력된 주문정보 orderDto에 저장
 		//입력된 결제정보 paymentDto에 저장
 		//저장된 정보 model 출력준비
-//		if(주문실패할 경우) {
-//			return "redirect:order_2";
+//		if(주문실패할 경우) { 
+//			return "redirect:order/_2";
 //		}else { //주문성공할 경우
-//			return "redirect:order_1";
+//			return "redirect:order/_1";
 //		}
-		return "redirect:order_1";
+		return "redirect:/order/_1";
+	}
+	
+	@GetMapping("/_1")
+	public String success() {
+		return "order/order_success";
+	}
+	
+	@GetMapping("/_2")
+	public String fail() {
+		return "order/order_fail";
 	}
 	
 	

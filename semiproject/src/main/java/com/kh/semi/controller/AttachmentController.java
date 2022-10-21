@@ -37,7 +37,7 @@ public class AttachmentController {
 		}
 		//[2]파일 불러오기
 		File dir = new File("D:\\test");
-		File target = new File(dir,String.valueOf(attachmentNo));
+		File target = new File(dir, String.valueOf(attachmentNo));
 		byte[] data = FileUtils.readFileToByteArray(target);
 		ByteArrayResource resource = new ByteArrayResource(data);
 		

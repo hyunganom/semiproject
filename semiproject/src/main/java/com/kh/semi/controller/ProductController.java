@@ -55,27 +55,32 @@ public class ProductController {
 		
 		// 관리자 상품 등록(INSERT)을 위한 다음 시퀀스 번호 반환
 		int productNo = productDao.nextSequence();
-		// View에서 입력받은 productDto로 DB 처리 - 관리자 상품 등록(INSERT)
+		
+		// 반환한 시퀀스 번호를 View에서 입력받은 ProductDto의 productNo로 설정
+		productDto.setProductNo(productNo);
+		
+		// productNo가 설정된 productDto로 DB 처리 - 관리자 상품 등록(INSERT)
 		productDao.insertProduct(productDto);
 		
 		
 		//첨부파일 DB연결
 		//첨부파일 시퀀스 발급
+		int attatchmentNo = attachmentDao.sequence();
 		
 		//DB등록
 		attachmentDao.insert(AttachmentDto.builder()
-				.attachmentNo(productNo+1)
+				.attachmentNo(attatchmentNo)
 				.attachmentName(attachment.getOriginalFilename())
 				.attachmentType(attachment.getContentType())
 				.attachmentSize(attachment.getSize())
 			.build());
 		
 		//파일저장
-		File target = new File(directory, String.valueOf(productNo+1));
+		File target = new File(directory, String.valueOf(attatchmentNo));
 		System.out.println(target.getAbsolutePath());
 		attachment.transferTo(target);
 		//product_attachment 연결테이블 정보 저장
-		attachmentDao.productConnectAttachment(productNo+1, productNo+1);
+		attachmentDao.productConnectAttachment(productNo, attatchmentNo);
 		
 		
 		// 관리자 상품 등록(INSERT) 처리 후 해당 상품 페이지로 강제 이동(redirect)
@@ -85,18 +90,18 @@ public class ProductController {
 	
 	// 3) 상품 목록 Mapping
 	@GetMapping("/list")
-	public String selectList(Model model, @ModelAttribute ProductListSearchVO productListSearchVO
-			) {
+	public String selectList(Model model, @ModelAttribute ProductListSearchVO productListSearchVO) {
 		
-		// 검색 조회인지 전체 조회인지 판정 - 검색 조회이면 true, 전체 조회이면 false를 반환
-		if(productListSearchVO.isSearch()) { // 검색 조회라면
-			// ProductListSearchVO의 type과 keyword를 매개변수로 검색 조회 실행 결과를 model에 첨부
-			model.addAttribute("productList", productDao.searchListProduct(productListSearchVO.getType(), productListSearchVO.getKeyword()));
-		}
-		else { // 검색 조회가 아니라면(전체 조회라면)
-			// 전체 조회 실행 결과를 model에 첨부
-			model.addAttribute("productList", productDao.allListProduct());
-		}
+		// View에서 입력받은 ProductListSearchVO를 매개변수로 조회 결과에 따른 상품의 총 수 반환
+		// - 검색 조회일 경우 검색 조회의 결과에 대한 count(*)의 값 반환
+		// - 전체 조회일 경우 전체 조회의 결과에 대한 count(*)의 값 반환
+		int countTotalProduct = productDao.countTotalProduct(productListSearchVO);
+		
+		// 반환한 상품의 총 수를 다시 ProductListSearchVO의 등록된 상품의 총 수(countTotalProduct) 필드의 값으로 설정
+		productListSearchVO.setCountTotalProduct(countTotalProduct);
+		
+		// 설정된 ProductListSearchVO로 통합 조회를 실행한 후 그 결과를 Model에 첨부
+		model.addAttribute("productList", productDao.selectListProduct(productListSearchVO));
 		
 		// 상품 수정 페이지(list.jsp)로 연결
 		return "product/list";
@@ -109,6 +114,9 @@ public class ProductController {
 		
 		// 하이퍼링크로 받은 productNo로 상세 조회 실행 후 그 결과를 Model에 첨부
 		model.addAttribute("productDto", productDao.selectOneProduct(productNo));
+		
+		// 첨부파일 뷰테이블 조회
+		model.addAttribute("attachmentDto",attachmentDao.selectProductAttachmentList(productNo));
 		
 		// 상품 상세 페이지(detail.jsp)로 연결
 		return "product/detail";
