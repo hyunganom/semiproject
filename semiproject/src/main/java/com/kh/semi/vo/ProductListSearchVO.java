@@ -43,7 +43,7 @@ public class ProductListSearchVO {
 	// 2. 전체 페이지에 대한 페이지 블럭의 시작과 끝 번호 관련
 	// 필드
 	private int countTotalProduct;	// 등록된 상품의 총 수 - 조회한 총 상품 수(count(*))를 값으로 가질 예정
-	private int countBlockNow = 10; // 현재 페이지에 표시될 페이지 블럭의 수
+	private int countBlockNow = 5; // 현재 페이지에 표시될 페이지 블럭의 수
 	
 	// - 전체 페이지에 대한 첫 페이지 블럭 번호
 	@ToString.Include
@@ -116,5 +116,16 @@ public class ProductListSearchVO {
 	@ToString.Include
 	public boolean hasNext() {
 		return blockEnd() < blockLast();
+	}
+	
+	// 검색 중에도 페이징이 유지될 수 있도록 Query String 생성
+	@ToString.Include
+	public String queryString() {
+		if(isSearch()) {
+			return "countProductNow=" + countProductNow + "&type=" + type + "&keyword=" + keyword;
+		}
+		else {
+			return "countProductNow=" + countProductNow;
+		}
 	}
 }
