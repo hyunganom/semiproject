@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.semi.constant.SessionConstant;
 import com.kh.semi.entity.MemberDto;
 import com.kh.semi.repository.MemberDao;
 
@@ -19,25 +20,31 @@ import com.kh.semi.repository.MemberDao;
 @RequestMapping("/member")
 public class MemberController {
 	
+	//회원 의존성
 	@Autowired
 	private MemberDao memberDao;
 	
+	//회원가입
 	@GetMapping("/join")
 	public String join() {
 		return "member/join";
 	}
 	
+	//회원가입 처리
 	@PostMapping("/join")
 	public String join(@ModelAttribute MemberDto memberDto) {
+		//DB등록
 		memberDao.insert(memberDto);
 		return "redirect:join_finish";
 	}
 	
+	//회원가입완료
 	@GetMapping("/join_finish")
 	public String joinFinish() {
 		return "member/joinFinish";
 	}
 	
+	//회원목록
 	@GetMapping("/list")
 	public String list(Model model, 
 			@RequestParam(required = false)	String type, 
@@ -52,6 +59,7 @@ public class MemberController {
 		return "member/list";
 	}
 	
+	//회원상세
 	@GetMapping("/detail")
 	public String detail(Model model, @RequestParam String memberId) {
 		MemberDto memberDto = memberDao.selectOne(memberId);
@@ -59,23 +67,27 @@ public class MemberController {
 		return "member/detail";
 	}
 	
+	//로그인
 	@GetMapping("/login")
 	public String login() {
 		return "member/login";
 	}
 	
+	//로그인 처리
 	@PostMapping("/login")
 	public String login(@ModelAttribute MemberDto inputDto, 
 			HttpSession session) {
+		//DB에서 아이디에 해당하는 정보를 가져옴
 		MemberDto findDto = memberDao.selectOne(inputDto.getMemberId());
 		if(findDto == null) {
 			return "redirect:login?error";
 		}
 		
+		//DB에서 가져온 비밀번호와 사용자가 입력한 비밀번호가 맞는지 비교
 		boolean passwordMatch = inputDto.getMemberPw().equals(findDto.getMemberPw());
 		if(passwordMatch) {
-			session.setAttribute("loginId", inputDto.getMemberId());
-			session.setAttribute("mg", findDto.getMemberGrade());
+			session.setAttribute(SessionConstant.ID, inputDto.getMemberId());
+			session.setAttribute(SessionConstant.GRADE, findDto.getMemberGrade());
 			return "redirect:/";
 		}
 		else {
@@ -83,12 +95,14 @@ public class MemberController {
 		}
 	}
 	
+	//정보변경
 	@GetMapping("/change")
 	public String change(Model model, @RequestParam String memberId) {
 		model.addAttribute("memberDto", memberDao.selectOne(memberId));
 		return "member/change";
 	}
 	
+	//정보변경 처리
 	@PostMapping("/change")
 	public String change(@ModelAttribute MemberDto memberDto, RedirectAttributes attr) {
 		boolean result = memberDao.update(memberDto);
@@ -101,21 +115,46 @@ public class MemberController {
 		}
 	}
 	
+	//정보변경실패
 	@GetMapping("/change_fail")
 	public String changeFail() {
 		return "member/changeFail";
 	}
 	
+	//회원삭제
+	@GetMapping("/cut")
+	public String cut(@RequestParam String memberId) {
+		boolean result = memberDao.delete(memberId);
+		if(result) {
+			return "redirect:list";
+		}
+		else {
+			return "member/changeFail";
+		}
+	}
+	
+	//비밀번호변경
 	@GetMapping("/change_pw")
 	public String changePw() {
 		return "member/changePw";
 	}
 	
+	//비밀번호변경 처리
 	@PostMapping("/change_pw")
-	public String changePw(HttpSession session, @RequestParam String memberPw) {
-		String memberId = (String)session.getAttribute("loginId");
+	public String changePw(HttpSession session, 
+			@RequestParam String beforePw, //기존비밀번호
+			@RequestParam String afterPw) {//변경할비밀번호
+		String memberId = (String)session.getAttribute(SessionConstant.ID);
 		try {
-			memberDao.changePassword(memberId, memberPw);
+			//비밀번호검사
+			MemberDto memberDto = memberDao.selectOne(memberId);
+			boolean passwordMatch = beforePw.equals(memberDto.getMemberPw());
+			if(!passwordMatch) {
+				throw new Exception();
+			}
+			
+			//비밀번호변경
+			memberDao.changePassword(memberId, afterPw);
 			return "redirect:change_pw_success";
 		}
 		catch (Exception e) {
@@ -123,16 +162,82 @@ public class MemberController {
 		}
 	}
 	
+	//비밀번호변경완료
 	@GetMapping("/change_pw_success")
 	public String changePwSuccess() {
 		return "member/changePwSuccess";
 	}
 	
+	//로그아웃
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
-		session.removeAttribute("loginId");
-		session.removeAttribute("mg");
+		session.removeAttribute(SessionConstant.ID);
+		session.removeAttribute(SessionConstant.GRADE);
 		return "redirect:/";
+	}
+	
+	//개인정보변경
+	@GetMapping("/information")
+	public String information(HttpSession session, Model model) {
+		//본인 아이디 획득
+		String memberId = (String)session.getAttribute(SessionConstant.ID);
+		
+		//아이디로 정보 조회
+		MemberDto memberDto = memberDao.selectOne(memberId);
+		
+		//조회한 정보 전달
+		model.addAttribute("memberDto", memberDto);
+		
+		return "member/information";
+	}
+	
+	//개인정보변경 처리
+	@PostMapping("/information")
+	public String information(HttpSession session, @ModelAttribute MemberDto inputDto) {
+		String memberId = (String)session.getAttribute(SessionConstant.ID);
+		inputDto.setMemberId(memberId);
+		
+		//비밀번호검사
+		MemberDto findDto = memberDao.selectOne(memberId);
+		boolean passwordMatch = inputDto.getMemberPw().equals(findDto.getMemberPw());
+		if(passwordMatch) {
+			//정보변경처리
+			memberDao.changeInformation(inputDto);
+			return "redirect:mypage";
+		}
+		else {
+			return "redirect:information?error";
+		}
+	}
+	
+	//회원탈퇴
+	@GetMapping("/end")
+	public String end() {
+		return "member/end";
+	}
+	
+	@PostMapping("/end")
+	public String end(HttpSession session, 
+			@RequestParam String memberPw) {
+		String memberId = (String)session.getAttribute(SessionConstant.ID);
+		MemberDto memberDto = memberDao.selectOne(memberId);
+		boolean passwordMatch = memberPw.equals(memberDto.getMemberPw());
+		if(passwordMatch) {
+			//회원탈퇴
+			memberDao.delete(memberId);
+			//로그아웃
+			session.removeAttribute(SessionConstant.ID);
+			session.removeAttribute(SessionConstant.GRADE);
+			return "redirect:end_success";
+		}
+		else {
+			return "redirect:end?error";
+		}
+	}
+	
+	@GetMapping("/end")
+	public String endSuccess() {
+		return "member/endSuccess";
 	}
 	
 	
