@@ -17,9 +17,13 @@ public interface AttachmentDao {
 	AttachmentDto selectOne(int attachmentNo); 
 	// 첨부파일 삭제
 	boolean delete(int attachmentNo); 
-	//첨부파일 관련 기능
+	
+	//상품썸네일이미지 삽입 기능
 	void productConnectAttachment(int productNo, int attachmentNo);
-	//상품 첨부파일 관련(product_attachment_view)
-//	List<ProductAttachmentVO> selectProductAttachmentList(int productOriginNo); 
+	//상품 이미지 조회(product_attachment_view)
 	public List<AttachmentDto> selectProductAttachmentList(int productOriginNo);
+	//상품 설명 이미지 조회(product_explain_view)
+	public List<AttachmentDto> selectProductExplainList(int productOriginNo);
+	//상품설멍이미지 삽입 기능
+	void explainConnectAttachment(int productNo, int attachmentNo);
 }

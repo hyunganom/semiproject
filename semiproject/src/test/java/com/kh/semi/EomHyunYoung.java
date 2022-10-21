@@ -16,12 +16,12 @@ public class EomHyunYoung {
 	@Test
 	public void testInsert() {	
 		// 상품 등록
-		for(int i = 1 ; i <= 300 ; i ++) {
+		for(int i = 1 ; i <= 30 ; i ++) {
 			int productNo = productDao.nextSequence();		
 			productDao.insertProduct(ProductDto.builder()
 										.productNo(productNo)
-										.categoryHighNo(24)
-										.categoryLowNo(5)
+										.categoryHighNo(27)
+										.categoryLowNo(19)
 										.productName("테스트 상품" + i)
 										.productPrice(10000)
 										.productInformation("테스트 상품 "+ i +"의 정보")

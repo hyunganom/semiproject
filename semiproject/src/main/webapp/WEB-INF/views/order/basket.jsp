@@ -25,14 +25,13 @@
                 </thead>
                 <tbody>
                     <tr class="center">
-                        <th class="w-5"><input type="checkbox"></th>
+                        <td class="w-5"><input type="checkbox"></td>
                         <td class="w-50">?상품정보?</td>
                         <td class="w-15">
-                            ?수량?
-                            <button type="button">옵션/수량 변경</button>
-                        </td>
+                        	?수량?<br>
+                            <button type="button">수량 변경</button>
                         <td class="w-15">
-                            ?주문금액?
+                            ?주문금액?<br>
                             <button type="button">바로구매</button>
                         </td>
                         <td class="w-15">?배송비?</td>
