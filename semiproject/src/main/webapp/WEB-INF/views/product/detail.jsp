@@ -64,7 +64,7 @@
 		<th>상품이미지</th>
 		<td>
 			<c:forEach var="attachmentDto" items="${attachmentDto}">
-			<img width=50 height=50 src="/attachment/download?attachmentNo=${attachmentDto.attachmentNo}">
+			<img width=50 height=50 src="/attachment/download/product?attachmentNo=${attachmentDto.attachmentNo}">
 			</c:forEach>
 		</td>
 	</tr>

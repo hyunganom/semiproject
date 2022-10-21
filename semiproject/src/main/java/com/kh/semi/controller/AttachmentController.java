@@ -27,8 +27,8 @@ public class AttachmentController {
 	@Autowired
 	AttachmentDao attachmentDao;
 	
-	@GetMapping("/download")
-	public ResponseEntity<ByteArrayResource> dowuload(
+	@GetMapping("/download/product")
+	public ResponseEntity<ByteArrayResource> productDowuload(
 			@RequestParam int attachmentNo) throws IOException{
 		//[1] 파일탐색(DB)
 		AttachmentDto dto = attachmentDao.selectOne(attachmentNo);
@@ -36,8 +36,9 @@ public class AttachmentController {
 			return ResponseEntity.notFound().build();//404 error 전송
 		}
 		//[2]파일 불러오기
-		File dir = new File("D:\\test");
-		File target = new File(dir, String.valueOf(attachmentNo));
+		File directory = new File("D:\\saluv\\product");
+		File target = new File(directory, String.valueOf(attachmentNo));
+		directory.mkdir();//폴더 생성 명령
 		byte[] data = FileUtils.readFileToByteArray(target);
 		ByteArrayResource resource = new ByteArrayResource(data);
 		

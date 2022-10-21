@@ -33,7 +33,7 @@ public class ProductController {
 	private AttachmentDao attachmentDao;
 	
 	//첨부파일 업로드 다운로드 경로
-	private final File directory = new File("D:\\test");
+	private final File directory = new File("D:\\saluv\\product");
 	
 	// 1. 상품 등록 Mapping
 	// 1) 상품 등록 페이지로 연결
@@ -77,7 +77,7 @@ public class ProductController {
 		
 		//파일저장
 		File target = new File(directory, String.valueOf(attatchmentNo));
-		System.out.println(target.getAbsolutePath());
+		directory.mkdir();//폴더 생성 명령
 		attachment.transferTo(target);
 		//product_attachment 연결테이블 정보 저장
 		attachmentDao.productConnectAttachment(productNo, attatchmentNo);
