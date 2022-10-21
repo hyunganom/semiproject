@@ -14,8 +14,8 @@ import lombok.ToString;
 public class ProductCategoryListVO {
 
 	// 필드
-	private int categoryHighNo; 		// 상위 카테고리 번호
-	private String categoryHighName; 	// 상위 카테고리명
+	private int categoryHighNo;  // 상위 카테고리 번호
+	private String categoryHighName;  // 상위 카테고리 이름
 	private int categoryLowNo; 			// 하위 카테고리 번호
 	private String categoryLowName; 	// 하위 카테고리명
 }
