@@ -5,6 +5,6 @@
 	<jsp:param value="환불" name="title"/>
 	</jsp:include>
 	
-	<h1>주문 환불</h1>
+	<h1>주문 반품</h1>
     
     <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
