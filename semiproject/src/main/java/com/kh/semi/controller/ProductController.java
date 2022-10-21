@@ -40,9 +40,6 @@ public class ProductController {
 	@GetMapping("/insert")
 	public String insert(Model model) {
 		
-		// 모든 상품 카테고리 항목 조회 결과를 Model에 첨부 (아직 해결하지 못한 문제)
-//		model.addAttribute("categoryList", productDao.selectCategoryList());
-		
 		// 상품 등록 페이지(insert.jsp) 연결
 		return "product/insert";
 	}

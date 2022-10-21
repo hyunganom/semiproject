@@ -23,13 +23,15 @@ public class OrdersDaoImpl implements OrdersDao{
 				+ "order_post, order_base_address, order_detail_address, "
 				+ "order_tel, order_memo, order_date, order_status, "
 				+ "order_changedate, order_price, order_payprice) values("
-				+ "orders_seq.nextval, ?, ?, ?, ?,?,?,?,sysdate,?,sysdate,?,?)";
+				+ "orders_seq.nextval, ?, ?, ?, ?,?,?,?,sysdate,?,sysdate,?,?,?,?,?)";
 		Object[] param = {
 				ordersDto.getOrderId(),	ordersDto.getOrderName(),
 				ordersDto.getOrderPost(), ordersDto.getOrderBaseAddress(),
 				ordersDto.getOrderDetailAddress(), ordersDto.getOrderTel(),
 				ordersDto.getOrderMemo(), ordersDto.getOrderStatus(), 
-				ordersDto.getOrderPrice(), ordersDto.getOrderPayPrice()
+				ordersDto.getOrderPrice(), ordersDto.getOrderPayPrice(),
+				ordersDto.getOrderType(), ordersDto.getOrderUsePoint(),
+				ordersDto.getOrderPoint()
 		};
 		jdbcTemplate.update(sql, param);
 	}
@@ -77,6 +79,9 @@ public class OrdersDaoImpl implements OrdersDao{
 		ordersDto.setOrderChangeDate(rs.getDate("order_changedate"));
 		ordersDto.setOrderPrice(rs.getInt("order_price"));
 		ordersDto.setOrderPayPrice(rs.getInt("order_payprice"));
+		ordersDto.setOrderType(rs.getString("order_type"));
+		ordersDto.setOrderUsePoint(rs.getInt("order_use_point"));
+		ordersDto.setOrderPoint(rs.getInt("order_point"));
 		return ordersDto;
 	};
 	
@@ -97,6 +102,9 @@ public class OrdersDaoImpl implements OrdersDao{
 			ordersDto.setOrderChangeDate(rs.getDate("order_changedate"));
 			ordersDto.setOrderPrice(rs.getInt("order_price"));
 			ordersDto.setOrderPayPrice(rs.getInt("order_payprice"));
+			ordersDto.setOrderType(rs.getString("order_type"));
+			ordersDto.setOrderUsePoint(rs.getInt("order_use_point"));
+			ordersDto.setOrderPoint(rs.getInt("order_point"));
 			return ordersDto;
 		}else {
 			return null;
