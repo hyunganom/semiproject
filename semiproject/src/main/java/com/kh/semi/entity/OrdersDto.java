@@ -21,5 +21,7 @@ public class OrdersDto {
 	private String orderStatus;
 	private Date orderChangeDate;
 	private int orderPrice, orderPayPrice;
+	private String orderType;
+	private int orderUsePoint, orderPoint;
 
 }
