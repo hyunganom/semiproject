@@ -133,5 +133,23 @@ public class MemberDaoImpl implements MemberDao{
 		return jdbcTemplate.update(sql, param) > 0;
 	}
 	
+	@Override
+	public boolean delete(String memberId) {
+		String sql = "delete member where member_id = ?";
+		Object[] param = {memberId};
+		return jdbcTemplate.update(sql, param) > 0;
+	}
 	
+	@Override
+	public boolean changeInformation(MemberDto memberDto) {
+		String sql = "update member set member_name = ?, "
+				+ "member_email = ?, member_tel = ?, member_pw = ? "
+				+ "where member_id = ?";
+		Object[] param = {
+				memberDto.getMemberName(), memberDto.getMemberEmail(), 
+				memberDto.getMemberTel(), memberDto.getMemberPw(), 
+				memberDto.getMemberId()
+		};
+		return jdbcTemplate.update(sql, param) > 0;
+	}
 }
