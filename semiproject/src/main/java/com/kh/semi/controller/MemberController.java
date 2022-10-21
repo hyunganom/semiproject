@@ -75,6 +75,7 @@ public class MemberController {
 		boolean passwordMatch = inputDto.getMemberPw().equals(findDto.getMemberPw());
 		if(passwordMatch) {
 			session.setAttribute("loginId", inputDto.getMemberId());
+			session.setAttribute("mg", findDto.getMemberGrade());
 			return "redirect:/";
 		}
 		else {
@@ -130,7 +131,16 @@ public class MemberController {
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		session.removeAttribute("loginId");
+		session.removeAttribute("mg");
 		return "redirect:/";
+	}
+	
+	@GetMapping("/mypage")
+	public String mypage(HttpSession session, Model model) {
+		String loginId = (String) session.getAttribute("loginId");
+		MemberDto memberDto = memberDao.selectOne(loginId);
+		model.addAttribute("memberDto", memberDto);
+		return "member/detail";
 	}
 	
 	
