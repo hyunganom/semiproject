@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     
 <jsp:include page="/WEB-INF/views/template/header.jsp">
-	<jsp:param value="상품 등록" name="title"/>
+	<jsp:param value="상품 등록 페이지" name="title"/>
 </jsp:include>
 
 <!-- 자바 스크립트 코드 -->
@@ -104,5 +104,5 @@
 	</form>
 	
 	</div>
-</body>
-</html>
+
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
