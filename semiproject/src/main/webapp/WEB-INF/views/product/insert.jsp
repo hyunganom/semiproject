@@ -96,6 +96,10 @@
 		상품 이미지 : 
 		<input type = "file" name = "attachment" accept = ".png, .jpg" multiple > 
 	</div>
+	<div class = "row">
+		상품 상세이미지 : 
+		<input type = "file" name = "attachment1" accept = ".png, .jpg" multiple > 
+	</div>
 	
 	<div class = "row">
 		<button type = "submit">등록</button>

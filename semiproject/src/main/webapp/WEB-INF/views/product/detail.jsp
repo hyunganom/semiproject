@@ -60,10 +60,18 @@
 	<tr>
 		<th>상품이미지</th>
 		<td>
-			<c:forEach var="attachmentDto" items="${attachmentDto}">
-			<img width=50 height=50 src="/attachment/download/product?attachmentNo=${attachmentDto.attachmentNo}">
+			<c:forEach var="productTumbnailList" items="${productTumbnailList}">
+			<img width=50 height=50 src="/attachment/download/productTumbnail?attachmentNo=${productTumbnailList.attachmentNo}">
 			</c:forEach>
 		</td>
+	<tr>
+		<th>상품상세이미지</th>
+		<td>
+			<c:forEach var="productDetailList" items="${productDetailList}">
+			<img width=50 height=50 src="/attachment/download/productDetail?attachmentNo=${productDetailList.attachmentNo}">
+			</c:forEach>
+		</td>
+	</tr>
 	</tr>
 </tbody>
 <tfoot>
