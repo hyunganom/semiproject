@@ -11,14 +11,15 @@
         float:right;
       }
 </style>
-	
+
 	<div class="container-900 mt-50">
         <div class="row">
             <h2>주문 / 결제</h2>
         </div>
 
         <hr>
-
+        
+<form action="order_ck" method="post">	
         <div class="row mt-50">
           <h3>주문 상품 정보</h3>
         </div>
@@ -47,7 +48,7 @@
           </tbody>
         </table>
         
-	<form action="order" method="post">
+	
         <div class="row mt-50">
           <h3>주문자 정보</h3>
         </div>
@@ -119,8 +120,15 @@
         
          <!-- 입력하지않지만 넘어가야하는 정보 -->
         <input type="hidden" name="orderId" value="${sessionScope.loginId}">
+        <input type="hidden" name="orderStatus" value="결제완료">
         <input type="hidden" name="orderPrice" value="12000">
         <input type="hidden" name="orderPayPrice" value="10000">
+        
+        <!-- payment에 넘어가야하는 정보(배열값으로 돌릴 예정) -->
+		<input type="hidden" name="paymentProductNo" value="49">
+		<input type="hidden" name="paymentCount" value="2">
+		<input type="hidden" name="paymentPrice" value="2000">
+		<input type="hidden" name="paymentOption" value="2">
 
         <div class="row mt-50">
           <h3>쿠폰 / 적립금</h3>
@@ -177,7 +185,7 @@
           <button type="submit" class="btn btn-positive">결제하기</button>
         </div>
 	</form>
-	
+
     </div>
 </body>
 

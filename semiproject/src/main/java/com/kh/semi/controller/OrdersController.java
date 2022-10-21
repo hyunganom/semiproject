@@ -1,17 +1,22 @@
 package com.kh.semi.controller;
 
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.semi.entity.OrdersDto;
+import com.kh.semi.entity.PaymentDto;
 import com.kh.semi.repository.OrdersDao;
+import com.kh.semi.repository.PaymentDao;
+import com.kh.semi.service.OrderService;
 
 @Controller
 @RequestMapping("/order")
@@ -19,6 +24,15 @@ public class OrdersController {
 
 	@Autowired
 	private OrdersDao ordersDao;
+	@Autowired
+	private PaymentDao paymentDao;
+	@Autowired
+	private OrderService orderService;
+	
+	@PostConstruct
+	public void prepare() {
+		System.out.println("초기화 메소드!!");
+	}
 	
 	
 	//장바구니
@@ -45,14 +59,12 @@ public class OrdersController {
 	
 	@PostMapping("/order_ck")
 	public String order(@ModelAttribute OrdersDto ordersDto,
-			RedirectAttributes attr) {
-		ordersDao.insert(ordersDto);
-		System.out.println(ordersDto);
+			@ModelAttribute List<PaymentDto> paymentDto) {
+		orderService.buy(ordersDto, paymentDto);
 		return "redirect:/order/_1";
 		
 		//입력된 주문정보 orderDto에 저장
 		//입력된 결제정보 paymentDto에 저장
-		//저장된 정보 model 출력준비
 //		if(주문실패할 경우) { 
 //			return "redirect:order/_2";
 //		}else { //주문성공할 경우

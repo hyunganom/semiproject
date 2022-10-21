@@ -5,6 +5,9 @@ import java.util.List;
 import com.kh.semi.entity.OrdersDto;
 
 public interface OrdersDao {
+	
+	//시퀀스 미리 생성
+	public int sequence();
 
 	//1. 주문 등록
 	void insert(OrdersDto ordesDto);
