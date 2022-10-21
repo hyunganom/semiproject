@@ -210,35 +210,35 @@ public class MemberController {
 		}
 	}
 	
-	//회원탈퇴
-	@GetMapping("/end")
-	public String end() {
-		return "member/end";
-	}
+//	//회원탈퇴
+//	@GetMapping("/end")
+//	public String end() {
+//		return "member/end";
+//	}
+//	
+//	@PostMapping("/end")
+//	public String end(HttpSession session, 
+//			@RequestParam String memberPw) {
+//		String memberId = (String)session.getAttribute(SessionConstant.ID);
+//		MemberDto memberDto = memberDao.selectOne(memberId);
+//		boolean passwordMatch = memberPw.equals(memberDto.getMemberPw());
+//		if(passwordMatch) {
+//			//회원탈퇴
+//			memberDao.delete(memberId);
+//			//로그아웃
+//			session.removeAttribute(SessionConstant.ID);
+//			session.removeAttribute(SessionConstant.GRADE);
+//			return "redirect:end_success";
+//		}
+//		else {
+//			return "redirect:end?error";
+//		}
+//	}
 	
-	@PostMapping("/end")
-	public String end(HttpSession session, 
-			@RequestParam String memberPw) {
-		String memberId = (String)session.getAttribute(SessionConstant.ID);
-		MemberDto memberDto = memberDao.selectOne(memberId);
-		boolean passwordMatch = memberPw.equals(memberDto.getMemberPw());
-		if(passwordMatch) {
-			//회원탈퇴
-			memberDao.delete(memberId);
-			//로그아웃
-			session.removeAttribute(SessionConstant.ID);
-			session.removeAttribute(SessionConstant.GRADE);
-			return "redirect:end_success";
-		}
-		else {
-			return "redirect:end?error";
-		}
-	}
-	
-	@GetMapping("/end")
-	public String endSuccess() {
-		return "member/endSuccess";
-	}
+//	@GetMapping("/end")
+//	public String endSuccess() {
+//		return "member/endSuccess";
+//	}
 	
 	
 }
