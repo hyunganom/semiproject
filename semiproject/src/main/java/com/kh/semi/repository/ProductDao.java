@@ -2,14 +2,18 @@ package com.kh.semi.repository;
 
 import java.util.List;
 
+import com.kh.semi.entity.CategoryHighDto;
+import com.kh.semi.entity.CategoryLowDto;
 import com.kh.semi.entity.ProductDto;
-import com.kh.semi.vo.ProductCategoryListVO;
 import com.kh.semi.vo.ProductListSearchVO;
 
 public interface ProductDao {
 
-	// 추상 메소드 - 모든 상품 카테고리 항목 조회
-	List<ProductCategoryListVO> selectCategoryList();
+	// 추상 메소드 - 상위 카테고리 항목 조회
+	List<CategoryHighDto> selectCategoryHighList();
+	
+	// 추상 메소드 - 상위 카테고리 항목에 연결된 하위 카테고리 항목 조회
+	List<CategoryLowDto> selectCategoryLowList(int categoryHighNo);
 	
 	// 추상 메소드 - 상품 등록을 위한 다음 시퀀스 번호 반환
 	int nextSequence();

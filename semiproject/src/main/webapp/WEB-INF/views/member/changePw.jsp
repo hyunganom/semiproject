@@ -9,12 +9,13 @@
 <h1>비밀번호 변경</h1>
 
 <form action="password" method="post">
-	<input type="password" name="memberPw" placeholder="변경할 비밀번호" required><br><br>
+	<input type="password" name="beforePw" placeholder="기존 비밀번호" required><br><br>
+	<input type="password" name="afterPw" placeholder="변경할 비밀번호" required>
 	<button type="submit">변경하기</button>
 </form>
 
 <c:if test="${param.error != null}">
-	<h2 style="color:red;">잘못된 비밀번호 입니다.</h2>
+	<h2 style="color:red;">잘못된 비밀번호입니다.</h2>
 </c:if>
 
 <%-- footer.jsp 불러오기 --%>

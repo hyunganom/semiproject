@@ -3,13 +3,15 @@
     
 <%-- header.jsp 불러오기 --%>
 <jsp:include page="/WEB-INF/views/template/header.jsp">
-	<jsp:param value="회원정보 변경 실패" name="title"/>
+	<jsp:param value="비밀번호 확인" name="title"/>
 </jsp:include>
 
-	<div align="center">
-		<h1>존재하지 않는 회원입니다.</h1>
-		<h2><a href="list">목록 보기</a></h2>
-	</div>
-	
+<h1>비밀번호 확인</h1>
+
+<form action="end" method="post">
+	<input type="password" name="memberPw" required>
+	<button type="submit">탈퇴하기</button>
+</form>
+
 <%-- footer.jsp 불러오기 --%>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

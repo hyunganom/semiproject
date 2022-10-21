@@ -11,8 +11,9 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import com.kh.semi.entity.CategoryHighDto;
+import com.kh.semi.entity.CategoryLowDto;
 import com.kh.semi.entity.ProductDto;
-import com.kh.semi.vo.ProductCategoryListVO;
 import com.kh.semi.vo.ProductListSearchVO;
 
 @Repository
@@ -22,26 +23,45 @@ public class ProductDaoImpl implements ProductDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	// ProductCategoryListVO에 대한 RowMapper
-	private RowMapper<ProductCategoryListVO> productCategoryMapper = new RowMapper<ProductCategoryListVO>() {
+	// CategoryHighDto에 대한 RowMapper
+	private RowMapper<CategoryHighDto> categoryHighMapper = new RowMapper<CategoryHighDto>() {
 		@Override
-		public ProductCategoryListVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-			return ProductCategoryListVO.builder()
+		public CategoryHighDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+			return CategoryHighDto.builder()
 						.categoryHighNo(rs.getInt("category_high_no"))
 						.categoryHighName(rs.getString("category_high_name"))
+					.build();
+		}
+	};
+	
+	// 추상 메소드 오버라이딩 - 상위 카테고리 항목 조회
+	@Override
+	public List<CategoryHighDto> selectCategoryHighList() {
+		String sql = "select * from category_high order by category_high_no asc";
+		return jdbcTemplate.query(sql, categoryHighMapper);
+	}
+	
+	// CategoryLowDto에 대한 RowMapper
+	private RowMapper<CategoryLowDto> categoryLowMapper = new RowMapper<CategoryLowDto>() {
+		@Override
+		public CategoryLowDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+			return CategoryLowDto.builder()
+						.categoryHighNo(rs.getInt("category_high_no"))
 						.categoryLowNo(rs.getInt("category_low_no"))
 						.categoryLowName(rs.getString("category_low_name"))
 					.build();
 		}
 	};
 	
-	// 추상 메소드 오버라이딩 -  모든 상품 카테고리 항목 조회
+	// 추상 메소드 오버라이딩 - 상위 카테고리 항목에 연결된 하위 카테고리 항목 조회
 	@Override
-	public List<ProductCategoryListVO> selectCategoryList() {
-		// 상위 카테고리 테이블(category_high)과 하위 카테고리 테이블(category_low)을 inner join하여 조회하는 SQL문
-		String sql = "select H.*, L.category_low_no, L.category_low_name from category_high H inner join category_low L on H.category_high_no = L.category_high_no";
+	public List<CategoryLowDto> selectCategoryLowList(int categoryHighNo) {
+		// 특정 상위 카테고리 컬럼에 연결된 하위 카테고리의 컬럼을 조회
+		String sql = "select * from category_low where category_high_no = ? order by category_low_no desc";
+		// 바인드 변수 배열 생성
+		Object[] param = new Object[] {categoryHighNo};
 		// List<ProductCategoryListVO> 형태의 조회 결과를 반환
-		return jdbcTemplate.query(sql, productCategoryMapper);
+		return jdbcTemplate.query(sql, categoryLowMapper, param);
 	}
 	
 	// 추상 메소드 오버라이딩 - 상품 등록을 위한 다음 시퀀스 번호 반환
