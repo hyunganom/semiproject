@@ -40,12 +40,14 @@
             <tr>
               <td colspan="3">
                 <i class="fa-solid fa-arrow-turn-down-right"></i>
-                ?옵션?
+                적립 예상금액
+                <input type="hidden" name="orderPoint" value="100">
               </td>
             </tr>
           </tbody>
         </table>
-
+        
+	<form action="order" method="post">
         <div class="row mt-50">
           <h3>주문자 정보</h3>
         </div>
@@ -88,32 +90,37 @@
               <tr>
                 <th>이름</th>
                 <td>
-                  <input type="text" name="order_name">
+                  <input type="text" name="orderName">
                 </td>
               </tr>
               <tr>
                 <th>연락처</th>
                 <td>
-                  <input type="text" name="order_tel">
+                  <input type="text" name="orderTel">
                 </td>
               </tr>
               <tr>
                 <th>주소</th>
                 <td>
-                  <input type="text" name="order_post">
-                  <input type="text" name="order_base_address">
-                  <input type="text" name="order_detail_address">
+                  <input type="text" name="orderPost">
+                  <input type="text" name="orderBaseAddress">
+                  <input type="text" name="orderDetailAddress">
                 </td>
               </tr>
               <tr>
                 <th>배송메세지</th>
                 <td>
-                  <textarea type="text" name="order_memo" class="w-100 input"></textarea>
+                  <textarea type="text" name="orderMemo" class="w-100 input"></textarea>
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
+        
+         <!-- 입력하지않지만 넘어가야하는 정보 -->
+        <input type="hidden" name="orderId" value="${sessionScope.loginId}">
+        <input type="hidden" name="orderPrice" value="12000">
+        <input type="hidden" name="orderPayPrice" value="10000">
 
         <div class="row mt-50">
           <h3>쿠폰 / 적립금</h3>
@@ -127,7 +134,7 @@
           </div>
           <div class="row">
             <p>적립금</p>
-            <input type="text" class="input w-50">
+            <input type="text" class="input w-50" name="orderUsePoint">
             <a href="#" class="btn btn-positive">전액 사용</a>
           </div>
         </div>
@@ -147,7 +154,7 @@
                 <th>총 금액</th>
               </tr>
               <tr>
-                <td>?상품금액 찍기?</td>
+                <td>1000</td>
                 <td>?배송비 찍기?</td>
                 <td>?할인금액 찍기?</td>
                 <td>?총 금액 찍기?</td>
@@ -169,7 +176,8 @@
         <div class="row center">
           <button type="submit" class="btn btn-positive">결제하기</button>
         </div>
-
+	</form>
+	
     </div>
 </body>
 

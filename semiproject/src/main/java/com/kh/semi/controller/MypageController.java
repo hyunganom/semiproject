@@ -31,7 +31,7 @@ public class MypageController {
 		//3. 불러온 회원 정보를 모델에 첨부한다
 		model.addAttribute("memberDto", memberDto);
 		
-		return "mypage/list";		
+		return "mypage/order_list";		
 	}
 	
 
