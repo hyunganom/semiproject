@@ -74,7 +74,7 @@ public class ProductController {
 		
 		//파일저장
 		File target = new File(directory, String.valueOf(attatchmentNo));
-		directory.mkdir();//폴더 생성 명령
+		directory.mkdirs();//폴더 생성 명령
 		attachment.transferTo(target);
 		//product_attachment 연결테이블 정보 저장
 		attachmentDao.productConnectAttachment(productNo, attatchmentNo);
