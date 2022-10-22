@@ -52,8 +52,8 @@ public class ProductController {
 	// 2) 상품 등록 처리
 	@PostMapping("/insert")
 	public String insert(@ModelAttribute ProductDto productDto,
-			@RequestParam List<MultipartFile> attachment,
-			@RequestParam List<MultipartFile> attachment1,
+			@RequestParam List<MultipartFile> attachmentMainImg, // 상품 이미지 첨부파일에 대한 List
+			@RequestParam List<MultipartFile> attachmentSubImg, // 상품 상세 이미지 첨부파일에 대한 List
 			RedirectAttributes attr) throws IllegalStateException, IOException {
 		
 		// 관리자 상품 등록(INSERT)을 위한 다음 시퀀스 번호 반환
@@ -68,7 +68,7 @@ public class ProductController {
 		
 		
 		//첨부파일 썸네일 이미지 등록
-		for(MultipartFile file : attachment) {
+		for(MultipartFile file : attachmentMainImg) {
 			if(!file.isEmpty()) {
 			//1)첨부파일 시퀀스 발급
 			int attatchmentNo = attachmentDao.sequence();
@@ -90,7 +90,7 @@ public class ProductController {
 		}
 		
 		//상품설명이미지 등록
-		for(MultipartFile file : attachment1) {
+		for(MultipartFile file : attachmentSubImg) {
 			if(!file.isEmpty()) {
 			//첨부파일 시퀀스 발급
 			int attatchmentNo = attachmentDao.sequence();
@@ -116,7 +116,7 @@ public class ProductController {
 		return "redirect:detail";
 	}
 	
-	// 2. 상품 목록 Mapping
+	// 3) 상품 목록 Mapping
 	@GetMapping("/list")
 	public String selectList(Model model, @ModelAttribute ProductListSearchVO productListSearchVO) {
 		
@@ -136,7 +136,7 @@ public class ProductController {
 	}
 	
 	
-	// 3. 상품 상세 Mapping
+	// 2. 상품 상세 Mapping
 	@GetMapping("/detail")
 	public String detail(Model model, @RequestParam int productNo) {
 		
@@ -153,7 +153,7 @@ public class ProductController {
 		return "product/detail";
 	}
 	
-	// 4. 상품 수정 Mapping
+	// 3. 상품 수정 Mapping
 	// 1) 상품 수정 페이지로 연결
 	@GetMapping("/edit")
 	public String edit(Model model, @RequestParam int productNo) {
@@ -194,7 +194,7 @@ public class ProductController {
 		}
 	}
 	
-	// 5. 상품 삭제(비활성화) Mapping
+	// 3. 상품 삭제(비활성화) Mapping
 	@GetMapping("/delete")
 	public String delete(@RequestParam int productNo) {
 		
@@ -208,7 +208,7 @@ public class ProductController {
 		return "redirect:list";
 	}
 	
-	// 6. 상품 삭제(DELETE) Mapping (더미데이터 삭제용)
+	// 4. 상품 삭제(DELETE) Mapping (더미데이터 삭제용)
 	@GetMapping("/deleteAdmin")
 	public String deleteAdmin(@RequestParam int productNo) {
 		
