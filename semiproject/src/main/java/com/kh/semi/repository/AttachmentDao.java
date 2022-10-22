@@ -26,4 +26,10 @@ public interface AttachmentDao {
 	public List<AttachmentDto> selectProductExplainList(int productOriginNo);
 	//상품설멍이미지 삽입 기능
 	void explainConnectAttachment(int productNo, int attachmentNo);
+	
+	// 추상 메소드 - 문의 게시판 첨부파일 업로드 기록 등록(INSERT)
+	void inquireConnectAttachment(int inquireNo, int attachmentInquireNo);
+	
+	// 추상 메소드 - 문의 게시판 첨부파일 업로드 기록 조회(SELECT)
+	public List<AttachmentDto> selectInquireAttachmentList(int inquireAttachmentOriginNo);
 }

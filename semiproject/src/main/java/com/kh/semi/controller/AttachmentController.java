@@ -95,4 +95,20 @@ public class AttachmentController {
 				.contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.body(resource);
 	}
+	
+//	// 문의글 첨부파일 이미지 다운로드 Mapping
+//	@GetMapping("/download/inquireImg")
+//	public ResponseEntity<ByteArrayResource> downloadInquireImg(@RequestParam int attachmentNo){
+//		
+//		// View에서 입력받은 첨부파일 번호로 단일 조회 실행
+//		AttachmentDto attachmentDto = attachmentDao.selectOne(attachmentNo);
+//		
+//		// 해당 첨부파일 번호의 파일이 있는지 판정
+//		if(attachmentDto == null) { // 해당 첨부파일 번호의 첨부파일이 존재하지 않는다면
+//			return "";
+//		}
+//		
+//		// 문의글 이미지 첨부파일 업로드를 위한 상위 경로(parent) 설정(상위 경로에 대한 File 클래스의 인스턴스 추가)
+//		File directory = new File("D:\\saluv\\inquireImg");
+//	}
 }
