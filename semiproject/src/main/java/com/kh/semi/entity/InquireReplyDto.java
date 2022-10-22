@@ -14,11 +14,11 @@ import lombok.ToString;
 @ToString
 @Builder
 public class InquireReplyDto {
-	private int inqurer_reply_no;
-	private String inqurer_reply_id;
-	private int inqurer_origin_no;
-	private Date inqurer_reply_writedate;
-	private Date inqurer_reply_updatedate;
-	private String inqurer_reply_content;
+	private int inqurerReplyNo;
+	private String inqurerReplyId;
+	private int inqurerOriginNo;
+	private Date inqurerReplyWritedate;
+	private Date inqurerReplyUpdatedate;
+	private String inqurerReplyContent;
 	
 }
