@@ -13,13 +13,17 @@
 		<h1>1:1 문의 작성</h1>
 	</div>
 	
-	<form action = "write" method = "post">
+	<form action = "write" method = "post" enctype = "multipart/form-data">
 	<div class = "row">
 		문의글 제목 : <input name = "inquireTitle">
 	</div>
 	
 	<div class = "row">
 		문의글 내용 : <input name = "inquireContent">
+	</div>
+	
+	<div>
+		첨부파일 : <input type = "file" name = "attachmentInquireImg" accept = ".png, .jpg" multiple>
 	</div>
 	
 	<div>

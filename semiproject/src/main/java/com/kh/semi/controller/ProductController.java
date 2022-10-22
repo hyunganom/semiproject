@@ -71,21 +71,21 @@ public class ProductController {
 		for(MultipartFile file : attachmentMainImg) {
 			if(!file.isEmpty()) {
 			//1)첨부파일 시퀀스 발급
-			int attatchmentNo = attachmentDao.sequence();
+			int attachmentNo = attachmentDao.sequence();
 			//첨부 DB등록
 			attachmentDao.insert(AttachmentDto.builder()
-					.attachmentNo(attatchmentNo)
+					.attachmentNo(attachmentNo)
 					.attachmentName(file.getOriginalFilename())
 					.attachmentType(file.getContentType())
 					.attachmentSize(file.getSize())
 				.build());
 			
 			//2)파일저장
-			File target = new File(tumbnailDirectory, String.valueOf(attatchmentNo));
+			File target = new File(tumbnailDirectory, String.valueOf(attachmentNo));
 			tumbnailDirectory.mkdirs();//3)폴더 생성 명령
 			file.transferTo(target);
 			//4)product_attachment 연결테이블 정보 저장
-			attachmentDao.productConnectAttachment(productNo, attatchmentNo);
+			attachmentDao.productConnectAttachment(productNo, attachmentNo);
 			}
 		}
 		
@@ -93,21 +93,21 @@ public class ProductController {
 		for(MultipartFile file : attachmentSubImg) {
 			if(!file.isEmpty()) {
 			//첨부파일 시퀀스 발급
-			int attatchmentNo = attachmentDao.sequence();
+			int attachmentNo = attachmentDao.sequence();
 			//첨부 DB등록
 			attachmentDao.insert(AttachmentDto.builder()
-					.attachmentNo(attatchmentNo)
+					.attachmentNo(attachmentNo)
 					.attachmentName(file.getOriginalFilename())
 					.attachmentType(file.getContentType())
 					.attachmentSize(file.getSize())
 				.build());
 			
 			//파일저장
-			File target = new File(detailDirectory, String.valueOf(attatchmentNo));
+			File target = new File(detailDirectory, String.valueOf(attachmentNo));
 			detailDirectory.mkdirs();//폴더 생성 명령
 			file.transferTo(target);
 			//product_explaim 연결테이블 정보 저장
-			attachmentDao.explainConnectAttachment(productNo, attatchmentNo);
+			attachmentDao.explainConnectAttachment(productNo, attachmentNo);
 			}
 		}
 		
