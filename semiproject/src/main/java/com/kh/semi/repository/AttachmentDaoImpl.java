@@ -145,8 +145,8 @@ public class AttachmentDaoImpl implements AttachmentDao{
 	@Override
 	public List<AttachmentDto> selectInquireAttachmentList(int inquireAttachmentOriginNo) {
 		// 문의글 원본 번호(inquireAttachmentOriginNo)로 해당 문의글 번호에 연결된 첨부파일 번호 조회(상세 조회)
-		String sql = "select * from inquire_attachment where inquire_attachment_origin_no = ?";
+		String sql = "select A.* from inquire_attachment I inner join attachment A on I.inquire_attachment_no = A.attachment_no where inquire_attachment_origin_no = ?";
 		Object[] param = new Object[] {inquireAttachmentOriginNo};
-		return jdbcTemplate.query(sql, mapper);
+		return jdbcTemplate.query(sql, mapper, param);
 	}
 }
