@@ -54,6 +54,8 @@
 	<a href = "">주문</a>
 	<a href = "/member/list">회원 목록</a>
 	<a href = "/product/list">상품 목록</a> 
+	<a href = "/inquire/list">문의글 목록</a>
+	<a href = "/member/login">로그인</a>
 
 	</div>
 

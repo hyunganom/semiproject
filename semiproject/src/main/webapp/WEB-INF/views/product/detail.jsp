@@ -72,7 +72,6 @@
 			</c:forEach>
 		</td>
 	</tr>
-	</tr>
 </tbody>
 <tfoot>
 	<tr>
