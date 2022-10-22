@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>회원 목록</title>
-</head>
-<body>
+
+<%-- header.jsp 불러오기 --%>
+<jsp:include page="/WEB-INF/views/template/header.jsp">
+	<jsp:param value="회원 목록" name="title"/>
+</jsp:include>
+
 	<div align="center">
 		<h1>회원 조회</h1>
 		
@@ -54,7 +53,7 @@
 		
 		<br><br>
 		
-		<table border="1" width="900">
+		<table border="1" width="1000">
 			<thead>
 				<tr>
 					<th>아이디</th>
@@ -66,6 +65,7 @@
 					<th>등급</th>
 					<th>회원탈퇴여부</th>
 					<th>메뉴</th>
+					<th>탈퇴관리(Y / N)</th>
 				</tr>
 			</thead>
 			<tbody align="center">
@@ -82,13 +82,15 @@
 					<td>
 						<a href="detail?memberId=${memberDto.memberId}">상세</a>
 						<a href="change?memberId=${memberDto.memberId}">수정</a>
+<%-- 						<a href="cut?memberId=${memberDto.memberId}">삭제</a> --%>
 					</td>
+					<td></td>
 				</tr>
 				</c:forEach>
 			</tbody>
 			<tfoot>
 				<tr>
-					<td colspan="9" align="right">
+					<td colspan="10" align="right">
 						총 ${list.size()}개의 결과
 					</td>
 				</tr>
@@ -98,5 +100,6 @@
 		<h2><a href="/">메인 페이지</a></h2>
 		
 	</div>
-</body>
-</html>
+	
+<%-- footer.jsp 불러오기 --%>
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

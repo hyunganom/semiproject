@@ -3,6 +3,7 @@ package com.kh.semi.repository;
 import java.util.List;
 
 import com.kh.semi.entity.CouponDto;
+import com.kh.semi.vo.CouponCountVO;
 
 public interface CouponDao {
 	//회원 개인이 보유하는 쿠폰
@@ -18,5 +19,7 @@ public interface CouponDao {
 	
 	//4. 보유쿠폰 삭제(쿠폰번호로 삭제)
 	boolean delete(int couponNo);
-
+	
+	List<CouponCountVO> selectCountList();
+	
 }

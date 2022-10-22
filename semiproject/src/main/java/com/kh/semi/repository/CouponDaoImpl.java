@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.kh.semi.entity.CouponDto;
+import com.kh.semi.vo.CouponCountVO;
 
 public class CouponDaoImpl implements CouponDao{
 	
@@ -16,6 +17,7 @@ public class CouponDaoImpl implements CouponDao{
 	private JdbcTemplate jdbcTemplate;
 	
 	private RowMapper<CouponDto> mapper = new RowMapper<CouponDto>() {
+		@Override
 		public CouponDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 			CouponDto couponDto = new CouponDto();
 			couponDto.setCouponNo(rs.getInt("coupon_no"));
@@ -78,5 +80,23 @@ public class CouponDaoImpl implements CouponDao{
 		Object[] param = {couponNo};
 		return jdbcTemplate.update(sql, param) > 0;
 	}
+	
+	//쿠폰 갯수를 세기 CouponCountVO에 대한 RowMapper
+	private RowMapper<CouponCountVO> countMapper = new RowMapper<CouponCountVO>() {
+		@Override
+		public CouponCountVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+			CouponCountVO couponCountVo = new CouponCountVO();
+			couponCountVo.setCouponId(rs.getString("couponId"));
+			couponCountVo.setCnt(rs.getInt("cnt"));
+			return null;
+		}
+	};
 
+	@Override 
+	public List<CouponCountVO> selectCountList() {
+		String sql = "select coupon_id, count(*) cnt from coupon "
+						+ "group by coupon_id";
+		return jdbcTemplate.query(sql,  countMapper);
+	}	
+	
 }

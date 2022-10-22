@@ -52,8 +52,8 @@ public class ProductController {
 	// 2) 상품 등록 처리
 	@PostMapping("/insert")
 	public String insert(@ModelAttribute ProductDto productDto,
-			@RequestParam List<MultipartFile> attachment,
-			@RequestParam List<MultipartFile> attachment1,
+			@RequestParam List<MultipartFile> attachmentMainImg, // 상품 이미지 첨부파일에 대한 List
+			@RequestParam List<MultipartFile> attachmentSubImg, // 상품 상세 이미지 첨부파일에 대한 List
 			RedirectAttributes attr) throws IllegalStateException, IOException {
 		
 		// 관리자 상품 등록(INSERT)을 위한 다음 시퀀스 번호 반환
@@ -68,7 +68,7 @@ public class ProductController {
 		
 		
 		//첨부파일 썸네일 이미지 등록
-		for(MultipartFile file : attachment) {
+		for(MultipartFile file : attachmentMainImg) {
 			if(!file.isEmpty()) {
 			//1)첨부파일 시퀀스 발급
 			int attatchmentNo = attachmentDao.sequence();
@@ -90,7 +90,7 @@ public class ProductController {
 		}
 		
 		//상품설명이미지 등록
-		for(MultipartFile file : attachment1) {
+		for(MultipartFile file : attachmentSubImg) {
 			if(!file.isEmpty()) {
 			//첨부파일 시퀀스 발급
 			int attatchmentNo = attachmentDao.sequence();
