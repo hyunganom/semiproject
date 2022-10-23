@@ -41,8 +41,8 @@ public interface ProductDao {
 	// 추상 메소드 - 관리자 상품 수정(UPDATE)
 	boolean updateProduct(ProductDto productDto);
 	
-	// 추상 메소드 - 관리자 상품 삭제(비활성화로 UPDATE)
-	boolean deleteProduct(int productNo, boolean isProductInactive);
+	// 추상 메소드 - 관리자 상품 삭제(UPDATE)
+	boolean inactiveProduct(int productNo, boolean isProductInactive);
 	
 	// 추상 메소드 - 상품 수정시 수정시간 갱신
 	void updateProductRegistTime(int productNo);

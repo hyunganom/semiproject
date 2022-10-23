@@ -47,6 +47,8 @@ public class InquireDaoImpl implements InquireDao {
 					.inquireContent(rs.getString("inquire_content"))
 					.inquireWritetime(rs.getDate("inquire_writetime"))
 					.inquireUpdatetime(rs.getDate("inquire_updatetime"))
+					.inquireHasReply(rs.getString("inquire_hasReply"))
+					.inquireInactive(rs.getString("inquire_inactive"))
 					.build();
 		}
 	};
@@ -56,6 +58,14 @@ public class InquireDaoImpl implements InquireDao {
 	public List<InquireDto> selectInquire() {
 		String sql = "select * from inquire order by inquire_no desc";
 		return jdbcTemplate.query(sql, mapper);
+	}
+	
+	// 추상 메소드 오버라이딩 - 문의글 조회(SELECT) - 회원용
+	@Override
+	public List<InquireDto> selectInquire(String inquireId) {
+		String sql = "select * from inquire where inquire_id = ? order by inquire_no desc";
+		Object[] param = new Object[] {inquireId};
+		return jdbcTemplate.query(sql, mapper, param);
 	}
 
 	// InquireDto에 대한 ResultSetExtractor
@@ -70,6 +80,8 @@ public class InquireDaoImpl implements InquireDao {
 						.inquireContent(rs.getString("inquire_content"))
 						.inquireWritetime(rs.getDate("inquire_writetime"))
 						.inquireUpdatetime(rs.getDate("inquire_updatetime"))
+						.inquireHasReply(rs.getString("inquire_hasReply"))
+						.inquireInactive(rs.getString("inquire_inactive"))
 						.build();
 			}
 			else {
@@ -94,4 +106,19 @@ public class InquireDaoImpl implements InquireDao {
 		return jdbcTemplate.update(sql, param) > 0;
 	}
 
+	// 추상 메소드 오버라이딩 - 문의글 삭제(DELETE)
+	@Override
+	public boolean deleteInquire(int inquireNo) {
+		String sql = "delete inquire where inquire_no = ?";
+		Object[] param = new Object[] {inquireNo};
+		return jdbcTemplate.update(sql, param) > 0;
+	}
+
+	// 추상 메소드 오버라이딩 - 문의글 삭제(UPDATE)
+	@Override
+	public boolean inactiveInquire(int inquireNo) {
+		String sql = "update inquire set inquire_inactive = 'Y' where inquire_no = ?";
+		Object[] param = new Object[] {inquireNo};
+		return jdbcTemplate.update(sql, param) > 0;
+	}
 }
