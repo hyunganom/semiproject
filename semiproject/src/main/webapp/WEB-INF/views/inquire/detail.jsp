@@ -57,6 +57,43 @@
 				
 			</tbody>
 		</table>
+		
+		<hr><!-- 여기부턴 댓글 목록 -->
+		
+		<div class = "row">
+			<h1>1:1 문의 댓글 목록</h1>
+		</div>
+		
+		<div class="container-1200 row">
+			<table class="table table-border">
+				<c:forEach var="inquireReplyList" items="${inquireReplyList}">
+					<tr>
+						<td class="left w-100">
+							(${inquireReplyList.memberName})
+							<br>
+							<pre>${inquireReplyList.inquireReplyContent}</pre>
+						</td>
+						<td>수정</td>
+						<td>삭제</td>
+					</tr>
+				</c:forEach>
+			</table>
+		</div>
+		
+		<!-- 댓글 쓰기  -->
+		<div class="row">
+			<h1>댓글 쓰기</h1>
+		</div>
+		<form action="inquireReply/write" method="post">
+		<input name="inquireOriginNo" type ="hidden" value="${inquireDto.inquireNo}">
+		
+		
+		<div class="row">
+			댓글 답변 내용 : <textarea class="input w-100 fix-size" name="inquireReplyContent"></textarea>
+		</div>
+		<button type="submit">등록</button>
+		</form>
+		
 	</div>
 
 </div>

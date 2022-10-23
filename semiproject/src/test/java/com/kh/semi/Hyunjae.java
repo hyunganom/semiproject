@@ -32,7 +32,7 @@ public class Hyunjae {
 		
 	inquireReplyDao.replyWrite(InquireReplyDto.builder()
 			.inquireReplyId("hello111")
-			.inquireOriginNo(308)
+			.inquireOriginNo(301)
 			.inquireReplyContent("아몰랑")
 			.build());
 	
