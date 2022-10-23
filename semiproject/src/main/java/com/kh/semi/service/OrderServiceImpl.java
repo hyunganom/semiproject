@@ -1,6 +1,6 @@
 package com.kh.semi.service;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class OrderServiceImpl implements OrderService{
 	private PaymentDao paymentDao;
 
 	@Override
-	public void buy(OrdersDto ordersDto, List<PaymentDto> paymentDto) {
+	public void buy(OrdersDto ordersDto, ArrayList<PaymentDto> paymentDto) {
 		int orderNo = ordersDao.sequence();
 		ordersDto.setOrderNo(orderNo);
 		ordersDao.insert(ordersDto);
