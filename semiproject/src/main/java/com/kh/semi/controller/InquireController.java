@@ -18,10 +18,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.semi.constant.SessionConstant;
 import com.kh.semi.entity.AttachmentDto;
 import com.kh.semi.entity.InquireDto;
+import com.kh.semi.entity.InquireReplyDto;
 import com.kh.semi.repository.AttachmentDao;
 import com.kh.semi.repository.InquireDao;
+import com.kh.semi.vo.InquireListSearchVO;
+import com.kh.semi.repository.InquireReplyDao;
 
 @Controller
 @RequestMapping("/inquire")
@@ -34,6 +38,10 @@ public class InquireController {
 	// 의존성 주입
 	@Autowired
 	private AttachmentDao attachmentDao;
+	
+	// 1:1 문의 댓글 의존성 주입
+	@Autowired
+	private InquireReplyDao inquireReplyDao;
 	
 	// 문의글 이미지 첨부파일 업로드를 위한 상위 경로(parent) 설정(상위 경로에 대한 File 클래스의 인스턴스 추가)
 	private final File inquireDirectory = new File("D:\\saluv\\inquireImg");
@@ -124,14 +132,29 @@ public class InquireController {
 		return "redirect:detail";
 	}
 	
-	// 2. 문의글 조회 Mapping
+	// 2. 문의글 목록 Mapping (회원용)
 	@GetMapping("/list")
-	public String selectList(Model model) {
+	public String selectList(Model model, @ModelAttribute InquireListSearchVO inquireListSearchVO, HttpSession session) {
 		
-		// 문의글 조회(SELECT) 실행 후 그 결과를 Model에 첨부
-		model.addAttribute("inquireList", inquireDao.selectInquire());
+		// HttpSession에서 로그인 중인 회원 아이디 반환
+		String loginId = (String) session.getAttribute("loginId");
 		
+		// 검색 분류(type)과 검색어(keyword) 값의 존재 여부에 따라 반환한 회원 아이디로 검색 조회/전체 조회 실행 후 그 결과를 Model에 첨부
+		model.addAttribute("inquireList", inquireDao.selectListUserInquire(inquireListSearchVO, loginId));
+		
+		// 문의글 목록 페이지(list.jsp)로 연결
 		return "inquire/list";
+	}
+	
+	// 2. 문의글 목록 Mapping (관리자용)
+	@GetMapping("/listAdmin")
+	public String selectList(Model model, @ModelAttribute InquireListSearchVO inquireListSearchVO) {
+		
+		// 검색 분류(type)과 검색어(keyword) 값의 존재 여부에 따라 검색 조회/전체 조회 실행 후 그 결과를 Model에 첨부
+		model.addAttribute("inquireList", inquireDao.selectListInquire(inquireListSearchVO));
+		
+		// 문의글 목록 페이지(list.jsp)로 연결
+		return "admin/listAdmin";
 	}
 	
 	// 3. 문의글 상세 Mapping
@@ -144,6 +167,9 @@ public class InquireController {
 		// 하이퍼링크로 입력받은 inquireNo로 첨부파일 테이블에서 해당 문의글 원본 번호를 가진 문의글 첨부파일을 전체 조회 실행 후 그 결과를 Model에 첨부
 		model.addAttribute("inquireAttachmentList", attachmentDao.selectInquireAttachmentList(inquireNo));
 		
+		// inquireNo(댓글의 원본글 번호)로 해당하는 댓글 목록 전부조회
+		model.addAttribute("inquireReplyList", inquireReplyDao.selectList(inquireNo));
+		
 		// 문의글 상세 페이지(detail.jsp)로 연결
 		return "inquire/detail";
 	}
@@ -153,8 +179,13 @@ public class InquireController {
 	@GetMapping("/edit")
 	public String edit(HttpSession session, @RequestParam int inquireNo, Model model, RedirectAttributes attr) {
 		
+		// 비로그인 상태일 경우 로그인 페이지(login.jsp)으로 연결 (임시)
 		// HttpSession에서 로그인 중인 회원 아이디를 반환
 		String loginId = (String)session.getAttribute("loginId");
+		// 비로그인 상태라면 로그인 페이지(login.jsp)로 연결
+		if(loginId == null) {
+			return "/member/login";
+		}
 		
 		// 반환한 inquireNo를 매개변수로 상세 조회 실행 후 그 결과를 변수 inquireDto에 저장
 		InquireDto inquireDto = inquireDao.selectOneInquire(inquireNo);
@@ -170,7 +201,7 @@ public class InquireController {
 			// 문의글 수정 페이지(edit.jsp)로 연결
 			return "inquire/edit";
 		}
-		else {
+		else { // 작성자가 아니라면
 			// inquireNo를 redirect시 파라미터의 값(value)으로 설정
 			attr.addAttribute("inquireNo", inquireNo);
 			
@@ -196,4 +227,43 @@ public class InquireController {
 		return "redirect:detail";
 	}
 	
+
+	//1:1문의 댓글 등록(insert) 서블릿
+	@PostMapping("/inquireReply/write")
+	public String Replywrite(@ModelAttribute InquireReplyDto inquireReplyDto,
+			HttpSession session, RedirectAttributes attr) {
+		//로그인된 세션을 가져온다
+		String memberId = (String) session.getAttribute(SessionConstant.ID);
+		//로그인된 세션아이디를 댓글작성자로 설정한다.
+		inquireReplyDto.setInquireReplyId(memberId);
+		//댓글 파라미터에서 요청이 들어온 값을 DB에 집어넣는다.
+		inquireReplyDao.replyWrite(inquireReplyDto);
+		//1:1문의 원본글 
+		attr.addAttribute("inquireNo",inquireReplyDto.getInquireOriginNo());
+		
+		//댓글을 다시 문의글 상세로 이동
+		return "redirect:/inquire/detail";
+	}
+	
+	// 5. 문의글 삭제(비활성화) Mapping
+	@GetMapping("/delete")
+	public String delete(@RequestParam int inquireNo) {
+		
+		// 하이퍼링크로 입력받은 문의글 번호(boardNo)로 문의글 삭제(UPDATE) 실행 - 비활성화 상태를 Y로 수정
+		inquireDao.inactiveInquire(inquireNo);
+		
+		// 상품 목록 Mapping으로 강제 이동(redirect)
+		return "redirect:list";
+	}
+	
+	// *. 문의글 삭제(DELETE) Mapping (임시)
+	@GetMapping("/deleteAdmin")
+	public String delete(@RequestParam int inquireNo, HttpSession session) {
+		
+		// 하이퍼링크로 입력받은 문의글 번호(boardNo)로 문의글 삭제(DELETE) 실행
+		inquireDao.deleteInquire(inquireNo);
+		
+		// 문의글 삭제 후 문의글 목록 Mapping으로 강제 이동(redirect)
+		return "redirect:list";
+	}
 }
