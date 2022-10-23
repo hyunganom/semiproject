@@ -2,18 +2,20 @@ package com.kh.semi.controller;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.semi.constant.SessionConstant;
 import com.kh.semi.entity.OrdersDto;
 import com.kh.semi.entity.PaymentDto;
+import com.kh.semi.repository.BasketDao;
 import com.kh.semi.repository.OrdersDao;
 import com.kh.semi.repository.PaymentDao;
 import com.kh.semi.service.OrderService;
@@ -27,20 +29,17 @@ public class OrdersController {
 	@Autowired
 	private PaymentDao paymentDao;
 	@Autowired
+	private BasketDao basketDao;
+	@Autowired
 	private OrderService orderService;
-	
-	@PostConstruct
-	public void prepare() {
-		System.out.println("초기화 메소드!!");
-	}
-	
 	
 	//장바구니
 	@GetMapping("/basket")
-	public String basket() {
-		//아이디, 상품번호, 상품수량, 추가일(sysdate)로 등록
-		//상세페이지에서 넘어오는 값 확인 후 등록해야함
-		
+	public String basket(HttpSession session, Model model) {
+		//장바구니 조회
+		String memberId = (String)session.getAttribute(SessionConstant.ID);
+		//모델로 전달
+		model.addAttribute("basketVO", basketDao.selectList(memberId));
 		return "order/basket";
 	}
 
@@ -59,7 +58,12 @@ public class OrdersController {
 	
 	@PostMapping("/order_ck")
 	public String order(@ModelAttribute OrdersDto ordersDto,
-			@ModelAttribute List<PaymentDto> paymentDto) {
+			@ModelAttribute List<PaymentDto> paymentDto,
+			HttpSession session
+			) {
+		String memberId = (String)session.getAttribute(SessionConstant.ID);
+		ordersDto.setOrderId(memberId);
+		
 		orderService.buy(ordersDto, paymentDto);
 		return "redirect:/order/_1";
 		

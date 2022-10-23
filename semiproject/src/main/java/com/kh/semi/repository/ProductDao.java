@@ -6,6 +6,7 @@ import com.kh.semi.entity.CategoryHighDto;
 import com.kh.semi.entity.CategoryLowDto;
 import com.kh.semi.entity.ProductDto;
 import com.kh.semi.vo.ProductListSearchVO;
+import com.kh.semi.vo.ProductSelectNameVO;
 
 public interface ProductDao {
 
@@ -58,4 +59,7 @@ public interface ProductDao {
 	
 	// 3) 검색 조회시 상품의 총 갯수
 	int countSearchProduct(ProductListSearchVO productListSearchVO);
+	
+	//승정 구독상품 상세옵션 상품조회
+	ProductSelectNameVO selectName(int productNo);
 }

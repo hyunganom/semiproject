@@ -119,7 +119,7 @@
         </div>
         
          <!-- 입력하지않지만 넘어가야하는 정보 -->
-        <input type="hidden" name="orderId" value="${sessionScope.loginId}">
+<%--         <input type="hidden" name="orderId" value="${sessionScope.loginId}"> --%>
         <input type="hidden" name="orderStatus" value="결제완료">
         <input type="hidden" name="orderPrice" value="12000">
         <input type="hidden" name="orderPayPrice" value="10000">
