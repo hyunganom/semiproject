@@ -141,6 +141,9 @@ public class InquireController {
 		// 하이퍼링크로 입력받은 inquireNo로 상세 조회 실행 후 그 결과를 Model에 첨부
 		model.addAttribute("inquireDto", inquireDao.selectOneInquire(inquireNo));
 		
+		// 하이퍼링크로 입력받은 inquireNo로 첨부파일 테이블에서 해당 문의글 원본 번호를 가진 문의글 첨부파일을 전체 조회 실행 후 그 결과를 Model에 첨부
+		model.addAttribute("inquireAttachmentList", attachmentDao.selectInquireAttachmentList(inquireNo));
+		
 		// 문의글 상세 페이지(detail.jsp)로 연결
 		return "inquire/detail";
 	}

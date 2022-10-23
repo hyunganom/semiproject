@@ -22,9 +22,9 @@ public class InquireReplyDaoImpl implements InquireReplyDao {
 		String sql = "insert INTO inquire_reply "
 				+ " values(INQUIRE_REPLY_SEQ.nextval,"
 				+ " ?, ?,sysdate,sysdate, ?)";
-		Object[] param = {inquireReplyDto.getInqurerReplyId(),
-				inquireReplyDto.getInqurerOriginNo(),
-				inquireReplyDto.getInqurerReplyContent()};
+		Object[] param = {inquireReplyDto.getInquireReplyId(),
+				inquireReplyDto.getInquireOriginNo(),
+				inquireReplyDto.getInquireReplyContent()};
 		jdbcTemplate.update(sql, param);
 	}
 
@@ -66,12 +66,12 @@ public class InquireReplyDaoImpl implements InquireReplyDao {
 	ResultSetExtractor<InquireReplyDto> extractor = (rs)->{
 		if(rs.next()) {
 			return InquireReplyDto.builder()
-					.inqurerReplyNo(rs.getInt("inqurerReply_no"))
-					.inqurerReplyId(rs.getString("inqurerReply_id"))
-					.inqurerOriginNo(rs.getInt("inqurerOrigin_no"))
-					.inqurerReplyWritedate(rs.getDate("inqurerReply_writedate"))
-					.inqurerReplyUpdatedate(rs.getDate("inqurerReply_updatedate"))
-					.inqurerReplyContent(rs.getString("inqurerReply_content"))
+					.inquireReplyNo(rs.getInt("inquire_reply_no"))
+					.inquireOriginNo(rs.getInt("inquire_origin_no"))
+					.inquireReplyId(rs.getString("inquire_reply_id"))
+					.inquireReplyWritedate(rs.getDate("inquire_reply_writedate"))
+					.inquireReplyUpdatedate(rs.getDate("inquire_reply_updatedate"))
+					.inquireReplyContent(rs.getString("inquire_reply_content"))
 					.build();
 		}
 		else return null;
