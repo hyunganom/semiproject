@@ -111,7 +111,7 @@
               <tr>
                 <th>배송메세지</th>
                 <td>
-                  <textarea type="text" name="orderMemo" class="w-100 input"></textarea>
+                  <textarea name="orderMemo" class="w-100 input"></textarea>
                 </td>
               </tr>
             </tbody>

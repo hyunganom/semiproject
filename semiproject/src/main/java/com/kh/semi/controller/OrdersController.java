@@ -1,6 +1,6 @@
 package com.kh.semi.controller;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.annotation.PostConstruct;
 
@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.semi.entity.OrdersDto;
 import com.kh.semi.entity.PaymentDto;
@@ -58,10 +57,19 @@ public class OrdersController {
 	}
 	
 	@PostMapping("/order_ck")
-	public String order(@ModelAttribute OrdersDto ordersDto,
-			@ModelAttribute List<PaymentDto> paymentDto) {
+	public String order(@ModelAttribute OrdersDto ordersDto, 
+			@ModelAttribute ArrayList<PaymentDto> paymentDto
+			) {
+		
+		// View에서 전달받은 OrdersDto에 포함된 정보
+		// orderName, orderTel, orderPost, orderBaseAddress, orderDetailAddress, 
+		// orderMemo, orderId, orderStatus, orderPrice, orderPayPrice
+		
+		// View에서 전달받은 List<PaymentDto>에 포함된 정보
+		// paymentProductNo, paymentCount, paymentPrice, paymentOption
+		
 		orderService.buy(ordersDto, paymentDto);
-		return "redirect:/order/_1";
+		return "redirect:_1";
 		
 		//입력된 주문정보 orderDto에 저장
 		//입력된 결제정보 paymentDto에 저장
