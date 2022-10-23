@@ -15,6 +15,7 @@ import com.kh.semi.entity.CategoryHighDto;
 import com.kh.semi.entity.CategoryLowDto;
 import com.kh.semi.entity.ProductDto;
 import com.kh.semi.vo.ProductListSearchVO;
+import com.kh.semi.vo.ProductSelectNameVO;
 
 @Repository
 public class ProductDaoImpl implements ProductDao {
@@ -253,5 +254,24 @@ public class ProductDaoImpl implements ProductDao {
 		sql = sql.replace("#1", productListSearchVO.getType());
 		Object[] param = new Object[] {productListSearchVO.getKeyword()};
 		return jdbcTemplate.queryForObject(sql, int.class, param);
+	}
+
+	//상품이름 조회 테스트
+	
+	private ResultSetExtractor<ProductSelectNameVO> nameExtractor =(rs)->{
+		if(rs.next()) {
+			ProductSelectNameVO vo = new ProductSelectNameVO();
+			vo.setProductName(rs.getString("product_name"));
+			return vo;
+		}else {
+			return null;
+		}
+	};
+	
+	@Override
+	public ProductSelectNameVO selectName(int productNo) {
+		String sql = "select product_name from product where product_no=?";
+		Object[] param= {productNo};
+		return jdbcTemplate.query(sql, nameExtractor, param);
 	}
 }

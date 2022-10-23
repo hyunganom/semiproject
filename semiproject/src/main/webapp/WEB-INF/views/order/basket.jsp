@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     
 <jsp:include page="/WEB-INF/views/template/header.jsp">
 	<jsp:param value="장바구니" name="title"/>
@@ -19,24 +20,44 @@
                         </th>
                         <th class="w-50 sideline">상품 정보</th>
                         <th class="w-15">수량</th>
-                        <th class="w-15">주문금액</th>
-                        <th class="w-15">배송비</th>
+                        <th class="w-15">가격</th>
+                        <th class="w-15">적립금</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="center">
-                        <td class="w-5"><input type="checkbox"></td>
-                        <td class="w-50">?상품정보?</td>
-                        <td class="w-15">
-                        	?수량?<br>
-                            <button type="button">수량 변경</button>
-                        <td class="w-15">
-                            ?주문금액?<br>
-                            <button type="button">바로구매</button>
-                        </td>
-                        <td class="w-15">?배송비?</td>
-                    </tr>
+                
+                <c:choose>
+                	<c:when test="${basketVO.size()==0}">
+                		<tr class="center">
+                			<td class="w-5"><input type="checkbox"></td>
+                			<td colspan="4">장바구니 담긴 내역이 없습니다!</td>
+                		</tr>
+                	</c:when>
+                	<c:otherwise>
+                		<c:forEach var="vo" items="${basketVO}">
+	                    	<tr class="center">
+		                        <td class="w-5"><input type="checkbox"></td>
+		                        <td class="w-50">
+		                        	${vo.productName}<br>
+		                        	${vo.basketProductOption}
+		                        </td>
+		                        <td class="w-15">
+		                        	${vo.basketCountNumber}<br>
+		                            <button type="button">수량 변경</button>
+		                        <td class="w-15">
+		                            ${vo.productPrice}<br>
+		                            <%--                         	<a href="delete?${vo.productNo}">삭제(비활성화)</a> --%>
+		                        	<a href="#">삭제(비활성화)</a>
+		                        </td>
+		                        <td class="w-15">
+									?적립금찍기?
+		                        </td>
+                    		</tr>
+                    	</c:forEach>
+                	</c:otherwise>
+                </c:choose>
                     
+  
                 </tbody>
                 <tfoot>
                     <tr>
@@ -51,7 +72,7 @@
             <table>
             	<tbody>
             		<tr>
-            			<td>총 주문 상품<span>(개수)</span>개</td>
+            			<td>총 주문 상품<span>${basketVO.size()}</span>개</td>
             		</tr>
             		<tr>
             			
