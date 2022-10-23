@@ -1,6 +1,6 @@
 package com.kh.semi.controller;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
@@ -57,15 +57,20 @@ public class OrdersController {
 	}
 	
 	@PostMapping("/order_ck")
-	public String order(@ModelAttribute OrdersDto ordersDto,
-			@ModelAttribute List<PaymentDto> paymentDto,
-			HttpSession session
+	public String order(@ModelAttribute OrdersDto ordersDto, 
+			@ModelAttribute ArrayList<PaymentDto> paymentDto
 			) {
-		String memberId = (String)session.getAttribute(SessionConstant.ID);
-		ordersDto.setOrderId(memberId);
+		
+		// View에서 전달받은 OrdersDto에 포함된 정보
+		// orderName, orderTel, orderPost, orderBaseAddress, orderDetailAddress, 
+		// orderMemo, orderId, orderStatus, orderPrice, orderPayPrice
+		
+		// View에서 전달받은 List<PaymentDto>에 포함된 정보
+		// paymentProductNo, paymentCount, paymentPrice, paymentOption
+
 		
 		orderService.buy(ordersDto, paymentDto);
-		return "redirect:/order/_1";
+		return "redirect:_1";
 		
 		//입력된 주문정보 orderDto에 저장
 		//입력된 결제정보 paymentDto에 저장
