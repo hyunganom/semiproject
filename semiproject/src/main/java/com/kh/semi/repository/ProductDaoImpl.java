@@ -107,7 +107,7 @@ public class ProductDaoImpl implements ProductDao {
 						.productGood(rs.getInt("product_good"))
 						.productRegisttime(rs.getDate("product_registtime"))
 						.productUpdatetime(rs.getDate("product_updatetime"))
-						.productInactive(rs.getBoolean("product_inactive"))
+						.productInactive(rs.getString("product_inactive") != null)
 					.build();
 		}
 	};
@@ -162,7 +162,7 @@ public class ProductDaoImpl implements ProductDao {
 						.productGood(rs.getInt("product_good"))
 						.productRegisttime(rs.getDate("product_registtime"))
 						.productUpdatetime(rs.getDate("product_updatetime"))
-						.productInactive(rs.getBoolean("product_inactive"))
+						.productInactive(rs.getString("product_inactive") != null)
 					.build();
 			}
 			else {

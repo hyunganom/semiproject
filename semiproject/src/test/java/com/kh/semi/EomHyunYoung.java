@@ -1,11 +1,15 @@
 package com.kh.semi;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.kh.semi.entity.InquireDto;
 import com.kh.semi.repository.InquireDao;
 import com.kh.semi.repository.ProductDao;
+import com.kh.semi.vo.InquireListSearchVO;
 
 @SpringBootTest
 public class EomHyunYoung {
@@ -20,6 +24,27 @@ public class EomHyunYoung {
 //	@Test
 //	public void test() {	
 //		
+//	}
+	
+	// 문의글 통합 조회(SELECT) 회원용
+	@Test
+	public void test() {
+		List<InquireDto> result = inquireDao.selectListUserInquire(InquireListSearchVO.builder()
+																	.type("inquire_title")
+																	.keyword("테")
+																.build(), 
+																"hello1234");
+		System.out.println(result);
+	}
+	
+	// 문의글 통합 조회(SELECT) 관리자용
+//	@Test
+//	public void test() {
+//		List<InquireDto> result = inquireDao.selectListInquire(InquireListSearchVO.builder()
+//																	.type("inquire_title")
+//																	.keyword("테")
+//																.build());
+//		System.out.println(result);
 //	}
 	
 	// 문의글 수정(UPDATE)
@@ -48,13 +73,6 @@ public class EomHyunYoung {
 //		}
 //	}
 
-	// 문의글 조회(SELECT)
-//	@Test
-//	public void test() {	
-//		List<InquireDto> result = inquireDao.selectInquire();
-//		System.out.println(result);
-//	}
-
 	// 문의글 상세(DETAIL)
 //	@Test
 //	public void test() {	
@@ -81,11 +99,11 @@ public class EomHyunYoung {
 //	}
 	
 	// 문의글 삭제(UPDATE)
-	@Test
-	public void test() {	
-		boolean result = inquireDao.inactiveInquire(304);
-		System.out.println(result);
-	}
+//	@Test
+//	public void test() {	
+//		boolean result = inquireDao.inactiveInquire(304);
+//		System.out.println(result);
+//	}
 
 	// 관리자 상품 등록(INSERT)
 //	@Test
