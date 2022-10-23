@@ -1,10 +1,10 @@
 package com.kh.semi.service;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import com.kh.semi.entity.OrdersDto;
 import com.kh.semi.entity.PaymentDto;
 
 public interface OrderService {
-	void buy(OrdersDto ordersDto, List<PaymentDto> paymentDto);
+	void buy(OrdersDto ordersDto, ArrayList<PaymentDto> paymentDto);
 }
