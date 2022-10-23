@@ -6,7 +6,7 @@
 -- inquire_writedate(문의글 작성일) : 날짜, sysdate를 기본값으로
 -- inquire_updatedate(문의글 수정일) : 날짜
 -- inquire_hasReply(문의글 답변 상태) : 문자(1 byte), 관리자의 댓글이 달렸는지 여부, 관리자가 작성한 댓글이 있으면 'Y'
--- inquire_inactive(문의글 삭제 상태) : 문자(1 byte), 문의글 삭제시 'Y'
+-- inquire_inactive(문의글 비활성화) : 문자(1 byte), 문의글 삭제시 'Y'
 
 -- 테이블 생성
 create table inquire(
