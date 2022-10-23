@@ -22,4 +22,6 @@ public class InquireDto {
 	private String inquireContent;	// 문의글 내용
 	private Date inquireWritetime;	// 문의글 작성일
 	private Date inquireUpdatetime; // 문의글 수정일
+	private String inquireHasReply; // 문의글 답변 상태
+	private String inquireInactive;	// 문의글 삭제 상태
 }

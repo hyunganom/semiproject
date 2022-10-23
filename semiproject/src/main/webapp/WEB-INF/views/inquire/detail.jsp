@@ -39,6 +39,14 @@
 					<th>문의글 수정일</th>
 					<td>${inquireDto.inquireUpdatetime}</td>
 				</tr>
+				<tr>
+					<th>문의글 답변 상태</th>
+					<td>${inquireDto.inquireHasReply}</td>
+				</tr>
+				<tr>
+					<th>문의글 삭제 상태</th>
+					<td>${inquireDto.inquireInactive}</td>
+				</tr>
 				
 				<tr>
 					<th>문의글 첨부파일</th>
@@ -51,8 +59,8 @@
 				
 				<tr>
 					<td><a href = "edit?inquireNo=${inquireDto.inquireNo}">수정</a></td>
-					<td><a href = "inactive?inquireNo=${inquireDto.inquireNo}">삭제(비활성화)</a></td>
-					<td><a href = "delete?inquireNo=${inquireDto.inquireNo}">삭제</a></td>
+					<td><a href = "delete?inquireNo=${inquireDto.inquireNo}">삭제(UPDATE)</a></td>
+					<td><a href = "deleteAdmin?inquireNo=${inquireDto.inquireNo}">삭제(DELETE)</a></td>
 				</tr>
 				
 			</tbody>

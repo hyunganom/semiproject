@@ -202,13 +202,13 @@ public class ProductController {
 		ProductDto productDto = productDao.selectOneProduct(productNo);
 		
 		// 상세 조회한 ProductDto의 현재 상품 비활성화 상태의 반대값으로 상품 비활성화 상태 수정(UPDATE)
-		productDao.deleteProduct(productNo, !productDto.isProductInactive());
+		productDao.inactiveProduct(productNo, !productDto.isProductInactive());
 		
 		// 상품 목록 Mapping으로 강제 이동(redirect)
 		return "redirect:list";
 	}
 	
-	// 4. 상품 삭제(DELETE) Mapping (더미데이터 삭제용)
+	// 4. 상품 삭제(DELETE) Mapping (임시)
 	@GetMapping("/deleteAdmin")
 	public String deleteAdmin(@RequestParam int productNo) {
 		

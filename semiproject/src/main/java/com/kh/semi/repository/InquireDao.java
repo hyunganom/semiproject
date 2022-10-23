@@ -15,6 +15,9 @@ public interface InquireDao {
 	// 추상 메소드 - 문의글 조회(SELECT)
 	List<InquireDto> selectInquire();
 	
+	// 추상 메소드 - 문의글 조회(SELECT) - 회원용
+	List<InquireDto> selectInquire(String inquireId);
+	
 	// 추상 메소드 - 문의글 상세(DETAIL)
 	InquireDto selectOneInquire(int inquireNo);
 	
@@ -22,4 +25,8 @@ public interface InquireDao {
 	boolean updateInquire(InquireDto inquireDto);
 	
 	// 추상 메소드 - 문의글 삭제(DELETE)
+	boolean deleteInquire(int inquireNo);
+	
+	// 추상 메소드 - 문의글 삭제(UPDATE)
+	boolean inactiveInquire(int inquireNo);
 }
