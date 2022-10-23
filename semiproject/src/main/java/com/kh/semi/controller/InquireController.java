@@ -24,6 +24,7 @@ import com.kh.semi.entity.InquireDto;
 import com.kh.semi.entity.InquireReplyDto;
 import com.kh.semi.repository.AttachmentDao;
 import com.kh.semi.repository.InquireDao;
+import com.kh.semi.vo.InquireListSearchVO;
 import com.kh.semi.repository.InquireReplyDao;
 
 @Controller
@@ -133,13 +134,13 @@ public class InquireController {
 	
 	// 2. 문의글 목록 Mapping (회원용)
 	@GetMapping("/list")
-	public String selectList(Model model, HttpSession session) {
+	public String selectList(Model model, @ModelAttribute InquireListSearchVO inquireListSearchVO, HttpSession session) {
 		
 		// HttpSession에서 로그인 중인 회원 아이디 반환
 		String loginId = (String) session.getAttribute("loginId");
 		
-		// 반환한 회원 아이디로 해당 아이디가 작성한 문의글 전체 조회 후 그 결과를 Model에 첨부
-		model.addAttribute("inquireList", inquireDao.selectInquire(loginId));
+		// 검색 분류(type)과 검색어(keyword) 값의 존재 여부에 따라 반환한 회원 아이디로 검색 조회/전체 조회 실행 후 그 결과를 Model에 첨부
+		model.addAttribute("inquireList", inquireDao.selectListUserInquire(inquireListSearchVO, loginId));
 		
 		// 문의글 목록 페이지(list.jsp)로 연결
 		return "inquire/list";
@@ -147,10 +148,10 @@ public class InquireController {
 	
 	// 2. 문의글 목록 Mapping (관리자용)
 	@GetMapping("/listAdmin")
-	public String selectList(Model model) {
+	public String selectList(Model model, @ModelAttribute InquireListSearchVO inquireListSearchVO) {
 		
-		// 문의글 조회(SELECT) 실행 후 그 결과를 Model에 첨부
-		model.addAttribute("inquireList", inquireDao.selectInquire());
+		// 검색 분류(type)과 검색어(keyword) 값의 존재 여부에 따라 검색 조회/전체 조회 실행 후 그 결과를 Model에 첨부
+		model.addAttribute("inquireList", inquireDao.selectListInquire(inquireListSearchVO));
 		
 		// 문의글 목록 페이지(list.jsp)로 연결
 		return "admin/listAdmin";
@@ -226,6 +227,7 @@ public class InquireController {
 		return "redirect:detail";
 	}
 	
+
 	//1:1문의 댓글 등록(insert) 서블릿
 	@PostMapping("/inquireReply/write")
 	public String Replywrite(@ModelAttribute InquireReplyDto inquireReplyDto,
@@ -243,7 +245,7 @@ public class InquireController {
 		return "redirect:/inquire/detail";
 	}
 	
-	// 3. 문의글 삭제(비활성화) Mapping
+	// 5. 문의글 삭제(비활성화) Mapping
 	@GetMapping("/delete")
 	public String delete(@RequestParam int inquireNo) {
 		
@@ -254,7 +256,7 @@ public class InquireController {
 		return "redirect:list";
 	}
 	
-	// 문의글 삭제(DELETE) Mapping (임시)
+	// *. 문의글 삭제(DELETE) Mapping (임시)
 	@GetMapping("/deleteAdmin")
 	public String delete(@RequestParam int inquireNo, HttpSession session) {
 		

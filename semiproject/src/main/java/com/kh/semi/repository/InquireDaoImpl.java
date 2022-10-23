@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.kh.semi.entity.InquireDto;
+import com.kh.semi.vo.InquireListSearchVO;
 
 @Repository
 public class InquireDaoImpl implements InquireDao {
@@ -47,24 +48,70 @@ public class InquireDaoImpl implements InquireDao {
 					.inquireContent(rs.getString("inquire_content"))
 					.inquireWritetime(rs.getDate("inquire_writetime"))
 					.inquireUpdatetime(rs.getDate("inquire_updatetime"))
-					.inquireHasReply(rs.getString("inquire_hasReply"))
-					.inquireInactive(rs.getString("inquire_inactive"))
+					.inquireHasReply(rs.getString("inquire_hasReply") != null)
+					.inquireInactive(rs.getString("inquire_inactive") != null)
 					.build();
 		}
 	};
-
-	// 추상 메소드 오버라이딩 - 문의글 조회(SELECT)
+	
+	// 추상 메소드 오버라이딩 - 문의글 통합 조회(SELECT) 관리자용
+	// - 통합 조회
 	@Override
-	public List<InquireDto> selectInquire() {
+	public List<InquireDto> selectListInquire(InquireListSearchVO inquireListSearchVO) {
+		
+		// 검색 조회인지 판정
+		if(inquireListSearchVO.isSearch()) { // 검색 조회라면
+			return searchListInquire(inquireListSearchVO); // 검색 조회 실행
+		}
+		else { // 검색 조회가 아니라면 (전체 조회라면)
+			return allListInquire(); // 전체 조회 실행
+		}
+	}
+
+	// - 검색 조회
+	@Override
+	public List<InquireDto> searchListInquire(InquireListSearchVO inquireListSearchVO) {
+		String sql = "select * from inquire where instr(#1, ?) > 0 order by inquire_no desc";
+		sql = sql.replace("#1", inquireListSearchVO.getType());
+		Object[] param = new Object[] {inquireListSearchVO.getKeyword()};
+		return jdbcTemplate.query(sql, mapper, param);
+	}
+	
+	// - 전체 조회
+	@Override
+	public List<InquireDto> allListInquire() {
 		String sql = "select * from inquire order by inquire_no desc";
 		return jdbcTemplate.query(sql, mapper);
 	}
 	
-	// 추상 메소드 오버라이딩 - 문의글 조회(SELECT) - 회원용
+	// 추상 메소드 - 문의글 통합 조회(SELECT) 회원용
+	// - 통합 조회
 	@Override
-	public List<InquireDto> selectInquire(String inquireId) {
+	public List<InquireDto> selectListUserInquire(InquireListSearchVO inquireListSearchVO, String loginId) {
+		
+		// 검색 조회인지 판정
+		if(inquireListSearchVO.isSearch()) { // 검색 조회라면
+			return searchListUserInquire(inquireListSearchVO, loginId);
+		}
+		else {
+			return allListUserInquire(loginId);
+		}
+	}
+
+	// - 검색 조회
+	@Override
+	public List<InquireDto> searchListUserInquire(InquireListSearchVO inquireListSearchVO, String loginId) {
+		String sql = "select * from inquire where instr(#1, ?) > 0 and inquire_id = ? order by inquire_no desc";
+		sql = sql.replace("#1", inquireListSearchVO.getType());
+		Object[] param = new Object[] {inquireListSearchVO.getKeyword(), loginId};
+		return jdbcTemplate.query(sql, mapper, param);
+	}
+
+	// - 전체 조회
+	@Override
+	public List<InquireDto> allListUserInquire(String loginId) {
 		String sql = "select * from inquire where inquire_id = ? order by inquire_no desc";
-		Object[] param = new Object[] {inquireId};
+		Object[] param = new Object[] {loginId};
 		return jdbcTemplate.query(sql, mapper, param);
 	}
 
@@ -80,8 +127,8 @@ public class InquireDaoImpl implements InquireDao {
 						.inquireContent(rs.getString("inquire_content"))
 						.inquireWritetime(rs.getDate("inquire_writetime"))
 						.inquireUpdatetime(rs.getDate("inquire_updatetime"))
-						.inquireHasReply(rs.getString("inquire_hasReply"))
-						.inquireInactive(rs.getString("inquire_inactive"))
+						.inquireHasReply(rs.getString("inquire_hasReply") != null)
+						.inquireInactive(rs.getString("inquire_inactive") != null)
 						.build();
 			}
 			else {
