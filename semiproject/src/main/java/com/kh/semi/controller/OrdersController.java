@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.kh.semi.constant.SessionConstant;
 import com.kh.semi.entity.OrdersDto;
 import com.kh.semi.entity.PaymentDto;
-import com.kh.semi.entity.ProductDto;
 import com.kh.semi.repository.BasketDao;
 import com.kh.semi.repository.MemberDao;
 import com.kh.semi.repository.OrdersDao;
@@ -75,9 +74,11 @@ public class OrdersController {
 	
 	@PostMapping("/order_ck")
 	public String order(@ModelAttribute OrdersDto ordersDto, 
-			@ModelAttribute ArrayList<PaymentDto> paymentDto
+			@ModelAttribute ArrayList<PaymentDto> paymentDto,
+			HttpSession session
 			) {
-		
+		String memberId = (String)session.getAttribute(SessionConstant.ID);
+		ordersDto.setOrderId(memberId);
 		// View에서 전달받은 OrdersDto에 포함된 정보
 		// orderName, orderTel, orderPost, orderBaseAddress, orderDetailAddress, 
 		// orderMemo, orderId, orderStatus, orderPrice, orderPayPrice

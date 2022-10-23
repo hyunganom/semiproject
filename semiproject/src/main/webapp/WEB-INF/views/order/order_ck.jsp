@@ -141,16 +141,16 @@
         </div>
         
          <!-- 입력하지않지만 넘어가야하는 정보 -->
-<%--         <input type="hidden" name="orderId" value="${sessionScope.loginId}"> --%>
+<%--         <input type="hidden" name="orderId" value="${loginId}"> --%>
         <input type="hidden" name="orderStatus" value="결제완료">
         <input type="hidden" name="orderPrice" value="12000">
         <input type="hidden" name="orderPayPrice" value="10000">
         
         <!-- payment에 넘어가야하는 정보(배열값으로 돌릴 예정) -->
-		<input type="hidden" name="paymentProductNo" value="49">
+		<input type="hidden" name="paymentProductNo" value="1264">
 		<input type="hidden" name="paymentCount" value="2">
-		<input type="hidden" name="paymentPrice" value="2000">
-		<input type="hidden" name="paymentOption" value="2">
+		<input type="hidden" name="paymentPrice" value="10000">
+		<input type="hidden" name="paymentOption" value="옵션">
 
         <div class="row mt-50">
           <h3>쿠폰 / 적립금</h3>
