@@ -56,6 +56,7 @@
 	<a href = "/product/list">상품 목록</a> 
 	<a href = "/inquire/list">문의글 목록</a>
 	<a href = "/member/login">로그인</a>
+	<a href = "/member/logout">로그아웃</a>
 	<a href = "/">홈(메인)</a>
 	</div>
 
