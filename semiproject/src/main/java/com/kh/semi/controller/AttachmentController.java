@@ -3,6 +3,7 @@ package com.kh.semi.controller;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,19 +97,40 @@ public class AttachmentController {
 				.body(resource);
 	}
 	
-//	// 문의글 첨부파일 이미지 다운로드 Mapping
-//	@GetMapping("/download/inquireImg")
-//	public ResponseEntity<ByteArrayResource> downloadInquireImg(@RequestParam int attachmentNo){
-//		
-//		// View에서 입력받은 첨부파일 번호로 단일 조회 실행
-//		AttachmentDto attachmentDto = attachmentDao.selectOne(attachmentNo);
-//		
-//		// 해당 첨부파일 번호의 파일이 있는지 판정
-//		if(attachmentDto == null) { // 해당 첨부파일 번호의 첨부파일이 존재하지 않는다면
-//			return "";
-//		}
-//		
-//		// 문의글 이미지 첨부파일 업로드를 위한 상위 경로(parent) 설정(상위 경로에 대한 File 클래스의 인스턴스 추가)
-//		File directory = new File("D:\\saluv\\inquireImg");
-//	}
+	// 문의글 첨부파일 이미지 다운로드 Mapping
+	@GetMapping("/download/inquireImg")
+	public ResponseEntity<ByteArrayResource> downloadInquireImg(@RequestParam int attachmentNo) throws IOException{
+		
+		// View에서 입력받은 첨부파일 번호로 단일 조회 실행
+		AttachmentDto attachmentDto = attachmentDao.selectOne(attachmentNo);
+		
+		// 해당 첨부파일 번호의 파일이 있는지 판정
+		if(attachmentDto == null) { // 해당 첨부파일 번호의 첨부파일이 존재하지 않는다면
+			return ResponseEntity.notFound().build(); // 404 에러를 발생시키는 ResponseEntity 반환
+		}
+		
+		// 문의글 이미지 첨부파일이 존재하는 상위 경로(parent) 설정(상위 경로에 대한 File 클래스의 인스턴스 추가)
+		File directory = new File("D:\\saluv\\inquireImg");
+		
+		// 상위 경로(parent)의 File 클래스 인스턴스와 하위 경로(child)의 문자열을 이용하여 파일 다운로드 경로 설정
+		// - 첨부파일 업로드시 파일 이름을 첨부파일 번호(attchmentNo)로 설정했으므로 다운로드 시 하위 경로 이름은 해당 첨부파일 번호(attchmentNo)가 된다
+		File target = new File(directory, String.valueOf(attachmentNo));
+		
+		// target을 byte 배열로 변환
+		byte[] data = FileUtils.readFileToByteArray(target);
+		
+		// byte 배열로 ByteArrayResource의 인스턴스 생성
+		ByteArrayResource resource = new ByteArrayResource(data);
+		
+		// ResponseEntity 반환
+		return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_ENCODING, StandardCharsets.UTF_8.name()) 
+				.contentLength(attachmentDto.getAttachmentSize()) 
+				.contentType(MediaType.APPLICATION_OCTET_STREAM)
+				.header(HttpHeaders.CONTENT_DISPOSITION, 
+						ContentDisposition.attachment().filename(attachmentDto.getAttachmentName(), 
+						StandardCharsets.UTF_8)
+						.build().toString())
+				.body(resource);
+	}
 }

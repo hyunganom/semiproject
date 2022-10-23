@@ -29,6 +29,12 @@ public class Hyunjae {
 	//건들지 마셈
 	@Test
 	public void test01() {
+		
+	inquireReplyDao.replyWrite(InquireReplyDto.builder()
+			.inquireReplyId("hello111")
+			.inquireOriginNo(308)
+			.inquireReplyContent("아몰랑")
+			.build());
 	
 	inquireReplyDao.selectList(1);
 	

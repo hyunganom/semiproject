@@ -41,6 +41,15 @@
 				</tr>
 				
 				<tr>
+					<th>문의글 첨부파일</th>
+					<td>
+						<c:forEach var = "inquireAttachmentList" items = "${inquireAttachmentList}">
+							<img width = "50px" height = "50px" src = "/attachment/download/inquireImg?attachmentNo=${inquireAttachmentList.attachmentNo}">
+						</c:forEach>
+					</td>
+				</tr>
+				
+				<tr>
 					<td><a href = "edit?inquireNo=${inquireDto.inquireNo}">수정</a></td>
 					<td><a href = "inactive?inquireNo=${inquireDto.inquireNo}">삭제(비활성화)</a></td>
 					<td><a href = "delete?inquireNo=${inquireDto.inquireNo}">삭제</a></td>
