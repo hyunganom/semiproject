@@ -18,11 +18,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.semi.constant.SessionConstant;
 import com.kh.semi.entity.AttachmentDto;
 import com.kh.semi.entity.InquireDto;
+import com.kh.semi.entity.InquireReplyDto;
 import com.kh.semi.repository.AttachmentDao;
 import com.kh.semi.repository.InquireDao;
 import com.kh.semi.vo.InquireListSearchVO;
+import com.kh.semi.repository.InquireReplyDao;
 
 @Controller
 @RequestMapping("/inquire")
@@ -35,6 +38,10 @@ public class InquireController {
 	// 의존성 주입
 	@Autowired
 	private AttachmentDao attachmentDao;
+	
+	// 1:1 문의 댓글 의존성 주입
+	@Autowired
+	private InquireReplyDao inquireReplyDao;
 	
 	// 문의글 이미지 첨부파일 업로드를 위한 상위 경로(parent) 설정(상위 경로에 대한 File 클래스의 인스턴스 추가)
 	private final File inquireDirectory = new File("D:\\saluv\\inquireImg");
@@ -160,6 +167,9 @@ public class InquireController {
 		// 하이퍼링크로 입력받은 inquireNo로 첨부파일 테이블에서 해당 문의글 원본 번호를 가진 문의글 첨부파일을 전체 조회 실행 후 그 결과를 Model에 첨부
 		model.addAttribute("inquireAttachmentList", attachmentDao.selectInquireAttachmentList(inquireNo));
 		
+		// inquireNo(댓글의 원본글 번호)로 해당하는 댓글 목록 전부조회
+		model.addAttribute("inquireReplyList", inquireReplyDao.selectList(inquireNo));
+		
 		// 문의글 상세 페이지(detail.jsp)로 연결
 		return "inquire/detail";
 	}
@@ -237,5 +247,24 @@ public class InquireController {
 		
 		// 문의글 삭제 후 문의글 목록 Mapping으로 강제 이동(redirect)
 		return "redirect:list";
+	}
+	
+	
+	//1:1문의 댓글 관련
+	//1:1문의 댓글 등록(insert) 서블릿
+	@PostMapping("/inquireReply/write")
+	public String Replywrite(@ModelAttribute InquireReplyDto inquireReplyDto,
+			HttpSession session, RedirectAttributes attr) {
+		//로그인된 세션을 가져온다
+		String memberId = (String) session.getAttribute(SessionConstant.ID);
+		//로그인된 세션아이디를 댓글작성자로 설정한다.
+		inquireReplyDto.setInquireReplyId(memberId);
+		//댓글 파라미터에서 요청이 들어온 값을 DB에 집어넣는다.
+		inquireReplyDao.replyWrite(inquireReplyDto);
+		//1:1문의 원본글 
+		attr.addAttribute("inquireNo",inquireReplyDto.getInquireOriginNo());
+		
+		//댓글을 다시 문의글 상세로 이동
+		return "redirect:/inquire/detail";
 	}
 }
