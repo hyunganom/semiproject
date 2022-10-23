@@ -212,7 +212,7 @@ public class ProductDaoImpl implements ProductDao {
 
 	// 추상 메소드 오버라이딩 - 관리자 상품 삭제(비활성화로 UPDATE)
 	@Override
-	public boolean deleteProduct(int productNo, boolean isInactiveProduct) {
+	public boolean inactiveProduct(int productNo, boolean isInactiveProduct) {
 		String sql = "update product set product_inactive = ? where product_no = ?";
 		String isInactive = isInactiveProduct ? "Y" : null;
 		Object[] param = new Object[] {isInactive, productNo};
