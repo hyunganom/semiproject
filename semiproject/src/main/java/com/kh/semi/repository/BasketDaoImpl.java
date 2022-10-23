@@ -32,9 +32,9 @@ public class BasketDaoImpl implements BasketDao{
 		jdbcTemplate.update(sql,param);
 	}
 
-	//장바구니 수량수정(상품 옵션 없다고함)
+	//장바구니 수량수정
 	@Override
-	public boolean update(BasketDto basketDto) {
+	public boolean changeCount(BasketDto basketDto) {
 		String sql = "update basket set "
 				+ "basket_count_number=?, "
 				+ "basket_adddate=sysdate "
@@ -71,20 +71,12 @@ public class BasketDaoImpl implements BasketDao{
 	};
 
 	
-//	장바구니 상품조회(매개변수:회원ID)
-//	@Override
-//	public List<BasketDto> selectList(String memberId) {
-//		String sql = "select * from basket where basket_id=?";
-//		Object[] param = {memberId};
-//		return jdbcTemplate.query(sql,  mapper, param);
-//	}
-	
-	//3-3 조회(장바구니에 추가할 상품이 있는지 확인)
+	//장바구니 상품조회(매개변수:회원ID)
 	@Override
-	public boolean checkItem(BasketDto basketDto) {
-		String sql = "select * from basket where basket_product_no=?";
-		Object[] param= {};
-		return false;
+	public List<BasketDto> selectDtoList(String memberId) {
+		String sql = "select * from basket where basket_id=?";
+		Object[] param = {memberId};
+		return jdbcTemplate.query(sql,  mapper, param);
 	}
 	
 	//BasketVO Mapper

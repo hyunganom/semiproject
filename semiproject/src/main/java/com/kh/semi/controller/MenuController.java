@@ -1,5 +1,7 @@
 package com.kh.semi.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -55,22 +57,14 @@ public class MenuController {
 			option = option+productDao.selectName(productNo)+" / ";
 		}
 		
-		//장바구니에 있는 상품이면 개수 증가, 없으면 등록
-//		if(있으면) {
-//		}else {
-//		}
-		
-		//장바구니 옵션 컬럼에 데이터 세팅
+		//장바구니 옵션 컬럼에 들어갈 데이터 세팅
 		basketDto.setBasketProductOption(option);
-
-		//장바구니 테이블 데이터 등록
-		basketDao.insert(basketDto);
 		
-		//2주 테이블에 데이터 등록
+		//2주 테이블에 들어갈 데이터 세팅
 		//필요한 데이터 수집,, 노가다ㅠㅠㅠㅠㅠ 이렇게 하는게 맞는지 모르겠지만 돌아가긴 함
 		String memberId = (String)session.getAttribute(SessionConstant.ID);
 		int sequnece = week2Dao.sequence();
-		
+				
 		Week2Dto week2Dto = new Week2Dto();
 		week2Dto.setWeek2Combi(sequnece);
 		week2Dto.setWeek2ProducNo(basketDto.getBasketProductNo());
@@ -84,6 +78,14 @@ public class MenuController {
 		week2Dto.setWeek2Option7(Integer.parseInt(arrayParam[6]));
 		week2Dto.setWeek2Option8(Integer.parseInt(arrayParam[7]));
 		
+		// 장바구니에 상품번호와 동일한 옵션이 있는지 확인
+		// 1. 회원 아이디로 장바구니를 조회
+		// 2. 번호가 있고 옵션이 있으면 수량증가
+		// 3. 번호가 없거나 옵션이 다르면 등록
+		
+		//장바구니 테이블 데이터 등록
+		basketDao.insert(basketDto);
+		//2주 테이블 데이터 등록
 		week2Dao.insert(week2Dto);		
 
 		return "redirect:/order/basket";

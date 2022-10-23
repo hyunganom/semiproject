@@ -8,6 +8,7 @@
 
 <h1>상품 상세페이지</h1>
 
+<!-- 2주, 4주일때 form데이터 안에 옵션수량 다르게 나올수 있도록 c:when 설정해야함! -->
 <form action="detail" method="post">
 
 <input type="hidden" name="basketCountNumber" value="1">

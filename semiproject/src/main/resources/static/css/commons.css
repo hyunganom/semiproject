@@ -226,7 +226,7 @@ textarea.input.fix-size {
 
 /*  확장 스타일 - 테두리가 있는 테이블 */
 .table.table-border {
-    border: 1px solid gray;
+    border: 1px solid #e5e7eb;
 }
 
 .table.table-border > thead > tr > th, 
@@ -234,12 +234,12 @@ textarea.input.fix-size {
 .table.table-border > tbody > tr > th,
 .table.table-border > tbody > tr > td
 {
-    border: 1px solid gray;
+    border: 1px solid #e5e7eb;
 }
 
 /* 확장스타일 : 테두리가 있는 테이블 */
 .table.table-border {
-    border:1px solid gray;
+    border:1px solid #e5e7eb;
 }
 .table.table-border > thead > tr > th,
 .table.table-border > thead > tr > td,
@@ -247,7 +247,7 @@ textarea.input.fix-size {
 .table.table-border > tbody > tr > td,
 .table.table-border > tfoot > tr > th,
 .table.table-border > tfoot > tr > td {  
-    border: 1px solid gray;
+    border: 1px solid #e5e7eb;
 }
 
 /* 확장 스타일 : 줄무늬 테이블*/
@@ -266,7 +266,7 @@ textarea.input.fix-size {
 
 /* 확장스타일 : 옆트임 테이블 */
 .table.table-slit {
-    border: 3px solid gray;
+    border: 1px solid black;
     border-left: none;
     border-right: none;
 }
@@ -553,4 +553,50 @@ ul.pagination.pagination-small {
 }
 .float-right {
     float: right;
+}
+
+
+
+/* (승정 css) */
+.table.table-basket{
+	border:1px solid #d8dbe0;
+	border-left:none;
+	border-right:none;
+}
+.table.table-basket > thead,
+.table.table-basket > tbody{
+	border-bottom:1px solid #d8dbe0;
+}
+
+.table.table-basket > tbody > tr{
+	border-bottom:1px solid #d8dbe0;
+}
+
+.va-middle{
+	vertical-align:middle;
+}
+
+.btns { 
+    border: none;
+    font-size: 20px;
+    padding: 0.75em;
+    cursor: pointer;
+    display: inline-block;   
+    text-align: center;
+    text-decoration: none;
+    border-radius:8px;
+}
+
+.btns.btns-positive {
+    background-color: #4CB756;
+    color: white;
+}
+.btns.btns-positive:hover {
+    background-color: #addeb3;
+}
+
+.btns.btns-neutral {
+    border: 1px solid #d8dbe0;
+    background-color: white;
+    color: black;
 }

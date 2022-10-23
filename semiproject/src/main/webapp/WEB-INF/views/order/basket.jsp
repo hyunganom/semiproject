@@ -6,17 +6,41 @@
 	<jsp:param value="장바구니" name="title"/>
 </jsp:include>
 
-    <div class="container-900 mt-50">
+<script type="text/javascript">
+	$(function(){
+    	$(".checkedAll").on("input", function(){
+    		var judge = $(this).prop("checked");
+    		$(".checked").prop("checked", judge);
+    	});
+    	
+    	$(".checked").on("input", function(){
+    		var cnt = 0;
+    		$(".checked").each(function(){
+    			if($(this).prop("checked")){
+    				cnt++;
+    			}
+    		});
+    		var judge = $(".checked").length == cnt;
+    		if(judge){
+    			$(".checkedAll").prop("checked", true);
+    		}else{
+    			$(".checkedAll").prop("checked", false);
+    		}
+    	});
+	});
+</script>
+
+    <div class="container-1050 mt-50">
         <div class="row left">
             <h1>장바구니</h1>
         </div>
 
         <div class="row mt-30">
-            <table class="table table-border">
+            <table class="table table-basket">
                 <thead>
                     <tr>
                         <th class="w-5">
-                            <input type="checkbox">
+                            <input type="checkbox" class="checkedAll">
                         </th>
                         <th class="w-50 sideline">상품 정보</th>
                         <th class="w-15">수량</th>
@@ -29,25 +53,25 @@
                 <c:choose>
                 	<c:when test="${basketVO.size()==0}">
                 		<tr class="center">
-                			<td class="w-5"><input type="checkbox"></td>
+                			<td class="w-5"><input type="checkbox" class="checked"></td>
                 			<td colspan="4">장바구니 담긴 내역이 없습니다!</td>
                 		</tr>
                 	</c:when>
                 	<c:otherwise>
                 		<c:forEach var="vo" items="${basketVO}">
 	                    	<tr class="center">
-		                        <td class="w-5"><input type="checkbox"></td>
+		                        <td class="w-5"><input type="checkbox" class="checked"></td>
 		                        <td class="w-50">
 		                        	${vo.productName}<br>
 		                        	${vo.basketProductOption}
 		                        </td>
 		                        <td class="w-15">
 		                        	${vo.basketCountNumber}<br>
-		                            <button type="button">수량 변경</button>
+		                            <button type="button">옵션/수량 변경</button>
 		                        <td class="w-15">
 		                            ${vo.productPrice}<br>
 		                            <%--                         	<a href="delete?${vo.productNo}">삭제(비활성화)</a> --%>
-		                        	<a href="#">삭제(비활성화)</a>
+		                        	<a href="#"><i class="fa-solid fa-trash-can"></i>(비활성화)</a>
 		                        </td>
 		                        <td class="w-15">
 									?적립금찍기?
@@ -68,20 +92,24 @@
                     </tr>
                 </tfoot>
             </table>
+			
+			<table class="table table-slit mt-40">
+				<tbody>
+					<tr class="left">
+						<td>총 주문 상품 <span>${basketVO.size()}</span>개</td>
+					</tr>
+					<tr class="center">
+						<td>
+							<span>?상품금액?<i class="fa-solid fa-plus"></i></span>
+							<span>?배송비?<i class="fa-solid fa-equals"></i></span>
+							<span>?총 주문금액?</span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
             
-            <table>
-            	<tbody>
-            		<tr>
-            			<td>총 주문 상품<span>${basketVO.size()}</span>개</td>
-            		</tr>
-            		<tr>
-            			
-            		</tr>
-            	</tbody>
-            </table>
-            
-            <div class="row center">
-            	<a href="/order/order_ck" class="btn btn-positive">주문하기</a>
+            <div class="row center mt-50">
+            	<a href="/order/order_ck" class="btns btns-positive">주문하기</a>
             </div>
             
         </div>
