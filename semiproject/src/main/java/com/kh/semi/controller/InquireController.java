@@ -227,8 +227,6 @@ public class InquireController {
 		return "redirect:detail";
 	}
 	
-
-	
 	// 5. 문의글 삭제(비활성화) Mapping
 	@GetMapping("/delete")
 	public String delete(@RequestParam int inquireNo) {
