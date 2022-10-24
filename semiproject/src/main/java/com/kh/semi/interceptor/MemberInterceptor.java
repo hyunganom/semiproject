@@ -20,8 +20,8 @@ public class MemberInterceptor implements HandlerInterceptor{
 			throws Exception {
 
 		//접속한 사용자의 로그인 상태 검사
-		HttpSession session = request.getSession();
-		String loginId = (String) session.getAttribute(SessionConstant.ID);
+		HttpSession session = request.getSession();//접속한 사용자 로그인 상태 검사
+		String loginId = (String) session.getAttribute(SessionConstant.ID);//http세션에 loginId 값이 있는지 검사
 		if(loginId == null) {//비회원
 			response.sendRedirect("/member/login");//로그인 페이지로 보냄
 			return false;//차단
