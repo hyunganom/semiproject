@@ -6,6 +6,7 @@ import com.kh.semi.entity.CategoryHighDto;
 import com.kh.semi.entity.CategoryLowDto;
 import com.kh.semi.entity.ProductDto;
 import com.kh.semi.vo.ProductListSearchVO;
+import com.kh.semi.vo.ProductSelectNameVO;
 
 public interface ProductDao {
 
@@ -40,8 +41,8 @@ public interface ProductDao {
 	// 추상 메소드 - 관리자 상품 수정(UPDATE)
 	boolean updateProduct(ProductDto productDto);
 	
-	// 추상 메소드 - 관리자 상품 삭제(비활성화로 UPDATE)
-	boolean deleteProduct(int productNo, boolean isProductInactive);
+	// 추상 메소드 - 관리자 상품 삭제(UPDATE)
+	boolean inactiveProduct(int productNo, boolean isProductInactive);
 	
 	// 추상 메소드 - 상품 수정시 수정시간 갱신
 	void updateProductRegistTime(int productNo);
@@ -58,4 +59,7 @@ public interface ProductDao {
 	
 	// 3) 검색 조회시 상품의 총 갯수
 	int countSearchProduct(ProductListSearchVO productListSearchVO);
+	
+	//승정 구독상품 상세옵션 상품조회
+	ProductSelectNameVO selectName(int productNo);
 }

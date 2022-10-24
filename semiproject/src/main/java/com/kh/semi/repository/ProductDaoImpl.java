@@ -15,6 +15,7 @@ import com.kh.semi.entity.CategoryHighDto;
 import com.kh.semi.entity.CategoryLowDto;
 import com.kh.semi.entity.ProductDto;
 import com.kh.semi.vo.ProductListSearchVO;
+import com.kh.semi.vo.ProductSelectNameVO;
 
 @Repository
 public class ProductDaoImpl implements ProductDao {
@@ -106,7 +107,7 @@ public class ProductDaoImpl implements ProductDao {
 						.productGood(rs.getInt("product_good"))
 						.productRegisttime(rs.getDate("product_registtime"))
 						.productUpdatetime(rs.getDate("product_updatetime"))
-						.productInactive(rs.getBoolean("product_inactive"))
+						.productInactive(rs.getString("product_inactive") != null)
 					.build();
 		}
 	};
@@ -161,7 +162,7 @@ public class ProductDaoImpl implements ProductDao {
 						.productGood(rs.getInt("product_good"))
 						.productRegisttime(rs.getDate("product_registtime"))
 						.productUpdatetime(rs.getDate("product_updatetime"))
-						.productInactive(rs.getBoolean("product_inactive"))
+						.productInactive(rs.getString("product_inactive") != null)
 					.build();
 			}
 			else {
@@ -211,7 +212,7 @@ public class ProductDaoImpl implements ProductDao {
 
 	// 추상 메소드 오버라이딩 - 관리자 상품 삭제(비활성화로 UPDATE)
 	@Override
-	public boolean deleteProduct(int productNo, boolean isInactiveProduct) {
+	public boolean inactiveProduct(int productNo, boolean isInactiveProduct) {
 		String sql = "update product set product_inactive = ? where product_no = ?";
 		String isInactive = isInactiveProduct ? "Y" : null;
 		Object[] param = new Object[] {isInactive, productNo};
@@ -253,5 +254,24 @@ public class ProductDaoImpl implements ProductDao {
 		sql = sql.replace("#1", productListSearchVO.getType());
 		Object[] param = new Object[] {productListSearchVO.getKeyword()};
 		return jdbcTemplate.queryForObject(sql, int.class, param);
+	}
+
+	//상품이름 조회 테스트
+	
+	private ResultSetExtractor<ProductSelectNameVO> nameExtractor =(rs)->{
+		if(rs.next()) {
+			ProductSelectNameVO vo = new ProductSelectNameVO();
+			vo.setProductName(rs.getString("product_name"));
+			return vo;
+		}else {
+			return null;
+		}
+	};
+	
+	@Override
+	public ProductSelectNameVO selectName(int productNo) {
+		String sql = "select product_name from product where product_no=?";
+		Object[] param= {productNo};
+		return jdbcTemplate.query(sql, nameExtractor, param);
 	}
 }

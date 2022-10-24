@@ -5,6 +5,8 @@
 -- inquire_content(문의글 내용) : 문자(4000 byte), 필수 입력
 -- inquire_writedate(문의글 작성일) : 날짜, sysdate를 기본값으로
 -- inquire_updatedate(문의글 수정일) : 날짜
+-- inquire_hasReply(문의글 답변 상태) : 문자(1 byte), 관리자의 댓글이 달렸는지 여부, 관리자가 작성한 댓글이 있으면 'Y'
+-- inquire_inactive(문의글 비활성화) : 문자(1 byte), 문의글 삭제시 'Y'
 
 -- 테이블 생성
 create table inquire(
@@ -13,7 +15,9 @@ inquire_id varchar2(20) references member(member_id) on delete set null,
 inquire_title varchar2(300) not null,
 inquire_content varchar2(4000) not null,
 inquire_writetime date default sysdate,
-inquire_updatetime date
+inquire_updatetime date,
+inquire_hasReply char(1) check(inquire_hasReply = 'Y'),
+inquire_inactive char(1) check(inquire_delete = 'Y')
 );
 
 -- 테이블 삭제
@@ -34,3 +38,22 @@ insert into inquire(inquire_no, inquire_id, inquire_title, inquire_content) valu
 
 -- 문의글 조회(최신순)
 select * from inquire order by inquire_no desc;
+
+-- 문의글 상세
+select * from inquire where inquire_no = ?;
+select * from inquire where inquire_no = 1;
+
+-- 문의글 수정
+update inquire set inquire_title = ?, inquire_content = ? where inquire_no = ?;
+update inquire set inquire_title = '환불해줘Yo', inquire_content = '제발' where inquire_no = 1;
+
+-- 문의글 삭제(DELETE)
+delete inquire where inquire_no = ?;
+delete inquire where inquire_no = 311;
+
+-- 문의글 삭제(UPDATE)
+update inquire set inquire_inactive = 'Y' where inquire_no = ?;
+update inquire set inquire_inactive = 'Y' where inquire_no = 304;
+
+commit;
+

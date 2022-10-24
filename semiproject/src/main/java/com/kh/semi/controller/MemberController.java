@@ -239,10 +239,9 @@ public class MemberController {
 		}
 	}
 	
-	@GetMapping("/end_success")
+	@GetMapping("/endSuccess")
 	public String endSuccess() {
 		return "member/endSuccess";
 	}
-	
 	
 }

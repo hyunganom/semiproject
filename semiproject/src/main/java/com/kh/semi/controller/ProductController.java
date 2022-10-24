@@ -52,8 +52,8 @@ public class ProductController {
 	// 2) 상품 등록 처리
 	@PostMapping("/insert")
 	public String insert(@ModelAttribute ProductDto productDto,
-			@RequestParam List<MultipartFile> attachment,
-			@RequestParam List<MultipartFile> attachment1,
+			@RequestParam List<MultipartFile> attachmentMainImg, // 상품 이미지 첨부파일에 대한 List
+			@RequestParam List<MultipartFile> attachmentSubImg, // 상품 상세 이미지 첨부파일에 대한 List
 			RedirectAttributes attr) throws IllegalStateException, IOException {
 		
 		// 관리자 상품 등록(INSERT)을 위한 다음 시퀀스 번호 반환
@@ -68,46 +68,46 @@ public class ProductController {
 		
 		
 		//첨부파일 썸네일 이미지 등록
-		for(MultipartFile file : attachment) {
+		for(MultipartFile file : attachmentMainImg) {
 			if(!file.isEmpty()) {
 			//1)첨부파일 시퀀스 발급
-			int attatchmentNo = attachmentDao.sequence();
+			int attachmentNo = attachmentDao.sequence();
 			//첨부 DB등록
 			attachmentDao.insert(AttachmentDto.builder()
-					.attachmentNo(attatchmentNo)
+					.attachmentNo(attachmentNo)
 					.attachmentName(file.getOriginalFilename())
 					.attachmentType(file.getContentType())
 					.attachmentSize(file.getSize())
 				.build());
 			
 			//2)파일저장
-			File target = new File(tumbnailDirectory, String.valueOf(attatchmentNo));
+			File target = new File(tumbnailDirectory, String.valueOf(attachmentNo));
 			tumbnailDirectory.mkdirs();//3)폴더 생성 명령
 			file.transferTo(target);
 			//4)product_attachment 연결테이블 정보 저장
-			attachmentDao.productConnectAttachment(productNo, attatchmentNo);
+			attachmentDao.productConnectAttachment(productNo, attachmentNo);
 			}
 		}
 		
 		//상품설명이미지 등록
-		for(MultipartFile file : attachment1) {
+		for(MultipartFile file : attachmentSubImg) {
 			if(!file.isEmpty()) {
 			//첨부파일 시퀀스 발급
-			int attatchmentNo = attachmentDao.sequence();
+			int attachmentNo = attachmentDao.sequence();
 			//첨부 DB등록
 			attachmentDao.insert(AttachmentDto.builder()
-					.attachmentNo(attatchmentNo)
+					.attachmentNo(attachmentNo)
 					.attachmentName(file.getOriginalFilename())
 					.attachmentType(file.getContentType())
 					.attachmentSize(file.getSize())
 				.build());
 			
 			//파일저장
-			File target = new File(detailDirectory, String.valueOf(attatchmentNo));
+			File target = new File(detailDirectory, String.valueOf(attachmentNo));
 			detailDirectory.mkdirs();//폴더 생성 명령
 			file.transferTo(target);
 			//product_explaim 연결테이블 정보 저장
-			attachmentDao.explainConnectAttachment(productNo, attatchmentNo);
+			attachmentDao.explainConnectAttachment(productNo, attachmentNo);
 			}
 		}
 		
@@ -202,13 +202,13 @@ public class ProductController {
 		ProductDto productDto = productDao.selectOneProduct(productNo);
 		
 		// 상세 조회한 ProductDto의 현재 상품 비활성화 상태의 반대값으로 상품 비활성화 상태 수정(UPDATE)
-		productDao.deleteProduct(productNo, !productDto.isProductInactive());
+		productDao.inactiveProduct(productNo, !productDto.isProductInactive());
 		
 		// 상품 목록 Mapping으로 강제 이동(redirect)
 		return "redirect:list";
 	}
 	
-	// 4. 상품 삭제(DELETE) Mapping (더미데이터 삭제용)
+	// 4. 상품 삭제(DELETE) Mapping (임시)
 	@GetMapping("/deleteAdmin")
 	public String deleteAdmin(@RequestParam int productNo) {
 		

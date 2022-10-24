@@ -1,4 +1,4 @@
-package com.kh.semi.entity;
+package com.kh.semi.vo;
 
 import java.sql.Date;
 
@@ -6,19 +6,16 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
-@Builder
-public class InquireReplyDto {
+@Data  @NoArgsConstructor @AllArgsConstructor @Builder
+public class InquireReplyVO {
+//	inquireReply
 	private int inquireReplyNo;
 	private String inquireReplyId;
-	private int inquireOriginNo;
+	private int inquireReplyOriginNo;
 	private Date inquireReplyWritedate;
 	private Date inquireReplyUpdatedate;
 	private String inquireReplyContent;
-	
+	private String memberName;
+	private String memberGrade;
 }

@@ -22,7 +22,7 @@ public class AttachmentDaoImpl implements AttachmentDao{
 	private JdbcTemplate jdbcTemplate;
 	
 	//전체 조회를 위한 mapper
-	private RowMapper<AttachmentDto> productMapper  = (rs, rowNum) -> {
+	private RowMapper<AttachmentDto> mapper  = (rs, rowNum) -> {
 		AttachmentDto dto = new AttachmentDto();
 		dto.setAttachmentNo(rs.getInt("attachment_no"));
 		dto.setAttachmentName(rs.getString("attachment_name"));
@@ -32,7 +32,7 @@ public class AttachmentDaoImpl implements AttachmentDao{
 		return dto;
 	};
 	//단일조회를 위한 mapper
-	private ResultSetExtractor<AttachmentDto> productExtractor = (rs) -> {
+	private ResultSetExtractor<AttachmentDto> extractor = (rs) -> {
 			AttachmentDto dto = new AttachmentDto();
 			if(rs.next()) {
 				dto.setAttachmentNo(rs.getInt("attachment_no"));
@@ -76,7 +76,7 @@ public class AttachmentDaoImpl implements AttachmentDao{
 	@Override
 	public List<AttachmentDto> selectList() {
 		String sql = "select * from attachment";
-		return jdbcTemplate.query(sql, productMapper);
+		return jdbcTemplate.query(sql, mapper);
 	}
 
 	//첨부파일 단일 조회
@@ -84,7 +84,7 @@ public class AttachmentDaoImpl implements AttachmentDao{
 	public AttachmentDto selectOne(int attachmentNo) {
 		String sql = "select * from attachment where attachment_no = ?";
 		Object[] param = {attachmentNo};
-		return jdbcTemplate.query(sql, productExtractor, param);
+		return jdbcTemplate.query(sql, extractor, param);
 	}
 	
 	//첨부파일 삭제기능
@@ -119,7 +119,7 @@ public class AttachmentDaoImpl implements AttachmentDao{
 		String sql = "select * from product_attachment_view "
 				+ "where product_origin_no = ?";
 		Object[] param = {productOriginNo};
-		return jdbcTemplate.query(sql, productMapper, param);
+		return jdbcTemplate.query(sql, mapper, param);
 	}
 	
 	//뷰 조회 구문(product_explain_view)
@@ -129,10 +129,24 @@ public class AttachmentDaoImpl implements AttachmentDao{
 		String sql = "select * from product_explain_view "
 				+ "where product_origin_no = ?";
 		Object[] param = {productOriginNo};
-		return jdbcTemplate.query(sql, productMapper, param);
+		return jdbcTemplate.query(sql, mapper, param);
 	}
 
 
-	
-	
+	// 추상 메소드 - 문의 게시판 첨부파일 업로드 기록 등록(INSERT)
+	@Override
+	public void inquireConnectAttachment(int inquireNo, int attachmentInquireNo) {
+		String sql = "insert into inquire_attachment(inquire_attachment_origin_no, inquire_attachment_no) values(?, ?)";
+		Object[] param = new Object[] {inquireNo, attachmentInquireNo};
+		jdbcTemplate.update(sql, param);
+	}
+
+	// 추상 메소드 - 문의 게시판 첨부파일 업로드 기록 조회(SELECT)
+	@Override
+	public List<AttachmentDto> selectInquireAttachmentList(int inquireAttachmentOriginNo) {
+		// 문의글 원본 번호(inquireAttachmentOriginNo)로 해당 문의글 번호에 연결된 첨부파일 번호 조회(상세 조회)
+		String sql = "select A.* from inquire_attachment I inner join attachment A on I.inquire_attachment_no = A.attachment_no where inquire_attachment_origin_no = ?";
+		Object[] param = new Object[] {inquireAttachmentOriginNo};
+		return jdbcTemplate.query(sql, mapper, param);
+	}
 }
