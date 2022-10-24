@@ -14,7 +14,7 @@
 		<h1>공지 게시판 글 수정 페이지</h1>		
 	</div>
 	
-	<form action = "edit" method = "post">
+	<form action = "editAdmin" method = "post">
 		<input type = "hidden" name = "noticeNo" value = "${noticeDto.noticeNo}">
 		<div class = "row">
 			<p>제목 : <input name = "noticeTitle" value = "${noticeDto.noticeTitle}"></p>

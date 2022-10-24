@@ -33,12 +33,11 @@ public class NoticeDaoImpl implements NoticeDao{
 	public void write(NoticeDto noticeDto) {
 		String sql = "insert into notice "
 					+ "(notice_no, notice_id, notice_title, notice_content, "
-					+ "(notice_writedate, notice_updatedate, notice_read "
-						+ "values(?, ?, ?, ?, sysdate, ?, ?)";
+					+ "notice_read) "
+						+ "values(?, ?, ?, ?, ?)";
 		Object[] param = {
 					noticeDto.getNoticeNo(), noticeDto.getNoticeId(),
 					noticeDto.getNoticeTitle(), noticeDto.getNoticeContent(),
-					noticeDto.getNoticeWritedate(), noticeDto.getNoticeUpdatedate(),
 					noticeDto.getNoticeRead()};
 		jdbcTemplate.update(sql, param);		
 	}
@@ -66,7 +65,7 @@ public class NoticeDaoImpl implements NoticeDao{
 																.noticeId(rs.getString("notice_id"))
 																.noticeTitle(rs.getString("notice_title"))
 																.noticeContent(rs.getString("notice_content"))
-																.noticeWritedate(rs.getDate("notice_writetime"))
+																.noticeWritedate(rs.getDate("notice_writedate"))
 																.noticeUpdatedate(rs.getDate("notice_updatedate"))
 																.noticeRead(rs.getInt("notice_read"))
 														.build();									
@@ -84,7 +83,7 @@ public class NoticeDaoImpl implements NoticeDao{
 														.noticeId(rs.getString("notice_id"))
 														.noticeTitle(rs.getString("notice_title"))
 														.noticeContent(rs.getString("notice_content"))
-														.noticeWritedate(rs.getDate("notice_writetime"))
+														.noticeWritedate(rs.getDate("notice_writedate"))
 														.noticeUpdatedate(rs.getDate("notice_updatedate"))
 														.noticeRead(rs.getInt("notice_read"))
 												.build();			
@@ -95,14 +94,6 @@ public class NoticeDaoImpl implements NoticeDao{
 			}
 	};
 
-	@Override
-	public List<NoticeDto> selectList(String title, String content) {
-		String sql = "select * from notice "
-					+ "where instr( "+title+", ? ) > 0 "
-							+ "order by "+title+" asc";
-		Object[] param = {content};
-		return jdbcTemplate.query(sql, mapper, param);
-	}
 
 	// 추상 메소드 오버라이딩 - 공지글 삭제(DELETE)
 	@Override
@@ -127,15 +118,6 @@ public class NoticeDaoImpl implements NoticeDao{
 												+ "where notice_no=?";
 		Object[] param = {noticeNo};
 		return jdbcTemplate.update(sql, param) > 0;
-	}
-
-	@Override
-	public void noticeAttachment(int noticeNo, int attachmentNo) {
-		String sql = "insert into notice_attachment("
-					+ "board_no, attachment_no "
-						+ ") values(?, ?)";
-		Object[] param = {noticeNo, attachmentNo};
-		jdbcTemplate.update(sql, param);
 	}
 
 	// 추상 메소드 오버라이딩 - 공지글 상세(DETAIL)
@@ -175,6 +157,5 @@ public class NoticeDaoImpl implements NoticeDao{
 		String sql = "select * from notice order by notice_no desc";
 		return jdbcTemplate.query(sql, mapper);
 	}
-
 
 }
