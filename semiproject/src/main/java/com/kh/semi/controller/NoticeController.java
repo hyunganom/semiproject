@@ -16,10 +16,7 @@ import com.kh.semi.repository.NoticeDao;
 public class NoticeController {
 	
 	@Autowired
-	private NoticeDao noticedao;
-	
-	@Autowired
-	private NoticeDto noticeDto;
+	private NoticeDao noticeDao;
 	
 	@Autowired
 	private AttachmentDao attachmentDao;
