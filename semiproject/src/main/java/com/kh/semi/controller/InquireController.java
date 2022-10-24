@@ -154,7 +154,7 @@ public class InquireController {
 		model.addAttribute("inquireList", inquireDao.selectListInquire(inquireListSearchVO));
 		
 		// 문의글 목록 페이지(list.jsp)로 연결
-		return "admin/listAdmin";
+		return "inquire/listAdmin";
 	}
 	
 	// 3. 문의글 상세 Mapping
@@ -265,5 +265,24 @@ public class InquireController {
 		
 		// 문의글 삭제 후 문의글 목록 Mapping으로 강제 이동(redirect)
 		return "redirect:list";
+	}
+	
+	
+	//1:1문의 댓글 관련
+	//1:1문의 댓글 등록(insert) 서블릿
+	@PostMapping("/inquireReply/write")
+	public String Replywrite(@ModelAttribute InquireReplyDto inquireReplyDto,
+			HttpSession session, RedirectAttributes attr) {
+		//로그인된 세션을 가져온다
+		String memberId = (String) session.getAttribute(SessionConstant.ID);
+		//로그인된 세션아이디를 댓글작성자로 설정한다.
+		inquireReplyDto.setInquireReplyId(memberId);
+		//댓글 파라미터에서 요청이 들어온 값을 DB에 집어넣는다.
+		inquireReplyDao.replyWrite(inquireReplyDto);
+		//1:1문의 원본글 
+		attr.addAttribute("inquireNo",inquireReplyDto.getInquireOriginNo());
+		
+		//댓글을 다시 문의글 상세로 이동
+		return "redirect:/inquire/detail";
 	}
 }
