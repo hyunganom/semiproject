@@ -166,9 +166,9 @@ public class MemberDaoImpl implements MemberDao{
 	
 	//아이디찾기
 	@Override
-	public MemberDto findId(String memberEmail) {
-		String sql = "select member_id from member where member_email = ?";
-		Object[] param = {memberEmail};
+	public MemberDto findId(String memberName, String memberEmail) {
+		String sql = "select * from member where member_name = ? and member_email = ?";
+		Object[] param = {memberName, memberEmail};
 		return jdbcTemplate.query(sql, extractor, param);
 	}
 }
