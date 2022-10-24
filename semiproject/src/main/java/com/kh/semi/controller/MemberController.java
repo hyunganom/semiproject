@@ -90,7 +90,7 @@ public class MemberController {
 			session.setAttribute(SessionConstant.GRADE, findDto.getMemberGrade());
 			
 			//로그인 시간 갱신
-			memberDao.updateLoginTime(inputDto.getMemberId());
+//			memberDao.updateLoginTime(inputDto.getMemberId());
 			
 			return "redirect:/";
 		}
