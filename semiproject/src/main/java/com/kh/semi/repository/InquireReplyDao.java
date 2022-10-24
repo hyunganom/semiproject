@@ -15,6 +15,8 @@ public interface InquireReplyDao {
 	//1:1문의 하나만 조회
 	InquireReplyDto selectOne(int inquireReplyNo);
 	//1:1문의 댓글 수정
-	boolean replyUpdate(int inquireReplyNo);
+	boolean replyEdit(InquireReplyDto inquireReplyDto);
+	//1:1문의 댓글 삭제
+	boolean replyDelete(int inquireReplyNo);
 }
 	

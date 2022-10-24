@@ -13,6 +13,9 @@
 			<input type="text" name="memberId" placeholder="아이디" required><br><br>
 			<input type="password" name="memberPw" placeholder="비밀번호" required><br><br>
 			<button type="submit">로그인</button>
+			<br><br>
+			<a href="find_id">아이디 찾기</a>
+			<a href="#">비밀번호 찾기</a>
 		</form>
 		
 		<c:if test="${param.error != null}">

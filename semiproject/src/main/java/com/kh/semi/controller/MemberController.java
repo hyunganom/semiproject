@@ -244,4 +244,32 @@ public class MemberController {
 		return "member/endSuccess";
 	}
 	
+	
+	@GetMapping("/find_id")
+	public String findId() {
+		return "member/findId";
+	}
+	
+	@PostMapping("/find_id")
+	public String findId(@ModelAttribute MemberDto inputDto, 
+			HttpSession session) {
+		//DB에서 회원 이름에 해당하는 정보를 불러옴
+		MemberDto findDto = memberDao.selectOne(inputDto.getMemberName());
+		if(findDto == null) {
+			return "redirect:find_id?error";
+		}
+		
+		boolean emailMatch = inputDto.getMemberEmail().equals(findDto.getMemberEmail());
+		if(emailMatch) {
+			return "redirect:/";
+		}
+		else {
+			return "redirect:find_id?error";
+		}
+	}
+	
+	@GetMapping("/find_id_success")
+	public String findIdSuccess() {
+		return "member/findIdSuccess";
+	}
 }
