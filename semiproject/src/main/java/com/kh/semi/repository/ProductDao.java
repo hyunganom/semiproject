@@ -5,6 +5,7 @@ import java.util.List;
 import com.kh.semi.entity.CategoryHighDto;
 import com.kh.semi.entity.CategoryLowDto;
 import com.kh.semi.entity.ProductDto;
+import com.kh.semi.vo.ProductListSearchCategoryVO;
 import com.kh.semi.vo.ProductListSearchVO;
 import com.kh.semi.vo.ProductSelectNameVO;
 
@@ -25,7 +26,7 @@ public interface ProductDao {
 	// 추상 메소드 - 상품 이미지 첨부파일 기록 등록(INSERT)
 	void connectAttachment(int productNo, int attachmentNo);
 	
-	// 추상 메소드 - 관리자 상품 조회(SELECT)
+	// 추상 메소드 - 모든 상품 조회(SELECT)
 	// 1) 통합 조회
 	List<ProductDto> selectListProduct(ProductListSearchVO productListSearchVO);
 	
@@ -34,6 +35,14 @@ public interface ProductDao {
 	
 	// 3) 검색 조회
 	List<ProductDto> searchListProduct(ProductListSearchVO productListSearchVO);
+	
+	// 추상 메소드 - 카테고리 상품 조회(SELECT) : 카테고리 번호로 해당 카테고리 상품을 조회할 수 있도록
+	// 1) 통합 조회
+	
+	// 2) 카테고리 전체 조회
+	List<ProductDto> allListCategory(ProductListSearchCategoryVO productListSearchCategoryVO, int categoryHighNo, int categoryLowNo);
+	
+	// 3) 검색 조회
 	
 	// 추상 메소드 - 관리자 상품 상세(DETAIL)
 	ProductDto selectOneProduct(int productNo);
@@ -50,7 +59,7 @@ public interface ProductDao {
 	// 추상 메소드 - 관리자 상품 삭제(DELETE)
 	boolean deleteProduct(int productNo);
 	
-	// 추상 메소드 - 상품 총 갯수
+	// 추상 메소드 - 관리자 상품 조회에서 상품 총 갯수
 	// 1) 통합 조회시 상품의 총 갯수
 	int countTotalProduct(ProductListSearchVO productListSearchVO);
 	
@@ -59,6 +68,16 @@ public interface ProductDao {
 	
 	// 3) 검색 조회시 상품의 총 갯수
 	int countSearchProduct(ProductListSearchVO productListSearchVO);
+	
+	// 추상 메소드 - 회원 상품 조회에서 상품 총 갯수
+	// 1) 통합 조회시 상품의 총 갯수
+	int countTotalCategory(ProductListSearchCategoryVO productListSearchAllVO);
+	
+	// 2) 전체 조회시 상품의 총 갯수
+	int countAllCategory(ProductListSearchCategoryVO productListSearchAllVO);
+	
+	// 3) 검색 조회시 상품의 총 갯수
+	int countSearchCategory(ProductListSearchCategoryVO productListSearchAllVO);
 	
 	//승정 구독상품 상세옵션 상품조회
 	ProductSelectNameVO selectName(int productNo);
