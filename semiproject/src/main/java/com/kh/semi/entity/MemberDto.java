@@ -12,8 +12,7 @@ public class MemberDto {
 	private String memberId, memberPw, memberName, memberEmail;
 	private String memberTel, memberPost, memberBaseAddress;
 	private String memberDetailAddress, memberGender, memberGrade;
-	private String memberWithdrawal, memberBirth;
+	private String memberBirth;
 	private int memberPoint;
 	private Date memberJoindate, memberLogindate;
-	private Date memberWithdrawalDate;
 }

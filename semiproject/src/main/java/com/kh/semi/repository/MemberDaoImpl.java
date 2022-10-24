@@ -19,6 +19,7 @@ public class MemberDaoImpl implements MemberDao{
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
+	//회원가입
 	@Override
 	public void insert(MemberDto memberDto) {
 		String sql = "insert into member(member_id, member_pw, "
@@ -54,18 +55,18 @@ public class MemberDaoImpl implements MemberDao{
 			dto.setMemberPoint(rs.getInt("member_point"));
 			dto.setMemberJoindate(rs.getDate("member_joindate"));
 			dto.setMemberLogindate(rs.getDate("member_logindate"));
-			dto.setMemberWithdrawal(rs.getString("member_withdrawal"));
-			dto.setMemberWithdrawalDate(rs.getDate("member_withdrawaldate"));
 			return dto;
 		}
 	};
 
+	//회원조회
 	@Override
 	public List<MemberDto> selectList() {
 		String sql = "select * from member";
 		return jdbcTemplate.query(sql, mapper);
 	}
 
+	//회원검색조회
 	@Override
 	public List<MemberDto> selectList(String type, String keyword) {
 		String sql = "select * from member where instr(#1, ?) > 0 order by #1 asc";
@@ -93,8 +94,6 @@ public class MemberDaoImpl implements MemberDao{
 				dto.setMemberPoint(rs.getInt("member_point"));
 				dto.setMemberJoindate(rs.getDate("member_joindate"));
 				dto.setMemberLogindate(rs.getDate("member_logindate"));
-				dto.setMemberWithdrawal(rs.getString("member_withdrawal"));
-				dto.setMemberWithdrawalDate(rs.getDate("member_withdrawaldate"));
 				return dto;
 			}
 			else {
@@ -103,6 +102,7 @@ public class MemberDaoImpl implements MemberDao{
 		}
 	};
 
+	//회원아이디로 조회
 	@Override
 	public MemberDto selectOne(String memberId) {
 		String sql = "select * from member where member_id = ?";
@@ -110,6 +110,7 @@ public class MemberDaoImpl implements MemberDao{
 		return jdbcTemplate.query(sql, extractor, param);
 	}
 	
+	//회원정보수정
 	@Override
 	public boolean update(MemberDto memberDto) {
 		String sql = "update member set member_name = ?, member_email = ?, "
@@ -126,6 +127,7 @@ public class MemberDaoImpl implements MemberDao{
 		return jdbcTemplate.update(sql, param) > 0;
 	}
 	
+	//회원비밀번호변경
 	@Override
 	public boolean changePassword(String memberId, String memberPw) {
 		String sql = "update member set member_pw = ? where member_id = ?";
@@ -133,6 +135,7 @@ public class MemberDaoImpl implements MemberDao{
 		return jdbcTemplate.update(sql, param) > 0;
 	}
 	
+	//회원 삭제
 	@Override
 	public boolean delete(String memberId) {
 		String sql = "delete member where member_id = ?";
@@ -140,6 +143,7 @@ public class MemberDaoImpl implements MemberDao{
 		return jdbcTemplate.update(sql, param) > 0;
 	}
 	
+	//개인정보변경
 	@Override
 	public boolean changeInformation(MemberDto memberDto) {
 		String sql = "update member set member_name = ?, "
@@ -159,4 +163,12 @@ public class MemberDaoImpl implements MemberDao{
 //		Object[] param = {memberId};
 //		return jdbcTemplate.update(sql, param) > 0;
 //	}
+	
+	//아이디찾기
+	@Override
+	public MemberDto findId(String memberEmail) {
+		String sql = "select member_id from member where member_email = ?";
+		Object[] param = {memberEmail};
+		return jdbcTemplate.query(sql, extractor, param);
+	}
 }

@@ -69,27 +69,19 @@
 						<fmt:formatDate value="${memberDto.memberLogindate}" pattern="y년 M월 d일 E a h시 m분 s초"/>
 					</td>
 				</tr>
-				<tr>
-					<th>회원 탈퇴 여부</th>
-					<td>${memberDto.memberWithdrawal}</td>
-				</tr>
-				<tr>
-					<th>회원 탈퇴 일시</th>
-					<td>
-						<fmt:formatDate value="${memberDto.memberWithdrawalDate}" pattern="y년 M월 d일 E a h시 m분 s초"/>
-					</td>
-				</tr>
 			</tbody>
 		</table>
 		
 		<c:choose>
 			<c:when test="${mg == '관리자'}">
+			<!-- 관리자 -->
 				<h2><a href="list">목록 보기</a></h2>
 				<h2><a href="change?memberId=${memberDto.memberId}">회원정보 변경</a></h2>
 				<h2><a href="cut?memberId=${memberDto.memberId}">회원삭제 처리</a></h2>
 			</c:when>
 			<c:otherwise>
-				<h2><a href="changePw">비밀번호 변경</a></h2>
+			<!-- 회원 -->
+				<h2><a href="change_pw">비밀번호 변경</a></h2>
 				<h2><a href="information">개인정보 변경</a></h2>
 				<h2><a href="end">회원 탈퇴</a></h2>
 			</c:otherwise>
