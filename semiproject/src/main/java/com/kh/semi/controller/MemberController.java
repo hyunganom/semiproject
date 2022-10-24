@@ -88,6 +88,10 @@ public class MemberController {
 		if(passwordMatch) {
 			session.setAttribute(SessionConstant.ID, inputDto.getMemberId());
 			session.setAttribute(SessionConstant.GRADE, findDto.getMemberGrade());
+			
+			//로그인 시간 갱신
+			memberDao.updateLoginTime(inputDto.getMemberId());
+			
 			return "redirect:/";
 		}
 		else {
@@ -235,7 +239,7 @@ public class MemberController {
 		}
 	}
 	
-	@GetMapping("/end")
+	@GetMapping("/end_success")
 	public String endSuccess() {
 		return "member/endSuccess";
 	}
