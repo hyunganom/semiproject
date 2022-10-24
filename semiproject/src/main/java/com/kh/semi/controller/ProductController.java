@@ -63,7 +63,7 @@ public class ProductController {
 	// 2) 상품 등록 처리
 	@PostMapping("/insert")
 	public String insert(@ModelAttribute ProductDto productDto,
-			@RequestParam List<MultipartFile> attachmentMainImg, // 상품 이미지 첨부파일에 대한 List
+			@RequestParam MultipartFile attachmentMainImg, // 상품 이미지 첨부파일에 대한 List
 			@RequestParam List<MultipartFile> attachmentSubImg, // 상품 상세 이미지 첨부파일에 대한 List
 			RedirectAttributes attr) throws IllegalStateException, IOException {
 		
@@ -79,26 +79,22 @@ public class ProductController {
 		
 		
 		//첨부파일 썸네일 이미지 등록
-		for(MultipartFile file : attachmentMainImg) {
-			if(!file.isEmpty()) {
 			//1)첨부파일 시퀀스 발급
-			int attachmentNo = attachmentDao.sequence();
+			int attachmentNo1 = attachmentDao.sequence();
 			//첨부 DB등록
 			attachmentDao.insert(AttachmentDto.builder()
-					.attachmentNo(attachmentNo)
-					.attachmentName(file.getOriginalFilename())
-					.attachmentType(file.getContentType())
-					.attachmentSize(file.getSize())
+					.attachmentNo(attachmentNo1)
+					.attachmentName(attachmentMainImg.getOriginalFilename())
+					.attachmentType(attachmentMainImg.getContentType())
+					.attachmentSize(attachmentMainImg.getSize())
 				.build());
 			
 			//2)파일저장
-			File target = new File(tumbnailDirectory, String.valueOf(attachmentNo));
+			File target1 = new File(tumbnailDirectory, String.valueOf(attachmentNo1));
 			tumbnailDirectory.mkdirs();//3)폴더 생성 명령
-			file.transferTo(target);
+			attachmentMainImg.transferTo(target1);
 			//4)product_attachment 연결테이블 정보 저장
-			attachmentDao.productConnectAttachment(productNo, attachmentNo);
-			}
-		}
+			attachmentDao.productConnectAttachment(productNo, attachmentNo1);
 		
 		//상품설명이미지 등록
 		for(MultipartFile file : attachmentSubImg) {
