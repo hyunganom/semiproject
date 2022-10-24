@@ -154,7 +154,7 @@ public class InquireController {
 		model.addAttribute("inquireList", inquireDao.selectListInquire(inquireListSearchVO));
 		
 		// 문의글 목록 페이지(list.jsp)로 연결
-		return "admin/listAdmin";
+		return "inquire/listAdmin";
 	}
 	
 	// 3. 문의글 상세 Mapping

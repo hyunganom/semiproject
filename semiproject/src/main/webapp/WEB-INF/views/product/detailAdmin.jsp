@@ -10,6 +10,10 @@
 <table>
 <tbody>
 	<tr>
+		<th>상품 이미지</th>
+		<td></td>
+	</tr>
+	<tr>
 		<th>상품 번호</th>
 		<td>${productDto.productNo}</td>
 	</tr>
@@ -69,23 +73,14 @@
 		</td>
 	</tr>
 </tbody>
+<tfoot>
+	<tr>
+		<th><a href = "/product/edit?productNo=${productDto.productNo}">수정</a></th>
+		<th><a href = "/product/delete?productNo=${productDto.productNo}">삭제</a></th>
+		<th><a href = "/product/list">목록</a></th>
+	</tr>
+</tfoot>
 </table>
-
-<div class = "row">
-	<form action = "" method = "post">
-		<input type = "hidden" name = "${productDto.productNo}"> <%-- 상품 번호 --%>
-		<input type = "number" name = "basketCountNumber" placeholder = "수량">
-		<button class = "btn btn-positive" type = "submit">구매</button>
-	</form>
-</div>
-
-<div class = "row">	
-	<form action = "" method = "post">
-		<input type = "hidden" name = "${productDto.productNo}"> <%-- 상품 번호 --%>
-		<input type = "number" name = "basketCountNumber" placeholder = "수량">
-		<button class = "btn btn-positive" type = "submit">장바구니</button>
-	</form>
-</div>
 
 </div>
 
