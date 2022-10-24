@@ -15,14 +15,17 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		//인터셉터 작동하도록 설정
+		//인터셉터 작동하도록 설정(회원)
 		registry.addInterceptor(memberInterceptor)
-		.addPathPatterns(
+		.addPathPatterns(//인터셉터 감시주소
 				"/member/**"//회원전체
 				)
-		.excludePathPatterns(
-				"/member/join",//회원가입
-				"/member/login"//로그인
+		.excludePathPatterns(//감시 제외 주소
+				"/member/join*", //회원가입
+				"/member/login", //로그인
+				"/member/end_success", //탈퇴완료
+				"/member/find_id*"//아이디 찾기
 				);
+		
 	}
 }
