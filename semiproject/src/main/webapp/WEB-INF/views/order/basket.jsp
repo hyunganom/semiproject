@@ -100,7 +100,13 @@
 					</tr>
 					<tr class="center">
 						<td>
-							<span>?상품금액?<i class="fa-solid fa-plus"></i></span>
+							<span>
+								<c:set var="productPrice" value="0"></c:set>
+								<c:forEach var="i" items="${basketVO}">
+									
+								</c:forEach>
+								?상품금액?<i class="fa-solid fa-plus"></i>
+							</span>
 							<span>?배송비?<i class="fa-solid fa-equals"></i></span>
 							<span>?총 주문금액?</span>
 						</td>
