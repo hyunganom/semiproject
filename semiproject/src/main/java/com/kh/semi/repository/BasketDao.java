@@ -17,6 +17,8 @@ public interface BasketDao {
 	List<BasketDto> selectDtoList(String memberId);
 	//3-2. VO(회원아이디로 조회)
 	List<BasketVO> selectList(String memberId);
+	//3-3. VO(회원아이디, 상품번호로 조회)
+	BasketVO orderBeforeList(String memberId, int productNo);
 	
 	//4. 삭제(상품번호로 삭제)
 	// 나중에 넘어오는 값 확인 후 매개변수 수정 예정

@@ -1,5 +1,9 @@
 package com.kh.semi.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +36,21 @@ public class BasketController {
 	
 	//주문서 페이지로 이동
 	@PostMapping("/basket")
-	public String basket(@ModelAttribute BasketVO basketVO,
-			HttpSession session, Model model) {
-		//1. 체크된 상품의 상품번호, 수량 넘어가야함
+	public String basket(@ModelAttribute ArrayList<BasketVO> basketVO,
+			HttpServletRequest request, HttpSession session, Model model) {
+		String memberId = (String)session.getAttribute(SessionConstant.ID);
 		
+		//1. 체크된 상품의 상품번호가 넘어가야함
+		String[] arr = request.getParameterValues("productNo");
+		//2. 상품번호로 장바구니 조회 후 상세내역(BasketVO) 리스트로 찍어주기
+		for(int i=0; i<arr.length; i++) {
+			BasketVO list = basketDao.orderBeforeList(memberId, Integer.parseInt(arr[i]));
+			basketVO.add(list);
+		}
 
+		model.addAttribute("list", basketVO);
+		//추가로 해야할 것!!!
+		//(+심화:체크된 것만 넘어오게 처리하기)
 		return "redirect:/order/order_ck";
 	}
 		
