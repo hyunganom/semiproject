@@ -92,7 +92,7 @@
         <div class="row left">
             <h1>장바구니</h1>
         </div>
-
+	<form action="basket" method="post">
         <div class="row mt-30">
             <table class="table table-basket">
                 <thead>
@@ -135,6 +135,7 @@
 		                        </td>
 		                        <td class="w-15">
 									<span>?적립금찍기?</span>
+									<input type="hidden" name="productNo" value="${vo.basketProductNo}">
 		                        </td>
                     		</tr>
                     	</c:forEach>
@@ -173,10 +174,10 @@
 			</table>
             
             <div class="row center mt-50">
-            	<a href="/order/order_ck" class="btns btns-positive">주문하기</a>
+            	<button type="submit" class="btns btns-positive">주문하기</button>
             </div>
-            
         </div>
+        </form>
     </div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
