@@ -63,9 +63,7 @@
 					<th>생년월일</th>
 					<th>성별</th>
 					<th>등급</th>
-					<th>회원탈퇴여부</th>
 					<th>메뉴</th>
-					<th>탈퇴관리(Y / N)</th>
 				</tr>
 			</thead>
 			<tbody align="center">
@@ -78,7 +76,6 @@
 					<td>${memberDto.memberBirth}</td>
 					<td>${memberDto.memberGender}</td>
 					<td>${memberDto.memberGrade}</td>
-					<td>${memberDto.memberWithdrawal}</td>
 					<td>
 						<a href="detail?memberId=${memberDto.memberId}">상세</a>
 						<a href="change?memberId=${memberDto.memberId}">수정</a>
@@ -90,7 +87,7 @@
 			</tbody>
 			<tfoot>
 				<tr>
-					<td colspan="10" align="right">
+					<td colspan="9" align="right">
 						총 ${list.size()}개의 결과
 					</td>
 				</tr>
