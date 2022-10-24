@@ -1,10 +1,8 @@
 package com.kh.semi.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +13,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.kh.semi.entity.AttachmentDto;
-import com.kh.semi.entity.InquireDto;
 import com.kh.semi.entity.NoticeDto;
-import com.kh.semi.repository.AttachmentDao;
 import com.kh.semi.repository.NoticeDao;
-import com.kh.semi.vo.InquireListSearchVO;
+import com.kh.semi.vo.NoticeListSearchVO;
 
 @Controller
 @RequestMapping("/notice")
@@ -32,21 +26,7 @@ public class NoticeController {
 	
 	// 의존성 주입
 	@Autowired
-	private NoticeDao noticeDao;
-	
-	// 의존성 주입
-	@Autowired
-	private AttachmentDao attachmentDao;
-	
-	// 공지글 이미지 첨부파일 업로드를 위한 상위 경로(parent) 설정(상위 경로에 대한 File 클래스의 인스턴스 추가)
-		private final File noticeDirectory = new File("D:\\saluv\\noticeImg");
-		
-	// 상위 경로 생성
-	// - 상위 경로 설정(File 클래스의 인스턴스 생성 = 의존성 주입) 후 설정한 상위 경로를 실제로 생성
-	@PostConstruct
-	public void createDirectory() {
-		noticeDirectory.mkdirs();
-	}
+	private NoticeDao noticeDao;	
 	
 	// 1. 공지 글 등록 Mapping
 	// 1) 공지 글 등록 페이지(write.jsp)로 연결
@@ -60,8 +40,8 @@ public class NoticeController {
 	@PostMapping("/write")
 	public String write(@ModelAttribute NoticeDto noticeDto,
 						RedirectAttributes attr,
-						HttpSession session,
-						List<MultipartFile> attachmentNoticeImg) throws  IllegalStateException, IOException {
+						HttpSession session
+						) throws  IllegalStateException, IOException {
 		
 		//HttpSession에서 로그인 중인 회원 아이디를 반환
 		String noticeId = (String)session.getAttribute("loginId");
@@ -78,33 +58,7 @@ public class NoticeController {
 		//설정한 noticeDto를 매개변수롤 공지글 등록(INSERT) 실행
 		noticeDao.write(noticeDto);
 		
-		//공지글 이미지 첨부파일 업로드
-		for(MultipartFile file : attachmentNoticeImg) {
-			if(!file.isEmpty()) { //첨부파일이 존재한다면
-				
-				//첨부파일 등록(INSERT)을 위해 다음 시퀀스 번호 반환
-				int attachmentNoticeNo = attachmentDao.sequence();
-				
-				//Builder 패턴으로 AttachmentDto의 인스턴스 생성 후 첨부파일 테이블(attachment)에 등록 실행
-				attachmentDao.insert(AttachmentDto.builder()
-						.attachmentNo(attachmentNoticeNo)
-						.attachmentName(file.getOriginalFilename())
-						.attachmentType(file.getContentType())
-						.attachmentSize(file.getSize())
-					.build());
-				
-				// 첨부파일 업로드 경로 생성
-				// - 상위 경로(parent)에 대한 File 클래스의 인스턴스와 하위 경로(child)를 나타내는 문자열(String)으로 파일을 업로드할 경로 설정
-				// - 첨부파일이 실제로 저장될 때 파일 이름을 첨부파일의 시퀀스 번호로 저장하도록 한다
-				File target = new File(noticeDirectory, String.valueOf(attachmentNoticeNo));
-				
-				// 해당 경로에 업로드한 첨부파일 저장
-				file.transferTo(target);
-				
-				// 첨부파일 업로드 후 문의글 첨부파일 테이블(notice_attachment)에도 등록(INSERT) 실행
-				attachmentDao.inquireConnectAttachment(noticeNo, attachmentNoticeNo);
-			}
-		}
+
 		
 		// 반환한 시퀀스 번호를 redirect시 파라미터의 값(value)으로 설정
 		attr.addAttribute("noticeNo", noticeNo);
@@ -115,7 +69,10 @@ public class NoticeController {
 	
 	//2. 공지글 목록 Mapping
 	@GetMapping("/list")
-	public String selectList(Model model, @ModelAttribute InquireListSearchVO inquireListSearchVO, HttpSession session) {		
+	public String selectList(Model model, @ModelAttribute NoticeListSearchVO noticeListSearchVO, HttpSession session) {		
+		
+		List<NoticeDto> list = noticeDao.allListNotice();
+		model.addAttribute("list", list);
 		
 		//공지글 목록(list.jsp)으로 연결
 		return "notice/list";
@@ -126,12 +83,49 @@ public class NoticeController {
 	@GetMapping("/detail")
 	public String detail(@RequestParam int noticeNo, Model model) {
 		
+		// 하이퍼링크로 입력받은 inquireNo로 상세 조회 실행 후 그 결과를 Model에 첨부
+		model.addAttribute("noticeDto", noticeDao.selectOne(noticeNo));		
+
+		
 		// 공지글 상세 페이지(detail.jsp)로 연결
 		return "notice/detail";
 	
 	}
 	
 	//4. 공지글 수정 Mapping(UPDATE) (관리자)
+	@GetMapping("/editAdmin")
+	public String edit(HttpSession session, @RequestParam int noticeNo, Model model, RedirectAttributes attr) {
+		String loginId = (String)session.getAttribute("loginId");
+		
+		NoticeDto noticeDto = noticeDao.selectOne(noticeNo);
+		String noticeId = noticeDto.getNoticeId();
+		
+		if(loginId.equals(noticeId)) {
+			// inquireDto를 Model에 첨부
+			model.addAttribute("noticeDtoo", noticeDto);
+			
+			// 문의글 수정 페이지(edit.jsp)로 연결
+			return "notice/edit";
+		}
+		else {
+			// inquireNo를 redirect시 파라미터의 값(value)으로 설정
+			attr.addAttribute("noticeNo", noticeNo);
+			
+			// 해당 문의글의 상세 Mapping으로 강제 이동
+			return "redirect:detail";
+			
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@PostMapping("/editAdmin")
 	public String edit(@ModelAttribute NoticeDto noticeDto, RedirectAttributes attr) {
 		
