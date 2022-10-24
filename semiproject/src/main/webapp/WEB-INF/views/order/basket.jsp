@@ -6,6 +6,13 @@
 	<jsp:param value="장바구니" name="title"/>
 </jsp:include>
 
+<style>
+	.items, .delivery, .total{
+		font-size:28px ;
+		font-weight: bold;
+	}
+</style>
+
 <script type="text/javascript">
 	$(function(){
 		<!-- model로 넘어온 basketVO의 상품가격, 수량 js에서도 사용가능하도록 처리 -->
@@ -23,7 +30,7 @@
 			$(".checked").prop("checked", true);
 			calcul();
 		}
-    	
+		
 		<!-- 체크박스 선택/해제 -->
     	$(".checkedAll").on("input", function(){
     		var judge = $(this).prop("checked");
@@ -59,7 +66,6 @@
             for (var i = 0; i < count; i++) {
                 if ($(".checked")[i].checked == true) {
                     sum += (parseInt(price[i])*parseInt(cnt[i]));
-                    console.log(sum);
                 }
             } 
             $("span.items").text(sum);
@@ -68,7 +74,10 @@
             var itemPrice = parseInt($("span.items").text());
             if(sum>=50000){
             	$(".delivery").text(0);
-            	$(".total").text(total);
+            	$(".total").text(itemPrice);
+            }else if(sum==0){
+            	$(".delivery").text(0);
+            	$(".total").text(0);
             }else{
             	$(".delivery").text(3000);
             	$(".total").text(itemPrice+parseInt($(".delivery").text()));
@@ -152,11 +161,11 @@
 					<tr class="center">
 						<td>
 							<div class="price">
-								<span class="items">?상품금액?(js로 처리)	</span>
+								<span class="items">0</span>
 								<i class="fa-solid fa-plus"></i>
-								<span class="delivery">?배송비?(js로 처리)</span>
+								<span class="delivery">0</span>
 								<i class="fa-solid fa-equals"></i>
-								<span class="total">?총 주문금액?(js로 처리)	</span>
+								<span class="total">0</span>
 							</div>
 						</td>
 					</tr>
