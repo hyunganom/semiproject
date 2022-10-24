@@ -23,4 +23,6 @@ public interface MemberDao {
 	boolean delete(String memberId);
 	//개인정보변경
 	boolean changeInformation(MemberDto memberDto);
+	//로그인시간 갱신
+//	boolean updateLoginTime(String memberId);
 }

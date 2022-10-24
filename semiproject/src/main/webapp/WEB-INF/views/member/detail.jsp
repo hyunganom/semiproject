@@ -85,7 +85,7 @@
 		<c:choose>
 			<c:when test="${mg == '관리자'}">
 				<h2><a href="list">목록 보기</a></h2>
-				<h2><a href="change?memberId=${memberDto.memberId}">개인정보 변경</a></h2>
+				<h2><a href="change?memberId=${memberDto.memberId}">회원정보 변경</a></h2>
 				<h2><a href="cut?memberId=${memberDto.memberId}">회원삭제 처리</a></h2>
 			</c:when>
 			<c:otherwise>
