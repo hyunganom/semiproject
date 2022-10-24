@@ -33,11 +33,11 @@
 				</tr>
 				<tr>
 					<th>공지글 작성일</th>
-					<td>${noticeDto.noticeWritetime}</td>
+					<td>${noticeDto.noticeWritedate}</td>
 				</tr>
 				<tr>
 					<th>공지글 수정일</th>
-					<td>$noticeDto.noticeUpdatetime}</td>
+					<td>${noticeDto.noticeUpdatedate}</td>
 				</tr>
 				
 				<tr>
