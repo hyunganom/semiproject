@@ -72,7 +72,8 @@
 	<a href = "/">홈(메인)</a>
 	<a href = "/inquire/list">문의글 목록(회원용)</a>
 	<a href = "/inquire/listAdmin">문의글 목록(관리자용)</a>
-	<a href = "/order/basket">장바구니</a>
+	<a href = "/basket">장바구니</a>
+	<a href = "/notice/list">공지게시판</a>
 	</div>
 
 <hr>
