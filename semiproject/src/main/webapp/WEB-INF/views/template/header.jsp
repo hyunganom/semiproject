@@ -54,11 +54,11 @@
 	
 	<c:choose>
 		<c:when test="${login}">
-			<a href="/member/logout">회원 로그아웃</a>
+			<a href="/member/logout">로그아웃</a>
 		</c:when>
 		<c:otherwise>
-			<a href="/member/join">회원 가입</a>
-			<a href="/member/login">회원 로그인</a>
+			<a href="/member/login">로그인</a>
+			<a href="/member/join">회원가입</a>
 		</c:otherwise>
 	</c:choose>
 	
