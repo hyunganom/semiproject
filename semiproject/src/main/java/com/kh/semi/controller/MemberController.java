@@ -88,6 +88,10 @@ public class MemberController {
 		if(passwordMatch) {
 			session.setAttribute(SessionConstant.ID, inputDto.getMemberId());
 			session.setAttribute(SessionConstant.GRADE, findDto.getMemberGrade());
+			
+			//로그인 시간 갱신
+			memberDao.updateLoginTime(inputDto.getMemberId());
+			
 			return "redirect:/";
 		}
 		else {
@@ -210,35 +214,34 @@ public class MemberController {
 		}
 	}
 	
-//	//회원탈퇴
-//	@GetMapping("/end")
-//	public String end() {
-//		return "member/end";
-//	}
-//	
-//	@PostMapping("/end")
-//	public String end(HttpSession session, 
-//			@RequestParam String memberPw) {
-//		String memberId = (String)session.getAttribute(SessionConstant.ID);
-//		MemberDto memberDto = memberDao.selectOne(memberId);
-//		boolean passwordMatch = memberPw.equals(memberDto.getMemberPw());
-//		if(passwordMatch) {
-//			//회원탈퇴
-//			memberDao.delete(memberId);
-//			//로그아웃
-//			session.removeAttribute(SessionConstant.ID);
-//			session.removeAttribute(SessionConstant.GRADE);
-//			return "redirect:end_success";
-//		}
-//		else {
-//			return "redirect:end?error";
-//		}
-//	}
+	//회원탈퇴
+	@GetMapping("/end")
+	public String end() {
+		return "member/end";
+	}
 	
-//	@GetMapping("/end")
-//	public String endSuccess() {
-//		return "member/endSuccess";
-//	}
+	@PostMapping("/end")
+	public String end(HttpSession session, 
+			@RequestParam String memberPw) {
+		String memberId = (String)session.getAttribute(SessionConstant.ID);
+		MemberDto memberDto = memberDao.selectOne(memberId);
+		boolean passwordMatch = memberPw.equals(memberDto.getMemberPw());
+		if(passwordMatch) {
+			//회원탈퇴
+			memberDao.delete(memberId);
+			//로그아웃
+			session.removeAttribute(SessionConstant.ID);
+			session.removeAttribute(SessionConstant.GRADE);
+			return "redirect:end_success";
+		}
+		else {
+			return "redirect:end?error";
+		}
+	}
 	
+	@GetMapping("/endSuccess")
+	public String endSuccess() {
+		return "member/endSuccess";
+	}
 	
 }
