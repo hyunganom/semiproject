@@ -26,38 +26,15 @@ import com.kh.semi.service.OrderService;
 public class OrdersController {
 
 	@Autowired
-	private OrdersDao ordersDao;
-	@Autowired
-	private PaymentDao paymentDao;
-	@Autowired
 	private OrderService orderService;
 	@Autowired
-	private BasketDao basketDao;
-	@Autowired
 	private MemberDao memberDao;
+	
 	
 //	@PostConstruct
 //	public void prepare() {
 //		System.out.println("초기화 메소드!!");
 //	}
-	
-	
-	//장바구니
-	@GetMapping("/basket")
-	public String basket(HttpSession session, Model model) {
-		//장바구니 조회
-		String memberId = (String)session.getAttribute(SessionConstant.ID);
-		//모델로 전달
-		model.addAttribute("basketVO", basketDao.selectList(memberId));
-		return "order/basket";
-	}
-	
-	@PostMapping("/basket")
-	public String basket() {
-		//form처리
-		return "redirect:/order/order_ck";
-	}
-
 
 	//장바구니에서 주문서로 넘어가는 화면
 	@GetMapping("/order_ck")
@@ -110,5 +87,7 @@ public class OrdersController {
 	public String fail() {
 		return "order/order_fail";
 	}
+	
+
 
 }

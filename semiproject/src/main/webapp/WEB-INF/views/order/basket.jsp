@@ -70,8 +70,10 @@
 		                            <button type="button">옵션/수량 변경</button>
 		                        <td class="w-15">
 		                            ${vo.productPrice}<br>
-		                            <%--                         	<a href="delete?${vo.productNo}">삭제(비활성화)</a> --%>
-		                        	<a href="#"><i class="fa-solid fa-trash-can"></i>(비활성화)</a>
+		                        	<a href="delete?productNo=${vo.basketProductNo}">
+		                        		<i class="fa-solid fa-trash-can"></i>
+		                        		(비활성화)
+		                        	</a>
 		                        </td>
 		                        <td class="w-15">
 									?적립금찍기?
@@ -100,15 +102,13 @@
 					</tr>
 					<tr class="center">
 						<td>
-							<span>
-								<c:set var="productPrice" value="0"></c:set>
-								<c:forEach var="i" items="${basketVO}">
-									
-								</c:forEach>
-								?상품금액?<i class="fa-solid fa-plus"></i>
-							</span>
-							<span>?배송비?<i class="fa-solid fa-equals"></i></span>
-							<span>?총 주문금액?</span>
+							<div class="price">
+								<span class="items">
+									?상품금액?<i class="fa-solid fa-plus"></i>
+								</span>
+								<span class="delivery">?배송비?<i class="fa-solid fa-equals"></i></span>
+								<span class="total">?총 주문금액?</span>
+							</div>
 						</td>
 					</tr>
 				</tbody>
