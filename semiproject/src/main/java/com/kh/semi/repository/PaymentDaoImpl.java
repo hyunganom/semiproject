@@ -16,6 +16,14 @@ public class PaymentDaoImpl implements PaymentDao{
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
+	//주문번호 불러오기
+	@Override
+	public int sequence() {
+		String sql ="select payment_seq.nextval from dual";
+		int paymentNo = jdbcTemplate.queryForObject(sql, int.class);
+		return paymentNo;
+	}
+	
 	//1. 등록(추가)
 	@Override
 	public void insert(PaymentDto paymentDto) {

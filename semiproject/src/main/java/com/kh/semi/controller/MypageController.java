@@ -46,9 +46,7 @@ public class MypageController {
 		MemberDto memberDto = memberDao.selectOne(loginId);
 		//3. 불러온 회원 정보를 모델에 첨부한다
 		model.addAttribute("memberDto", memberDto);
-		
-		
-		
+    
 		return "mypage/wish_list";			
 	}
 	

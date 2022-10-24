@@ -15,6 +15,9 @@
 -- 주문상태 변경일(order_changedate) : 주문 상태가 변경된 시점을 각각 sysdate로 설정
 -- 할인전 금액(order_price) : 숫자, 필수 입력
 -- 총 결제 금액(order_payprice) : 숫자, 필수 입력
+-- 결제방법(order_type) : 한글 10자 이내
+-- 적립금 사용금액(order_use_point) : 숫자
+-- 적립금액(order_point) 숫자
 
 -- 테이블 생성
 create table orders(
@@ -30,7 +33,10 @@ order_date date default sysdate,
 order_status varchar2(16) default '결제완료' not null check(order_status in('결제완료', '주문취소', '취소완료')),
 order_changedate date,
 order_price number not null,
-order_payprice number not null
+order_payprice number not null,
+order_type varchar2(30),
+order_use_point number,
+order_point number
 );
 
 -- 테이블 삭제

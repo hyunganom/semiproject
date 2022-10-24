@@ -15,7 +15,7 @@ payment_order_no number references orders(order_no) on delete cascade,
 payment_product_no number references product(product_no) on delete cascade,
 payment_count number default 1 not null,
 payment_price number not null,
-payment_option varchar2(20) not null
+payment_option varchar2(300)
 );
 
 -- 테이블 삭제

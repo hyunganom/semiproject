@@ -1,21 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>상품 상세 페이지</title>
-</head>
-<body>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<jsp:include page="/WEB-INF/views/template/header.jsp">
+	<jsp:param value="상품 상세 페이지" name="title"/>
+</jsp:include>
 
 <div align = "center">
-
 <table>
 <tbody>
-	<tr>
-		<th>상품 이미지</th>
-		<td></td>
-	</tr>
 	<tr>
 		<th>상품 번호</th>
 		<td>${productDto.productNo}</td>
@@ -60,15 +53,39 @@
 		<th>상품 상태</th>
 		<td>${productDto.productInactive}</td>
 	</tr>
-</tbody>
-<tfoot>
 	<tr>
-		<th><a href = "/product/edit?productNo=${productDto.productNo}">수정</a></th>
-		<th><a href = "/product/delete?productNo=${productDto.productNo}">삭제</a></th>
-		<th><a href = "/product/list">목록</a></th>
+		<th>상품이미지</th>
+		<td>
+			<c:forEach var="productTumbnailList" items="${productTumbnailList}">
+			<img width=50 height=50 src="/attachment/download/productTumbnail?attachmentNo=${productTumbnailList.attachmentNo}">
+			</c:forEach>
+		</td>
+	<tr>
+		<th>상품상세이미지</th>
+		<td>
+			<c:forEach var="productDetailList" items="${productDetailList}">
+			<img width=50 height=50 src="/attachment/download/productDetail?attachmentNo=${productDetailList.attachmentNo}">
+			</c:forEach>
+		</td>
 	</tr>
-</tfoot>
+</tbody>
 </table>
+
+<div class = "row">
+	<form action = "" method = "post">
+		<input type = "hidden" name = "${productDto.productNo}"> <%-- 상품 번호 --%>
+		<input type = "number" name = "basketCountNumber" placeholder = "수량">
+		<button class = "btn btn-positive" type = "submit">구매</button>
+	</form>
+</div>
+
+<div class = "row">	
+	<form action = "" method = "post">
+		<input type = "hidden" name = "${productDto.productNo}"> <%-- 상품 번호 --%>
+		<input type = "number" name = "basketCountNumber" placeholder = "수량">
+		<button class = "btn btn-positive" type = "submit">장바구니</button>
+	</form>
+</div>
 
 </div>
 
