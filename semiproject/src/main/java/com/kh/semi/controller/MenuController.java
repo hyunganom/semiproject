@@ -61,7 +61,7 @@ public class MenuController {
 		// 2. 번호가 있고 옵션이 있으면 수량증가
 		// 3. 번호가 없거나 옵션이 다르면 등록
 
-		return "redirect:/order/basket";
+		return "redirect:/basket";
 	}
 
 	
