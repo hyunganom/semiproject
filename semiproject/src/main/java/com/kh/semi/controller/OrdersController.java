@@ -30,7 +30,6 @@ public class OrdersController {
 	@Autowired
 	private MemberDao memberDao;
 	
-	
 //	@PostConstruct
 //	public void prepare() {
 //		System.out.println("초기화 메소드!!");
@@ -42,10 +41,11 @@ public class OrdersController {
 		//주문자정보(이름, 전화번호, 이메일 등) model 출력준비
 		String memberId = (String)session.getAttribute(SessionConstant.ID);
 		model.addAttribute("memberDto", memberDao.selectOne(memberId));
-		
+
+		//1. 체크된 상품의 상품번호, 수량 넘어와야함
+		//2. 상품번호로 조회 후 상세내역 리스트로 찍어주기
 		//추가로 해야할 것!!!
-		//회원아이디로 장바구니 정보 조회 및 model 출력준비(+심화:체크된 것만 넘어오게 처리하기)
-		//배송정보(기본배송지) model 출력준비
+		//(+심화:체크된 것만 넘어오게 처리하기)
 		return "order/order_ck";
 	}
 	

@@ -16,8 +16,8 @@
         </div>
 
         <div class="row center">
-            <a href="/" class="btn btn-positive">메인페이지로 이동</a>
-            <a href="/mypage/order_list" class="btn btn-positive">주문상세로 이동</a>
+            <a href="/" class="btns btns-positive">메인페이지로 이동</a>
+            <a href="/mypage/order_list" class="btns btns-positive">주문상세로 이동</a>
         </div>
 
 	</div>
