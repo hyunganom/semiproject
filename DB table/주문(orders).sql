@@ -8,7 +8,7 @@
 -- 수취인 우편번호(order_post) : 숫자5~6자
 -- 수취인 주소(order_base_address) : 한글 50자 이내
 -- 수취인 상세주소(order_detail_address) : 한글 50자 이내
--- 수취인 휴대폰번호(order_tel) : 숫자11자 고정
+-- 수취인 휴대폰번호(order_tel) : 숫자13자 고정(010-0000-0000)
 -- 배송 요청사항(order_memo) : 주문시 필요한 메모, 빈칸 가능, (최대3000byte)
 -- 주문날짜(order_date) : 주문된 시점의 데이터베이스 시각, 주문시에는 주문시각으로 설정
 -- 주문 상태(order_status) : 다음 항목 중 (결제완료 주문취소) 필수선택
@@ -27,7 +27,7 @@ order_name varchar2(30) not null,
 order_post varchar2(6) not null,
 order_base_address varchar2(150) not null,
 order_detail_address varchar2(150) not null,
-order_tel char(11) not null, 
+order_tel char(13) not null, 
 order_memo varchar2(3000),
 order_date date default sysdate,
 order_status varchar2(16) default '결제완료' not null check(order_status in('결제완료', '주문취소', '취소완료')),

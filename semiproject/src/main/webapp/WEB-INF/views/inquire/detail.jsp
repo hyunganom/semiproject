@@ -7,6 +7,25 @@
 	<jsp:param value="1:1 문의글 상세 페이지" name="title"/>
 </jsp:include>
 
+<!-- 댓글 수정을 누를 때 댓글 수정창 기능 Jquery -->
+<script>
+	$(function(){
+		//1. edit-btn을 누르면 view를 숨기고 editor를 보여준다
+		$(".edit-btn").click(function(){
+			$(this).parents(".view").hide();
+			$(this).parents(".view").next(".editor").show();
+		});
+		//2. cancel-btn을 누르면 editor를 숨기고 view를 보여준다
+		$(".cancel-btn").click(function(){
+			$(this).parents(".editor").hide();
+			$(this).parents(".editor").prev(".view").show();
+		});
+		//3. 처음에는 view만 보여준다
+		$(".editor").hide();
+});
+</script>
+
+
 <div class = "container-1200">
 	<div class = "row center">
 	<h1>1:1 문의 상세 페이지</h1>
@@ -75,15 +94,35 @@
 		<div class="container-1200 row">
 			<table class="table table-border">
 				<c:forEach var="inquireReplyList" items="${inquireReplyList}">
-					<tr>
+					<tr class="view">
 						<td class="left w-100">
 							(${inquireReplyList.memberName})
 							<br>
 							<pre>${inquireReplyList.inquireReplyContent}</pre>
 						</td>
-						<td>수정</td>
-						<td>삭제</td>
+						<!-- 댓글 수정 -->
+						<td>
+							<a class="edit-btn">수정</a>
+						</td>
+						<!-- 댓글 삭제 -->
+						<td>
+							<a href="inquireReply/delete?inquireReplyNo=${inquireReplyList.inquireReplyNo}&inquireOriginNo=${inquireDto.inquireNo}">삭제</a>
+						</td>
 					</tr>
+					
+					<!-- 댓글 수정창 -->
+					<tr class = "editor"> <%-- class 이름을 editor로 변경 --%>
+						<th colspan = "2">
+							<form action = "inquireReply/edit" method = "post"><!-- 컨트롤러에 댓글수정 -->
+								<input type = "hidden" name = "inquireReplyNo" value = "${inquireReplyList.inquireReplyNo}"><!-- 1:1문의 원본글 번호 -->
+								<input type = "hidden" name = "inquireOriginNo" value = "${inquireDto.inquireNo}"><!-- 댓글 번호 -->
+								<textarea name = "inquireReplyContent" rows = "5" cols = "50" required></textarea>
+								<button type = "submit">변경</button>
+								<a class = "cancel-btn">취소</a>
+							</form>
+						</th>
+					</tr>
+					
 				</c:forEach>
 			</table>
 		</div>
