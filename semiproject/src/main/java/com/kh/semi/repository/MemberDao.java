@@ -25,4 +25,6 @@ public interface MemberDao {
 	boolean changeInformation(MemberDto memberDto);
 	//로그인시간 갱신
 //	boolean updateLoginTime(String memberId);
+	//아이디 찾기
+	MemberDto findId(String memberName, String memberEmail);
 }

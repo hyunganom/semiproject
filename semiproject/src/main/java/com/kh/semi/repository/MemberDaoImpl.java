@@ -135,6 +135,7 @@ public class MemberDaoImpl implements MemberDao{
 		return jdbcTemplate.update(sql, param) > 0;
 	}
 	
+	//회원 삭제
 	@Override
 	public boolean delete(String memberId) {
 		String sql = "delete member where member_id = ?";
@@ -142,6 +143,7 @@ public class MemberDaoImpl implements MemberDao{
 		return jdbcTemplate.update(sql, param) > 0;
 	}
 	
+	//개인정보변경
 	@Override
 	public boolean changeInformation(MemberDto memberDto) {
 		String sql = "update member set member_name = ?, "
@@ -161,4 +163,12 @@ public class MemberDaoImpl implements MemberDao{
 //		Object[] param = {memberId};
 //		return jdbcTemplate.update(sql, param) > 0;
 //	}
+	
+	//아이디찾기
+	@Override
+	public MemberDto findId(String memberName, String memberEmail) {
+		String sql = "select * from member where member_name = ? and member_email = ?";
+		Object[] param = {memberName, memberEmail};
+		return jdbcTemplate.query(sql, extractor, param);
+	}
 }

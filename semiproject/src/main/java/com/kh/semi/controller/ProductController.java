@@ -191,7 +191,7 @@ public class ProductController {
 		basketDto.setBasketId(memberId);
 		basketDto.setBasketProductOption(""); //옵션에 빈값넣기
 		basketDao.insert(basketDto);
-		return "redirect:/order/basket";
+		return "redirect:/basket";
 	}
 	
 	

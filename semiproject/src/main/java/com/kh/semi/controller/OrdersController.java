@@ -26,13 +26,7 @@ import com.kh.semi.service.OrderService;
 public class OrdersController {
 
 	@Autowired
-	private OrdersDao ordersDao;
-	@Autowired
-	private PaymentDao paymentDao;
-	@Autowired
 	private OrderService orderService;
-	@Autowired
-	private BasketDao basketDao;
 	@Autowired
 	private MemberDao memberDao;
 	
@@ -40,24 +34,6 @@ public class OrdersController {
 //	public void prepare() {
 //		System.out.println("초기화 메소드!!");
 //	}
-	
-	
-	//장바구니
-	@GetMapping("/basket")
-	public String basket(HttpSession session, Model model) {
-		//장바구니 조회
-		String memberId = (String)session.getAttribute(SessionConstant.ID);
-		//모델로 전달
-		model.addAttribute("basketVO", basketDao.selectList(memberId));
-		return "order/basket";
-	}
-	
-	@PostMapping("/basket")
-	public String basket() {
-		//form처리
-		return "redirect:/order/order_ck";
-	}
-
 
 	//장바구니에서 주문서로 넘어가는 화면
 	@GetMapping("/order_ck")
@@ -65,10 +41,11 @@ public class OrdersController {
 		//주문자정보(이름, 전화번호, 이메일 등) model 출력준비
 		String memberId = (String)session.getAttribute(SessionConstant.ID);
 		model.addAttribute("memberDto", memberDao.selectOne(memberId));
-		
+
+		//1. 체크된 상품의 상품번호, 수량 넘어와야함
+		//2. 상품번호로 조회 후 상세내역 리스트로 찍어주기
 		//추가로 해야할 것!!!
-		//회원아이디로 장바구니 정보 조회 및 model 출력준비(+심화:체크된 것만 넘어오게 처리하기)
-		//배송정보(기본배송지) model 출력준비
+		//(+심화:체크된 것만 넘어오게 처리하기)
 		return "order/order_ck";
 	}
 	
@@ -110,5 +87,7 @@ public class OrdersController {
 	public String fail() {
 		return "order/order_fail";
 	}
+	
+
 
 }

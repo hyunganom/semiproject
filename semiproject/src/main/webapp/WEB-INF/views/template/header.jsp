@@ -70,6 +70,7 @@
 		<a href = "/order/basket">장바구니</a>
 	</div>
 	
+
 	<div>
 			<a href = "/inquire/list">문의글 목록(회원용)</a>
 		<a href = "/inquire/listAdmin">문의글 목록(관리자용)</a>
@@ -79,7 +80,19 @@
 		<a href = "/product/list">상품 목록(관리자용)</a> 
 		<a href = "/product/category?categoryHighNo=25">정기배송(상위25)</a>
 		<a href = "/product/category?categoryHighNo=25&categoryLowNo=8">정기배송(상위25) 6주식단(하위8)</a> 
-	</div>
+	<a href = "/mypage/order_list">마이페이지</a>
+	<a href = "">주문</a>
+	<a href = "/member/list">회원 목록</a>
+	<a href = "/product/list">상품 목록</a> 
+	<a href = "/inquire/list">문의글 목록</a>
+	<a href = "/member/login">로그인</a>
+	<a href = "/member/logout">로그아웃</a>
+	<a href = "/">홈(메인)</a>
+	<a href = "/inquire/list">문의글 목록(회원용)</a>
+	<a href = "/inquire/listAdmin">문의글 목록(관리자용)</a>
+	<a href = "/basket">장바구니</a>
+	<a href = "/notice/list">공지게시판</a>
+
 	</div>
 
 <hr>
