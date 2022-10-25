@@ -2,9 +2,9 @@
 -- 상품 번호(product_no) : 숫자, 기본키, 시퀀스로 부여
 -- 상위 카테고리 번호(category_high_no) : 숫자, 외래키, 상위 카테고리 테이블(category_high)의 상위 카테고리 번호(category_high_no)를 참조, 
 -- 하위 카테고리 번호(category_low_no) : 숫자, 외래키, 하위 카테고리 테이블(category_low)의 하위 카테고리 번호(category_low_no)를 참조, 
--- 상품 이름(product_name) : 문자(30 byte), 필수 입력
+-- 상품 이름(product_name) : 문자(4000 byte), 필수 입력
 -- 상품 가격(product_price) : 숫자, 필수 입력
--- 상품 정보(product_information) : 문자(500 byte), 필수 입력
+-- 상품 정보(product_information) : 문자(4000 byte), 필수 입력
 -- 상품 재고(product_inventory) : 숫자, 기본값을 0으로, 0 이상의 숫자만 입력 가능, 필수 입력
 -- 상품 별점(product_good) : 숫자, 기본값은 0으로
 -- 상품 등록일(product_registtime) : 날짜, 기본값은 sysdate로
