@@ -19,3 +19,6 @@ basket_no nubmer primary key
 -- 테이블 삭제
 drop table basket;
 
+-- 시퀀스 생성
+create sequence basket_seq;
+
