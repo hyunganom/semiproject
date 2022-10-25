@@ -11,13 +11,13 @@
 <script type = "text/javascript">
 
         $(function(){
-			$("select[name=categoryHighNo]").on("change", function(){
+			$("#select-categoryHigh").on("change", function(){
 
 				// 상위 카테고리 선택창의 값(value)을 변수로 설정
-				var categoryHighNo = $("select[name=categoryHighNo]").val();
+				var categoryHighNo = $("#select-categoryHigh").val();
 
 				// 하위 카테고리에 해당하는 select 태그는 유지하며 내부의 선택 항목 삭제(초기화)
-				$(".select-categoryLow").empty();
+				$("#select-categoryLow").empty();
 
 				$.ajax({
 					// 상위 카테고리 번호를 매개변수로 전체 조회 수행
@@ -65,7 +65,8 @@
 			<button type = "submit">생성</button>
 		</div>
 		</form>
-	
+		
+		<div>
 		<div class = "row">
 			<h1>하위 카테고리 생성</h1>
 		</div>
@@ -88,6 +89,8 @@
 		</div>
 		</form>
 	</div>
+	</div>
+	
 
 	<div class = "container-800">
 		<h1>상품 등록</h1>
@@ -95,7 +98,7 @@
 	<form action = "insert" method = "post" enctype = "multipart/form-data">
 	<div class = "row">
 		상위 카테고리 번호 : 
-		<select name = "categoryHighNo" class = "select-categoryHigh">
+		<select name = "categoryHighNo" id = "select-categoryHigh">
 			<option value = "">선택</option>
 			<c:forEach var = "categoryHighList" items = "${categoryHighList}">
 				<option value = "${categoryHighList.categoryHighNo}">${categoryHighList.categoryHighName}</option>
@@ -105,7 +108,7 @@
 	
 	<div class = "row">
 		하위 카테고리 번호 :
-		<select name = "categoryLowNo" class = "select-categoryLow">
+		<select name = "categoryLowNo" id = "select-categoryLow">
 			<option>선택</option>
 		</select>
 	</div>
