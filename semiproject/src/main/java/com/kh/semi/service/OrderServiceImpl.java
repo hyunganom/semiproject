@@ -31,7 +31,7 @@ public class OrderServiceImpl implements OrderService{
 			int paymentNo = paymentDao.sequence();
 			paymentDao.insert(PaymentVO.builder()
 					.paymentNo(paymentNo)
-					.paymentOrderNo(dto.getPaymentOrderNo())
+					.paymentOrderNo(orderNo)
 					.paymentProductNo(dto.getPaymentProductNo())
 					.paymentPrice(dto.getPaymentPrice())
 					.paymentOption(dto.getPaymentOption())

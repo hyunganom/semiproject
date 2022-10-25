@@ -33,8 +33,9 @@ public class OrdersDaoImpl implements OrdersDao{
 				+ "order_tel, order_memo, order_date, order_status, "
 				+ "order_changedate, order_price, order_payprice,"
 				+ "order_type, order_use_point, order_point) values("
-				+ "orders_seq.nextval, ?, ?, ?, ?,?,?,?,sysdate,?,sysdate,?,?,?,?,?)";
+				+ "?, ?, ?, ?, ?,?,?,?,sysdate,?,sysdate,?,?,?,?,?)";
 		Object[] param = {
+				ordersDto.getOrderNo(), 
 				ordersDto.getOrderId(),	ordersDto.getOrderName(),
 				ordersDto.getOrderPost(), ordersDto.getOrderBaseAddress(),
 				ordersDto.getOrderDetailAddress(), ordersDto.getOrderTel(),
@@ -54,8 +55,9 @@ public class OrdersDaoImpl implements OrdersDao{
 				+ "order_tel, order_memo, order_date, order_status, "
 				+ "order_changedate, order_price, order_payprice,"
 				+ "order_type, order_use_point, order_point) values("
-				+ "orders_seq.nextval, ?, ?, ?, ?,?,?,?,sysdate,?,sysdate,?,?,?,?,?)";
+				+ "?, ?, ?, ?, ?,?,?,?,sysdate,?,sysdate,?,?,?,?,?)";
 		Object[] param = {
+				ordervo.getOrderNo(), 
 				ordervo.getOrderId(),	ordervo.getOrderName(),
 				ordervo.getOrderPost(), ordervo.getOrderBaseAddress(),
 				ordervo.getOrderDetailAddress(), ordervo.getOrderTel(),
