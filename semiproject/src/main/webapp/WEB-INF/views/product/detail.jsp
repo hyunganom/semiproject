@@ -14,10 +14,9 @@
 	    $("#submit-purchase").click(function(){
 	        $("#product-data").attr("action", "/");
 	    });
-		
 		 // 만약 장바구니 버튼을 눌렀다면 /basket Mapping으로 form의 값을 전송
 	    $("#submit-basket").click(function(){
-	        $("#product-data").attr("action", ""); // 장바구니 Mapping 주소를 넣어주세요
+	        $("#product-data").attr("action", "/basket");
 	    });
 	});
 	
@@ -89,10 +88,12 @@
 </table>
 
 <div>
-	<form id = "product-data" method = "get">
-		<input type = "hidden" name = "productNo" value = "${productDto.productNo}"> <%-- 상품 번호 --%>
+
+	<form id = "product-data" method = "post">
+		<input type = "hidden" name = "paymentProductNo" value = "${productDto.productNo}"> <%-- 상품 번호 --%>
 		<div class = "row">
-			수량 : <input type = "number" name = "productCount" placeholder = "수량">
+			옵션 : <input type = "text" name = "paymentOption" value="" placeholder = "옵션">
+			수량 : <input type = "number" name = "paymentCount" placeholder = "수량">
 		</div>
 		<div class = "row">
 			<%-- 누르는 버튼에 따라 전송하는 Mapping이 다르도록 하기 위해 하나의 폼에 버튼 2개 생성 --%>
