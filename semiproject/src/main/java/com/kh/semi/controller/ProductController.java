@@ -24,6 +24,8 @@ import com.kh.semi.entity.ProductDto;
 import com.kh.semi.repository.AttachmentDao;
 import com.kh.semi.repository.BasketDao;
 import com.kh.semi.repository.ProductDao;
+import com.kh.semi.vo.ProductCategoryListVO;
+import com.kh.semi.vo.ProductListSearchCategoryVO;
 import com.kh.semi.vo.ProductListSearchVO;
 
 @Controller
@@ -61,7 +63,7 @@ public class ProductController {
 	// 2) 상품 등록 처리
 	@PostMapping("/insert")
 	public String insert(@ModelAttribute ProductDto productDto,
-			@RequestParam List<MultipartFile> attachmentMainImg, // 상품 이미지 첨부파일에 대한 List
+			@RequestParam MultipartFile attachmentMainImg, // 상품 이미지 첨부파일에 대한 List
 			@RequestParam List<MultipartFile> attachmentSubImg, // 상품 상세 이미지 첨부파일에 대한 List
 			RedirectAttributes attr) throws IllegalStateException, IOException {
 		
@@ -77,26 +79,22 @@ public class ProductController {
 		
 		
 		//첨부파일 썸네일 이미지 등록
-		for(MultipartFile file : attachmentMainImg) {
-			if(!file.isEmpty()) {
 			//1)첨부파일 시퀀스 발급
-			int attachmentNo = attachmentDao.sequence();
+			int attachmentNo1 = attachmentDao.sequence();
 			//첨부 DB등록
 			attachmentDao.insert(AttachmentDto.builder()
-					.attachmentNo(attachmentNo)
-					.attachmentName(file.getOriginalFilename())
-					.attachmentType(file.getContentType())
-					.attachmentSize(file.getSize())
+					.attachmentNo(attachmentNo1)
+					.attachmentName(attachmentMainImg.getOriginalFilename())
+					.attachmentType(attachmentMainImg.getContentType())
+					.attachmentSize(attachmentMainImg.getSize())
 				.build());
 			
 			//2)파일저장
-			File target = new File(tumbnailDirectory, String.valueOf(attachmentNo));
+			File target1 = new File(tumbnailDirectory, String.valueOf(attachmentNo1));
 			tumbnailDirectory.mkdirs();//3)폴더 생성 명령
-			file.transferTo(target);
+			attachmentMainImg.transferTo(target1);
 			//4)product_attachment 연결테이블 정보 저장
-			attachmentDao.productConnectAttachment(productNo, attachmentNo);
-			}
-		}
+			attachmentDao.productConnectAttachment(productNo, attachmentNo1);
 		
 		//상품설명이미지 등록
 		for(MultipartFile file : attachmentSubImg) {
@@ -125,9 +123,9 @@ public class ProductController {
 		return "redirect:detail";
 	}
 	
-	// 3) 상품 목록 Mapping
+	// 2. 상품 목록 Mapping (모든 상품)
 	@GetMapping("/list")
-	public String selectList(Model model, @ModelAttribute ProductListSearchVO productListSearchVO) {
+	public String selectListAdmin(Model model, @ModelAttribute ProductListSearchVO productListSearchVO) {
 		
 		// View에서 입력받은 ProductListSearchVO를 매개변수로 조회 결과에 따른 상품의 총 수 반환
 		// - 검색 조회일 경우 검색 조회의 결과에 대한 count(*)의 값 반환
@@ -144,6 +142,24 @@ public class ProductController {
 		return "product/list";
 	}
 	
+	// 3. 상품 목록 Mapping (카테고리 상품)
+	@GetMapping("/category")
+	public String selectList(Model model, @ModelAttribute ProductListSearchCategoryVO productListSearchCategoryVO, @ModelAttribute ProductCategoryListVO productCategoryListVO) {
+		
+		// View에서 입력받은 ProductListSearchVO를 매개변수로 조회 결과에 따른 상품의 총 수 반환
+		// - 검색 조회일 경우 검색 조회의 결과에 대한 count(*)의 값 반환
+		// - 전체 조회일 경우 전체 조회의 결과에 대한 count(*)의 값 반환
+		int countTotalProduct = productDao.countAllCategory(productListSearchCategoryVO);
+		
+		// 반환한 상품의 총 수를 다시 ProductListSearchVO의 등록된 상품의 총 수(countTotalProduct) 필드의 값으로 설정
+		productListSearchCategoryVO.setCountTotalProduct(countTotalProduct);
+		
+		// 설정된 ProductListSearchVO로 통합 조회를 실행한 후 그 결과를 Model에 첨부
+		model.addAttribute("productList", productDao.allListCategory(productListSearchCategoryVO, productCategoryListVO.getCategoryHighNo(), productCategoryListVO.getCategoryLowNo()));
+		
+		// 상품 수정 페이지(list.jsp)로 연결
+		return "product/category";
+	}
 	
 	// 2. 상품 상세 Mapping
 	// 1) 상품 상세페이지로 이동
