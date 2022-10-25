@@ -17,7 +17,7 @@
 		
 		 // 만약 장바구니 버튼을 눌렀다면 /basket Mapping으로 form의 값을 전송
 	    $("#submit-basket").click(function(){
-	        $("#product-data").attr("action", ""); // 장바구니 Mapping 주소를 넣어주세요
+	        $("#product-data").attr("action", "/basket"); // 장바구니 Mapping 주소를 넣어주세요
 	    });
 	});
 	
@@ -89,7 +89,7 @@
 </table>
 
 <div>
-	<form id = "product-data" method = "get">
+	<form id = "product-data" method = "post">
 		<input type = "hidden" name = "productNo" value = "${productDto.productNo}"> <%-- 상품 번호 --%>
 		<div class = "row">
 			수량 : <input type = "number" name = "productCount" placeholder = "수량">
