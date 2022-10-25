@@ -4,46 +4,42 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     
 <jsp:include page="/WEB-INF/views/template/header.jsp">
-	<jsp:param value="공지 게시판 글 목록" name="title"/>
+	<jsp:param value="공지 게시판" name="title"/>
 </jsp:include>
 
 <div class = "container-1200">
 
-	<div class = "row">
-		<h1>공지 게시판 글 목록</h1>
+	<div class = "row center">
+		<h1>NOTICE</h1>
 	</div>
-	
-	<div class = "row right">
-		<a href = "write">등록</a>
-	</div>
+
 	
 	<div class = "row">
 	<table border = "1" width = "1200">
 		<tbody>
 			<tr>
-				<th>공지 번호</th>
-				<th>공지 작성자</th>
-				<th>공지 제목</th>
-				<th>공지 내용</th>
-				<th>공지 작성일</th>
-				<th>공지 수정일</th>
-				<th colspan = "3">기능(임시로 표시)</th>
+				<th>번호</th>
+				<th>제목</th>
+				<th>작성자</th>
+				<th>작성일</th>
+				<th>조회수</th>
 			</tr>
 			
-			<c:forEach var = "noticeList" items = "${noticeList}">
+			<c:forEach var = "list" items = "${list}">
 			<tr>
-				<th>${noticeList.noticeNo}</th>
-				<th>${noticeList.noticeId}</th>
-				<th><a href = "detail?inquireNo=${noticeList.noticeNo}">${noticeList.noticeTitle}</a></th>
-				<th>${noticeList.noticeContent}</th>
-				<th>${noticeList.noticeWritetime}</th>
-				<th>${noticeList.noticeUpdatetime}</th>
-				<th><a href = "editAdmin?noticeNo=${noticeList.noticeNo}">수정</a></th>
-				<th><a href = "deleteAdmin?noticeNo=${noticeList.noticeNo}">삭제</a></th>
+				<th>${list.noticeNo}</th>
+				<th><a href = "detail?inquireNo=${list.noticeNo}">${list.noticeTitle}</a></th>
+				<th>${list.noticeId}</th>
+				<th>${list.noticeWritedate}</th>
+				<th>${list.noticeRead}</th>
+				<th><a href = "editAdmin?noticeNo=${list.noticeNo}">수정</a></th>
+				<th><a href = "deleteAdmin?noticeNo=${list.noticeNo}">삭제</a></th>
 			</tr>
 			</c:forEach>
 		</tbody>
 	</table>
+	
+	<hr>
 	
 	<div class = "row right">
 		<a href = "write">등록</a>

@@ -23,10 +23,6 @@
 	</div>
 	
 	<div>
-		첨부파일 : <input type = "file" name = "attachmentNoticeImg" accept = ".png, .jpg" multiple>
-	</div>
-	
-	<div>
 		<button type = "submit">작성</button>
 	</div>
 	

@@ -150,6 +150,10 @@ public class InquireController {
 	@GetMapping("/listAdmin")
 	public String selectList(Model model, @ModelAttribute InquireListSearchVO inquireListSearchVO) {
 		
+		int countTotalInquire = inquireDao.countTotalInquire(inquireListSearchVO);
+		
+		inquireListSearchVO.setCountTotalInquireNow(countTotalInquire);
+		
 		// 검색 분류(type)과 검색어(keyword) 값의 존재 여부에 따라 검색 조회/전체 조회 실행 후 그 결과를 Model에 첨부
 		model.addAttribute("inquireList", inquireDao.selectListInquire(inquireListSearchVO));
 		

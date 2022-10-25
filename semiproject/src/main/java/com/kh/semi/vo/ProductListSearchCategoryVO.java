@@ -4,11 +4,15 @@ import lombok.Data;
 import lombok.ToString;
 
 @Data
-public class ProductListSearchVO {
+public class ProductListSearchCategoryVO {
 
 	// 필드
 	private String type;		// 분류
 	private String keyword;		// 검색어
+	
+	// 카테고리 조회를 위한 필드
+	private int categoryHighNo;  // 상위 카테고리 번호
+	private int categoryLowNo; 			// 하위 카테고리 번호
 	
 	// 검색 조회인지 전체 조회인지 판정하여 boolean 반환
 	public boolean isSearch() {
@@ -122,10 +126,10 @@ public class ProductListSearchVO {
 	@ToString.Include
 	public String queryString() {
 		if(isSearch()) {
-			return "countProductNow=" + countProductNow + "&type=" + type + "&keyword=" + keyword;
+			return "&categoryHighNo=" + categoryHighNo + "&categoryLowNo=" + categoryLowNo + "&countProductNow=" + countProductNow + "&type=" + type + "&keyword=" + keyword;
 		}
 		else {
-			return "countProductNow=" + countProductNow;
+			return "&categoryHighNo=" + categoryHighNo + "&categoryLowNo=" + categoryLowNo + "&countProductNow=" + countProductNow;
 		}
 	}
 }

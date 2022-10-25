@@ -49,11 +49,9 @@
 			</c:forEach>
 		</tbody>
 	</table>
-	
 	<div class = "row right">
 		<a href = "write">등록</a>
 	</div>
-	
 	</div>
 
 </div>

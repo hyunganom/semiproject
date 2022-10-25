@@ -71,7 +71,7 @@ public class BasketDaoImpl implements BasketDao{
 	};
 
 	
-	//장바구니 상품조회(매개변수:회원ID)
+	//장바구니 조회(BasketDto, 매개변수:회원ID)
 	@Override
 	public List<BasketDto> selectDtoList(String memberId) {
 		String sql = "select * from basket where basket_id=?";
@@ -91,7 +91,24 @@ public class BasketDaoImpl implements BasketDao{
 				.productPrice(rs.getInt("product_price"))
 				.build();
 	};
-
+	//BasketVO Extractor
+	private ResultSetExtractor<BasketVO> voExtractor =(rs)->{
+		if(rs.next()) {
+			return BasketVO.builder()
+					.basketId(rs.getString("basket_id"))
+					.basketProductNo(rs.getInt("basket_product_no"))
+					.basketCountNumber(rs.getInt("basket_count_number"))
+					.basketAddDate(rs.getDate("basket_adddate"))
+					.basketProductOption(rs.getString("basket_product_option"))
+					.productName(rs.getString("product_name"))
+					.productPrice(rs.getInt("product_price"))
+					.build();
+		}else {
+			return null;
+		}
+	};
+	
+	//장바구니 조회(BasketVO, 매개변수:회원ID)
 	@Override
 	public List<BasketVO> selectList(String memberId) {
 		String sql = "select b.*, p.product_name, p.product_price "
@@ -100,6 +117,17 @@ public class BasketDaoImpl implements BasketDao{
 				+ "where basket_id=? order by basket_adddate desc";
 		Object[] param = {memberId};
 		return jdbcTemplate.query(sql, voMapper, param);
+	}
+	
+	//장바구니 조회(BasketVO, 매개변수 : 회원ID, 상품번호)
+	@Override
+	public BasketVO orderBeforeList(String memberId, int productNo) {
+		String sql = "select b.*, p.product_name, p.product_price "
+				+ "from basket b inner join product p "
+				+ "on b.basket_product_no=p.product_no "
+				+ "where basket_id=? and basket_product_no=?";
+		Object[] param= {memberId,productNo};
+		return jdbcTemplate.query(sql, voExtractor, param);
 	}
 	
 	//장바구니 상품삭제(매개변수:상품번호)
