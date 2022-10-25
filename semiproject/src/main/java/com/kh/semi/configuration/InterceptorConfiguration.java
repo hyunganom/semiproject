@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.kh.semi.interceptor.AdminInterceptor;
 import com.kh.semi.interceptor.MemberInterceptor;
 
 @Configuration
@@ -12,6 +13,9 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 
 	@Autowired
 	private MemberInterceptor memberInterceptor;
+	
+	@Autowired
+	private AdminInterceptor adminInterceptor;
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
@@ -27,6 +31,14 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 				"/member/find_id*", //아이디 찾기
 				"/member/find_pw*"//비밀번호 찾기
 				);
+		
+		//관리자용
+//		registry.addInterceptor(adminInterceptor)
+//		.addPathPatterns(
+//				"/member/list", //회원목록
+//				"/member/detail", //회원상세
+//				"/member/change"//회원수정
+//				);
 		
 	}
 }
