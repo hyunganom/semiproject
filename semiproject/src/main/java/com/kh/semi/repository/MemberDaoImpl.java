@@ -171,4 +171,12 @@ public class MemberDaoImpl implements MemberDao{
 		Object[] param = {memberName, memberEmail};
 		return jdbcTemplate.query(sql, extractor, param);
 	}
+	
+	//비밀번호찾기
+	@Override
+	public MemberDto findPw(String memberId, String memberName, String memberTel) {
+		String sql = "select * from member where member_id = ? and member_name = ? and member_tel = ?";
+		Object[] param = {memberId, memberName, memberTel};
+		return jdbcTemplate.query(sql, extractor, param);
+	}
 }
