@@ -41,17 +41,9 @@
 				</tr>
 				
 				<tr>
-					<th>공지글 첨부파일</th>
-					<td>
-						<c:forEach var = "noticeAttachmentList" items = "${noticeAttachmentList}">
-							<img width = "50px" height = "50px" src = "/attachment/download/noticeImg?attachmentNo=${inquireAttachmentList.attachmentNo}">
-						</c:forEach>
-					</td>
-				</tr>
-				
-				<tr>
 					<td><a href = "editAdmin?noticeNo=${noticeDto.noticeNo}">수정</a></td>
 					<td><a href = "deleteAdmin?noticeNo=${noticeDto.noticeNo}">삭제</a></td>
+					<td><a href = "/notice/list">목록으로</a></td>
 				</tr>
 				
 			</tbody>
