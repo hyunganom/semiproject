@@ -7,6 +7,7 @@
 
 <script type="text/javascript">
 	$(function(){
+		<!-- 수령자 정보와 주문자 정보가 같은 경우의 체크박스 -->
 		$("#checkbox").on("input", function(){
 			var judge = $(this).prop("checked");
 			if(judge){
@@ -18,7 +19,6 @@
 				$("input[name=orderName]").val("");
 				$("input[name=orderTel]").val("");
 			}
-			
 		});
 		
 	});
@@ -40,7 +40,7 @@
         </div>
 
         <hr>
-        
+        ${list}
 <form action="order_ck" method="post">	
         <div class="row mt-50">
           <h3>주문 상품 정보</h3>
@@ -158,12 +158,12 @@
 
         <div class="row">
           <div class="row">
-            <p>쿠폰</p>
+            <p>쿠폰 (보유 : <span>?</span> 개)</p>
             <input type="text" class="input w-50">
             <a href="#" class="btns btns-positive">쿠폰 적용</a>
           </div>
           <div class="row">
-            <p>적립금</p>
+            <p>적립금 (사용가능 적립금 : <span>?</span>)</p>
             <input type="text" class="input w-50" name="orderUsePoint">
             <a href="#" class="btns btns-positive">전액 사용</a>
           </div>
@@ -184,10 +184,10 @@
                 <th>총 금액</th>
               </tr>
               <tr>
-                <td>1000</td>
-                <td>?배송비 찍기?</td>
-                <td>?할인금액 찍기?</td>
-                <td>?총 금액 찍기?</td>
+                <td>0</td>
+                <td>3000</td>
+                <td>0</td>
+                <td>0</td>
               </tr>
             </tbody>
           </table>

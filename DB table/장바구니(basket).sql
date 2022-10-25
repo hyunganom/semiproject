@@ -4,6 +4,7 @@
 -- 장바구니 상품수량(basket_count_number) : 기본 1개, 1보다 큰 숫자로 조건 설정
 -- 장바구니 상품추가일(basket_adddate) : sysdate 기본값
 -- 장바구니 상품옵션(basekt_product_option) : null값 허용
+-- 장바구니 번호(basket_no) : (+추가) primary key
 
 -- BASKET 테이블 생성
 create table basket (
@@ -12,7 +13,7 @@ basket_product_no number references product(product_no) on delete cascade,
 basket_count_number number default 1 check(basket_count_number >= 1),
 basket_adddate date default sysdate,
 basket_product_option varchar2(300),
-primary key(basket_id, basket_product_no)
+basket_no nubmer primary key
 );
 
 -- 테이블 삭제

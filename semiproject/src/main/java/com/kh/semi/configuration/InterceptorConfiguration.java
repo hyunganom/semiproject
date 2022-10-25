@@ -23,8 +23,9 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 		.excludePathPatterns(//감시 제외 주소
 				"/member/join*", //회원가입
 				"/member/login", //로그인
-				"/member/end_success", //탈퇴완료
-				"/member/find_id*"//아이디 찾기
+				"/member/endSuccess", //탈퇴완료
+				"/member/find_id*", //아이디 찾기
+				"/member/find_pw*"//비밀번호 찾기
 				);
 		
 	}
