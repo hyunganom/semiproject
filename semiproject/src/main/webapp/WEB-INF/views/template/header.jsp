@@ -77,8 +77,8 @@
 	
 	<div>
 		<a href = "/product/list">상품 목록(관리자용)</a> 
-		<a href = "/product/category?categoryHighNo=25">정기배송(상위25)</a>
-		<a href = "/product/category?categoryHighNo=25&categoryLowNo=8">정기배송(상위25) 6주식단(하위8)</a> 
+		<a href = "/product/category?categoryHighNo=41">정기배송(상위41)</a>
+		<a href = "/product/category?categoryHighNo=41&categoryLowNo=21">정기배송(상위41) 2주식단(하위21)</a> 
 	</div>
 	</div>
 

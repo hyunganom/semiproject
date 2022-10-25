@@ -31,35 +31,17 @@
 
 <table border = "1" width = "1000" >
 	<tbody>
-		<tr>
-			<th>상품 번호</th>
-			<th>상위 카테고리 번호</th>
-			<th>하위 카테고리 번호</th>
-			<th>상품 이름</th>
-			<th>상품 가격</th>
-			<th>상품 정보</th>
-			<th>상품 재고</th>
-			<th>상품 별점</th>
-			<th>상품 등록일</th>
-			<th>상품 수정일</th>
-			<th>상품 상태</th>
-		</tr>
 		
 		<c:forEach var = "productList" items = "${productList}">
 		<tr>
-			<td>${productList.productNo}</td>
-			<td>${productList.categoryHighNo}</td>
-			<td>${productList.categoryLowNo}</td>
+			<td>번호 : ${productList.productNo}</td>
 			<td>
 				<a href = "detail?productNo=${productList.productNo}">${productList.productName}</a>
 			</td>
 			<td>${productList.productPrice}</td>
-			<td>${productList.productInformation}</td>
-			<td>${productList.productInventory}</td>
 			<td>${productList.productGood}</td>
-			<td>${productList.productRegisttime}</td>
-			<td>${productList.productUpdatetime}</td>
 			<td>${productList.productInactive}</td>
+			<td><img width=50 height=50 src="/attachment/download/productTumbnail?attachmentNo=${productList.attachmentNo}"></td>
 		</tr>
 		</c:forEach>
 		

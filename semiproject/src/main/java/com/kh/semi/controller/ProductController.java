@@ -48,6 +48,36 @@ public class ProductController {
 	private final File tumbnailDirectory = new File("D:\\saluv\\productTumbnail");
 	private final File detailDirectory = new File("D:\\saluv\\productDeatail");
 	
+	// 상위 카테고리 생셩 Mapping
+	@PostMapping("/createCategoryHigh")
+	public String createCategoryHigh(@ModelAttribute ProductCategoryListVO productCategoryListVO) {
+		
+		// 상위 카테고리 등록을 위한 다음 시퀀스 번호 반환
+		int categoryHighNo = productDao.sequencecategoryHigh();
+		
+		// 상위 카테고리 등록
+		productDao.createCategoryHigh(categoryHighNo, productCategoryListVO.getCategoryHighName());
+		
+		// 상위 카테고리와 하위 카테고리 등록 후 상품 등록 Mapping으로 강제 이동(redirect)
+		return "redirect:insert";
+	}
+	
+	// *. 하위 카테고리 생성 Mapping - 상품 등록 Mapping에서 연결됨
+	@PostMapping("/createCategoryLow")
+	public String createCategoryLow(@ModelAttribute ProductCategoryListVO productCategoryListVO) {
+		
+		// 하위 카테고리 등록을 위한 다음 시퀀스 번호 반환
+		int categoryLowNo = productDao.sequencecategoryLow();
+		
+		System.out.println(productCategoryListVO.getCategoryHighNo());
+		
+		// 하위 카테고리 등록
+		productDao.createCategoryLow(productCategoryListVO.getCategoryHighNo(), categoryLowNo, productCategoryListVO.getCategoryLowName());
+		
+		// 상위 카테고리와 하위 카테고리 등록 후 상품 등록 Mapping으로 강제 이동(redirect)
+		return "redirect:insert";
+	}
+	
 	// 1. 상품 등록 Mapping
 	// 1) 상품 등록 페이지로 연결
 	@GetMapping("/insert")
@@ -153,10 +183,10 @@ public class ProductController {
 		// View에서 입력받은 ProductListSearchVO를 매개변수로 조회 결과에 따른 상품의 총 수 반환
 		// - 검색 조회일 경우 검색 조회의 결과에 대한 count(*)의 값 반환
 		// - 전체 조회일 경우 전체 조회의 결과에 대한 count(*)의 값 반환
-		int countTotalProduct = productDao.countAllCategory(productListSearchCategoryVO);
+		int countTotalCategory = productDao.countAllCategory(productListSearchCategoryVO);
 		
 		// 반환한 상품의 총 수를 다시 ProductListSearchVO의 등록된 상품의 총 수(countTotalProduct) 필드의 값으로 설정
-		productListSearchCategoryVO.setCountTotalProduct(countTotalProduct);
+		productListSearchCategoryVO.setCountTotalProduct(countTotalCategory);
 		
 		// 설정된 ProductListSearchVO로 통합 조회를 실행한 후 그 결과를 Model에 첨부
 		model.addAttribute("productList", productDao.selectListCategory(productListSearchCategoryVO));
