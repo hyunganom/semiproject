@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.kh.semi.entity.PaymentDto;
+import com.kh.semi.vo.PaymentVO;
 
 @Repository
 public class PaymentDaoImpl implements PaymentDao{
@@ -23,6 +24,7 @@ public class PaymentDaoImpl implements PaymentDao{
 		int paymentNo = jdbcTemplate.queryForObject(sql, int.class);
 		return paymentNo;
 	}
+
 	
 	//1. 등록(추가)
 	@Override
@@ -39,6 +41,23 @@ public class PaymentDaoImpl implements PaymentDao{
 				paymentDto.getPaymentOption()
 		};
 		jdbcTemplate.update(sql, param);
+	}
+	
+	//1-2. 등록(추가)
+	public void insert(PaymentVO payment) {
+		String sql = "insert into payment("
+				+ "payment_no, payment_order_no, payment_product_no, "
+				+ "payment_count, payment_price, payment_option) values("
+				+ "payment_seq.nextval, ?, ?, ?, ?, ?)";
+		Object[] param = {
+				payment.getPaymentOrderNo(),
+				payment.getPaymentProductNo(),
+				payment.getPaymentCount(),
+				payment.getPaymentPrice(),
+				payment.getPaymentOption()
+		};
+		jdbcTemplate.update(sql, param);
+		
 	}
 
 	//2. 수정(상품번호로 조회 후 수량/가격을 변경)
@@ -114,5 +133,7 @@ public class PaymentDaoImpl implements PaymentDao{
 		Object[] param = {orderNo, productNo};
 		return jdbcTemplate.update(sql, param)>0;
 	}
+
+
 
 }
