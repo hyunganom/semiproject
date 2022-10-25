@@ -10,14 +10,24 @@
 <div align = "center">
 
 <%-- 검색창 --%>
-<form action = "list" method = "get">
-	<%-- 일단 상품명 조회만 추가했으며 차후 테이블 조인을 통해 카테고리 이름으로도 조회가 가능하도록 바꿀 예정 --%>
+<form action = "category" method = "get">
+	<%-- 카테고리 번호를 입력받아 조회해야하므로 검색을 위해 form에서 값을 보낼 때 하이퍼링크에서 입력받았던 카테고리 번호도 보내야 한다 --%>
+	<input type = "hidden" name = "categoryHighNo" value = "${productListSearchCategoryVO.categoryHighNo}">
+	<input type = "hidden" name = "categoryLowNo" value = "${productListSearchCategoryVO.categoryLowNo}">
 	<select name = "type">
 		<option value = "product_name" <c:if test = "${productListSearchCategoryVO.type == 'product_name'}">selected</c:if>>상품명</option>
 	</select>
 	<input name = "keyword" value = "${productListSearchCategoryVO.keyword}">
 	<button type = "submit">검색</button>
 </form>
+
+<div class = "container-1200">
+	
+	<div class = "row">
+		<a><img></a>
+	</div>
+
+</div>
 
 <table border = "1" width = "1000" >
 	<tbody>

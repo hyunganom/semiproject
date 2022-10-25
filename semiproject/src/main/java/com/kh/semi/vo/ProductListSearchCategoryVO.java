@@ -23,7 +23,7 @@ public class ProductListSearchCategoryVO {
 	// 1. 현재 페이지에 표시될 상품의 시작과 끝 rownum 관련 
 	// 필드
 	private int pageNow = 1; // 현재 페이지 번호 (기본값을 1로 한다)
-	private int countProductNow = 10; // 현재 페이지에 표시될 상품의 수
+	private int countProductNow = 8; // 현재 페이지에 표시될 상품의 수
 	
 	// 메소드
 	// - 현재 페이지에 표시될 상품의 시작 rownum
@@ -126,10 +126,10 @@ public class ProductListSearchCategoryVO {
 	@ToString.Include
 	public String queryString() {
 		if(isSearch()) {
-			return "&categoryHighNo=" + categoryHighNo + "&categoryLowNo=" + categoryLowNo + "&countProductNow=" + countProductNow + "&type=" + type + "&keyword=" + keyword;
+			return "&countProductNow=" + countProductNow + "&type=" + type + "&keyword=" + keyword + "&categoryHighNo=" + categoryHighNo + "&categoryLowNo=" + categoryLowNo;
 		}
 		else {
-			return "&categoryHighNo=" + categoryHighNo + "&categoryLowNo=" + categoryLowNo + "&countProductNow=" + countProductNow;
+			return "&countProductNow=" + countProductNow + "&categoryHighNo=" + categoryHighNo + "&categoryLowNo=" + categoryLowNo;
 		}
 	}
 }

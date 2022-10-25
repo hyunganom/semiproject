@@ -37,12 +37,14 @@ public interface ProductDao {
 	List<ProductDto> searchListProduct(ProductListSearchVO productListSearchVO);
 	
 	// 추상 메소드 - 카테고리 상품 조회(SELECT) : 카테고리 번호로 해당 카테고리 상품을 조회할 수 있도록
-	// 1) 통합 조회
+	// 1) 카테고리 상품 통합 조회
+	List<ProductDto> selectListCategory(ProductListSearchCategoryVO productListSearchCategoryVO);
 	
-	// 2) 카테고리 전체 조회
-	List<ProductDto> allListCategory(ProductListSearchCategoryVO productListSearchCategoryVO, int categoryHighNo, int categoryLowNo);
+	// 2) 카테고리 상품 전체 조회
+	List<ProductDto> allListCategory(ProductListSearchCategoryVO productListSearchCategoryVO);
 	
-	// 3) 검색 조회
+	// 3) 카테고리 상품 검색 조회
+	List<ProductDto> searchListCategory(ProductListSearchCategoryVO productListSearchCategoryVO);
 	
 	// 추상 메소드 - 관리자 상품 상세(DETAIL)
 	ProductDto selectOneProduct(int productNo);

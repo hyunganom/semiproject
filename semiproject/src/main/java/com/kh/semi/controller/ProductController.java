@@ -148,7 +148,7 @@ public class ProductController {
 	
 	// 3. 상품 목록 Mapping (카테고리 상품)
 	@GetMapping("/category")
-	public String selectList(Model model, @ModelAttribute ProductListSearchCategoryVO productListSearchCategoryVO, @ModelAttribute ProductCategoryListVO productCategoryListVO) {
+	public String selectList(Model model, @ModelAttribute ProductListSearchCategoryVO productListSearchCategoryVO) {
 		
 		// View에서 입력받은 ProductListSearchVO를 매개변수로 조회 결과에 따른 상품의 총 수 반환
 		// - 검색 조회일 경우 검색 조회의 결과에 대한 count(*)의 값 반환
@@ -159,7 +159,7 @@ public class ProductController {
 		productListSearchCategoryVO.setCountTotalProduct(countTotalProduct);
 		
 		// 설정된 ProductListSearchVO로 통합 조회를 실행한 후 그 결과를 Model에 첨부
-		model.addAttribute("productList", productDao.allListCategory(productListSearchCategoryVO, productCategoryListVO.getCategoryHighNo(), productCategoryListVO.getCategoryLowNo()));
+		model.addAttribute("productList", productDao.selectListCategory(productListSearchCategoryVO));
 		
 		// 상품 수정 페이지(list.jsp)로 연결
 		return "product/category";
