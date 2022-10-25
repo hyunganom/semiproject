@@ -21,7 +21,7 @@ product_price number not null,
 product_information varchar2(500) not null,
 product_inventory number default 0 not null check(product_inventory >= 0),
 product_good number default 0,
-product_registdate date default sysdate,
+product_registtime date default sysdate,
 product_updatetime date,
 product_inactive char(1) check(product_inactive = 'Y')
 ); 
