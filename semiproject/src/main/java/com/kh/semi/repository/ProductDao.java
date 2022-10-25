@@ -7,10 +7,24 @@ import com.kh.semi.entity.CategoryLowDto;
 import com.kh.semi.entity.ProductDto;
 import com.kh.semi.vo.ProductListSearchCategoryVO;
 import com.kh.semi.vo.ProductListSearchVO;
+import com.kh.semi.vo.ProductListVO;
 import com.kh.semi.vo.ProductSelectNameVO;
 
 public interface ProductDao {
+	
+	// 추상 메소드 - 상위 카테고리 다음 시퀀스 번호 반환
+	int sequencecategoryHigh();
 
+	// 추상 메소드 - 상위 카테고리 생성
+	void createCategoryHigh(int categoryHighNo, String categoryHighName);
+	
+	// 추상 메소드 - 하위 카테고리 다음 시퀀스 번호 반환
+	int sequencecategoryLow();
+	
+	// 추상 메소드 - 하위 카테고리 생성
+	void createCategoryLow(int categoryHighNo, int categoryLowNo, String categoryLowName);
+	
+	
 	// 추상 메소드 - 상위 카테고리 항목 조회
 	List<CategoryHighDto> selectCategoryHighList();
 	
@@ -37,12 +51,14 @@ public interface ProductDao {
 	List<ProductDto> searchListProduct(ProductListSearchVO productListSearchVO);
 	
 	// 추상 메소드 - 카테고리 상품 조회(SELECT) : 카테고리 번호로 해당 카테고리 상품을 조회할 수 있도록
-	// 1) 통합 조회
+	// 1) 카테고리 상품 통합 조회
+	List<ProductListVO> selectListCategory(ProductListSearchCategoryVO productListSearchCategoryVO);
 	
-	// 2) 카테고리 전체 조회
-	List<ProductDto> allListCategory(ProductListSearchCategoryVO productListSearchCategoryVO, int categoryHighNo, int categoryLowNo);
+	// 2) 카테고리 상품 전체 조회
+	List<ProductListVO> allListCategory(ProductListSearchCategoryVO productListSearchCategoryVO);
 	
-	// 3) 검색 조회
+	// 3) 카테고리 상품 검색 조회
+	List<ProductListVO> searchListCategory(ProductListSearchCategoryVO productListSearchCategoryVO);
 	
 	// 추상 메소드 - 관리자 상품 상세(DETAIL)
 	ProductDto selectOneProduct(int productNo);

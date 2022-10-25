@@ -14,8 +14,10 @@ import org.springframework.stereotype.Repository;
 import com.kh.semi.entity.CategoryHighDto;
 import com.kh.semi.entity.CategoryLowDto;
 import com.kh.semi.entity.ProductDto;
+import com.kh.semi.vo.ProductCategoryListVO;
 import com.kh.semi.vo.ProductListSearchCategoryVO;
 import com.kh.semi.vo.ProductListSearchVO;
+import com.kh.semi.vo.ProductListVO;
 import com.kh.semi.vo.ProductSelectNameVO;
 
 @Repository
@@ -24,6 +26,36 @@ public class ProductDaoImpl implements ProductDao {
 	// 의존성 주입
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+	// 추상 메소드 오버라이딩 - 상위 카테고리 다음 시퀀스 번호 반환
+	@Override
+	public int sequencecategoryHigh() {
+		String sql = "select category_high_seq.nextval from dual";
+		return jdbcTemplate.queryForObject(sql, int.class);
+	}
+	
+	// 추상 메소드 오버라이딩 - 상위 카테고리 생성
+	@Override
+	public void createCategoryHigh(int categoryHighNo, String categoryHighName) {
+		String sql = "insert into category_high(category_high_no, category_high_name) values (?, ?)";
+		Object[] param = new Object[] {categoryHighNo, categoryHighName};
+		jdbcTemplate.update(sql, param);
+	}
+	
+	// 추상 메소드 오버라이딩 - 하위 카테고리 다음 시퀀스 번호 반환
+	@Override
+	public int sequencecategoryLow() {
+		String sql = "select category_high_seq.nextval from dual";
+		return jdbcTemplate.queryForObject(sql, int.class);
+	}
+
+	// 추상 메소드 오버라이딩 - 하위 카테고리 생성
+	@Override
+	public void createCategoryLow(int categoryHighNo, int categoryLowNo, String categoryLowName) {
+		String sql = "insert into category_low(category_high_no, category_low_no, category_low_name) values(?, ?, ?)";
+		Object[] param = new Object[] {categoryHighNo, categoryLowNo, categoryLowName};
+		jdbcTemplate.update(sql, param);
+	}
 	
 	// CategoryHighDto에 대한 RowMapper
 	private RowMapper<CategoryHighDto> categoryHighMapper = new RowMapper<CategoryHighDto>() {
@@ -147,26 +179,73 @@ public class ProductDaoImpl implements ProductDao {
 		return jdbcTemplate.query(sql, mapper, param);
 	}
 	
+	// 카테고리 조회를 위한 ProductDto에 대한 RowMapper (product_inactive 추가)
+	private RowMapper<ProductListVO> mapperCategory = new RowMapper<>() {
+		@Override
+		public ProductListVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+			return ProductListVO.builder()
+						.productNo(rs.getInt("product_no"))
+						.productName(rs.getString("product_name"))
+						.productPrice(rs.getInt("product_price"))
+						.productGood(rs.getInt("product_good"))
+						.productInactive(rs.getString("product_inactive") != null)
+						.attachmentNo(rs.getInt("attachment_no"))
+					.build();
+		}
+	};
+	
 	// 추상 메소드 오버라이딩 - 카테고리 상품 조회(SELECT)
-	// 1) 
+	// 1) 카테고리 상품 통합 조회
+	@Override
+	public List<ProductListVO> selectListCategory(ProductListSearchCategoryVO productListSearchCategoryVO) {
+		// 검색 조회인지 판정
+		boolean isSearch = productListSearchCategoryVO.isSearch();
+
+		if(isSearch) { // 검색 조회라면
+			return searchListCategory(productListSearchCategoryVO);
+		}
+		else { // 검색 조회가 아니라면(전체 조회라면)
+			return allListCategory(productListSearchCategoryVO);
+		}
+	}
 	
 	// 2) 카테고리 상품 전체 조회
 	@Override
-	public List<ProductDto> allListCategory(ProductListSearchCategoryVO productListSearchCategoryVO, int categoryHighNo, int categoryLowNo) {
-		if(categoryLowNo != 0) {
-			String sql = "select * from (select TMP.*, rownum rn from (select * from product where category_high_no = ? and category_low_no = ? order by product_no desc)TMP) where rn between ? and ?";
-			Object[] param = new Object[] {categoryHighNo, categoryLowNo, productListSearchCategoryVO.rownumStart(), productListSearchCategoryVO.rownumEnd()};
-			return jdbcTemplate.query(sql, mapper, param);
+	public List<ProductListVO> allListCategory(ProductListSearchCategoryVO productListSearchCategoryVO) {
+		// 하위 카테고리 번호 존재 여부 판쟁
+		if(productListSearchCategoryVO.getCategoryLowNo() != 0) { // 하위 카테고리가 존재한다면
+			String sql = "select * from (select TMP.*, rownum rn from (select P.product_no, P.product_name, P.product_price, P.product_good, P.product_inactive, PA.attachment_no from product P inner join (select * from product_attachment inner join attachment on product_attachment_no = attachment_no)PA on P.product_no = PA.product_origin_no where P.category_high_no = ? and P.category_low_no = ? order by product_no desc)TMP) where rn between ? and ?";
+			Object[] param = new Object[] {productListSearchCategoryVO.getCategoryHighNo(), productListSearchCategoryVO.getCategoryLowNo(), productListSearchCategoryVO.rownumStart(), productListSearchCategoryVO.rownumEnd()};
+			// 해당 상위 카테고리의 해당 하위 카테고리 상품 전체 조회
+			return jdbcTemplate.query(sql, mapperCategory, param);
 		}
-		else {
-			String sql = "select * from (select TMP.*, rownum rn from (select * from product where category_high_no = ? order by product_no desc)TMP) where rn between ? and ?";
-			Object[] param = new Object[] {categoryHighNo, productListSearchCategoryVO.rownumStart(), productListSearchCategoryVO.rownumEnd()};
-			return jdbcTemplate.query(sql, mapper, param);
+		else { // 하위 카테고리 번호가 존재하지 않는다면
+			String sql = "select * from (select TMP.*, rownum rn from (select P.product_no, P.product_name, P.product_price, P.product_good, P.product_inactive, PA.attachment_no from product P inner join (select * from product_attachment inner join attachment on product_attachment_no = attachment_no)PA on P.product_no = PA.product_origin_no where P.category_high_no = ? order by product_no desc)TMP) where rn between ? and ?";
+			Object[] param = new Object[] {productListSearchCategoryVO.getCategoryHighNo(), productListSearchCategoryVO.rownumStart(), productListSearchCategoryVO.rownumEnd()};
+			// 해당 상위 카테고리의 상품 전체 조회
+			return jdbcTemplate.query(sql, mapperCategory, param);
 		}
 	}
 	
 	// 3) 카테고리 상품 검색 조회
-	
+	@Override
+	public List<ProductListVO> searchListCategory(ProductListSearchCategoryVO productListSearchCategoryVO) {
+		// 하위 카테고리 번호 존재 여부 판정
+		if(productListSearchCategoryVO.getCategoryLowNo() != 0) { // 하위 카테고리 번호가 존재한다면
+			String sql = "select * from (select TMP.*, rownum rn from (select P.product_no, P.product_name, P.product_price, P.product_good, P.product_inactive, PA.attachment_no from product P inner join (select * from product_attachment inner join attachment on product_attachment_no = attachment_no)PA on P.product_no = PA.product_origin_no where P.category_high_no = ? and P.category_low_no = ? and instr(#1, ?) > 0 order by product_no desc)TMP) where rn between ? and ?";
+			sql = sql.replace("#1", productListSearchCategoryVO.getType());
+			Object[] param = new Object[] {productListSearchCategoryVO.getCategoryHighNo(), productListSearchCategoryVO.getCategoryLowNo(), productListSearchCategoryVO.getKeyword(), productListSearchCategoryVO.rownumStart(), productListSearchCategoryVO.rownumEnd()};
+			// 해당 상위 카테고리의 해당 하위 카테고리 상품 검색 조회 
+			return jdbcTemplate.query(sql, mapperCategory, param);
+		}
+		else { // 하위 카테고리 번호가 존재하지 않는다면
+			String sql = "select * from (select TMP.*, rownum rn from (select P.product_no, P.product_name, P.product_price, P.product_good, P.product_inactive, PA.attachment_no from product P inner join (select * from product_attachment inner join attachment on product_attachment_no = attachment_no)PA on P.product_no = PA.product_origin_no where P.category_high_no = ? and instr(#1, ?) > 0 order by product_no desc)TMP) where rn between ? and ?";
+			sql = sql.replace("#1", productListSearchCategoryVO.getType());
+			Object[] param = new Object[] {productListSearchCategoryVO.getCategoryHighNo(), productListSearchCategoryVO.getKeyword(), productListSearchCategoryVO.rownumStart(), productListSearchCategoryVO.rownumEnd()};
+			// 해당 상위 카테고리의 상품 검색 조회
+			return jdbcTemplate.query(sql, mapperCategory, param);
+		}
+	}
 	
 	// ProductDto에 대한 ResultSetExtractor (product_inactive 추가)
 	private ResultSetExtractor<ProductDto> extractor = new ResultSetExtractor<>() {
@@ -249,7 +328,7 @@ public class ProductDaoImpl implements ProductDao {
 		return jdbcTemplate.update(sql, param) > 0;
 	}
 
-	// 추상 메소드 오버라이딩 - 관리자 상품 조회에서 상품 총 갯수
+	// 추상 메소드 오버라이딩 - 모든 상품 조회에서 상품 총 갯수
 	// 1) 통합 조회시 상품의 총 갯수
 	@Override
 	public int countTotalProduct(ProductListSearchVO productListSearchVO) {
@@ -278,7 +357,7 @@ public class ProductDaoImpl implements ProductDao {
 		return jdbcTemplate.queryForObject(sql, int.class, param);
 	}
 	
-	// 추상 메소드 오버라이딩 - 회원 상품 조회에서 상품 총 갯수
+	// 추상 메소드 오버라이딩 - 카테고리 상품 조회에서 상품 총 갯수
 	// 1) 통합 조회시 상품의 총 갯수
 	@Override
 	public int countTotalCategory(ProductListSearchCategoryVO productListSearchAllVO) {
@@ -291,25 +370,40 @@ public class ProductDaoImpl implements ProductDao {
 		}
 	}
 
+	// 2) 전체 조회시 상품의 총 갯수
 	@Override
 	public int countAllCategory(ProductListSearchCategoryVO productListSearchAllVO) {
 		String sql;
 		Object[] param;
-		if(productListSearchAllVO.getCategoryLowNo() == 0) {
+		// 상위 카테고리만 조회인지 판정
+		if(productListSearchAllVO.getCategoryLowNo() == 0) { // 상위 카테고리 조회라면
 			sql = "select count(*) from product where category_high_no = ?";
 			param = new Object[] {productListSearchAllVO.getCategoryHighNo()};
 		}
-		else {
+		else { // 상위 카테고리 조회가 아니라면
 			sql = "select count(*) from product where category_high_no = ? and category_low_no = ?";
 			param = new Object[] {productListSearchAllVO.getCategoryHighNo(), productListSearchAllVO.getCategoryLowNo()};
 		}
 		return jdbcTemplate.queryForObject(sql, int.class, param);
 	}
 
+	// 3) 검색 조회시 상품의 총 갯수
 	@Override
 	public int countSearchCategory(ProductListSearchCategoryVO productListSearchAllVO) {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql;
+		Object[] param;
+		// 상위 카테고리 검색 조회인지 판정
+		if(productListSearchAllVO.getCategoryLowNo() == 0) { // 상위 카테고리 검색 조회라면
+			sql = "select count(*) from product where category_high_no = ? and instr(#1, ?) > 0";
+			sql = sql.replace("#1", productListSearchAllVO.getType());
+			param = new Object[] {productListSearchAllVO.getCategoryHighNo(), productListSearchAllVO.getKeyword()};
+		}
+		else { // 상위 카테고리 검색 조회가 아니라면(하위 카테고리 검색 조회라면)
+			sql = "select count(*) from product where category_high_no = ? and category_low_no = ? and instr(#1, ?) > 0";
+			sql = sql.replace("#1", productListSearchAllVO.getType());
+			param = new Object[] {productListSearchAllVO.getCategoryHighNo(), productListSearchAllVO.getCategoryLowNo(), productListSearchAllVO.getKeyword()};
+		}
+		return jdbcTemplate.queryForObject(sql, int.class, param);
 	}
 
 	//상품이름 조회 테스트
