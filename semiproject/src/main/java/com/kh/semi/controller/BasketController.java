@@ -37,20 +37,26 @@ public class BasketController {
 	//주문서 페이지로 이동
 	@PostMapping("/basket")
 	public String basket(@ModelAttribute ArrayList<BasketVO> basketVO,
-			HttpServletRequest request, HttpSession session, Model model) {
+			HttpServletRequest request, HttpSession session) {
 		String memberId = (String)session.getAttribute(SessionConstant.ID);
 		
 		//1. 체크된 상품의 상품번호가 넘어가야함
-		String[] arr = request.getParameterValues("productNo");
+		String[] arr = request.getParameterValues("basketProductNo");
+		
 		//2. 상품번호로 장바구니 조회 후 상세내역(BasketVO) 리스트로 찍어주기
+		List<BasketVO> result = new ArrayList<>();
 		for(int i=0; i<arr.length; i++) {
 			BasketVO list = basketDao.orderBeforeList(memberId, Integer.parseInt(arr[i]));
-			basketVO.add(list);
+			result.add(list);
+			
 		}
-
-		model.addAttribute("list", basketVO);
+		
+		//세션에 리스트값 저장
+		session.setAttribute("basket", result);
+		//System.out.println(session.getAttribute("basket"));
+		
 		//추가로 해야할 것!!!
-		//(+심화:체크된 것만 넘어오게 처리하기)
+		//(+심화:체크된 것만 넘어오게 처리하기, js 체크박스 필요)
 		return "redirect:/order/order_ck";
 	}
 		

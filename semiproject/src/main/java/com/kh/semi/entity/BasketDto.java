@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class BasketDto {
+	private int basketNo;
 	private String basketId;
 	private int basketProductNo, basketCountNumber;
 	private Date basketAddDate;

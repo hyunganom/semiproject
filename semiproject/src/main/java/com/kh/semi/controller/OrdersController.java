@@ -41,13 +41,14 @@ public class OrdersController {
 
 	//장바구니에서 주문서로 넘어오는 화면
 	@GetMapping("/order_ck")
-	public String order(HttpSession session, Model model) {
-		//@ModelAttribute ArrayList<BasketVO> basketVO,
-		
+	public String order(
+			HttpSession session, Model model) {
 		//주문자정보(이름, 전화번호, 이메일 등) model 출력준비
 		String memberId = (String)session.getAttribute(SessionConstant.ID);
 		model.addAttribute("memberDto", memberDao.selectOne(memberId));
-		//model.addAttribute("list", basketVO);
+		
+		//session에 저장된 장바구니 항목 model 출력준비
+		model.addAttribute("basketList", session.getAttribute("basket"));		
 		
 		return "order/order_ck";
 	}
