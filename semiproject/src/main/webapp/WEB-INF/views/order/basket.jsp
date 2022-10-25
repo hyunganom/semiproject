@@ -135,7 +135,7 @@
 		                        </td>
 		                        <td class="w-15">
 									<span>?적립금찍기?</span>
-									<input type="hidden" name="productNo" value="${vo.basketProductNo}">
+									<input type="hidden" name="basketProductNo" value="${vo.basketProductNo}">
 		                        </td>
                     		</tr>
                     	</c:forEach>

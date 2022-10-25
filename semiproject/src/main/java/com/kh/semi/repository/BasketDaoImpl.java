@@ -21,10 +21,10 @@ public class BasketDaoImpl implements BasketDao{
 	//장바구니 추가
 	@Override
 	public void insert(BasketDto basketDto) {
-		String sql = "insert into basket (basket_id, "
+		String sql = "insert into basket (basket_no, basket_id, "
 				+ "basket_product_no, basket_count_number, "
 				+ "basket_adddate, basket_product_option) "
-				+ "values(?, ?, ?, sysdate,?)";
+				+ "values(basket_seq.nextval,?, ?, ?, sysdate,?)";
 		Object[] param = {basketDto.getBasketId(),
 				basketDto.getBasketProductNo(),
 				basketDto.getBasketCountNumber(),
@@ -47,6 +47,7 @@ public class BasketDaoImpl implements BasketDao{
 	//BasketDto Mapper
 	private RowMapper<BasketDto> mapper =(rs, idx)->{
 		return BasketDto.builder()
+				.basketNo(rs.getInt("basket_no"))
 				.basketId(rs.getString("basket_id"))
 				.basketProductNo(rs.getInt("basket_product_no"))
 				.basketCountNumber(rs.getInt("basket_count_number"))
@@ -59,6 +60,7 @@ public class BasketDaoImpl implements BasketDao{
 	private ResultSetExtractor<BasketDto> extractor = (rs)->{
 		if(rs.next()) {
 			return BasketDto.builder()
+					.basketNo(rs.getInt("basket_no"))
 					.basketId(rs.getString("basket_id"))
 					.basketProductNo(rs.getInt("basket_product_no"))
 					.basketCountNumber(rs.getInt("basket_count_number"))
@@ -82,6 +84,7 @@ public class BasketDaoImpl implements BasketDao{
 	//BasketVO Mapper
 	private RowMapper<BasketVO> voMapper =(rs, idx)->{
 		return BasketVO.builder()
+				.basketNo(rs.getInt("basket_no"))
 				.basketId(rs.getString("basket_id"))
 				.basketProductNo(rs.getInt("basket_product_no"))
 				.basketCountNumber(rs.getInt("basket_count_number"))
@@ -95,6 +98,7 @@ public class BasketDaoImpl implements BasketDao{
 	private ResultSetExtractor<BasketVO> voExtractor =(rs)->{
 		if(rs.next()) {
 			return BasketVO.builder()
+					.basketNo(rs.getInt("basket_no"))
 					.basketId(rs.getString("basket_id"))
 					.basketProductNo(rs.getInt("basket_product_no"))
 					.basketCountNumber(rs.getInt("basket_count_number"))
