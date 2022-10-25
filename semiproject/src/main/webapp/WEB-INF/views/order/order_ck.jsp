@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp">
 	<jsp:param value="주문서 작성" name="title"/>
@@ -40,7 +41,6 @@
         </div>
 
         <hr>
-        ${list}
 <form action="order_ck" method="post">	
         <div class="row mt-50">
           <h3>주문 상품 정보</h3>
@@ -49,17 +49,22 @@
         <table class="table table-border">
           <thead>
             <tr>
-              <th>상품</th>
-              <th>수량</th>
-              <th>가격</th>
+              <th class="w-70">상품</th>
+              <th class="w-15">수량</th>
+              <th class="w-15">가격</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>?상품찍기?</td>
-              <td>?수량찍기?</td>
-              <td>?가격찍기?</td>
-            </tr>
+            <c:forEach var="list" items="${basketList}">
+            	<tr>
+	              <td>
+	              	<div>${list.productName}</div>
+	              	<div class="mt-10">${list.basketProductOption}</div>
+	              </td>
+	              <td>${list.basketCountNumber}</td>
+	              <td>${list.productPrice}</td>
+            	</tr>
+            </c:forEach>
             <tr>
               <td colspan="3">
                 <i class="fa-solid fa-angles-right"></i>

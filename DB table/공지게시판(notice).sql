@@ -45,7 +45,7 @@ select * from notice where notice_no=1;
 update notice set notice_title =?, notice_content=? where notice_no=?;
 
 -- 공지 글 삭제
-delete notive where notice_no=?;
+delete notice where notice_no=?;
 
 commit;
 
