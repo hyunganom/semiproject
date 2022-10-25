@@ -61,8 +61,12 @@
 	              	<div>${list.productName}</div>
 	              	<div class="mt-10">${list.basketProductOption}</div>
 	              </td>
-	              <td>${list.basketCountNumber}</td>
-	              <td>${list.productPrice}</td>
+	              <td>
+	              	<div class="center">${list.basketCountNumber}</div>
+	              </td>
+	              <td>
+	              	<div class="center">${list.productPrice}</div>
+	              </td>
             	</tr>
             </c:forEach>
             <tr>
@@ -145,32 +149,20 @@
           </table>
         </div>
         
-         <!-- 입력하지않지만 넘어가야하는 정보 -->
-<%--         <input type="hidden" name="orderId" value="${loginId}"> --%>
-        <input type="hidden" name="orderStatus" value="결제완료">
-        <input type="hidden" name="orderPrice" value="12000">
-        <input type="hidden" name="orderPayPrice" value="10000">
-        
-        <!-- payment에 넘어가야하는 정보(배열값으로 돌릴 예정) -->
-		<input type="hidden" name="paymentProductNo" value="1264">
-		<input type="hidden" name="paymentCount" value="2">
-		<input type="hidden" name="paymentPrice" value="10000">
-		<input type="hidden" name="paymentOption" value="옵션">
-
         <div class="row mt-50">
           <h3>쿠폰 / 적립금</h3>
         </div>
 
         <div class="row">
           <div class="row">
-            <p>쿠폰 (보유 : <span>?</span> 개)</p>
+            <p>쿠폰 (보유 : <span>${coupon.size()}</span>개)</p>
             <input type="text" class="input w-50">
             <a href="#" class="btns btns-positive">쿠폰 적용</a>
           </div>
           <div class="row">
-            <p>적립금 (사용가능 적립금 : <span>?</span>)</p>
-            <input type="text" class="input w-50" name="orderUsePoint">
-            <a href="#" class="btns btns-positive">전액 사용</a>
+          	<p>적립금 (사용가능 적립금 : <span>?</span>)</p>
+			<input type="text" class="input w-50" name="orderUsePoint">
+			<a href="#" class="btns btns-positive">전액 사용</a>
           </div>
         </div>
 
@@ -190,7 +182,7 @@
               </tr>
               <tr>
                 <td>0</td>
-                <td>3000</td>
+                <td>0</td>
                 <td>0</td>
                 <td>0</td>
               </tr>
@@ -207,6 +199,19 @@
             <input type="radio" name="orderType" value="실시간 계좌이체">실시간 계좌이체
             <input type="radio" name="orderType" value="무통장입금">무통장입금
         </div>
+        
+         <!-- 입력하지않지만 넘어가야하는 정보 -->
+        <input type="hidden" name="orderStatus" value="결제완료">
+        <input type="hidden" name="orderPrice" value="50000">
+        <input type="hidden" name="orderPayPrice" value="50000">
+        
+        <!-- payment에 넘어가야하는 정보(paymentDto형태로 들어가야함!) -->
+        <c:forEach var="list" items="${basketList}" varStatus="status">
+			<input type="hidden" name="payment[${status.index}].paymentProductNo" value="${list.basketProductNo}">
+			<input type="hidden" name="payment[${status.index}].paymentCount" value="${list.basketCountNumber}">
+			<input type="hidden" name="payment[${status.index}].paymentPrice" value="10000">
+			<input type="hidden" name="payment[${status.index}].paymentOption" value="${list.basketProductOption}">
+		</c:forEach>
 
         <div class="row center">
           <button type="submit" class="btns btns-positive">결제하기</button>

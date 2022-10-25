@@ -10,8 +10,10 @@
 <div align = "center">
 
 <%-- 검색창 --%>
-<form action = "list" method = "get">
-	<%-- 일단 상품명 조회만 추가했으며 차후 테이블 조인을 통해 카테고리 이름으로도 조회가 가능하도록 바꿀 예정 --%>
+<form action = "category" method = "get">
+	<%-- 카테고리 번호를 입력받아 조회해야하므로 검색을 위해 form에서 값을 보낼 때 하이퍼링크에서 입력받았던 카테고리 번호도 보내야 한다 --%>
+	<input type = "hidden" name = "categoryHighNo" value = "${productListSearchCategoryVO.categoryHighNo}">
+	<input type = "hidden" name = "categoryLowNo" value = "${productListSearchCategoryVO.categoryLowNo}">
 	<select name = "type">
 		<option value = "product_name" <c:if test = "${productListSearchCategoryVO.type == 'product_name'}">selected</c:if>>상품명</option>
 	</select>
@@ -19,37 +21,27 @@
 	<button type = "submit">검색</button>
 </form>
 
+<div class = "container-1200">
+	
+	<div class = "row">
+		<a><img></a>
+	</div>
+
+</div>
+
 <table border = "1" width = "1000" >
 	<tbody>
-		<tr>
-			<th>상품 번호</th>
-			<th>상위 카테고리 번호</th>
-			<th>하위 카테고리 번호</th>
-			<th>상품 이름</th>
-			<th>상품 가격</th>
-			<th>상품 정보</th>
-			<th>상품 재고</th>
-			<th>상품 별점</th>
-			<th>상품 등록일</th>
-			<th>상품 수정일</th>
-			<th>상품 상태</th>
-		</tr>
 		
 		<c:forEach var = "productList" items = "${productList}">
 		<tr>
-			<td>${productList.productNo}</td>
-			<td>${productList.categoryHighNo}</td>
-			<td>${productList.categoryLowNo}</td>
+			<td>번호 : ${productList.productNo}</td>
 			<td>
 				<a href = "detail?productNo=${productList.productNo}">${productList.productName}</a>
 			</td>
 			<td>${productList.productPrice}</td>
-			<td>${productList.productInformation}</td>
-			<td>${productList.productInventory}</td>
 			<td>${productList.productGood}</td>
-			<td>${productList.productRegisttime}</td>
-			<td>${productList.productUpdatetime}</td>
 			<td>${productList.productInactive}</td>
+			<td><img width=50 height=50 src="/attachment/download/productTumbnail?attachmentNo=${productList.attachmentNo}"></td>
 		</tr>
 		</c:forEach>
 		

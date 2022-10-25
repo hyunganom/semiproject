@@ -5,6 +5,7 @@
 -- 장바구니 상품수량(basket_count_number) : 기본 1개, 1보다 큰 숫자로 조건 설정
 -- 장바구니 상품추가일(basket_adddate) : sysdate 기본값
 -- 장바구니 상품옵션(basekt_product_option) : null값 허용
+-- 장바구니 번호(basket_no) : (+추가) primary key
 
 
 -- BASKET 테이블 생성
