@@ -23,7 +23,7 @@
 		</c:otherwise>
 	</c:choose>
 
-	<h2><a href="/order/basket">장바구니</a></h2>
+	<h2><a href="/basket">장바구니</a></h2>
 	
 <%-- footer.jsp 불러오기 --%>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

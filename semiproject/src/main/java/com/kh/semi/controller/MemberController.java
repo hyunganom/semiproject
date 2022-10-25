@@ -232,7 +232,7 @@ public class MemberController {
 			//로그아웃
 			session.removeAttribute(SessionConstant.ID);
 			session.removeAttribute(SessionConstant.GRADE);
-			return "redirect:end_success";
+			return "redirect:endSuccess";
 		}
 		else {
 			return "redirect:end?error";
@@ -244,4 +244,46 @@ public class MemberController {
 		return "member/endSuccess";
 	}
 	
+	@GetMapping("/find_id")
+	public String findId() {
+		return "member/findId";
+	}
+	
+	@PostMapping("/find_id")
+	public String findId(Model model, @ModelAttribute MemberDto inputDto, 
+			HttpSession session) {
+		//DB에서 회원 이름과 이메일에 해당하는 정보를 불러옴
+		MemberDto findDto = memberDao.findId(
+				inputDto.getMemberName(), 
+				inputDto.getMemberEmail());
+		if(findDto == null) {
+			return "redirect:find_id?error";
+		}
+		else {
+			model.addAttribute("memberDto", findDto);
+			return "member/findIdSuccess";
+		}
+	}
+	
+	@GetMapping("/find_pw")
+	public String findPw() {
+		return "member/findPw";
+	}
+	
+	@PostMapping("/find_pw")
+	public String findPw(Model model, @ModelAttribute MemberDto inputDto, 
+			HttpSession session) {
+		//DB에서 회원 아이디, 이름, 전화번호에 해당하는 정보를 불러옴
+		MemberDto findDto = memberDao.findPw(
+				inputDto.getMemberId(), 
+				inputDto.getMemberName(), 
+				inputDto.getMemberTel());
+		if(findDto == null) {
+			return "redirect:find_pw?error";
+		}
+		else {
+			model.addAttribute("memberDto", findDto);
+			return "member/findPwSuccess";
+		}
+	}
 }

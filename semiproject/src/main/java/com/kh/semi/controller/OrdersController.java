@@ -1,7 +1,9 @@
 package com.kh.semi.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,64 +13,43 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.semi.constant.SessionConstant;
 import com.kh.semi.entity.OrdersDto;
 import com.kh.semi.entity.PaymentDto;
 import com.kh.semi.repository.BasketDao;
 import com.kh.semi.repository.MemberDao;
-import com.kh.semi.repository.OrdersDao;
-import com.kh.semi.repository.PaymentDao;
 import com.kh.semi.service.OrderService;
+import com.kh.semi.vo.BasketVO;
 
 @Controller
 @RequestMapping("/order")
 public class OrdersController {
 
 	@Autowired
-	private OrdersDao ordersDao;
-	@Autowired
-	private PaymentDao paymentDao;
-	@Autowired
 	private OrderService orderService;
 	@Autowired
-	private BasketDao basketDao;
-	@Autowired
 	private MemberDao memberDao;
+	@Autowired
+	private BasketDao basketDao;
 	
 //	@PostConstruct
 //	public void prepare() {
 //		System.out.println("초기화 메소드!!");
 //	}
-	
-	
-	//장바구니
-	@GetMapping("/basket")
-	public String basket(HttpSession session, Model model) {
-		//장바구니 조회
-		String memberId = (String)session.getAttribute(SessionConstant.ID);
-		//모델로 전달
-		model.addAttribute("basketVO", basketDao.selectList(memberId));
-		return "order/basket";
-	}
-	
-	@PostMapping("/basket")
-	public String basket() {
-		//form처리
-		return "redirect:/order/order_ck";
-	}
 
-
-	//장바구니에서 주문서로 넘어가는 화면
+	//장바구니에서 주문서로 넘어오는 화면
 	@GetMapping("/order_ck")
-	public String order(HttpSession session, Model model) {
+	public String order(
+			HttpSession session, Model model) {
 		//주문자정보(이름, 전화번호, 이메일 등) model 출력준비
 		String memberId = (String)session.getAttribute(SessionConstant.ID);
 		model.addAttribute("memberDto", memberDao.selectOne(memberId));
 		
-		//추가로 해야할 것!!!
-		//회원아이디로 장바구니 정보 조회 및 model 출력준비(+심화:체크된 것만 넘어오게 처리하기)
-		//배송정보(기본배송지) model 출력준비
+		//session에 저장된 장바구니 항목 model 출력준비
+		model.addAttribute("basketList", session.getAttribute("basket"));		
+		
 		return "order/order_ck";
 	}
 	
@@ -110,5 +91,7 @@ public class OrdersController {
 	public String fail() {
 		return "order/order_fail";
 	}
+	
+
 
 }
