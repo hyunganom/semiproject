@@ -89,6 +89,11 @@
 </table>
 
 <div>
+
+	<form id = "product-data" method = "post">
+		<input type = "hidden" name = "productNo" value = "${productDto.productNo}"> <%-- 상품 번호 --%>
+
+
 	<form id = "product-data" method = "post">
 		<input type = "hidden" name = "productNo" value = "${productDto.productNo}"> <%-- 상품 번호 --%>
 		<div class = "row">
