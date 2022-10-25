@@ -3,6 +3,7 @@ package com.kh.semi.repository;
 import java.util.List;
 
 import com.kh.semi.entity.PaymentDto;
+import com.kh.semi.vo.PaymentVO;
 
 public interface PaymentDao {
 	//결제(&통계)
@@ -12,6 +13,8 @@ public interface PaymentDao {
 	
 	//1. 등록(추가)
 	void insert(PaymentDto paymentDto);
+	//1-2. 등록(추가)
+	void insert(PaymentVO payment);
 	
 	//2. 수정(상품번호로 조회 후 수량/가격을 변경)
 	boolean update(PaymentDto paymentDto); 

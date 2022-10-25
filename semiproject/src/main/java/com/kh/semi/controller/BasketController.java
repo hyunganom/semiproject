@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.semi.constant.SessionConstant;
 import com.kh.semi.repository.BasketDao;
+import com.kh.semi.repository.CouponDao;
 import com.kh.semi.vo.BasketVO;
 
 @Controller
@@ -23,6 +24,7 @@ public class BasketController {
 	
 	@Autowired
 	private BasketDao basketDao;
+
 	
 	//장바구니 페이지로 이동
 	@GetMapping("/basket")
@@ -43,17 +45,15 @@ public class BasketController {
 		//1. 체크된 상품의 상품번호가 넘어가야함
 		String[] arr = request.getParameterValues("basketProductNo");
 		
-		//2. 상품번호로 장바구니 조회 후 상세내역(BasketVO) 리스트로 찍어주기
+		//2. 상품번호로 장바구니 조회 후 새로 생성한 result 배열에 
+		//	BasketVO 형태로 담기(상품이 여러개일 수 있으므로 반복문으로 처리)
 		List<BasketVO> result = new ArrayList<>();
 		for(int i=0; i<arr.length; i++) {
 			BasketVO list = basketDao.orderBeforeList(memberId, Integer.parseInt(arr[i]));
 			result.add(list);
-			
 		}
-		
-		//세션에 리스트값 저장
+		//3. 세션에 리스트값 저장
 		session.setAttribute("basket", result);
-		//System.out.println(session.getAttribute("basket"));
 		
 		//추가로 해야할 것!!!
 		//(+심화:체크된 것만 넘어오게 처리하기, js 체크박스 필요)
