@@ -23,6 +23,7 @@ import com.kh.semi.vo.NoticeListSearchVO;
 @RequestMapping("/notice")
 
 public class NoticeController {
+	//등록 수정 삭제 관리자 권한 수정 추가필요
 	
 	// 의존성 주입
 	@Autowired
@@ -58,8 +59,6 @@ public class NoticeController {
 		//설정한 noticeDto를 매개변수롤 공지글 등록(INSERT) 실행
 		noticeDao.write(noticeDto);
 		
-
-		
 		// 반환한 시퀀스 번호를 redirect시 파라미터의 값(value)으로 설정
 		attr.addAttribute("noticeNo", noticeNo);
 		
@@ -69,12 +68,18 @@ public class NoticeController {
 	
 	//2. 공지글 목록 Mapping
 	@GetMapping("/list")
-	public String selectList(Model model, @ModelAttribute NoticeListSearchVO noticeListSearchVO, HttpSession session) {		
+	public String list(Model model, @ModelAttribute NoticeListSearchVO noticeListSearchVO) {		
 		
-		List<NoticeDto> list = noticeDao.allListNotice();
-		model.addAttribute("list", list);
+		// 조회 유형 판정과 실행시킬 메소드를 BoardDaoImpl에서 결정하도록 변경
+		// 조회 유형에 따른 조회 결과의 총 갯수를 반환
+		int count = noticeDao.count(noticeListSearchVO);
+		// 반환한 조회 결과의 총 갯수(count)를 noticeListSearchVO의 count 필드의 값으로 설정
+		noticeListSearchVO.setCount(count);
+
+		// model에 조회 유형에 따른 조회 결과를 첨부
+		model.addAttribute("list", noticeDao.selectList(noticeListSearchVO));
 		
-		//공지글 목록(list.jsp)으로 연결
+		// 게시글 목록(list.jsp)로 연결
 		return "notice/list";
 	
 	}
@@ -85,7 +90,6 @@ public class NoticeController {
 		
 		// 하이퍼링크로 입력받은 inquireNo로 상세 조회 실행 후 그 결과를 Model에 첨부
 		model.addAttribute("noticeDto", noticeDao.selectOne(noticeNo));		
-
 		
 		// 공지글 상세 페이지(detail.jsp)로 연결
 		return "notice/detail";
@@ -95,14 +99,20 @@ public class NoticeController {
 	//4. 공지글 수정 Mapping(UPDATE) (관리자)
 	@GetMapping("/editAdmin")
 	public String edit(HttpSession session, @RequestParam int noticeNo, Model model, RedirectAttributes attr) {
+		
+		// HttpSession에서 로그인 중인 회원 아이디를 반환
 		String loginId = (String)session.getAttribute("loginId");
 		
+		// 반환한 noticeNo를 매개변수로 상세 조회 실행 후 그 결과를 변수 noticeeDto에 저장
 		NoticeDto noticeDto = noticeDao.selectOne(noticeNo);
+		
+		// noticeDto에서 공지 작성자(noticeId) 반환
 		String noticeId = noticeDto.getNoticeId();
 		
+		// 수정 Mapping의 접근자가 해당 공지 작성자인지 확인(관리자인 경우)
 		if(loginId.equals(noticeId)) {
-			// inquireDto를 Model에 첨부
-			model.addAttribute("noticeDtoo", noticeDto);
+			// noticeDto를 Model에 첨부
+			model.addAttribute("noticeDto", noticeDto);
 			
 			// 문의글 수정 페이지(edit.jsp)로 연결
 			return "notice/edit";
@@ -115,30 +125,22 @@ public class NoticeController {
 			return "redirect:detail";
 			
 		}
-	}
-	
-	
-	
-	
-	
-	
-	
-	
+	}	
 	
 	
 	@PostMapping("/editAdmin")
 	public String edit(@ModelAttribute NoticeDto noticeDto, RedirectAttributes attr) {
 		
-		// View에서 입력받은 inquireDto를 매개변수로 문의글 수정(UPDATE) 실행
+		// View에서 입력받은 noticeDto를 매개변수로 문의글 수정(UPDATE) 실행
 		noticeDao.update(noticeDto);
 		
-		// inquireDto에서 문의글 번호(inquireNo) 반환
-		int inquireNo = noticeDto.getNoticeNo();
+		// noticeDto에서 공지 번호(noticeNo) 반환
+		int noticeNo = noticeDto.getNoticeNo();
 		
-		// 반환한 문의글 번호(inquireNo)를 redirect시 파라미터의 값(value)으로 설정
-		attr.addAttribute("inquireNo", inquireNo);
+		// 반환한 공지 번호(inquireNo)를 redirect시 파라미터의 값(value)으로 설정
+		attr.addAttribute("noticeNo", noticeNo);
 		
-		// 수정한 해당 문의글 상세 Mapping으로 강제 이동(redirect)
+		// 수정한 해당 공지 상세 Mapping으로 강제 이동(redirect)
 		return "redirect:detail";
 	}	
 	

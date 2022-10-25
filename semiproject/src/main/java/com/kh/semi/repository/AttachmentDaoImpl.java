@@ -127,7 +127,7 @@ public class AttachmentDaoImpl implements AttachmentDao{
 	@Override
 	public List<AttachmentDto> selectProductExplainList(int productOriginNo) {
 		String sql = "select * from product_explain_view "
-				+ "where product_origin_no = ?";
+				+ "where product_explain_no = ?";
 		Object[] param = {productOriginNo};
 		return jdbcTemplate.query(sql, mapper, param);
 	}

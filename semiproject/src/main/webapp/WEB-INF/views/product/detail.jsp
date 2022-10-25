@@ -80,8 +80,8 @@
 </div>
 
 <div class = "row">	
-	<form action = "detail" method = "post">
-		<input type = "hidden" name ="basketProductNo" value="${productDto.productNo}"> <%-- 상품 번호 --%>
+	<form action = "" method = "post">
+		<input type = "hidden" name = "${productDto.productNo}"> <%-- 상품 번호 --%>
 		<input type = "number" name = "basketCountNumber" placeholder = "수량">
 		<button class = "btn btn-positive" type = "submit">장바구니</button>
 	</form>

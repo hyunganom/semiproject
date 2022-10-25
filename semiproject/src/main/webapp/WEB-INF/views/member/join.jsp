@@ -153,11 +153,13 @@
 			<input class="input w-100" name="memberName" type="text" required autocomplete="off">
 		</div>
 		
-		<div class="row left mt-30">			<label>생년월일</label>
+		<div class="row left mt-30">
+			<label>생년월일</label>
 			<input class="input w-100" name="memberBirth" type="date" autocomplete="off">
 		</div>
 		
-		<div class="row left mt-30">성별</div>		<div>
+		<div class="row left mt-30">성별</div>
+		<div>
 			<input type="radio" name="memberGender" value="남자"> 남자
 			<input type="radio" name="memberGender" value="여자"> 여자
 		</div>
@@ -166,17 +168,19 @@
 			<label>이메일</label>
 			<input class="input w-100" name="memberEmail" type="email" required autocomplete="off">
 		</div>
-				<div class="row left mt-30">
+		
+		<div class="row left mt-30">
 			<label>전화번호</label>
 			<input class="input w-100" name="memberTel" type="tel" required autocomplete="off">
 		</div>
 
-		<div class="row left mt-30">			<label>주소</label>
+		<div class="row left mt-30">
+			<label>주소</label>
 			<br>
 			<input class="input" name="memberPost" type="text" maxlength="6" size="6" placeholder="우편번호" autocomplete="off">
 			<button type="button" class="btn btn-find-address" onclick="openZipSearch()">
 				<i class="fa-solid fa-house"></i> 검색
-            </button>
+      </button>
 		</div>
 		<div class="row left">
 			<input class="input w-100" placeholder="기본주소" name="memberBaseAddress" type="text" autocomplete="off">

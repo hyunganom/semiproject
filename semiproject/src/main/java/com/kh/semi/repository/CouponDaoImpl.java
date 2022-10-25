@@ -7,10 +7,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.kh.semi.entity.CouponDto;
 import com.kh.semi.vo.CouponCountVO;
 
+@Repository
 public class CouponDaoImpl implements CouponDao{
 	
 	@Autowired
@@ -67,8 +69,8 @@ public class CouponDaoImpl implements CouponDao{
 	
 	//쿠폰 조회
 	@Override
-	public List<CouponDto> selectList(int couponId) {
-		String sql = "select * from coupon where coupon_id=?";
+	public List<CouponDto> selectList(String couponId) {
+		String sql = "select * from coupon where coupon_id=? and coupon_yn='y'";
 		Object[] param = {couponId};
 		return jdbcTemplate.query(sql, mapper,param);
 	}

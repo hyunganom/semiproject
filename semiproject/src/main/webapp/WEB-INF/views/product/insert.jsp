@@ -52,6 +52,44 @@
 
 <body>
 	<div class = "container-800">
+	
+		<div class = "row">
+			<h1>상위 카테고리 생성</h1>
+		</div>
+		
+		<form action = "createCategoryHigh" method = "post">
+		<div>
+			상위 카테고리명 : <input name = "categoryHighName">
+		</div>
+		<div>
+			<button type = "submit">생성</button>
+		</div>
+		</form>
+	
+		<div class = "row">
+			<h1>하위 카테고리 생성</h1>
+		</div>
+
+		<form action = "createCategoryLow" method = "post">	
+		<div class = "row">
+			상위 카테고리명 : 
+			<select name = "categoryHighNo">
+				<option value = "">선택</option>
+				<c:forEach var = "categoryHighList" items = "${categoryHighList}">
+					<option value = "${categoryHighList.categoryHighNo}">${categoryHighList.categoryHighName}</option>
+				</c:forEach>
+			</select>
+		</div>
+		<div class = "row">
+			하위 카테고리명 : <input name = "categoryLowName">
+		</div>
+		<div class = "row">
+			<button type = "submit">생성</button>
+		</div>
+		</form>
+	</div>
+
+	<div class = "container-800">
 		<h1>상품 등록</h1>
 	
 	<form action = "insert" method = "post" enctype = "multipart/form-data">

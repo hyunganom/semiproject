@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.kh.semi.entity.OrdersDto;
+import com.kh.semi.vo.OrderVO;
 
 @Repository
 public class OrdersDaoImpl implements OrdersDao{
@@ -32,8 +33,9 @@ public class OrdersDaoImpl implements OrdersDao{
 				+ "order_tel, order_memo, order_date, order_status, "
 				+ "order_changedate, order_price, order_payprice,"
 				+ "order_type, order_use_point, order_point) values("
-				+ "orders_seq.nextval, ?, ?, ?, ?,?,?,?,sysdate,?,sysdate,?,?,?,?,?)";
+				+ "?, ?, ?, ?, ?,?,?,?,sysdate,?,sysdate,?,?,?,?,?)";
 		Object[] param = {
+				ordersDto.getOrderNo(), 
 				ordersDto.getOrderId(),	ordersDto.getOrderName(),
 				ordersDto.getOrderPost(), ordersDto.getOrderBaseAddress(),
 				ordersDto.getOrderDetailAddress(), ordersDto.getOrderTel(),
@@ -43,6 +45,29 @@ public class OrdersDaoImpl implements OrdersDao{
 				ordersDto.getOrderPoint()
 		};
 		jdbcTemplate.update(sql, param);
+	}
+	
+	//1-2. orderVO로 등록
+	@Override
+	public void insert(OrderVO ordervo) {
+		String sql = "insert into orders(order_no, order_id, order_name,"
+				+ "order_post, order_base_address, order_detail_address, "
+				+ "order_tel, order_memo, order_date, order_status, "
+				+ "order_changedate, order_price, order_payprice,"
+				+ "order_type, order_use_point, order_point) values("
+				+ "?, ?, ?, ?, ?,?,?,?,sysdate,?,sysdate,?,?,?,?,?)";
+		Object[] param = {
+				ordervo.getOrderNo(), 
+				ordervo.getOrderId(),	ordervo.getOrderName(),
+				ordervo.getOrderPost(), ordervo.getOrderBaseAddress(),
+				ordervo.getOrderDetailAddress(), ordervo.getOrderTel(),
+				ordervo.getOrderMemo(), ordervo.getOrderStatus(), 
+				ordervo.getOrderPrice(), ordervo.getOrderPayPrice(),
+				ordervo.getOrderType(), ordervo.getOrderUsePoint(),
+				ordervo.getOrderPoint()
+		};
+		jdbcTemplate.update(sql, param);
+		
 	}
 
 	//2. 주문 수정
@@ -144,5 +169,9 @@ public class OrdersDaoImpl implements OrdersDao{
 		Object[] param = {orderNo};
 		return jdbcTemplate.update(sql, param)>0;
 	}
+
+
+
+
 
 }

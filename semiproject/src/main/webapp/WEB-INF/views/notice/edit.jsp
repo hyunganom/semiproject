@@ -22,7 +22,7 @@
 		
 		<div class = "row">
 			<p>내용</p>
-			<textarea name = "inquireContent">${noticeDto.noticeContent}</textarea>
+			<textarea name = "noticeContent">${noticeDto.noticeContent}</textarea>
 		</div>
 		<div>
 			<button type = "submit">수정</button>

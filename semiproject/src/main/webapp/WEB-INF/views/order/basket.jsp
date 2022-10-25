@@ -82,8 +82,12 @@
             	$(".delivery").text(3000);
             	$(".total").text(itemPrice+parseInt($(".delivery").text()));
             }
-
 		}
+		
+		<!-- 주문하기 버튼 이벤트 (전체 or 체크된것만 넘기기) -->
+		$(".form-btn").click(function(){
+			
+		});
 
 	});
 </script>
@@ -103,7 +107,7 @@
                         <th class="w-50 sideline">상품 정보</th>
                         <th class="w-15">수량</th>
                         <th class="w-15">가격</th>
-                        <th class="w-15">적립금</th>
+                        <th class="w-15">배송비</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -134,7 +138,7 @@
 		                        	</a>
 		                        </td>
 		                        <td class="w-15">
-									<span>?적립금찍기?</span>
+									<span>0</span>
 									<input type="hidden" name="basketProductNo" value="${vo.basketProductNo}">
 		                        </td>
                     		</tr>
@@ -174,7 +178,7 @@
 			</table>
             
             <div class="row center mt-50">
-            	<button type="submit" class="btns btns-positive">주문하기</button>
+            	<button type="submit" class="form-btn btns btns-positive">주문하기</button>
             </div>
         </div>
         </form>
