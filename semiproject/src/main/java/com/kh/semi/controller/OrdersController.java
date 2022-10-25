@@ -13,81 +13,53 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.semi.constant.SessionConstant;
-import com.kh.semi.entity.OrdersDto;
 import com.kh.semi.entity.PaymentDto;
-import com.kh.semi.repository.BasketDao;
+import com.kh.semi.repository.CouponDao;
 import com.kh.semi.repository.MemberDao;
-import com.kh.semi.repository.OrdersDao;
-import com.kh.semi.repository.PaymentDao;
 import com.kh.semi.service.OrderService;
+import com.kh.semi.vo.OrderVO;
 
 @Controller
 @RequestMapping("/order")
 public class OrdersController {
 
 	@Autowired
-	private OrdersDao ordersDao;
-	@Autowired
-	private PaymentDao paymentDao;
-	@Autowired
 	private OrderService orderService;
 	@Autowired
-	private BasketDao basketDao;
-	@Autowired
 	private MemberDao memberDao;
-	
-//	@PostConstruct
-//	public void prepare() {
-//		System.out.println("초기화 메소드!!");
-//	}
-	
-	
-	//장바구니
-	@GetMapping("/basket")
-	public String basket(HttpSession session, Model model) {
-		//장바구니 조회
-		String memberId = (String)session.getAttribute(SessionConstant.ID);
-		//모델로 전달
-		model.addAttribute("basketVO", basketDao.selectList(memberId));
-		return "order/basket";
-	}
-	
-	@PostMapping("/basket")
-	public String basket() {
-		//form처리
-		return "redirect:/order/order_ck";
-	}
+	@Autowired
+	private CouponDao couponDao;
 
-
-	//장바구니에서 주문서로 넘어가는 화면
+	//장바구니에서 주문서로 넘어오는 화면
 	@GetMapping("/order_ck")
 	public String order(HttpSession session, Model model) {
 		//주문자정보(이름, 전화번호, 이메일 등) model 출력준비
 		String memberId = (String)session.getAttribute(SessionConstant.ID);
 		model.addAttribute("memberDto", memberDao.selectOne(memberId));
 		
-		//추가로 해야할 것!!!
-		//회원아이디로 장바구니 정보 조회 및 model 출력준비(+심화:체크된 것만 넘어오게 처리하기)
-		//배송정보(기본배송지) model 출력준비
+		//session에 저장된 장바구니 항목 model 출력준비
+		model.addAttribute("basketList", session.getAttribute("basket"));		
+		
+		//사용가능한 쿠폰 출력하기 위한 model 출력준비
+		model.addAttribute("coupon", couponDao.selectList(memberId));
 		return "order/order_ck";
 	}
 	
 	@PostMapping("/order_ck")
-	public String order(@ModelAttribute OrdersDto ordersDto, 
-			@ModelAttribute ArrayList<PaymentDto> paymentDto,
-			HttpSession session
-			) {
+	public String order(@ModelAttribute OrderVO orderVO, 
+			HttpSession session) {
 		String memberId = (String)session.getAttribute(SessionConstant.ID);
-		ordersDto.setOrderId(memberId);
-		// View에서 전달받은 OrdersDto에 포함된 정보
+		orderVO.setOrderId(memberId);
+		
+		orderService.buy(orderVO);
+		return "redirect:_1";
+		
+		// OrdersDto에 포함된 정보
 		// orderName, orderTel, orderPost, orderBaseAddress, orderDetailAddress, 
 		// orderMemo, orderId, orderStatus, orderPrice, orderPayPrice
 		
-		// View에서 전달받은 List<PaymentDto>에 포함된 정보
+		// List<PaymentDto>에 포함된 정보
 		// paymentProductNo, paymentCount, paymentPrice, paymentOption
-		
-		orderService.buy(ordersDto, paymentDto);
-		return "redirect:_1";
 		
 		//입력된 주문정보 orderDto에 저장
 		//입력된 결제정보 paymentDto에 저장
@@ -110,5 +82,7 @@ public class OrdersController {
 	public String fail() {
 		return "order/order_fail";
 	}
+	
+
 
 }

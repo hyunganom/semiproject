@@ -150,6 +150,10 @@ public class InquireController {
 	@GetMapping("/listAdmin")
 	public String selectList(Model model, @ModelAttribute InquireListSearchVO inquireListSearchVO) {
 		
+		int countTotalInquire = inquireDao.countTotalInquire(inquireListSearchVO);
+		
+		inquireListSearchVO.setCountTotalInquireNow(countTotalInquire);
+		
 		// 검색 분류(type)과 검색어(keyword) 값의 존재 여부에 따라 검색 조회/전체 조회 실행 후 그 결과를 Model에 첨부
 		model.addAttribute("inquireList", inquireDao.selectListInquire(inquireListSearchVO));
 		
@@ -227,6 +231,8 @@ public class InquireController {
 		return "redirect:detail";
 	}
 	
+
+	
 	// 5. 문의글 삭제(비활성화) Mapping
 	@GetMapping("/delete")
 	public String delete(@RequestParam int inquireNo) {
@@ -249,22 +255,44 @@ public class InquireController {
 		return "redirect:list";
 	}
 	
-	
-	//1:1문의 댓글 관련
 	//1:1문의 댓글 등록(insert) 서블릿
-	@PostMapping("/inquireReply/write")
-	public String Replywrite(@ModelAttribute InquireReplyDto inquireReplyDto,
-			HttpSession session, RedirectAttributes attr) {
-		//로그인된 세션을 가져온다
-		String memberId = (String) session.getAttribute(SessionConstant.ID);
-		//로그인된 세션아이디를 댓글작성자로 설정한다.
-		inquireReplyDto.setInquireReplyId(memberId);
-		//댓글 파라미터에서 요청이 들어온 값을 DB에 집어넣는다.
-		inquireReplyDao.replyWrite(inquireReplyDto);
-		//1:1문의 원본글 
-		attr.addAttribute("inquireNo",inquireReplyDto.getInquireOriginNo());
+		@PostMapping("/inquireReply/write")
+		public String Replywrite(@ModelAttribute InquireReplyDto inquireReplyDto,
+				HttpSession session, RedirectAttributes attr) {
+			//로그인된 세션을 가져온다
+			String memberId = (String) session.getAttribute(SessionConstant.ID);
+			//로그인된 세션아이디를 댓글작성자로 설정한다.
+			inquireReplyDto.setInquireReplyId(memberId);
+			//댓글 파라미터에서 요청이 들어온 값을 DB에 집어넣는다.
+			inquireReplyDao.replyWrite(inquireReplyDto);
+			//1:1문의 원본글 
+			attr.addAttribute("inquireNo",inquireReplyDto.getInquireOriginNo());
+			
+			//댓글을 다시 문의글 상세로 이동
+			return "redirect:/inquire/detail";
+		}
 		
-		//댓글을 다시 문의글 상세로 이동
+	//1:1문의 댓글 삭제(delete) 서블릿
+	@GetMapping("/inquireReply/delete")
+	public String ReplyDelete(@RequestParam int inquireReplyNo,
+							@RequestParam int inquireOriginNo , RedirectAttributes attr) {
+		//1:1문의 댓글 삭제
+		inquireReplyDao.replyDelete(inquireReplyNo);
+		
+		attr.addAttribute("inquireNo",inquireOriginNo);
 		return "redirect:/inquire/detail";
 	}
+	
+	//1:1문의 댓글 수정(update) 서블릯
+	@PostMapping("/inquireReply/edit")
+	public String ReplyEdit(@ModelAttribute InquireReplyDto inquireReplyDto, RedirectAttributes attr) {
+		
+		//1:1문의 댓글 수정 DAO
+		inquireReplyDao.replyEdit(inquireReplyDto);
+		
+		
+		attr.addAttribute("inquireNo", inquireReplyDto.getInquireOriginNo());
+		return "redirect:/inquire/detail";
+	}
+	
 }

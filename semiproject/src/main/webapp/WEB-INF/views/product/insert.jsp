@@ -135,7 +135,7 @@
 	
 	<div class = "row">
 		상품 이미지 : 
-		<input type = "file" name = "attachmentMainImg" accept = ".png, .jpg" multiple > 
+		<input type = "file" name = "attachmentMainImg" accept = ".png, .jpg" > 
 	</div>
 	<div class = "row">
 		상품 상세이미지 : 

@@ -16,7 +16,8 @@ public class InquireReplyDaoImpl implements InquireReplyDao {
 	
 	@Autowired
 	JdbcTemplate jdbcTemplate;
-
+	
+	//1:1 문의 댓글 작성기능
 	@Override
 	public void replyWrite(InquireReplyDto inquireReplyDto) {
 		String sql = "insert INTO inquire_reply "
@@ -28,6 +29,8 @@ public class InquireReplyDaoImpl implements InquireReplyDao {
 		jdbcTemplate.update(sql, param);
 	}
 
+	//1:1 문의 댓글 조회
+	//1:1 게시판 원본글을 조회하여 전체출력
 	@Override
 	public List<InquireReplyVO> selectList(int inquireOriginNo) {
 		String sql = "select m.member_name, m.member_grade, r.* from"
@@ -43,11 +46,21 @@ public class InquireReplyDaoImpl implements InquireReplyDao {
 		Object[] param = {inquireReplyNo};
 		return jdbcTemplate.query(sql, extractor, param);
 	}
-
+	
+	//1:1문의 댓글 수정기능
 	@Override
-	public boolean replyUpdate(int inquireReplyNo) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean replyEdit(InquireReplyDto inquireReplyDto) {
+		String sql = "UPDATE inquire_reply set inquire_reply_content=? where inquire_reply_no=?";
+		Object[] param= {inquireReplyDto.getInquireReplyContent(), inquireReplyDto.getInquireReplyNo()};
+		return jdbcTemplate.update(sql, param)>0;
+	}
+	
+	//1:1문의 댓글 삭제기능
+	@Override
+	public boolean replyDelete(int inquireReplyNo) {
+		String sql = "delete inquire_reply where inquire_reply_no=?";
+		Object[] param = {inquireReplyNo};
+		return jdbcTemplate.update(sql,param)>0;
 	}
 	
 	RowMapper<InquireReplyVO> mapper = (rs, idx)->{
@@ -76,5 +89,7 @@ public class InquireReplyDaoImpl implements InquireReplyDao {
 		}
 		else return null;
 	};
+
+	
 	
 }

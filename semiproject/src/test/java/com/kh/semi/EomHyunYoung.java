@@ -27,15 +27,15 @@ public class EomHyunYoung {
 //	}
 	
 	// 문의글 통합 조회(SELECT) 회원용
-	@Test
-	public void test() {
-		List<InquireDto> result = inquireDao.selectListUserInquire(InquireListSearchVO.builder()
-																	.type("inquire_title")
-																	.keyword("테")
-																.build(), 
-																"hello1234");
-		System.out.println(result);
-	}
+//	@Test
+//	public void test() {
+//		List<InquireDto> result = inquireDao.selectListUserInquire(InquireListSearchVO.builder()
+//																	.type("inquire_title")
+//																	.keyword("테")
+//																.build(), 
+//																"hello1234");
+//		System.out.println(result);
+//	}
 	
 	// 문의글 통합 조회(SELECT) 관리자용
 //	@Test

@@ -7,18 +7,39 @@
 	<jsp:param value="로그인" name="title"/>
 </jsp:include>
 
-	<div align="cemter">
-		<h1>로그인</h1>
-		<form action="login" method="post">
-			<input type="text" name="memberId" placeholder="아이디" required><br><br>
-			<input type="password" name="memberPw" placeholder="비밀번호" required><br><br>
-			<button type="submit">로그인</button>
-		</form>
-		
-		<c:if test="${param.error != null}">
-			<h2 style="color:red">입력한 정보가 맞지 않습니다.</h2>
-		</c:if>
+<style>
+	a{
+	text-decoration: none;
+	}
+</style>
+
+<form action="login" method="post">
+	<div class="container-350 mt-40 mb-20">
+		<div class="row center">
+			<h1>SALUV</h1>
+				<div class="row mt-30">
+					<input class="input w-100" type="text" name="memberId" placeholder="아이디" required autocomplete="off">
+				</div>
+				<div>
+					<input class="input w-100" type="password" name="memberPw" placeholder="비밀번호" required>
+				</div>
+				
+				<div class="row mt-20">
+					<button type="submit" class="btn btn-netural w-100">로그인</button>
+				</div>
+				
+				<div class="row mt-20">
+					<a href="find_id">아이디 찾기</a> &nbsp;|&nbsp;
+					<a href="find_pw">비밀번호 찾기</a> &nbsp;|&nbsp;
+					<a href="join">회원가입</a>
+				</div>
+			
+			<c:if test="${param.error != null}">
+				<h2 style="color:red">입력한 정보가 맞지 않습니다.</h2>
+			</c:if>
+		</div>
 	</div>
+</form>
 
 <%-- footer.jsp 불러오기 --%>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
