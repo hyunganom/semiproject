@@ -12,6 +12,8 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.kh.semi.entity.MemberDto;
+import com.kh.semi.vo.MemberSearchVO;
+import com.kh.semi.vo.MemberVO;
 
 @Repository
 public class MemberDaoImpl implements MemberDao{
@@ -178,5 +180,76 @@ public class MemberDaoImpl implements MemberDao{
 		String sql = "select * from member where member_id = ? and member_name = ? and member_tel = ?";
 		Object[] param = {memberId, memberName, memberTel};
 		return jdbcTemplate.query(sql, extractor, param);
+	}
+	
+	private RowMapper<MemberVO> listMapper = new RowMapper<MemberVO>() {
+		@Override
+		public MemberVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+			return MemberVO.builder()
+					.memberId(rs.getString("member_id"))
+					.memberPw(rs.getString("member_pw"))
+					.memberName(rs.getString("member_name"))
+					.memberEmail(rs.getString("member_email"))
+					.memberTel(rs.getString("member_tel"))
+					.memberPost(rs.getString("member_post"))
+					.memberBaseAddress(rs.getString("member_base_address"))
+					.memberDetailAddress(rs.getString("member_detail_address"))
+					.memberBirth(rs.getString("member_birth"))
+					.memberGender(rs.getString("member_gender"))
+					.memberGrade(rs.getString("member_grade"))
+					.memberPoint(rs.getInt("member_point"))
+					.memberJoindate(rs.getDate("member_joindate"))
+					.memberLogindate(rs.getDate("member_logindate"))
+				.build();
+		}
+	};
+	
+	@Override
+	public List<MemberVO> selectList(MemberSearchVO vo) {
+		if(vo.isSearch()) {
+			return search(vo);
+		}
+		else {
+			return list(vo);
+		}
+	}
+	
+	@Override
+	public List<MemberVO> list(MemberSearchVO vo) {
+		String sql = "select * from ("
+					+ "select TMP.*, rownum rn from("
+						+ "select * from member where instr(#1, ?) > 0 order by #1 asc"
+					+ ")TMP"
+				+ ") where rn between ? and ?";
+		Object[] param = {vo.startRow(), vo.endRow()};
+		return jdbcTemplate.query(sql, listMapper, param);
+	}
+	
+	@Override
+	public List<MemberVO> search(MemberSearchVO vo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int count(MemberSearchVO vo) {
+		if(vo.isSearch()) {
+			return searchCount(vo);
+		}
+		return listCount(vo);
+	}
+
+	@Override
+	public int searchCount(MemberSearchVO vo) {
+		String sql = "select count(*) from member where instr(#1, ?) > 0";
+		sql = sql.replace("#1", vo.getType());
+		Object[] param = {vo.getKeyword()};
+		return jdbcTemplate.queryForObject(sql, int.class, param);
+	}
+
+	@Override
+	public int listCount(MemberSearchVO vo) {
+		String sql = "select count(*) from member";
+		return jdbcTemplate.queryForObject(sql, int.class);
 	}
 }

@@ -7,9 +7,18 @@
 	<jsp:param value="회원 목록" name="title"/>
 </jsp:include>
 
-	<div align="center">
-		<h1>회원 조회</h1>
+<style>
+	a{
+	text-decoration: none;
+	}
+</style>
+
+	<div class="container-900 mt-40 mb-40">
+		<div class="row center">
+			<h1>회원 조회</h1>
+		</div>
 		
+		<div class="row center">
 		<form action="list" method="get">
 			<c:choose>
 				<c:when test="${param.type == 'member_name'}">
@@ -50,10 +59,10 @@
 			
 			<button type="submit">검색</button>
 		</form>
+		</div>
 		
-		<br><br>
-		
-		<table border="1" width="1000">
+		<div class="row">
+		<table class="table table-slit table-hover"> <!-- border="1" width="1000"> -->
 			<thead>
 				<tr>
 					<th>아이디</th>
@@ -77,24 +86,77 @@
 					<td>${memberDto.memberGender}</td>
 					<td>${memberDto.memberGrade}</td>
 					<td>
-						<a href="detail?memberId=${memberDto.memberId}">상세</a>
-						<a href="change?memberId=${memberDto.memberId}">수정</a>
-<%-- 						<a href="cut?memberId=${memberDto.memberId}">삭제</a> --%>
+						<a class="btn btn-neutral" style="padding:4px;" href="detail?memberId=${memberDto.memberId}">상세</a>
+						<a class="btn btn-neutral" style="padding:4px;" href="change?memberId=${memberDto.memberId}">수정</a>
+						<a class="btn btn-neutral" style="padding:4px;" href="cut?memberId=${memberDto.memberId}">삭제</a>
 					</td>
-					<td></td>
 				</tr>
 				</c:forEach>
 			</tbody>
 			<tfoot>
 				<tr>
-					<td colspan="9" align="right">
+					<td colspan="8" align="right">
 						총 ${list.size()}개의 결과
 					</td>
 				</tr>
 			</tfoot>
 		</table>
+		</div>
 		
-		<h2><a href="/">메인 페이지</a></h2>
+		<div class="row center">
+            <ul class="pagination">
+            	<c:choose>
+            		<c:when test="${not vo.isFirst()}">
+            			<a href="list?p=${vo.firstBlock()}&${vo.parameter()}">&laquo;</a>
+            		</c:when>
+            		<c:otherwise>
+            			<a href="#">&laquo;</a>
+            		</c:otherwise>
+            	</c:choose>
+            	
+            	<c:choose>
+            		<c:when test="${not vo.hasPrev()}">
+            			<a href="list?p=${vo.prevBlock()}&${vo.parameter()}">&lt;</a>
+            		</c:when>
+            		<c:otherwise>
+            			<a href="#">&lt;</a>
+            		</c:otherwise>
+            	</c:choose>
+            	
+            	<c:forEach var="i" begin="${vo.startBlock()}" end="${vo.endBlock()}" step="1">
+            		<c:choose>
+						<c:when test="${vo.p == i}">
+							<li class="on"><a href="#">${i}</a></li>
+						</c:when>
+						<c:otherwise>
+							<li><a href="list?p=${i}&${vo.parameter()}">${i}</a></li>
+						</c:otherwise>
+					</c:choose>
+            	</c:forEach>
+            	
+            	<c:choose>
+            		<c:when test="${not vo.hasNext()}">
+            			<a href="list?p=${vo.nextBlock()}&${vo.parameter()}">&gt;</a>
+            		</c:when>
+            		<c:otherwise>
+            			<a href="#">&gt;</a>
+            		</c:otherwise>
+            	</c:choose>
+            	
+            	<c:choose>
+            		<c:when test="${not vo.isLast()}">
+            			<a href="list?p=${vo.lastBlock()}&${vo.parameter()}">&raquo;</a>
+            		</c:when>
+            		<c:otherwise>
+            			<a href="#">&raquo;</a>
+            		</c:otherwise>
+            	</c:choose>
+            </ul>
+        </div>
+		
+		<div class="row right">
+			<a href="/">메인 페이지</a>
+		</div>
 		
 	</div>
 	

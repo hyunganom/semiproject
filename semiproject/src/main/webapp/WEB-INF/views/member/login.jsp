@@ -14,7 +14,7 @@
 </style>
 
 <form action="login" method="post">
-	<div class="container-350 mt-40">
+	<div class="container-350 mt-40 mb-20">
 		<div class="row center">
 			<h1>SALUV</h1>
 				<div class="row mt-30">
