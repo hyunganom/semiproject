@@ -67,7 +67,7 @@
 	
 	<div>
 		<a href = "">주문</a>
-		<a href = "/order/basket">장바구니</a>
+		<a href = "/basket/list">장바구니</a>
 	</div>
 	
 

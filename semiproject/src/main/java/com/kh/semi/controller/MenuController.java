@@ -54,7 +54,7 @@ public class MenuController {
 		basketDto.setBasketProductOption(option);
 		
 		//장바구니 테이블 데이터 등록
-		basketDao.insert(basketDto);	
+		basketDao.insert(basketDto);
 		
 		// 장바구니에 상품번호와 동일한 옵션이 있는지 확인
 		// 1. 회원 아이디로 장바구니를 조회

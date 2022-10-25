@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     
 <jsp:include page="/WEB-INF/views/template/header.jsp">
 	<jsp:param value="장바구니" name="title"/>
 </jsp:include>
 
 <style>
-	.items, .delivery, .total{
+	.total-items, .total-delivery, .total-price{
 		font-size:28px ;
 		font-weight: bold;
 	}
@@ -16,11 +17,11 @@
 <script type="text/javascript">
 	$(function(){
 		<!-- model로 넘어온 basketVO의 상품가격, 수량 js에서도 사용가능하도록 처리 -->
-		var price = new Array();
-		var cnt = new Array();
+		var prices = new Array();
+		var cnts = new Array();
 		<c:forEach items="${basketVO}" var="vo">
-			price.push("${vo.productPrice}");
-			cnt.push("${vo.basketCountNumber}");
+			prices.push("${vo.productPrice}");
+			cnts.push("${vo.basketCountNumber}");
 		</c:forEach>
 
 		<!-- 처음 들어왔을 때 전체선택 체크되게 하기 -->
@@ -65,22 +66,25 @@
 			var sum = 0;
             for (var i = 0; i < count; i++) {
                 if ($(".checked")[i].checked == true) {
-                    sum += (parseInt(price[i])*parseInt(cnt[i]));
+                    sum += (parseInt(prices[i])*parseInt(cnts[i]));
                 }
             } 
-            $("span.items").text(sum);
+            $("span.total-items").text(sum);
             
             <!-- 배송비 + 총 금액 -->
-            var itemPrice = parseInt($("span.items").text());
+            var itemPrice = parseInt($("span.total-items").text());
             if(sum>=50000){
-            	$(".delivery").text(0);
-            	$(".total").text(itemPrice);
+            	$(".total-delivery").text(0);
+            	$(".total-price").text(itemPrice);
+            	$(".delivery").text("무료");
             }else if(sum==0){
-            	$(".delivery").text(0);
-            	$(".total").text(0);
-            }else{
+            	$(".total-delivery").text(0);
+            	$(".total-price").text(0);
             	$(".delivery").text(3000);
-            	$(".total").text(itemPrice+parseInt($(".delivery").text()));
+            }else{
+            	$(".total-delivery").text(3000);
+            	$(".total-price").text(itemPrice+parseInt($(".total-delivery").text()));
+            	$(".delivery").text("3000");
             }
 		}
 		
@@ -96,7 +100,7 @@
         <div class="row left">
             <h1>장바구니</h1>
         </div>
-	<form action="basket" method="post">
+	<form action="list" method="post">
         <div class="row mt-30">
             <table class="table table-basket">
                 <thead>
@@ -131,14 +135,13 @@
 		                        	${vo.basketCountNumber}<br>
 		                            <button type="button">옵션/수량 변경</button>
 		                        <td class="w-15">
-		                            <span class="items-price">${vo.productPrice}</span><br>
+		                            <span class="items-price">${vo.productPrice}</span>
 		                        	<a href="delete?productNo=${vo.basketProductNo}">
 		                        		<i class="fa-solid fa-trash-can"></i>
-		                        		(비활성화)
 		                        	</a>
 		                        </td>
 		                        <td class="w-15">
-									<span>0</span>
+									<span class="delivery">0</span>
 									<input type="hidden" name="basketProductNo" value="${vo.basketProductNo}">
 		                        </td>
                     		</tr>
@@ -152,7 +155,6 @@
                     <tr>
                         <td colspan="5">
                             <button>선택상품 삭제</button>
-                            <button>품절상품 삭제</button>
                         </td>
                     </tr>
                 </tfoot>
@@ -166,11 +168,11 @@
 					<tr class="center">
 						<td>
 							<div class="price">
-								<span class="items">0</span>
+								<span class="total-items">0</span>
 								<i class="fa-solid fa-plus"></i>
-								<span class="delivery">0</span>
+								<span class="total-delivery">0</span>
 								<i class="fa-solid fa-equals"></i>
-								<span class="total">0</span>
+								<span class="total-price">0</span>
 							</div>
 						</td>
 					</tr>

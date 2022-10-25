@@ -2,8 +2,10 @@ package com.kh.semi.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ import com.kh.semi.entity.ProductDto;
 import com.kh.semi.repository.AttachmentDao;
 import com.kh.semi.repository.BasketDao;
 import com.kh.semi.repository.ProductDao;
+import com.kh.semi.vo.BasketVO;
 import com.kh.semi.vo.ProductCategoryListVO;
 import com.kh.semi.vo.ProductListSearchCategoryVO;
 import com.kh.semi.vo.ProductListSearchVO;
@@ -208,16 +211,21 @@ public class ProductController {
 		// 상품 상세 페이지(detail.jsp)로 연결
 		return "product/detail";
 	}
-	
+
 	//2) 장바구니로 이동
 	@PostMapping("/detail")
 	public String detail(@ModelAttribute BasketDto basketDto,
+			@RequestParam int productNo,
+			@RequestParam int productCount,
 			HttpSession session) {
 		String memberId = (String)session.getAttribute(SessionConstant.ID);
 		basketDto.setBasketId(memberId);
+		basketDto.setBasketProductNo(productNo);
+		basketDto.setBasketCountNumber(productCount);
 		basketDto.setBasketProductOption(""); //옵션에 빈값넣기
-		basketDao.insert(basketDto);
-		return "redirect:/basket";
+	    basketDao.insert(basketDto);
+		
+		return "redirect:/basket/list";
 	}
 	
 	
