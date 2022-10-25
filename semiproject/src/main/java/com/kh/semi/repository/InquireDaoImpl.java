@@ -64,24 +64,25 @@ public class InquireDaoImpl implements InquireDao {
 			return searchListInquire(inquireListSearchVO); // 검색 조회 실행
 		}
 		else { // 검색 조회가 아니라면 (전체 조회라면)
-			return allListInquire(); // 전체 조회 실행
+			return allListInquire(inquireListSearchVO); // 전체 조회 실행
 		}
 	}
 
 	// - 검색 조회
 	@Override
 	public List<InquireDto> searchListInquire(InquireListSearchVO inquireListSearchVO) {
-		String sql = "select * from inquire where instr(#1, ?) > 0 order by inquire_no desc";
+		String sql = "select * from (select TMP.*, rownum rn from (select * from inquire where instr(#1, ?) > 0 order by inquire_writetime desc)TMP) where rn between ? and ?";
 		sql = sql.replace("#1", inquireListSearchVO.getType());
-		Object[] param = new Object[] {inquireListSearchVO.getKeyword()};
+		Object[] param = new Object[] {inquireListSearchVO.getKeyword(), inquireListSearchVO.rownumStart(), inquireListSearchVO.rownumEnd()};
 		return jdbcTemplate.query(sql, mapper, param);
 	}
 	
 	// - 전체 조회
 	@Override
-	public List<InquireDto> allListInquire() {
-		String sql = "select * from inquire order by inquire_no desc";
-		return jdbcTemplate.query(sql, mapper);
+	public List<InquireDto> allListInquire(InquireListSearchVO inquireListSearchVO) {
+		String sql = "select * from (select TMP.*, rownum rn from (select * from inquire order by inquire_writetime desc )TMP) where rn between ? and ?";
+		Object[] param = {inquireListSearchVO.rownumStart(), inquireListSearchVO.rownumEnd()};
+		return jdbcTemplate.query(sql, mapper, param);
 	}
 	
 	// 추상 메소드 - 문의글 통합 조회(SELECT) 회원용
@@ -167,5 +168,30 @@ public class InquireDaoImpl implements InquireDao {
 		String sql = "update inquire set inquire_inactive = 'Y' where inquire_no = ?";
 		Object[] param = new Object[] {inquireNo};
 		return jdbcTemplate.update(sql, param) > 0;
+	}
+
+	@Override
+	public int countTotalInquire(InquireListSearchVO inquireListSearchVO) {
+		//검색인지 조회인지 판정
+		if(inquireListSearchVO.isSearch()) {
+			return countSearchInquire(inquireListSearchVO);
+		}
+		else {
+			return countAllInquire();
+		}
+	}
+
+	@Override
+	public int countAllInquire() {
+		String sql = "select count(*) from inquire";
+		return jdbcTemplate.queryForObject(sql, int.class);
+	}
+
+	@Override
+	public int countSearchInquire(InquireListSearchVO inquireListSearchVO) {
+		String sql = "select count(*) from inquire where instr(#1, ?)>0";
+		sql = sql.replace("#1", inquireListSearchVO.getType());
+		Object[] param = {inquireListSearchVO.getKeyword()};
+		return jdbcTemplate.queryForObject(sql, int.class, param);
 	}
 }
