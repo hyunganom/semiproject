@@ -9,6 +9,7 @@ import com.kh.semi.vo.PaymentVO;
 import com.kh.semi.vo.ProductListSearchCategoryVO;
 import com.kh.semi.vo.ProductListSearchVO;
 import com.kh.semi.vo.ProductListVO;
+import com.kh.semi.vo.ProductNoNameVO;
 import com.kh.semi.vo.ProductSelectNameVO;
 
 public interface ProductDao {
@@ -24,7 +25,6 @@ public interface ProductDao {
 	
 	// 추상 메소드 - 하위 카테고리 생성
 	void createCategoryLow(int categoryHighNo, int categoryLowNo, String categoryLowName);
-	
 	
 	// 추상 메소드 - 상위 카테고리 항목 조회
 	List<CategoryHighDto> selectCategoryHighList();
@@ -63,6 +63,9 @@ public interface ProductDao {
 	
 	// 추상 메소드 - 관리자 상품 상세(DETAIL)
 	ProductDto selectOneProduct(int productNo);
+	
+	// 추상 메소드 - 상품 번호와 이름 전체 조회
+	List<ProductNoNameVO> selectNoName();
 	
 	// 추상 메소드 - 관리자 상품 수정(UPDATE)
 	boolean updateProduct(ProductDto productDto);
