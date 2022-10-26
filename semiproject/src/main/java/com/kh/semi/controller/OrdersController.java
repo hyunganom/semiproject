@@ -30,14 +30,18 @@ public class OrdersController {
 	@Autowired
 	private BasketDao basketDao;
 
+
 	//장바구니에서 주문서로 넘어오는 화면
 	@GetMapping("/order_ck")
 	public String order(HttpSession session, Model model) {
-		//수정한 곳
+		// 회원 아이디 꺼내옴
 		String memberId = (String)session.getAttribute(SessionConstant.ID);
+		// 주문자 정보 model로 출력준비
 		model.addAttribute("memberDto", memberDao.selectOne(memberId));
+		// 장바구니 정보 model로 출력준비
 		model.addAttribute("basketList", basketDao.selectList(memberId));
-		
+		// 보유 적립금 model로 출력준비
+		model.addAttribute("point", memberDao.findPoint(memberId));
 		return "order/order_ck";
 	}
 	

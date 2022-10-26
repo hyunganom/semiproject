@@ -21,6 +21,8 @@ public interface MemberDao {
 	MemberDto findId(String memberName, String memberEmail);
 	//비밀번호 찾기
 	MemberDto findPw(String memberId, String memberName, String memberTel);
+	//보유 적립금 조회
+	MemberDto findPoint(String memberId);
 	
 	//회원정보수정
 	boolean update(MemberDto memberDto);
