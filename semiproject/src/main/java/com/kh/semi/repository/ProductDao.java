@@ -5,6 +5,7 @@ import java.util.List;
 import com.kh.semi.entity.CategoryHighDto;
 import com.kh.semi.entity.CategoryLowDto;
 import com.kh.semi.entity.ProductDto;
+import com.kh.semi.vo.PaymentVO;
 import com.kh.semi.vo.ProductListSearchCategoryVO;
 import com.kh.semi.vo.ProductListSearchVO;
 import com.kh.semi.vo.ProductListVO;
@@ -97,4 +98,7 @@ public interface ProductDao {
 	
 	//승정 구독상품 상세옵션 상품조회
 	ProductSelectNameVO selectName(int productNo);
+	
+	//상품 재고 수량변경 메소드
+	boolean updateProductInventory(PaymentVO paymentVO);
 }
