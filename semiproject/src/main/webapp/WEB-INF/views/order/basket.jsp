@@ -100,7 +100,7 @@
         <div class="row left">
             <h1>장바구니</h1>
         </div>
-	<form action="list" method="post">
+	<form action="/order/order_ck" method="get">
         <div class="row mt-30">
             <table class="table table-basket">
                 <thead>
@@ -142,7 +142,6 @@
 		                        </td>
 		                        <td class="w-15">
 									<span class="delivery">0</span>
-									<input type="hidden" name="basketProductNo" value="${vo.basketProductNo}">
 		                        </td>
                     		</tr>
                     	</c:forEach>
@@ -180,6 +179,10 @@
 			</table>
             
             <div class="row center mt-50">
+            	<c:forEach var="vo" items="${basketVO}" varStatus="status">
+            		<input type="hidden" name="basketNo[${status.index}]" value="${vo.basketNo}">
+            		<input type="hidden" name="basketProductNo[${status.index}]" value="${vo.basketProductNo}">
+            	</c:forEach>
             	<button type="submit" class="form-btn btns btns-positive">주문하기</button>
             </div>
         </div>

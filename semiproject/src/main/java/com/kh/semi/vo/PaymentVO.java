@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class PaymentVO {
+	private int basketNo;
 	private int paymentNo;
 	private int paymentOrderNo;
 	private int paymentProductNo;
