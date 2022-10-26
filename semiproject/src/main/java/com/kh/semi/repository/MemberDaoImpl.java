@@ -183,14 +183,6 @@ public class MemberDaoImpl implements MemberDao{
 		return jdbcTemplate.query(sql, extractor, param);
 	}
 	
-	//보유 적립금 조회
-	@Override
-	public MemberDto findPoint(String memberId) {
-		String sql="select member_point from member where member_id=?";
-		Object[] param = {memberId};
-		return jdbcTemplate.query(sql, extractor, param);
-	}
-	
 	private RowMapper<MemberVO> listMapper = new RowMapper<MemberVO>() {
 		@Override
 		public MemberVO mapRow(ResultSet rs, int rowNum) throws SQLException {
