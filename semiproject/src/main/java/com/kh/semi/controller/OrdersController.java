@@ -41,7 +41,7 @@ public class OrdersController {
 		model.addAttribute("basketList", session.getAttribute("basket"));		
 		
 		//사용가능한 쿠폰 출력하기 위한 model 출력준비
-		model.addAttribute("coupon", couponDao.selectList(memberId));
+		//model.addAttribute("coupon", couponDao.selectList(memberId));
 		return "order/order_ck";
 	}
 	
@@ -51,18 +51,10 @@ public class OrdersController {
 		String memberId = (String)session.getAttribute(SessionConstant.ID);
 		orderVO.setOrderId(memberId);
 		
+		// 전체 변수 orderVO로 받아 등록처리
 		orderService.buy(orderVO);
 		return "redirect:_1";
-		
-		// OrdersDto에 포함된 정보
-		// orderName, orderTel, orderPost, orderBaseAddress, orderDetailAddress, 
-		// orderMemo, orderId, orderStatus, orderPrice, orderPayPrice
-		
-		// List<PaymentDto>에 포함된 정보
-		// paymentProductNo, paymentCount, paymentPrice, paymentOption
-		
-		//입력된 주문정보 orderDto에 저장
-		//입력된 결제정보 paymentDto에 저장
+
 //		if(주문실패할 경우) { 
 //			return "redirect:order/_2";
 //		}else { //주문성공할 경우

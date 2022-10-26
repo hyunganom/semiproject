@@ -1,11 +1,9 @@
 package com.kh.semi.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.semi.entity.PaymentDto;
+import com.kh.semi.repository.BasketDao;
 import com.kh.semi.repository.OrdersDao;
 import com.kh.semi.repository.PaymentDao;
 import com.kh.semi.vo.OrderVO;
@@ -18,31 +16,42 @@ public class OrderServiceImpl implements OrderService{
 	private OrdersDao ordersDao;
 	@Autowired
 	private PaymentDao paymentDao;
+	@Autowired
+	private BasketDao basketDao;
 
 	@Override
 	public void buy(OrderVO orderVO) {
+		// 주문번호 시퀀스로 미리 생성 후 세팅
 		int orderNo = ordersDao.sequence();
 		orderVO.setOrderNo(orderNo);
-		System.out.println(orderVO);
+
+		// 주문테이블에 데이터 등록
 		ordersDao.insert(orderVO);
 
 		//결제테이블에 데이터 등록
 		for(PaymentVO dto : orderVO.getPayment()) {
+			// 결제번호 시퀀스 생성
 			int paymentNo = paymentDao.sequence();
 			paymentDao.insert(PaymentVO.builder()
 					.paymentNo(paymentNo)
 					.paymentOrderNo(orderNo)
 					.paymentProductNo(dto.getPaymentProductNo())
+					.paymentCount(dto.getPaymentCount())
 					.paymentPrice(dto.getPaymentPrice())
 					.paymentOption(dto.getPaymentOption())
 					.build());
+			
+			// 결제상품 장바구니에서 제거(옵션 있는지 없는지 검사 후 delete 구문 다르게 실행)
+			if(dto.getPaymentOption()==null) {
+				basketDao.selectDelete(orderVO.getOrderId(), dto.getPaymentProductNo());
+			}else {
+				basketDao.selectDelete(orderVO.getOrderId(), dto.getPaymentProductNo(), dto.getPaymentOption());
+			}
 		}
-		System.out.println(orderVO);
-		
-		// 주문테이블에 데이터 등록
 		
 		
-		// 결제상품 장바구니에서 제거
+		
+		
 		
 		// 결제상품 상품재고 마이너스
 		
