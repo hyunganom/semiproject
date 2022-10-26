@@ -38,17 +38,6 @@ public class OrdersController {
 		model.addAttribute("memberDto", memberDao.selectOne(memberId));
 		model.addAttribute("basketList", basketDao.selectList(memberId));
 		
-		
-		///////////
-		//주문자정보(이름, 전화번호, 이메일 등) model 출력준비
-		//String memberId = (String)session.getAttribute(SessionConstant.ID);
-		//model.addAttribute("memberDto", memberDao.selectOne(memberId));
-		
-		//session에 저장된 장바구니 항목 model 출력준비
-		//model.addAttribute("basketList", session.getAttribute("basket"));		
-		
-		//사용가능한 쿠폰 출력하기 위한 model 출력준비
-		//model.addAttribute("coupon", couponDao.selectList(memberId));
 		return "order/order_ck";
 	}
 	

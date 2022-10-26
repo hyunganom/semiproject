@@ -48,7 +48,7 @@ public class OrderServiceImpl implements OrderService{
 			//결제테이블에 해당하는 결제상품 
 			productDao.updateProductInventory(dto);
 			
-			// 결제상품 장바구니에서 제거(옵션 있는지 없는지 검사 후 delete 구문 다르게 실행)
+			// 결제상품 장바구니에서 제거(장바구니 번호로 삭제)
 			basketDao.clearbasket(dto.getBasketNo());
 		}
 	

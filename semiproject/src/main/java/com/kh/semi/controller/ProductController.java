@@ -223,8 +223,14 @@ public class ProductController {
 		basketDto.setBasketProductNo(productNo);
 		basketDto.setBasketCountNumber(productCount);
 		basketDto.setBasketProductOption(""); //옵션에 빈값넣기
-	    basketDao.insert(basketDto);
 		
+		//동일한 상품이 있는지 확인 후 없으면 등록, 있으면 수량 증가
+		if(basketDao.sameItem(memberId, productNo)==null) {
+			basketDao.insert(basketDto);
+		}else {
+			basketDao.changeCount(basketDto);
+		}
+
 		return "redirect:/basket/list";
 	}
 	
