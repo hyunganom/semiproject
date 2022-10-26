@@ -6,9 +6,30 @@
 	<jsp:param value="회원가입 완료" name="title"/>
 </jsp:include>
 
-	<h1>회원 가입이 완료되었습니다.</h1>
-	<h2><a href="/">메인페이지로 이동</a></h2>
-	<h2><a href="login">로그인페이지로 이동</a></h2>
+<style>
+	a{
+	text-decoration: none;
+	}
+</style>
+
+<div class="container-500 mt-30">
+	<div class="row center">
+		<h1>회원가입이 완료되었습니다.</h1>
+	</div>
+	
+	<br>
+	
+	<div class="row center mb-30">
+		<h2>
+			<a href="/">
+				<i class="fa-solid fa-house"></i> 홈
+			</a>&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="login">
+				<i class="fa-sharp fa-solid fa-bars"></i> 로그인
+			</a>
+		</h2>
+	</div>
+</div>
 	
 <%-- footer.jsp 불러오기 --%>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

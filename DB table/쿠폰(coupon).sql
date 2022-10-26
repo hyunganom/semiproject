@@ -16,7 +16,7 @@ coupon_no references coupon_list(coupon_list_no) on delete  cascade,
 coupon_id references member(member_id) on delete cascade,
 coupon_startdate date default sysdate not null,
 coupon_enddate date not null,
-coupon_yn char(1)
+coupon_yn char(1) check(coupon_yn = 'y')
 );
 
 -- 테이블 삭제

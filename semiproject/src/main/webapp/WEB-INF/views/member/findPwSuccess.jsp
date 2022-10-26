@@ -5,14 +5,34 @@
 	<jsp:param value="비밀번호 찾기 완료" name="title"/>
 </jsp:include>
 
-<h1>비밀번호 찾기 완료</h1>
+<style>
+	a{
+	text-decoration: none;
+	}
+</style>
 
-	<h2>찾으시는 비밀번호는 "${memberDto.memberPw}" 입니다.</h2>
+<div class="container-500 mt-30">
+	<div class="row center">
+		<h1>비밀번호 찾기 완료</h1>
+	</div>
 	
-<h2>
-	<a href="login">로그인 페이지로 이동</a>
-	<a href="/">메인페이지로 이동</a>
-</h2>
+	<div class="row center">
+		<h2>찾으시는 비밀번호는 "${memberDto.memberPw}" 입니다.</h2>
+	</div>
+	
+	<br>
+	
+	<div class="row center mb-30">
+		<h2>
+			<a href="login">
+				<i class="fa-solid fa-seedling"></i> 로그인
+			</a>&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="/">
+				<i class="fa-solid fa-house"></i> 홈
+			</a>
+		</h2>
+	</div>
+</div>
 
 <%-- footer.jsp 불러오기 --%>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

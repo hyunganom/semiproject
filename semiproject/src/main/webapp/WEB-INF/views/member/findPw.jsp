@@ -7,19 +7,34 @@
 	<jsp:param value="비밀번호 찾기" name="title"/>
 </jsp:include>
 
-	<div align="cemter">
-		<h1>비밀번호 찾기</h1>
-		<form action="find_pw" method="post">
-			<input type="text" name="memberId" placeholder="아이디" required><br><br>
-			<input type="text" name="memberName" placeholder="이름" required><br><br>
-			<input type="tel" name="memberTel" placeholder="전화번호" required><br><br>
-			<button type="submit">비밀번호 찾기</button>
-		</form>
+<form action="find_pw" method="post">
+	<div class="container-300 mt-30">
+		<div class="row center">
+			<h1>비밀번호 찾기</h1>
+		</div>
+		
+		<div class="row mt-40">
+			<input class="input w-100" type="text" name="memberId" placeholder="아이디" required>
+		</div>
+			
+		<div class="row center">
+			<input class="input w-100" type="text" name="memberName" placeholder="이름" required>
+		</div>
+		
+		<div class="row center">
+			<input class="input w-100" type="tel" name="memberTel" placeholder="전화번호" required>
+		</div>
+		
+		<div class="row right mb-30">
+			<a href="login" class="btn btn-neutral">취소</a>
+			<button class="btn" type="submit">확인</button>
+		</div>
 		
 		<c:if test="${param.error != null}">
 			<h2 style="color:red">일치하는 정보가 없습니다.</h2>
 		</c:if>
 	</div>
+</form>
 
 <%-- footer.jsp 불러오기 --%>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
