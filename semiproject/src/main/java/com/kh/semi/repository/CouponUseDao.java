@@ -1,4 +1,4 @@
-package com.kh.semi.repository;
+ package com.kh.semi.repository;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public interface CouponUseDao {
 	//2. 쿠폰 사용내역 삭제
 	boolean delete(int couponUseNo);
 	
-	//3. 쿠폰 사용내역 조회(회원아이디로 조회)
-	List<CouponUseDto> selectList(String couponUseId);
+	//3. 쿠폰 사용내역 조회(주문번호로 조회)
+	List<CouponUseDto> selectList(int couponUseOrderNo);
 
 }

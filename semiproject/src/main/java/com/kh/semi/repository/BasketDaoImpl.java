@@ -36,7 +36,7 @@ public class BasketDaoImpl implements BasketDao{
 	@Override
 	public boolean changeCount(BasketDto basketDto) {
 		String sql = "update basket set "
-				+ "basket_count_number=?, "
+				+ "basket_count_number=basket_count_number+?, "
 				+ "basket_adddate=sysdate "
 				+ "where basket_product_no=?";
 		Object[] param = {basketDto.getBasketCountNumber(),
@@ -112,7 +112,7 @@ public class BasketDaoImpl implements BasketDao{
 		}
 	};
 	
-	//장바구니 조회(BasketVO, 매개변수:회원ID)
+	//3-2. 장바구니 조회(BasketVO, 매개변수:회원ID)
 	@Override
 	public List<BasketVO> selectList(String memberId) {
 		String sql = "select b.*, p.product_name, p.product_price "
@@ -123,7 +123,7 @@ public class BasketDaoImpl implements BasketDao{
 		return jdbcTemplate.query(sql, voMapper, param);
 	}
 	
-	//장바구니 조회(BasketVO, 매개변수 : 회원ID, 상품번호)
+	//3-3. 장바구니 조회(BasketVO, 매개변수 : 회원ID, 상품번호)
 	@Override
 	public BasketVO orderBeforeList(String memberId, int productNo) {
 		String sql = "select b.*, p.product_name, p.product_price "
@@ -134,12 +134,30 @@ public class BasketDaoImpl implements BasketDao{
 		return jdbcTemplate.query(sql, voExtractor, param);
 	}
 	
-	//장바구니 상품삭제(매개변수:상품번호)
+	//3-4. 장바구니 내 동일 상품있는지 조회(옵션 없는 단일상품만!)
+	public BasketDto sameItem(String memberId, int productNo) {
+		String sql = "select * from basket where basket_id=? and basket_product_no=?";
+		Object[] param= {memberId,productNo};
+		return jdbcTemplate.query(sql, extractor, param);
+	}
+	
+	
+	
+	//4-1. 장바구니 상품삭제(매개변수:장바구니 번호)
 	@Override
 	public boolean delete(int productNo) {
 		String sql = "delete basket where basket_product_no=?";
 		Object[] param= {productNo};
 		return jdbcTemplate.update(sql, param)>0;
 	}
+	
+	//4-2. 장바구니 상품삭제(매개변수:장바구니 번호)
+	@Override
+	public boolean clearbasket(int basketNo) {
+		String sql = "delete basket where basket_no=?";
+		Object[] param= {basketNo};
+		return jdbcTemplate.update(sql, param)>0;
+	}
+
 	
 }

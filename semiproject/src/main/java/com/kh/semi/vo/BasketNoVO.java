@@ -1,17 +1,14 @@
-package com.kh.semi.entity;
+package com.kh.semi.vo;
 
 import java.sql.Date;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
-public class CouponUseDto {
-	private int couponUseNo;
-	private int couponUseOrderNo;
-	private int couponIssueNo;
-	private Date couponUseDate;
-	
-	
+public class BasketNoVO {
+	private int basketNoVO;
 }

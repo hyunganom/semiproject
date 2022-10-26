@@ -8,11 +8,12 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class CouponDto {
+	private int couponIssue; 
 	private int couponNo;
 	private String couponId;
 	private Date couponStartdate; 
 	private Date couponEnddate; 
 	private String couponYn;
-	private int couponIssue;
+	
 }
      

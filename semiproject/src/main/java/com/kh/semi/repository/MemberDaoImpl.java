@@ -159,12 +159,13 @@ public class MemberDaoImpl implements MemberDao{
 		return jdbcTemplate.update(sql, param) > 0;
 	}
 	
-//@Override
-//	public boolean updateLoginTime(String memberId) {
-//		String sql = "update member set member_login = stsdate where member_id = ?";
-//		Object[] param = {memberId};
-//		return jdbcTemplate.update(sql, param) > 0;
-//	}
+	//로그인시간 갱신
+	@Override
+	public boolean updateLoginTime(String memberId) {
+		String sql = "update member set member_logindate = sysdate where member_id = ?";
+		Object[] param = {memberId};
+		return jdbcTemplate.update(sql, param) > 0;
+	}
 	
 	//아이디찾기
 	@Override
@@ -179,6 +180,14 @@ public class MemberDaoImpl implements MemberDao{
 	public MemberDto findPw(String memberId, String memberName, String memberTel) {
 		String sql = "select * from member where member_id = ? and member_name = ? and member_tel = ?";
 		Object[] param = {memberId, memberName, memberTel};
+		return jdbcTemplate.query(sql, extractor, param);
+	}
+	
+	//보유 적립금 조회
+	@Override
+	public MemberDto findPoint(String memberId) {
+		String sql="select member_point from member where member_id=?";
+		Object[] param = {memberId};
 		return jdbcTemplate.query(sql, extractor, param);
 	}
 	
@@ -218,7 +227,7 @@ public class MemberDaoImpl implements MemberDao{
 	public List<MemberVO> list(MemberSearchVO vo) {
 		String sql = "select * from ("
 					+ "select TMP.*, rownum rn from("
-						+ "select * from member where instr(#1, ?) > 0 order by #1 asc"
+						+ "select * from member order by member_join desc"
 					+ ")TMP"
 				+ ") where rn between ? and ?";
 		Object[] param = {vo.startRow(), vo.endRow()};
@@ -252,4 +261,6 @@ public class MemberDaoImpl implements MemberDao{
 		String sql = "select count(*) from member";
 		return jdbcTemplate.queryForObject(sql, int.class);
 	}
+
+
 }

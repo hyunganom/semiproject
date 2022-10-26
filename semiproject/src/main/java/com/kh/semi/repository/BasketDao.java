@@ -19,11 +19,13 @@ public interface BasketDao {
 	List<BasketVO> selectList(String memberId);
 	//3-3. VO(회원아이디, 상품번호로 조회)
 	BasketVO orderBeforeList(String memberId, int productNo);
+	//3-4. 장바구니 내 동일 상품있는지 조회(옵션 없는 단일상품만!)
+	BasketDto sameItem(String memberId, int productNo);
 	
-	//4. 삭제(상품번호로 삭제)
-	// 나중에 넘어오는 값 확인 후 매개변수 수정 예정
+	//4-1. 삭제(상품 번호로 삭제)
 	boolean delete(int productNo);
-
+	//4-2.삭제(장바구니 번호로 삭제)
+	boolean clearbasket(int basketNo);
 	
 	
 }

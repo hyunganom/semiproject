@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.semi.constant.SessionConstant;
+import com.kh.semi.entity.CouponDto;
 import com.kh.semi.entity.MemberDto;
+import com.kh.semi.repository.CouponDao;
 import com.kh.semi.repository.MemberDao;
 
 @Controller
@@ -24,6 +26,9 @@ public class MemberController {
 	@Autowired
 	private MemberDao memberDao;
 	
+	@Autowired
+	private CouponDao couponDao;
+	
 	//회원가입
 	@GetMapping("/join")
 	public String join() {
@@ -32,9 +37,20 @@ public class MemberController {
 	
 	//회원가입 처리
 	@PostMapping("/join")
-	public String join(@ModelAttribute MemberDto memberDto) {
+	public String join(@ModelAttribute MemberDto memberDto, CouponDto couponDto) {
 		//DB등록
 		memberDao.insert(memberDto);
+		String memberId =  memberDto.getMemberId();
+		couponDao.insert(CouponDto.builder()
+				.couponIssue(couponDto.getCouponIssue())
+				.couponNo(couponDto.getCouponNo())
+				.couponId(memberId)
+				.couponStartdate(couponDto.getCouponStartdate())
+				.couponEnddate(couponDto.getCouponEnddate())
+				.couponYn(couponDto.getCouponYn())			
+				.build()						
+				);
+		
 		return "redirect:join_finish";
 	}
 	
@@ -90,7 +106,7 @@ public class MemberController {
 			session.setAttribute(SessionConstant.GRADE, findDto.getMemberGrade());
 			
 			//로그인 시간 갱신
-//			memberDao.updateLoginTime(inputDto.getMemberId());
+			memberDao.updateLoginTime(inputDto.getMemberId());
 			
 			return "redirect:/";
 		}

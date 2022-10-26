@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.kh.semi.entity.MemberDto;
 import com.kh.semi.repository.CouponDao;
 import com.kh.semi.repository.MemberDao;
+import com.kh.semi.vo.CouponCountVO;
 
 @Controller
 @RequestMapping("/mypage")
@@ -18,6 +19,9 @@ public class MypageController {
 	
 	@Autowired
 	private MemberDao memberDao;
+	
+	@Autowired
+	private CouponDao couponDao;
 	
 //	@Autowired
 //	private CouponDao couponDao;
@@ -29,9 +33,10 @@ public class MypageController {
 		//(참고) 세션에 데이터는 Object 형태로 저장되므로 꺼내려면 다운캐스팅 필요
 		String loginId = (String) session.getAttribute("loginId");
 		//2. 아이디를 이용하여 회원 정보를 불러온다
-		MemberDto memberDto = memberDao.selectOne(loginId);
+		CouponCountVO couponMember = couponDao.selectOne(loginId);
 		//3. 불러온 회원 정보를 모델에 첨부한다
-		model.addAttribute("memberDto", memberDto);
+		model.addAttribute("memberDto", couponMember);		
+		
 
 		return "mypage/order_list";	
 	}

@@ -34,9 +34,10 @@
 		
 		<c:forEach var = "productList" items = "${productList}">
 		<tr>
+			<td>구독상품인가 : ${productList.categoryHighSub}</td>
 			<td>번호 : ${productList.productNo}</td>
 			<td>
-				<a href = "detail?productNo=${productList.productNo}">${productList.productName}</a>
+				<a href = "detail?productNo=${productList.productNo}&categoryHighSub=${productList.categoryHighSub}">${productList.productName}</a>
 			</td>
 			<td>${productList.productPrice}</td>
 			<td>${productList.productGood}</td>

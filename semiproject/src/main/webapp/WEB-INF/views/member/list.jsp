@@ -11,9 +11,15 @@
 	a{
 	text-decoration: none;
 	}
+	
+	/* 확장 스타일 : 줄무늬 테이블*/
+    .table.table-slit > thead > tr,
+    .table.table-slit > tfoot > tr{
+    	background-color: #dfe6e9;
+    }
 </style>
 
-	<div class="container-900 mt-40 mb-40">
+	<div class="container-1100 mt-40 mb-40">
 		<div class="row center">
 			<h1>회원 조회</h1>
 		</div>
@@ -159,6 +165,6 @@
 		</div>
 		
 	</div>
-	
+
 <%-- footer.jsp 불러오기 --%>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

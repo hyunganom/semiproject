@@ -40,7 +40,6 @@
 
 <!-- jquery를 사용하기 위하여 라이브러리 js 파일을 불러온다-->
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="daum-post-api.js"></script>
 <script type="text/javascript">
@@ -180,7 +179,7 @@
 			<input class="input" name="memberPost" type="text" maxlength="6" size="6" placeholder="우편번호" autocomplete="off">
 			<button type="button" class="btn btn-find-address" onclick="openZipSearch()">
 				<i class="fa-solid fa-house"></i> 검색
-      </button>
+      		</button>
 		</div>
 		<div class="row left">
 			<input class="input w-100" placeholder="기본주소" name="memberBaseAddress" type="text" autocomplete="off">
