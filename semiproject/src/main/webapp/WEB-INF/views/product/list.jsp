@@ -6,6 +6,18 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp">
 	<jsp:param value="상품 목록 페이지" name="title"/>
 </jsp:include>
+	<!DOCTYPE html>
+	<html lang="ko">
+	<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table design</title>
+    
+    <!-- 글꼴 바꿈 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 
 <style>
 	a{
@@ -30,6 +42,14 @@
     ul.pagination{
     	font-size: 1.25em;
     }
+    
+    .table {
+    	font-size: 14px;
+    }
+    
+    th, td {
+    	vertical-align : middle;
+    }
 </style>
 
 <div class="container-1100 mt-40 mb-40">
@@ -45,17 +65,17 @@
 	<table class="table table-slit table-hover table-border">
 		<thead>
 			<tr>
-				<th>상품 번호</th>
-				<th>상위 카테고리 번호</th>
-				<th>하위 카테고리 번호</th>
+				<th>상품 <br> 번호</th>
+				<th>상위 <br> 카테고리 <br> 번호</th>
+				<th>하위 <br> 카테고리 <br> 번호</th>
 				<th>상품 이름</th>
-				<th>상품 가격</th>
+				<th>상품 <br> 가격</th>
 				<th>상품 정보</th>
-				<th>상품 재고</th>
-				<th>상품 별점</th>
+				<th>상품 <br> 재고</th>
+				<th>상품 <br> 별점</th>
 				<th>상품 등록일</th>
 				<th>상품 수정일</th>
-				<th>상품 상태</th>
+				<th>상품 <br> 상태</th>
 				<th colspan = "3">관리자 명령</th>
 			</tr>
 		</thead>
