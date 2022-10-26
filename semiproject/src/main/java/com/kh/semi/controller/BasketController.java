@@ -12,22 +12,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.semi.constant.SessionConstant;
 import com.kh.semi.repository.BasketDao;
-import com.kh.semi.repository.CouponDao;
 import com.kh.semi.vo.BasketVO;
 
 @Controller
+@RequestMapping("/basket")
 public class BasketController {
 	
 	@Autowired
 	private BasketDao basketDao;
-
 	
 	//장바구니 페이지로 이동
-	@GetMapping("/basket")
+	@GetMapping("/list")
 	public String basket(HttpSession session, Model model) {
 		//장바구니 조회
 		String memberId = (String)session.getAttribute(SessionConstant.ID);
@@ -37,7 +37,7 @@ public class BasketController {
 	}
 	
 	//주문서 페이지로 이동
-	@PostMapping("/basket")
+	@PostMapping("/list")
 	public String basket(@ModelAttribute ArrayList<BasketVO> basketVO,
 			HttpServletRequest request, HttpSession session) {
 		String memberId = (String)session.getAttribute(SessionConstant.ID);
@@ -64,7 +64,7 @@ public class BasketController {
 	@GetMapping("/delete")
 	public String delete(@RequestParam int productNo) {
 		basketDao.delete(productNo);
-		return "redirect:/basket";
+		return "redirect:/basket/list";
 	}
 
 }
