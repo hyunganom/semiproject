@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.semi.entity.CategoryHighDto;
 import com.kh.semi.entity.CategoryLowDto;
 import com.kh.semi.entity.ProductDto;
+import com.kh.semi.vo.PaymentVO;
 import com.kh.semi.vo.ProductCategoryListVO;
 import com.kh.semi.vo.ProductListSearchCategoryVO;
 import com.kh.semi.vo.ProductListSearchVO;
@@ -424,5 +425,13 @@ public class ProductDaoImpl implements ProductDao {
 		String sql = "select product_name from product where product_no=?";
 		Object[] param= {productNo};
 		return jdbcTemplate.query(sql, nameExtractor, param);
+	}
+
+	//상품재고 변경 구문
+	@Override
+	public boolean updateProductInventory(PaymentVO paymentVO) {
+		String sql = "update product set product_inventory = product_inventory - ? where product_no = ?";
+		Object[] param = {paymentVO.getPaymentCount(), paymentVO.getPaymentProductNo()};
+		return jdbcTemplate.update(sql,param)>0;
 	}
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.kh.semi.entity.PaymentDto;
 import com.kh.semi.repository.OrdersDao;
 import com.kh.semi.repository.PaymentDao;
+import com.kh.semi.repository.ProductDao;
 import com.kh.semi.vo.OrderVO;
 import com.kh.semi.vo.PaymentVO;
 
@@ -18,6 +19,8 @@ public class OrderServiceImpl implements OrderService{
 	private OrdersDao ordersDao;
 	@Autowired
 	private PaymentDao paymentDao;
+	@Autowired
+	private ProductDao productDao;
 
 	@Override
 	public void buy(OrderVO orderVO) {
@@ -36,6 +39,8 @@ public class OrderServiceImpl implements OrderService{
 					.paymentPrice(dto.getPaymentPrice())
 					.paymentOption(dto.getPaymentOption())
 					.build());
+			//결제테이블에 해당하는 결제상품 
+			productDao.updateProductInventory(dto);
 		}
 		System.out.println(orderVO);
 		
