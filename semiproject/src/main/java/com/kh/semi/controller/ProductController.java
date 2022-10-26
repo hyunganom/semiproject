@@ -248,6 +248,8 @@ public class ProductController {
 					int no = Integer.parseInt(arrayParam[i]);
 					option = option+productDao.selectName(no)+" / ";
 				}
+				//마지막 / 구분자 문자열 자르기
+				option= option.substring(0, option.length()-2);
 				//장바구니 옵션 컬럼에 들어갈 데이터 세팅
 				basketDto.setBasketProductOption(option);
 			}
