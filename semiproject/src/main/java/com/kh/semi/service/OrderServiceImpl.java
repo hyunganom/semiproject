@@ -23,7 +23,8 @@ public class OrderServiceImpl implements OrderService{
 	public void buy(OrderVO orderVO) {
 		int orderNo = ordersDao.sequence();
 		orderVO.setOrderNo(orderNo);
-		System.out.println(orderVO);
+		
+		// 주문테이블에 데이터 등록
 		ordersDao.insert(orderVO);
 
 		//결제테이블에 데이터 등록
@@ -37,10 +38,6 @@ public class OrderServiceImpl implements OrderService{
 					.paymentOption(dto.getPaymentOption())
 					.build());
 		}
-		System.out.println(orderVO);
-		
-		// 주문테이블에 데이터 등록
-		
 		
 		// 결제상품 장바구니에서 제거
 		
