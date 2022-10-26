@@ -52,10 +52,13 @@ public class OrderServiceImpl implements OrderService{
 			basketDao.clearbasket(dto.getBasketNo());
 		}
 	
+		// 결제금액만큼 보유 포인트 차감
 		
 		// 쿠폰사용했을 경우 쿠폰사용내역, 보유쿠폰 테이블 정보 변경
 		
 		// 적립금 사용했을 경우 회원테이블 정보 변경
+		
+		
 		
 	}
 

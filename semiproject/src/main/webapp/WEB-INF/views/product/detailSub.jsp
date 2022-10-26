@@ -97,31 +97,31 @@
 		</div>
 		<div>
 			<input type="hidden" name="basketCountNumber" value="1">
-			<input type="hidden" name="basketProductNo" value="1262">
+			<input type="hidden" name="basketProductNo" value="${productDto.productNo}">
 			<input type="hidden" name="basketId" value="${loginId}">
-			옵션 1 : 4 <input type="text" name="basketProductOption" value="4">
+			옵션 1 : 4 <input type="text" name="productOption" value="4">
 		</div>
 		
 		<div class = "row">
-			옵션 2 : 35 <input type="text" name="basketProductOption" value="33">
+			옵션 2 : 35 <input type="text" name="productOption" value="1318">
 		</div>
 		<div class = "row">
-			옵션 3 : 35 <input type="text" name="basketProductOption" value="35">
+			옵션 3 : 35 <input type="text" name="productOption" value="1319">
 		</div>
 		<div class = "row">
-			옵션 4 : 33 <input type="text" name="basketProductOption" value="33">
+			옵션 4 : 33 <input type="text" name="productOption" value="33">
 		</div>
 		<div class = "row">
-			옵션 5 : 39 <input type="text" name="basketProductOption" value="39">
+			옵션 5 : 39 <input type="text" name="productOption" value="39">
 		</div>
 		<div class = "row">
-			옵션 6 : 41 <input type="text" name="basketProductOption" value="41">
+			옵션 6 : 41 <input type="text" name="productOption" value="41">
 		</div>
 		<div class = "row">
-			옵션 7 : 35 <input type="text" name="basketProductOption" value="35">
+			옵션 7 : 35 <input type="text" name="productOption" value="35">
 		</div>
 		<div class = "row">
-			옵션 8 : 33 <input type="text" name="basketProductOption" value="33">
+			옵션 8 : 33 <input type="text" name="productOption" value="33">
 		</div>
 		
 		<div class = "row">
