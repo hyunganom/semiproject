@@ -218,7 +218,7 @@ public class MemberDaoImpl implements MemberDao{
 	public List<MemberVO> list(MemberSearchVO vo) {
 		String sql = "select * from ("
 					+ "select TMP.*, rownum rn from("
-						+ "select * from member where instr(#1, ?) > 0 order by #1 asc"
+						+ "select * from member order by member_join desc"
 					+ ")TMP"
 				+ ") where rn between ? and ?";
 		Object[] param = {vo.startRow(), vo.endRow()};

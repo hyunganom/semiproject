@@ -7,12 +7,27 @@
 	<jsp:param value="비밀번호 변경" name="title"/>
 </jsp:include>
 
-<h1>비밀번호 변경</h1>
-
 <form action="change_pw" method="post">
-	<input type="password" name="beforePw" placeholder="기존 비밀번호" required><br><br>
-	<input type="password" name="afterPw" placeholder="변경할 비밀번호" required>
-	<button type="submit">변경하기</button>
+
+<div class="container-300 mt-30">
+	<div class="row center">
+		<h1>비밀번호 변경</h1>
+	</div>
+
+	<div class="row mt-30">
+		<input class="input w-100" type="password" name="beforePw" placeholder="현재 비밀번호" required><br><br>
+	</div>
+	
+	<div class="row">
+		<input class="input w-100" type="password" name="afterPw" placeholder="새 비밀번호" required>
+	</div>
+	
+	<div class="row right mt-10">
+		<a href="mypage" class="btn btn-neutral">취소</a>
+		<button class="btn btn-negative" type="submit">변경하기</button>
+	</div>
+</div>
+
 </form>
 
 <c:if test="${param.error != null}">
