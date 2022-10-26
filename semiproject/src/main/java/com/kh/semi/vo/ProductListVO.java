@@ -8,10 +8,11 @@ import lombok.Data;
 public class ProductListVO {
 
 	// 필드
-	private int productNo;
-	private String productName;
-	private int productPrice;
-	private int productGood;
-	private boolean productInactive;
-	private int attachmentNo;
+	private int productNo; // 상품 번호
+	private String productName; // 상품명
+	private int productPrice; // 상품 가격
+	private int productGood; // 상품 별점
+	private boolean productInactive; // 상품 비활성화 상태
+	private int attachmentNo; // 첨부파일 번호
+	private boolean categoryHighSub; // 구독 카테고리 여부
 }

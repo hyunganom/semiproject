@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.semi.entity.CategoryHighDto;
 import com.kh.semi.entity.CategoryLowDto;
 import com.kh.semi.entity.ProductDto;
+import com.kh.semi.vo.PaymentVO;
 import com.kh.semi.vo.ProductCategoryListVO;
 import com.kh.semi.vo.ProductListSearchCategoryVO;
 import com.kh.semi.vo.ProductListSearchVO;
@@ -190,6 +191,7 @@ public class ProductDaoImpl implements ProductDao {
 						.productGood(rs.getInt("product_good"))
 						.productInactive(rs.getString("product_inactive") != null)
 						.attachmentNo(rs.getInt("attachment_no"))
+						.categoryHighSub(rs.getNString("category_high_sub") != null)
 					.build();
 		}
 	};
@@ -214,13 +216,13 @@ public class ProductDaoImpl implements ProductDao {
 	public List<ProductListVO> allListCategory(ProductListSearchCategoryVO productListSearchCategoryVO) {
 		// 하위 카테고리 번호 존재 여부 판쟁
 		if(productListSearchCategoryVO.getCategoryLowNo() != 0) { // 하위 카테고리가 존재한다면
-			String sql = "select * from (select TMP.*, rownum rn from (select P.product_no, P.product_name, P.product_price, P.product_good, P.product_inactive, PA.attachment_no from product P inner join (select * from product_attachment inner join attachment on product_attachment_no = attachment_no)PA on P.product_no = PA.product_origin_no where P.category_high_no = ? and P.category_low_no = ? order by product_no desc)TMP) where rn between ? and ?";
+			String sql = "select * from (select TMP.*, rownum rn from (select HL.category_high_sub, PA.product_no, PA.product_name, PA.product_price, PA.product_good, PA.product_inactive, PA.attachment_no from (select * from category_high H inner join category_low L on H.category_high_no = L.category_high_no where H.category_high_no = ? and L.category_low_no = ?)HL inner join (select * from product P inner join (select * from product_attachment inner join attachment on product_attachment_no = attachment_no)A on P.product_no = A.product_origin_no order by product_no desc)PA on HL.category_low_no = PA.category_low_no order by product_no desc)TMP) where rn between ? and ?";
 			Object[] param = new Object[] {productListSearchCategoryVO.getCategoryHighNo(), productListSearchCategoryVO.getCategoryLowNo(), productListSearchCategoryVO.rownumStart(), productListSearchCategoryVO.rownumEnd()};
 			// 해당 상위 카테고리의 해당 하위 카테고리 상품 전체 조회
 			return jdbcTemplate.query(sql, mapperCategory, param);
 		}
 		else { // 하위 카테고리 번호가 존재하지 않는다면
-			String sql = "select * from (select TMP.*, rownum rn from (select P.product_no, P.product_name, P.product_price, P.product_good, P.product_inactive, PA.attachment_no from product P inner join (select * from product_attachment inner join attachment on product_attachment_no = attachment_no)PA on P.product_no = PA.product_origin_no where P.category_high_no = ? order by product_no desc)TMP) where rn between ? and ?";
+			String sql = "select * from (select TMP.*, rownum rn from (select HL.category_high_sub, PA.product_no, PA.product_name, PA.product_price, PA.product_good, PA.product_inactive, PA.attachment_no from (select * from category_high H inner join category_low L on H.category_high_no = L.category_high_no where H.category_high_no = ?)HL inner join (select * from product P inner join (select * from product_attachment inner join attachment on product_attachment_no = attachment_no)A on P.product_no = A.product_origin_no order by product_no desc)PA on HL.category_low_no = PA.category_low_no order by product_no desc)TMP) where rn between ? and ?";
 			Object[] param = new Object[] {productListSearchCategoryVO.getCategoryHighNo(), productListSearchCategoryVO.rownumStart(), productListSearchCategoryVO.rownumEnd()};
 			// 해당 상위 카테고리의 상품 전체 조회
 			return jdbcTemplate.query(sql, mapperCategory, param);
@@ -232,14 +234,14 @@ public class ProductDaoImpl implements ProductDao {
 	public List<ProductListVO> searchListCategory(ProductListSearchCategoryVO productListSearchCategoryVO) {
 		// 하위 카테고리 번호 존재 여부 판정
 		if(productListSearchCategoryVO.getCategoryLowNo() != 0) { // 하위 카테고리 번호가 존재한다면
-			String sql = "select * from (select TMP.*, rownum rn from (select P.product_no, P.product_name, P.product_price, P.product_good, P.product_inactive, PA.attachment_no from product P inner join (select * from product_attachment inner join attachment on product_attachment_no = attachment_no)PA on P.product_no = PA.product_origin_no where P.category_high_no = ? and P.category_low_no = ? and instr(#1, ?) > 0 order by product_no desc)TMP) where rn between ? and ?";
+			String sql = "select * from (select TMP.*, rownum rn from (select HL.category_high_sub, PA.product_no, PA.product_name, PA.product_price, PA.product_good, PA.product_inactive, PA.attachment_no from (select * from category_high H inner join category_low L on H.category_high_no = L.category_high_no where H.category_high_no = ? and L.category_low_no = ?)HL inner join (select * from product P inner join (select * from product_attachment inner join attachment on product_attachment_no = attachment_no)A on P.product_no = A.product_origin_no order by product_no desc)PA on HL.category_low_no = PA.category_low_no where instr(#1, ?) > 0 order by product_no desc)TMP) where rn between ? and ?";
 			sql = sql.replace("#1", productListSearchCategoryVO.getType());
 			Object[] param = new Object[] {productListSearchCategoryVO.getCategoryHighNo(), productListSearchCategoryVO.getCategoryLowNo(), productListSearchCategoryVO.getKeyword(), productListSearchCategoryVO.rownumStart(), productListSearchCategoryVO.rownumEnd()};
 			// 해당 상위 카테고리의 해당 하위 카테고리 상품 검색 조회 
 			return jdbcTemplate.query(sql, mapperCategory, param);
 		}
 		else { // 하위 카테고리 번호가 존재하지 않는다면
-			String sql = "select * from (select TMP.*, rownum rn from (select P.product_no, P.product_name, P.product_price, P.product_good, P.product_inactive, PA.attachment_no from product P inner join (select * from product_attachment inner join attachment on product_attachment_no = attachment_no)PA on P.product_no = PA.product_origin_no where P.category_high_no = ? and instr(#1, ?) > 0 order by product_no desc)TMP) where rn between ? and ?";
+			String sql = "select * from (select TMP.*, rownum rn from (select HL.category_high_sub, PA.product_no, PA.product_name, PA.product_price, PA.product_good, PA.product_inactive, PA.attachment_no from (select * from category_high H inner join category_low L on H.category_high_no = L.category_high_no where H.category_high_no = ?)HL inner join (select * from product P inner join (select * from product_attachment inner join attachment on product_attachment_no = attachment_no)A on P.product_no = A.product_origin_no order by product_no desc)PA on HL.category_low_no = PA.category_low_no where instr(#1, ?) > 0 order by product_no desc)TMP) where rn between ? and ?";
 			sql = sql.replace("#1", productListSearchCategoryVO.getType());
 			Object[] param = new Object[] {productListSearchCategoryVO.getCategoryHighNo(), productListSearchCategoryVO.getKeyword(), productListSearchCategoryVO.rownumStart(), productListSearchCategoryVO.rownumEnd()};
 			// 해당 상위 카테고리의 상품 검색 조회
@@ -424,5 +426,13 @@ public class ProductDaoImpl implements ProductDao {
 		String sql = "select product_name from product where product_no=?";
 		Object[] param= {productNo};
 		return jdbcTemplate.query(sql, nameExtractor, param);
+	}
+
+	//상품재고 변경 구문
+	@Override
+	public boolean updateProductInventory(PaymentVO paymentVO) {
+		String sql = "update product set product_inventory = product_inventory - ? where product_no = ?";
+		Object[] param = {paymentVO.getPaymentCount(), paymentVO.getPaymentProductNo()};
+		return jdbcTemplate.update(sql,param)>0;
 	}
 }
