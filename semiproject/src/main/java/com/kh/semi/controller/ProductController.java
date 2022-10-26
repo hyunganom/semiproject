@@ -208,6 +208,9 @@ public class ProductController {
 		//상품썸네일 이미지 뷰테이블 조회
 		model.addAttribute("productDetailList",attachmentDao.selectProductExplainList(productNo));
 		
+		// 모든 상품 번호와 이름을 조회하고 첨부
+		model.addAttribute("productNoNameList", productDao.selectNoName());
+		
 		if(categoryHighSub) {
 			// 상품 상세 페이지(detail.jsp)로 연결
 			return "product/detailSub";

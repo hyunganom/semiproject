@@ -19,6 +19,7 @@ import com.kh.semi.vo.ProductCategoryListVO;
 import com.kh.semi.vo.ProductListSearchCategoryVO;
 import com.kh.semi.vo.ProductListSearchVO;
 import com.kh.semi.vo.ProductListVO;
+import com.kh.semi.vo.ProductNoNameVO;
 import com.kh.semi.vo.ProductSelectNameVO;
 
 @Repository
@@ -280,6 +281,24 @@ public class ProductDaoImpl implements ProductDao {
 		String sql = "select * from product where product_no = ?";
 		Object[] param = new Object[] {productNo};
 		return jdbcTemplate.query(sql, extractor, param);
+	}
+	
+	// ProductNoNameVO에 대한 Mapper
+	private RowMapper<ProductNoNameVO> mapperNoName = new RowMapper<>() {
+		@Override
+		public ProductNoNameVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+			return ProductNoNameVO.builder()
+					.productNo(rs.getInt("product_no"))
+					.productName(rs.getNString("product_name"))
+					.build();
+		}
+	};
+	
+	// 추상 메소드 - 상품 번호와 이름 전체 조회
+	@Override
+	public List<ProductNoNameVO> selectNoName() {
+		String sql = "select product_no, product_name from product where category_high_no = 42 or category_high_no = 43";
+		return jdbcTemplate.query(sql, mapperNoName);
 	}
 
 	// 추상 메소드 오버라이딩 - 관리자 상품 수정(UPDATE)
