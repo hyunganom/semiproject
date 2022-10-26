@@ -233,10 +233,10 @@ public class ProductController {
 		basketDto.setBasketCountNumber(productCount);
 		// 파라미터 옵션항목값 배열로 가져오기(옵션값)
 		String[] arrayParam = request.getParameterValues("productOption");
-		
+		System.out.println(arrayParam);
 		//동일한 상품이 있는지 확인 후 없으면 등록, 있으면 수량 증가
 		if(basketDao.sameItem(memberId, productNo)==null) {
-			if(arrayParam.length==0) { //단일상품 및 옵션없음
+			if(arrayParam==null) { //단일상품 및 옵션없음
 				basketDto.setBasketProductOption(""); //옵션에 빈값넣기
 				
 			}else { //구독상품 및 옵션있음
