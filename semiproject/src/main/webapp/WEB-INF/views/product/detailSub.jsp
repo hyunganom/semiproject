@@ -106,7 +106,7 @@
 			<select name = "productOption">
 				<option>선택</option>
 				<c:forEach var = "productNoNameList" items = "${productNoNameList}">
-					<option value = "${productNoNameList}">${productNoNameList.productName}</option>
+					<option value = "${productNoNameList.productNo}">${productNoNameList.productName}</option>
 				</c:forEach>
 			</select>
 		</div>
@@ -116,7 +116,7 @@
 			<select name = "productOption">
 				<option>선택</option>
 				<c:forEach var = "productNoNameList" items = "${productNoNameList}">
-					<option value = "${productNoNameList}">${productNoNameList.productName}</option>
+					<option value = "${productNoNameList.productNo}">${productNoNameList.productName}</option>
 				</c:forEach>
 			</select>
 		</div>
@@ -126,7 +126,7 @@
 			<select name = "productOption">
 				<option>선택</option>
 				<c:forEach var = "productNoNameList" items = "${productNoNameList}">
-					<option value = "${productNoNameList}">${productNoNameList.productName}</option>
+					<option value = "${productNoNameList.productNo}">${productNoNameList.productName}</option>
 				</c:forEach>
 			</select>
 		</div>
@@ -136,7 +136,7 @@
 			<select name = "productOption">
 				<option>선택</option>
 				<c:forEach var = "productNoNameList" items = "${productNoNameList}">
-					<option value = "${productNoNameList}">${productNoNameList.productName}</option>
+					<option value = "${productNoNameList.productNo}">${productNoNameList.productName}</option>
 				</c:forEach>
 			</select>
 		</div>
@@ -146,7 +146,7 @@
 			<select name = "productOption">
 				<option>선택</option>
 				<c:forEach var = "productNoNameList" items = "${productNoNameList}">
-					<option value = "${productNoNameList}">${productNoNameList.productName}</option>
+					<option value = "${productNoNameList.productNo}">${productNoNameList.productName}</option>
 				</c:forEach>
 			</select>
 		</div>
@@ -156,7 +156,7 @@
 			<select name = "productOption">
 				<option>선택</option>
 				<c:forEach var = "productNoNameList" items = "${productNoNameList}">
-					<option value = "${productNoNameList}">${productNoNameList.productName}</option>
+					<option value = "${productNoNameList.productNo}">${productNoNameList.productName}</option>
 				</c:forEach>
 			</select>
 		</div>
@@ -166,7 +166,7 @@
 			<select name = "productOption">
 				<option>선택</option>
 				<c:forEach var = "productNoNameList" items = "${productNoNameList}">
-					<option value = "${productNoNameList}">${productNoNameList.productName}</option>
+					<option value = "${productNoNameList.productNo}">${productNoNameList.productName}</option>
 				</c:forEach>
 			</select>
 		</div>
@@ -176,11 +176,10 @@
 			<select name = "productOption">
 				<option>선택</option>
 				<c:forEach var = "productNoNameList" items = "${productNoNameList}">
-					<option value = "${productNoNameList}">${productNoNameList.productName}</option>
+					<option value = "${productNoNameList.productNo}">${productNoNameList.productName}</option>
 				</c:forEach>
 			</select>
 		</div>
-		
 		
 		<div class = "row">
 			<%-- 누르는 버튼에 따라 전송하는 Mapping이 다르도록 하기 위해 하나의 폼에 버튼 2개 생성 --%>
