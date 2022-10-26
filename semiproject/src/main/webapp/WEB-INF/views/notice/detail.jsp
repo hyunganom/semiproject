@@ -9,35 +9,41 @@
 
 <div class = "container-1200">
 	<div class = "row center">
-	<h1>공지 게시판 글 상세 페이지</h1>
+	<h1>공지 상세 페이지</h1>
 	</div>
+	<hr>
 	
 	<div class = "row center">
 		<table>
 			<tbody>
 				<tr>
-					<th>공지글 번호</th>
+					<th>공지 번호</th>
 					<td>${noticeDto.noticeNo}</td>
 				</tr>
 				<tr>
-					<th>공지글 작성자</th>
+					<th>작성자</th>
 					<td>${noticeDto.noticeId}</td>
 				</tr>
 				<tr>
-					<th>공지글 제목</th>
+					<th>제목</th>
 					<td>${noticeDto.noticeTitle}</td>
 				</tr>
 				<tr>
-					<th>공지글 내용</th>
+					<th>내용</th>
 					<td>${noticeDto.noticeContent}</td>
 				</tr>
 				<tr>
-					<th>공지글 작성일</th>
+					<th>작성일</th>
 					<td>${noticeDto.noticeWritedate}</td>
 				</tr>
 				<tr>
-					<th>공지글 수정일</th>
+					<th>수정일</th>
 					<td>${noticeDto.noticeUpdatedate}</td>
+				</tr>
+				<tr>
+					<td>조회수</td>
+					<td>${noticeDto.noticeRead}</td>
+				
 				</tr>
 				
 				<tr>
