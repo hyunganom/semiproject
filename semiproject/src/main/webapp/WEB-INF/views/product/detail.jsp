@@ -17,7 +17,7 @@
 		
 		 // 만약 장바구니 버튼을 눌렀다면 /basket Mapping으로 form의 값을 전송
 	    $("#submit-basket").click(function(){
-	        $("#product-data").attr("action", "/basket"); // 장바구니 Mapping 주소를 넣어주세요
+	        $("#product-data").attr("action", "detail"); // 장바구니 Mapping 주소를 넣어주세요
 	    });
 	});
 	
