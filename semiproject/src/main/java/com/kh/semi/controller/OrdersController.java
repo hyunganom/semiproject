@@ -1,7 +1,5 @@
 package com.kh.semi.controller;
 
-import java.util.ArrayList;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.semi.constant.SessionConstant;
-import com.kh.semi.entity.PaymentDto;
+import com.kh.semi.repository.BasketDao;
 import com.kh.semi.repository.CouponDao;
 import com.kh.semi.repository.MemberDao;
 import com.kh.semi.service.OrderService;
@@ -29,19 +27,21 @@ public class OrdersController {
 	private MemberDao memberDao;
 	@Autowired
 	private CouponDao couponDao;
+	@Autowired
+	private BasketDao basketDao;
+
 
 	//장바구니에서 주문서로 넘어오는 화면
 	@GetMapping("/order_ck")
 	public String order(HttpSession session, Model model) {
-		//주문자정보(이름, 전화번호, 이메일 등) model 출력준비
+		// 회원 아이디 꺼내옴
 		String memberId = (String)session.getAttribute(SessionConstant.ID);
+		// 주문자 정보 model로 출력준비
 		model.addAttribute("memberDto", memberDao.selectOne(memberId));
-		
-		//session에 저장된 장바구니 항목 model 출력준비
-		model.addAttribute("basketList", session.getAttribute("basket"));		
-		
-		//사용가능한 쿠폰 출력하기 위한 model 출력준비
-		//model.addAttribute("coupon", couponDao.selectList(memberId));
+		// 장바구니 정보 model로 출력준비
+		model.addAttribute("basketList", basketDao.selectList(memberId));
+		// 보유 적립금 model로 출력준비
+		model.addAttribute("point", memberDao.findPoint(memberId));
 		return "order/order_ck";
 	}
 	

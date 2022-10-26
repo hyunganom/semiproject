@@ -27,6 +27,8 @@ public class OrderVO {
 	
 	private List<PaymentVO> payment;
 	
+	private List<BasketNoVO> basketNoVO;
+	private List<BasketProductNoVO> productNoVO; //쓰이는 곳 찾아서 없으면 나중에 삭제
 	
 	
 	
