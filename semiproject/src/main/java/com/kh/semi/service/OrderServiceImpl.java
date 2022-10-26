@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.semi.repository.BasketDao;
+import com.kh.semi.repository.MemberDao;
 import com.kh.semi.repository.OrdersDao;
 import com.kh.semi.repository.PaymentDao;
 import com.kh.semi.repository.ProductDao;
@@ -21,6 +22,8 @@ public class OrderServiceImpl implements OrderService{
 	private ProductDao productDao;
 	@Autowired
 	private BasketDao basketDao;
+	@Autowired
+	private MemberDao memberDao;
 
 	@Override
 	public void buy(OrderVO orderVO) {
@@ -51,10 +54,12 @@ public class OrderServiceImpl implements OrderService{
 					basketDao.clearbasket(dto.getBasketNo());
 				}
 			
+				// 적립금 사용했을 경우 회원테이블 정보 변경
+				memberDao.minusUsedPoint(orderVO.getOrderId(), orderVO.getOrderUsePoint());
 				// 결제금액만큼 보유 포인트 차감
 				
 				// 쿠폰사용했을 경우 쿠폰사용내역, 보유쿠폰 테이블 정보 변경
 				
-				// 적립금 사용했을 경우 회원테이블 정보 변경
+				
 	}
 }
