@@ -20,12 +20,12 @@ public class CouponDaoImpl implements CouponDao{
 		@Override
 		public CouponDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 			CouponDto couponDto = new CouponDto();
+			couponDto.setCouponIssue(rs.getInt("coupon_issue"));		
 			couponDto.setCouponNo(rs.getInt("coupon_no"));
 			couponDto.setCouponId(rs.getString("coupon_id"));
 			couponDto.setCouponStartdate(rs.getDate("coupon_startdate"));
 			couponDto.setCouponEnddate(rs.getDate("coupon_enddate"));
 			couponDto.setCouponYn(rs.getString("coupon_yn"));
-			couponDto.setCouponIssue(rs.getInt("coupon_issue"));		
 			return couponDto;
 		}
 	};
@@ -34,40 +34,40 @@ public class CouponDaoImpl implements CouponDao{
 	@Override
 	public void insert(CouponDto couponDto) {
 		String sql = "insert into coupon "
-					+ "(coupon_no, coupon_id, coupon_startdate, "
-					+ "coupon_enddate, coupon_yn, coupon_issue) "
-						+ "values (?, ?, sysdate, ?, coupon_seq.nextval)";
+					+ "(coupon_issue, coupon_no, coupon_id, coupon_startdate, "
+					+ "coupon_enddate, coupon_yn) "
+						+ "values (coupon_issue_seq.nextval, ?, ?, sysdate, ?, ?)";
 		Object[] param = {
+					couponDto.getCouponIssue(),
+					couponDto.getCouponNo(),
 					couponDto.getCouponId(),
-					couponDto.getCouponYn(),
-					couponDto.getCouponIssue()
+					couponDto.getCouponYn()					
 		};
-		jdbcTemplate.update(sql, param);
-		
+		jdbcTemplate.update(sql, param);		
 	}
 	
 	//쿠폰 옵션 수정
 	@Override
 	public boolean update(CouponDto couponDto) {
 		String sql = "update coupon set "
+					+ "coupon_issue=? "
 					+ "coupon_id =? "
 					+ "coupon_startdate=? "
 					+ "coupon_enddate=? "
-					+ "coupon_yn =? "
-					+ "coupon_issue=? "
+					+ "coupon_yn =? "					
 						+"where coupon_no=?";
 		Object[] param = {
-					couponDto.getCouponId(),
-					couponDto.getCouponYn(),
 					couponDto.getCouponIssue(),
+					couponDto.getCouponId(),
+					couponDto.getCouponYn(),					
 					couponDto.getCouponNo()
 					};
-		return jdbcTemplate.update(sql, param) < 0;
+		return jdbcTemplate.update(sql, param) > 0;
 	}
 	
 	//쿠폰 조회
 	@Override
-	public List<CouponDto> selectList(int couponId) {
+	public List<CouponDto> selectList(String couponId) {
 		String sql = "select * from coupon where coupon_id=?";
 		Object[] param = {couponId};
 		return jdbcTemplate.query(sql, mapper,param);

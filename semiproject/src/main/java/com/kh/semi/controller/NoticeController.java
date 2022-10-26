@@ -68,7 +68,8 @@ public class NoticeController {
 	
 	//2. 공지글 목록 Mapping
 	@GetMapping("/list")
-	public String list(Model model, @ModelAttribute NoticeListSearchVO noticeListSearchVO) {		
+	public String list(Model model, @ModelAttribute NoticeListSearchVO noticeListSearchVO, 
+								HttpSession session) {		
 		
 		// 조회 유형 판정과 실행시킬 메소드를 BoardDaoImpl에서 결정하도록 변경
 		// 조회 유형에 따른 조회 결과의 총 갯수를 반환
@@ -88,8 +89,13 @@ public class NoticeController {
 	@GetMapping("/detail")
 	public String detail(@RequestParam int noticeNo, Model model) {
 		
+		noticeDao.updateReadcount(noticeNo);
+		
+		NoticeDto noticeDto = noticeDao.selectOne(noticeNo);
+		
+		
 		// 하이퍼링크로 입력받은 inquireNo로 상세 조회 실행 후 그 결과를 Model에 첨부
-		model.addAttribute("noticeDto", noticeDao.selectOne(noticeNo));		
+		model.addAttribute("noticeDto", noticeDto);		
 		
 		// 공지글 상세 페이지(detail.jsp)로 연결
 		return "notice/detail";
