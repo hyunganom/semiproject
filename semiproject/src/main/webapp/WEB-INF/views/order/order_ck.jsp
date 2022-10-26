@@ -60,6 +60,7 @@
             	<tr>
 	              <td>
 	              	<div>${list.productName}</div>
+	              	
 	              	<div class="mt-10">${list.basketProductOption}</div>
 	              </td>
 	              <td>
@@ -205,9 +206,10 @@
         <input type="hidden" name="orderStatus" value="결제완료">
         <input type="hidden" name="orderPrice" value="50000">
         <input type="hidden" name="orderPayPrice" value="50000">
-        
+         
         <!-- payment에 넘어가야하는 정보(paymentDto형태로 들어가야함!) -->
         <c:forEach var="list" items="${basketList}" varStatus="status">
+        	<input type="hidden" name="payment[${status.index}].basketNo" value="${list.basketNo}">
 			<input type="hidden" name="payment[${status.index}].paymentProductNo" value="${list.basketProductNo}">
 			<input type="hidden" name="payment[${status.index}].paymentCount" value="${list.basketCountNumber}">
 			<input type="hidden" name="payment[${status.index}].paymentPrice" value="10000">

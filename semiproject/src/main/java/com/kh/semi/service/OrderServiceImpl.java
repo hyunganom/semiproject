@@ -7,6 +7,7 @@ import com.kh.semi.repository.BasketDao;
 import com.kh.semi.repository.OrdersDao;
 import com.kh.semi.repository.PaymentDao;
 import com.kh.semi.repository.ProductDao;
+import com.kh.semi.vo.BasketNoVO;
 import com.kh.semi.vo.OrderVO;
 import com.kh.semi.vo.PaymentVO;
 
@@ -43,22 +44,21 @@ public class OrderServiceImpl implements OrderService{
 					.paymentPrice(dto.getPaymentPrice())
 					.paymentOption(dto.getPaymentOption())
 					.build());
+			
 			//결제테이블에 해당하는 결제상품 
 			productDao.updateProductInventory(dto);
 			
-			// 결제상품 장바구니에서 제거(옵션 있는지 없는지 검사 후 delete 구문 다르게 실행)
-			if(dto.getPaymentOption()==null) {
-				basketDao.selectDelete(orderVO.getOrderId(), dto.getPaymentProductNo());
-			}else {
-				basketDao.selectDelete(orderVO.getOrderId(), dto.getPaymentProductNo(), dto.getPaymentOption());
-			}
+			// 결제상품 장바구니에서 제거(장바구니 번호로 삭제)
+			basketDao.clearbasket(dto.getBasketNo());
 		}
-		
-		
+	
+		// 결제금액만큼 보유 포인트 차감
 		
 		// 쿠폰사용했을 경우 쿠폰사용내역, 보유쿠폰 테이블 정보 변경
 		
 		// 적립금 사용했을 경우 회원테이블 정보 변경
+		
+		
 		
 	}
 
