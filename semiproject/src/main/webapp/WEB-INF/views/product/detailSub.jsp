@@ -95,11 +95,6 @@
 		<div class = "row">
 			수량 : <input type = "number" name = "productCount" placeholder = "수량">
 		</div>
-		<div>
-			<input type="hidden" name="basketCountNumber" value="1">
-			<input type="hidden" name="basketProductNo" value="${productDto.productNo}">
-			<input type="hidden" name="basketId" value="${loginId}">
-		</div>
 		
 		<div>
 			<span>옵션 1 :</span>
