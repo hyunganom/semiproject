@@ -14,7 +14,7 @@ public interface CouponDao {
 	//2. 보유쿠폰 수정(쿠폰번호로 수정)
 	boolean update(CouponDto couponDto);
 	
-	//3. 보유쿠폰 조회(회원아이디로 조회)
+	//3-1. 보유쿠폰 조회(회원아이디로 조회)
 	List<CouponDto> selectList(String couponId);
 	
 	//4. 보유쿠폰 삭제(쿠폰번호로 삭제)

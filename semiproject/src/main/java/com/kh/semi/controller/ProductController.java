@@ -2,8 +2,10 @@ package com.kh.semi.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ import com.kh.semi.entity.ProductDto;
 import com.kh.semi.repository.AttachmentDao;
 import com.kh.semi.repository.BasketDao;
 import com.kh.semi.repository.ProductDao;
+import com.kh.semi.vo.BasketVO;
 import com.kh.semi.vo.ProductCategoryListVO;
 import com.kh.semi.vo.ProductListSearchCategoryVO;
 import com.kh.semi.vo.ProductListSearchVO;
@@ -47,6 +50,36 @@ public class ProductController {
 	//첨부파일 업로드 경로
 	private final File tumbnailDirectory = new File("D:\\saluv\\productTumbnail");
 	private final File detailDirectory = new File("D:\\saluv\\productDeatail");
+	
+	// 상위 카테고리 생셩 Mapping
+	@PostMapping("/createCategoryHigh")
+	public String createCategoryHigh(@ModelAttribute ProductCategoryListVO productCategoryListVO) {
+		
+		// 상위 카테고리 등록을 위한 다음 시퀀스 번호 반환
+		int categoryHighNo = productDao.sequencecategoryHigh();
+		
+		// 상위 카테고리 등록
+		productDao.createCategoryHigh(categoryHighNo, productCategoryListVO.getCategoryHighName());
+		
+		// 상위 카테고리와 하위 카테고리 등록 후 상품 등록 Mapping으로 강제 이동(redirect)
+		return "redirect:insert";
+	}
+	
+	// *. 하위 카테고리 생성 Mapping - 상품 등록 Mapping에서 연결됨
+	@PostMapping("/createCategoryLow")
+	public String createCategoryLow(@ModelAttribute ProductCategoryListVO productCategoryListVO) {
+		
+		// 하위 카테고리 등록을 위한 다음 시퀀스 번호 반환
+		int categoryLowNo = productDao.sequencecategoryLow();
+		
+		System.out.println(productCategoryListVO.getCategoryHighNo());
+		
+		// 하위 카테고리 등록
+		productDao.createCategoryLow(productCategoryListVO.getCategoryHighNo(), categoryLowNo, productCategoryListVO.getCategoryLowName());
+		
+		// 상위 카테고리와 하위 카테고리 등록 후 상품 등록 Mapping으로 강제 이동(redirect)
+		return "redirect:insert";
+	}
 	
 	// 1. 상품 등록 Mapping
 	// 1) 상품 등록 페이지로 연결
@@ -144,18 +177,18 @@ public class ProductController {
 	
 	// 3. 상품 목록 Mapping (카테고리 상품)
 	@GetMapping("/category")
-	public String selectList(Model model, @ModelAttribute ProductListSearchCategoryVO productListSearchCategoryVO, @ModelAttribute ProductCategoryListVO productCategoryListVO) {
+	public String selectList(Model model, @ModelAttribute ProductListSearchCategoryVO productListSearchCategoryVO) {
 		
 		// View에서 입력받은 ProductListSearchVO를 매개변수로 조회 결과에 따른 상품의 총 수 반환
 		// - 검색 조회일 경우 검색 조회의 결과에 대한 count(*)의 값 반환
 		// - 전체 조회일 경우 전체 조회의 결과에 대한 count(*)의 값 반환
-		int countTotalProduct = productDao.countAllCategory(productListSearchCategoryVO);
+		int countTotalCategory = productDao.countAllCategory(productListSearchCategoryVO);
 		
 		// 반환한 상품의 총 수를 다시 ProductListSearchVO의 등록된 상품의 총 수(countTotalProduct) 필드의 값으로 설정
-		productListSearchCategoryVO.setCountTotalProduct(countTotalProduct);
+		productListSearchCategoryVO.setCountTotalProduct(countTotalCategory);
 		
 		// 설정된 ProductListSearchVO로 통합 조회를 실행한 후 그 결과를 Model에 첨부
-		model.addAttribute("productList", productDao.allListCategory(productListSearchCategoryVO, productCategoryListVO.getCategoryHighNo(), productCategoryListVO.getCategoryLowNo()));
+		model.addAttribute("productList", productDao.selectListCategory(productListSearchCategoryVO));
 		
 		// 상품 수정 페이지(list.jsp)로 연결
 		return "product/category";
@@ -178,16 +211,21 @@ public class ProductController {
 		// 상품 상세 페이지(detail.jsp)로 연결
 		return "product/detail";
 	}
-	
+
 	//2) 장바구니로 이동
 	@PostMapping("/detail")
 	public String detail(@ModelAttribute BasketDto basketDto,
+			@RequestParam int productNo,
+			@RequestParam int productCount,
 			HttpSession session) {
 		String memberId = (String)session.getAttribute(SessionConstant.ID);
 		basketDto.setBasketId(memberId);
+		basketDto.setBasketProductNo(productNo);
+		basketDto.setBasketCountNumber(productCount);
 		basketDto.setBasketProductOption(""); //옵션에 빈값넣기
-		basketDao.insert(basketDto);
-		return "redirect:/basket";
+	    basketDao.insert(basketDto);
+		
+		return "redirect:/basket/list";
 	}
 	
 	

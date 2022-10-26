@@ -67,7 +67,7 @@
 	
 	<div>
 		<a href = "">주문</a>
-		<a href = "/order/basket">장바구니</a>
+		<a href = "/basket/list">장바구니</a>
 	</div>
 	
 
@@ -76,10 +76,29 @@
 		<a href = "/inquire/listAdmin">문의글 목록(관리자용)</a>
 	</div>
 	
-	<div>
+	<div class = "row">
 		<a href = "/product/list">상품 목록(관리자용)</a> 
-		<a href = "/product/category?categoryHighNo=25">정기배송(상위25)</a>
-		<a href = "/product/category?categoryHighNo=25&categoryLowNo=8">정기배송(상위25) 6주식단(하위8)</a> 
+	</div>
+	
+	<div>
+		<a href = "/product/category?categoryHighNo=41">구독상품(상위41)</a>
+		<a href = "/product/category?categoryHighNo=41&categoryLowNo=21">구독상품(상위41) 2주식단(하위21)</a> 
+		<a href = "/product/category?categoryHighNo=41&categoryLowNo=49">구독상품(상위41) 4주식단(하위49)</a>
+	</div>
+	
+	<div class = "row">
+		<a href = "/product/category?categoryHighNo=42">샐러드(상위42)</a> 
+		<a href = "/product/category?categoryHighNo=42&categoryLowNo=50">샐러드(상위42) 데일리 샐러드(하위50)</a> 
+		<a href = "/product/category?categoryHighNo=42&categoryLowNo=51">샐러드(상위42) 테이스티 샐러드(하위51)</a>
+		<a href = "/product/category?categoryHighNo=42&categoryLowNo=52">샐러드(상위42) 파우치 샐러드(하위52)</a>
+	</div>
+	
+	<div class = "row">
+		<a href = "/product/category?categoryHighNo=43">간식(상위43)</a> 
+		<a href = "/product/category?categoryHighNo=43&categoryLowNo=53">간식(상위43) 간식(하위53)</a> 
+		<a href = "/product/category?categoryHighNo=43&categoryLowNo=54">간식(상위43) 만두(하위54)</a>
+	</div>
+
 	<a href = "/mypage/order_list">마이페이지</a>
 	<a href = "">주문</a>
 	<a href = "/member/list">회원 목록</a>

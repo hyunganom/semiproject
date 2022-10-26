@@ -6,6 +6,23 @@
 	<jsp:param value="상품 상세 페이지" name="title"/>
 </jsp:include>
 
+<script type = "text/javascript">
+
+	<%-- 누르는 버튼에 따라 전송하는 Mapping이 다르도록 설정 --%>
+	$(function(){
+		// 만약 구매 버튼을 눌렀다면 
+	    $("#submit-purchase").click(function(){
+	        $("#product-data").attr("action", "/");
+	    });
+		
+		 // 만약 장바구니 버튼을 눌렀다면 /basket Mapping으로 form의 값을 전송
+	    $("#submit-basket").click(function(){
+	        $("#product-data").attr("action", "detail"); // 장바구니 Mapping 주소를 넣어주세요
+	    });
+	});
+	
+</script>
+
 <div align = "center">
 <table>
 <tbody>
@@ -71,19 +88,18 @@
 </tbody>
 </table>
 
-<div class = "row">
-	<form action = "" method = "post">
-		<input type = "hidden" name = "${productDto.productNo}"> <%-- 상품 번호 --%>
-		<input type = "number" name = "basketCountNumber" placeholder = "수량">
-		<button class = "btn btn-positive" type = "submit">구매</button>
-	</form>
-</div>
+<div>
 
-<div class = "row">	
-	<form action = "detail" method = "post">
-		<input type = "hidden" name ="basketProductNo" value="${productDto.productNo}"> <%-- 상품 번호 --%>
-		<input type = "number" name = "basketCountNumber" placeholder = "수량">
-		<button class = "btn btn-positive" type = "submit">장바구니</button>
+	<form id = "product-data" method = "post">
+		<input type = "hidden" name = "productNo" value = "${productDto.productNo}"> <%-- 상품 번호 --%>
+		<div class = "row">
+			수량 : <input type = "number" name = "productCount" placeholder = "수량">
+		</div>
+		<div class = "row">
+			<%-- 누르는 버튼에 따라 전송하는 Mapping이 다르도록 하기 위해 하나의 폼에 버튼 2개 생성 --%>
+			<button class = "btn btn-positive" type = "submit" id = "submit-purchase">구매</button>
+			<button class = "btn btn-neutral" type = "submit" id = "submit-basket">장바구니</button>
+		</div>
 	</form>
 </div>
 

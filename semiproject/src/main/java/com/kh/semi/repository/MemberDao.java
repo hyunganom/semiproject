@@ -3,6 +3,8 @@ package com.kh.semi.repository;
 import java.util.List;
 
 import com.kh.semi.entity.MemberDto;
+import com.kh.semi.vo.MemberSearchVO;
+import com.kh.semi.vo.MemberVO;
 
 public interface MemberDao {
 	//회원가입
@@ -30,4 +32,13 @@ public interface MemberDao {
 	boolean changeInformation(MemberDto memberDto);
 	//로그인시간 갱신
 //	boolean updateLoginTime(String memberId);
+	
+	List<MemberVO> selectList(MemberSearchVO vo);
+	List<MemberVO> list(MemberSearchVO vo);
+	List<MemberVO> search(MemberSearchVO vo);
+	
+	int count(MemberSearchVO vo);
+	int searchCount(MemberSearchVO vo);
+	int listCount(MemberSearchVO vo);
+	
 }

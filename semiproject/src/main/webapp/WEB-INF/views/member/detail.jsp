@@ -9,9 +9,40 @@
 	<jsp:param value="${memberDto.memberId} 회원 상세정보" name="title"/>
 </jsp:include>
 
-	<div align="center">
+<style>
+/* 확장스타일 : 테두리가 있는 테이블 */
+	.table.table-border {
+		border:1px solid gray;
+	}
+	.table.table-border > thead > tr > th, 
+	.table.table-border > thead > tr > td, 
+	.table.table-border > tbody > tr > th, 
+	.table.table-border > tbody > tr > td, 
+	.table.table-border > tfoot > tr > th, 
+	.table.table-border > tfoot > tr > td {
+		border: 1px solid gray;
+	}
+
+/* 확장스타일 : 옆트임 테이블 */
+	.table.table-slit {
+		border: 3px solid gray;
+	}
+	.table.table-slit > thead {
+		border-bottom: 2px solid gray;
+	}
+	.table.table-slit > tfoot {
+		border-top: 2px solid gray;
+	}
+     
+	a{
+		text-decoration: none;
+	}
+</style>
+
+<div class="container-500 mt-40 mb-40">
+	<div class="row center">
 		<h1>${memberDto.memberId} 회원 상세정보</h1>
-		<table border="1" width="500">
+		<table class="table table-slit table-border" border="1" width="450">
 			<tbody>
 				<tr>
 					<th width="25%">아이디</th>
@@ -23,11 +54,11 @@
 				</tr>
 				<tr>
 					<th>이메일</th>
-					<td>${memberDto.memberId}</td>
+					<td>${memberDto.memberEmail}</td>
 				</tr>
 				<tr>
 					<th>전화번호</th>
-					<td>${memberDto.memberId}</td>
+					<td>${memberDto.memberTel}</td>
 				</tr>
 				<tr>
 					<th>주소</th>
@@ -75,18 +106,23 @@
 		<c:choose>
 			<c:when test="${mg == '관리자'}">
 			<!-- 관리자 -->
-				<h2><a href="list">목록 보기</a></h2>
-				<h2><a href="change?memberId=${memberDto.memberId}">회원정보 변경</a></h2>
-				<h2><a href="cut?memberId=${memberDto.memberId}">회원삭제 처리</a></h2>
+				<div class="row mt-20">
+					<h2><a href="list">목록 보기</a></h2> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+					<h2><a href="change?memberId=${memberDto.memberId}">회원정보 변경</a></h2> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+					<h2><a href="cut?memberId=${memberDto.memberId}">회원삭제 처리</a></h2>
+				</div>
 			</c:when>
 			<c:otherwise>
 			<!-- 회원 -->
-				<h2><a href="change_pw">비밀번호 변경</a></h2>
-				<h2><a href="information">개인정보 변경</a></h2>
-				<h2><a href="end">회원 탈퇴</a></h2>
+				<div class="row mt-20">
+					<a href="change_pw">비밀번호 변경</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+					<a href="information">개인정보 변경</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+					<a href="end">회원 탈퇴</a>
+				</div>
 			</c:otherwise>
 		</c:choose>
 	</div>
+</div>
 	
 <%-- footer.jsp 불러오기 --%>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
