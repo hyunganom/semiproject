@@ -20,10 +20,12 @@ public interface BasketDao {
 	//3-3. VO(회원아이디, 상품번호로 조회)
 	BasketVO orderBeforeList(String memberId, int productNo);
 	
-	//4. 삭제(상품번호로 삭제)
-	// 나중에 넘어오는 값 확인 후 매개변수 수정 예정
+	//4-1. 삭제(장바구니 번호로 삭제)
 	boolean delete(int productNo);
-
+	//4-2. 삭제(회원id, 상품번호, 상품옵션으로 삭제) - 옵션 있는 값(구독상품)
+	boolean selectDelete(String memberId, int productNo, String basketProductOption);
+	//4-3. 삭제(회원id, 상품번호, 상품옵션으로 삭제) - 옵션 없는 값(일반상품)
+	boolean selectDelete(String memberId, int productNo);
 	
 	
 }
