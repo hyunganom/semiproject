@@ -141,23 +141,14 @@ public class BasketDaoImpl implements BasketDao{
 		Object[] param= {productNo};
 		return jdbcTemplate.update(sql, param)>0;
 	}
-
-	//4-2. 장바구니 상품삭제(매개변수:회원id, 상품번호) - 옵션있을 때
-	@Override
-	public boolean selectDelete(String memberId, int productNo, String basketProductOption) {
-		String sql = "delete basket where basket_id=? and basket_product_no=? and "
-				+ "basket_product_option =?";
-		Object[] param= {memberId, productNo, basketProductOption};
-		return jdbcTemplate.update(sql, param)>0;
-	}
 	
-	//4-3. 장바구니 상품삭제(매개변수:회원id, 상품번호) - 옵션없을 때
+	//4-2. 장바구니 상품삭제(매개변수:장바구니 번호)
 	@Override
-	public boolean selectDelete(String memberId, int productNo) {
-		String sql = "delete basket where basket_id=? and basket_product_no=? and "
-				+ "basket_product_option is null";
-		Object[] param= {memberId, productNo};
+	public boolean clearbasket(int basketNo) {
+		String sql = "delete basket where basket_no=?";
+		Object[] param= {basketNo};
 		return jdbcTemplate.update(sql, param)>0;
 	}
+
 	
 }
