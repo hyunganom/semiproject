@@ -28,4 +28,29 @@ public class ReviewDaoImpl implements ReviewDao {
 		jdbcTemplate.update(sql, param);
 	}
 
+	// 추상 메소드 오버라이딩 - 리뷰 작성 전 상품의 총 별점
+	@Override
+	public int scoreBeforeWrite(int productNo) {
+		String sql = "select sum(review_good) from review r inner join (select * from product pd inner join payment pm on pd.product_no = pm.payment_product_no) ppm on r.review_payment_no = ppm.payment_no where ppm.product_no = ?";
+		Object[] param = new Object[] {productNo};
+		return jdbcTemplate.queryForObject(sql, int.class, param);
+	}
+
+	// 추상 메소드 오버라이딩 - 리뷰 작성 전 리뷰의 총 갯수
+	@Override
+	public int countBeforeWrite(int productNo) {
+		String sql = "select count(*) from review r inner join (select * from product pd inner join payment pm on pd.product_no = pm.payment_product_no) ppm on r.review_payment_no = ppm.payment_no where ppm.product_no = ?";
+		Object[] param = new Object[] {productNo};
+		return jdbcTemplate.queryForObject(sql, int.class, param);
+	}
+
+	// 추상 메소드 오버라이딩 - 리뷰 등록시 해당 상품의 리뷰 점수 수정(UPDATE)
+	@Override
+	public boolean updateProductGood(double insertScore, int productNo) {
+		String sql = "update product set product_good = ? where product_no = ?";
+		Object[] param = new Object[] {insertScore, productNo};
+		return jdbcTemplate.update(sql, param) > 0;
+	}
+
+	// 
 }

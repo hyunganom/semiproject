@@ -11,6 +11,7 @@ import com.kh.semi.vo.ProductListSearchVO;
 import com.kh.semi.vo.ProductListVO;
 import com.kh.semi.vo.ProductNoNameVO;
 import com.kh.semi.vo.ProductSelectNameVO;
+import com.kh.semi.vo.ProductDetailVO;
 
 public interface ProductDao {
 	
@@ -66,6 +67,9 @@ public interface ProductDao {
 	
 	// 추상 메소드 - 관리자 상품 상세(DETAIL)
 	ProductDto selectOneProduct(int productNo);
+	
+	// 추상 메소드 - 회원용 상품 상세(DETAIL)
+	ProductDetailVO selectOneProductUser(int productNo);
 	
 	// 추상 메소드 - 상품 번호와 이름 전체 조회
 	List<ProductNoNameVO> selectNoName();
