@@ -236,7 +236,6 @@ public class ProductController {
 		basketDto.setBasketCountNumber(productCount);
 		// 파라미터 옵션항목값 배열로 가져오기(옵션값)
 		String[] arrayParam = request.getParameterValues("productOption");
-		System.out.println(arrayParam);
 		//동일한 상품이 있는지 확인 후 없으면 등록, 있으면 수량 증가
 		if(basketDao.sameItem(memberId, productNo)==null) {
 			if(arrayParam==null) { //단일상품 및 옵션없음
@@ -248,8 +247,9 @@ public class ProductController {
 				for(int i=0; i<arrayParam.length; i++) {
 					int no = Integer.parseInt(arrayParam[i]);
 					option = option+productDao.selectName(no)+" / ";
-					System.out.println(option);
 				}
+				//마지막 / 구분자 문자열 자르기
+				option= option.substring(0, option.length()-2);
 				//장바구니 옵션 컬럼에 들어갈 데이터 세팅
 				basketDto.setBasketProductOption(option);
 			}

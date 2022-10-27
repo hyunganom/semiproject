@@ -22,6 +22,18 @@
 				$("input[name=orderTel]").val("");
 			}
 		});
+		<!-- 금액 산출 -->
+		<!-- model로 넘어온 basketList의 상품가격, 수량 js에서도 사용가능하도록 처리-->
+		<!-- 너무 졸려서 내일 할 예정.. 다시 보기!!! 변수명 아님!!! -->
+		var prices = new Array();
+		var cnts = new Array();
+		<c:forEach items="${basketList}" var="vo">
+			prices.push("${vo.productPrice}");
+			cnts.push("${vo.basketCountNumber}");
+		</c:forEach>
+		
+		
+		
 		
 	});
 </script>
@@ -64,18 +76,18 @@
 	              	<div class="mt-10">${list.basketProductOption}</div>
 	              </td>
 	              <td>
-	              	<div class="center">${list.basketCountNumber}</div>
+	              	<div class="center items-count">${list.basketCountNumber}</div>
 	              </td>
 	              <td>
-	              	<div class="center">${list.productPrice}</div>
+	              	<div class="center items-price">${list.productPrice}</div>
 	              </td>
             	</tr>
             </c:forEach>
             <tr>
               <td colspan="3">
                 <i class="fa-solid fa-angles-right"></i>
-                적립 예상금액
-                <input type="hidden" name="orderPoint" value="100">
+                적립 <input type="hidden" name="orderPoint" value="100">
+                <span>예상금액</span>
               </td>
             </tr>
           </tbody>
@@ -157,12 +169,12 @@
 
         <div class="row">
           <div class="row">
-            <p>쿠폰 (보유 : <span>${coupon.size()}</span>개)</p>
+            <p>쿠폰 (보유 : <span>${unusedCoupon.size()}</span>개)</p>
             <input type="text" class="input w-50">
             <a href="#" class="btns btns-positive">쿠폰 적용</a>
           </div>
           <div class="row">
-          	<p>적립금 (사용가능 적립금 : <span>?</span>)</p>
+          	<p>적립금 (사용가능 적립금 : <span>${memberDto.memberPoint}</span>원)</p>
 			<input type="text" class="input w-50" name="orderUsePoint">
 			<a href="#" class="btns btns-positive">전액 사용</a>
           </div>
@@ -183,10 +195,10 @@
                 <th>총 금액</th>
               </tr>
               <tr>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
+                <td><div class="before-price">0</div></td>
+                <td><div class="delivery-price">0</div></td>
+                <td><div class="discount-price">0</div></td>
+                <td><div class="after-price">0</div></td>
               </tr>
             </tbody>
           </table>

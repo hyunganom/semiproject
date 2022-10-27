@@ -95,15 +95,10 @@
 		<div class = "row">
 			수량 : <input type = "number" name = "productCount" placeholder = "수량">
 		</div>
-		<div>
-			<input type="hidden" name="basketCountNumber" value="1">
-			<input type="hidden" name="basketProductNo" value="${productDto.productNo}">
-			<input type="hidden" name="basketId" value="${loginId}">
-		</div>
 		
 		<div>
 			<span>옵션 1 :</span>
-			<select name = "productOption">
+			<select name = "productOption" required>
 				<option>선택</option>
 				<c:forEach var = "productNoNameList" items = "${productNoNameList}">
 					<option value = "${productNoNameList.productNo}">${productNoNameList.productName}</option>
@@ -113,7 +108,7 @@
 		
 		<div>
 			<span>옵션 2 :</span>
-			<select name = "productOption">
+			<select name = "productOption" required>
 				<option>선택</option>
 				<c:forEach var = "productNoNameList" items = "${productNoNameList}">
 					<option value = "${productNoNameList.productNo}">${productNoNameList.productName}</option>
@@ -123,7 +118,7 @@
 		
 		<div>
 			<span>옵션 3 :</span>
-			<select name = "productOption">
+			<select name = "productOption" required>
 				<option>선택</option>
 				<c:forEach var = "productNoNameList" items = "${productNoNameList}">
 					<option value = "${productNoNameList.productNo}">${productNoNameList.productName}</option>
@@ -133,7 +128,7 @@
 		
 		<div>
 			<span>옵션 4 :</span>
-			<select name = "productOption">
+			<select name = "productOption" required>
 				<option>선택</option>
 				<c:forEach var = "productNoNameList" items = "${productNoNameList}">
 					<option value = "${productNoNameList.productNo}">${productNoNameList.productName}</option>
@@ -143,7 +138,7 @@
 		
 		<div>
 			<span>옵션 5 :</span>
-			<select name = "productOption">
+			<select name = "productOption" required>
 				<option>선택</option>
 				<c:forEach var = "productNoNameList" items = "${productNoNameList}">
 					<option value = "${productNoNameList.productNo}">${productNoNameList.productName}</option>
@@ -153,7 +148,7 @@
 		
 		<div>
 			<span>옵션 6 :</span>
-			<select name = "productOption">
+			<select name = "productOption" required>
 				<option>선택</option>
 				<c:forEach var = "productNoNameList" items = "${productNoNameList}">
 					<option value = "${productNoNameList.productNo}">${productNoNameList.productName}</option>
@@ -163,7 +158,7 @@
 		
 		<div>
 			<span>옵션 7 :</span>
-			<select name = "productOption">
+			<select name = "productOption" required>
 				<option>선택</option>
 				<c:forEach var = "productNoNameList" items = "${productNoNameList}">
 					<option value = "${productNoNameList.productNo}">${productNoNameList.productName}</option>
@@ -173,7 +168,7 @@
 		
 		<div>
 			<span>옵션 8 :</span>
-			<select name = "productOption">
+			<select name = "productOption" required>
 				<option>선택</option>
 				<c:forEach var = "productNoNameList" items = "${productNoNameList}">
 					<option value = "${productNoNameList.productNo}">${productNoNameList.productName}</option>
