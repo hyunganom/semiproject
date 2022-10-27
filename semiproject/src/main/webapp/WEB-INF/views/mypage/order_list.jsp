@@ -77,7 +77,7 @@
 					<tr>
 					</tr>			
 					<tr>
-					<td>도움이 필요하신가요?<br><a href="/inquire/list">1:1문의하기</a></h3></td>
+					<td>도움이 필요하신가요?<br><a href="/inquire/list">1:1문의하기</a></td>
 					</tr>		
 				</tbody>
 				</table>
@@ -85,13 +85,9 @@
 		</div>
 		</body>
 		
-		<a href = "/review/write?reviewPaymentNo=134">hello111의 paymentNo=134에 대한 리뷰 작성하기</a>
+		<a href = "/review/write?paymentNo=134&paymentProductNo=1315">hello111의 paymentNo=134에 대한 리뷰 작성하기</a>
 			
 
-
-			
-			
-</html>		
 
 	
 <!-- 	<div class="row left">
