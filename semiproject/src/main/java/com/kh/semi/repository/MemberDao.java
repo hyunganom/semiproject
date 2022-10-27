@@ -35,7 +35,6 @@ public interface MemberDao {
 	//주문완료 후 적립금 차감
 	boolean minusUsedPoint(String memberId, int point);
 	
-	
 	List<MemberVO> selectList(MemberSearchVO vo);
 	List<MemberVO> list(MemberSearchVO vo);
 	List<MemberVO> search(MemberSearchVO vo);

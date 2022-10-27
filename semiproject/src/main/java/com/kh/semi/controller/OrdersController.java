@@ -40,6 +40,8 @@ public class OrdersController {
 		model.addAttribute("memberDto", memberDao.selectOne(memberId));
 		// 장바구니 정보 model로 출력준비
 		model.addAttribute("basketList", basketDao.selectList(memberId));
+		// 미사용 쿠폰 model로 출력준비
+		model.addAttribute("unusedCoupon", couponDao.unUsed(memberId));
 		return "order/order_ck";
 	}
 	
