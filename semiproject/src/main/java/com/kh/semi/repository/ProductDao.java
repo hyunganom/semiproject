@@ -16,9 +16,12 @@ public interface ProductDao {
 	
 	// 추상 메소드 - 상위 카테고리 다음 시퀀스 번호 반환
 	int sequencecategoryHigh();
-
-	// 추상 메소드 - 상위 카테고리 생성
+	
+	// 추상 메소드 - 상위 카테고리 생성 (일반 상품용)
 	void createCategoryHigh(int categoryHighNo, String categoryHighName);
+
+	// 추상 메소드 - 상위 카테고리 생성 (구독 상품용)
+	void createCategoryHigh(int categoryHighNo, String categoryHighName, String categoryHighSub);
 	
 	// 추상 메소드 - 하위 카테고리 다음 시퀀스 번호 반환
 	int sequencecategoryLow();
