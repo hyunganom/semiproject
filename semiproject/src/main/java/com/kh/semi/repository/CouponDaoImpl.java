@@ -160,7 +160,7 @@ public class CouponDaoImpl implements CouponDao{
 		@Override
 		public CouponListVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 			return CouponListVO.builder()
-					.CouponNo(rs.getInt("coupon_issue"))
+					.CouponNo(rs.getInt("coupon_no"))
 					.CouponName(rs.getString("coupon_name"))
 					.CouponDiscount(rs.getInt("coupon_discount"))
 					.CouponInfo(rs.getString("coupon_info"))
@@ -174,7 +174,9 @@ public class CouponDaoImpl implements CouponDao{
 	
 	@Override
 	public List<CouponListVO> couponList(String memberId) {
-		String sql = "select CCL.coupon_issue, CCL.coupon_name, CCL.coupon_info,CCL.coupon_discount, CU.coupon_use_date, CCL.coupon_startdate, CCL.coupon_enddate, CCL.coupon_valid  from (select * from coupon C inner join coupon_list CL on CL.coupon_list_no = C.coupon_no) CCL inner join coupon_use CU on CCL.coupon_issue = CU.coupon_issue_no where CCL.coupon_id=?";
+		String sql = "select CCL.coupon_no, CCL.coupon_name, CCL.coupon_discount, CCL.coupon_info, CCL.coupon_startdate, CCL.coupon_enddate, "
+						+ "CU.coupon_use_date,CCL.coupon_valid from coupon_use CU right outer join(select * from coupon C inner join coupon_list CL on C.coupon_no=CL.coupon_list_no) "
+						+ "CCL on CU.coupon_issue_no=CCL.coupon_issue where CCL.coupon_id=?";
 		Object[] param = new Object[] {memberId};
 		return jdbcTemplate.query(sql, couponMapper, param);
 		

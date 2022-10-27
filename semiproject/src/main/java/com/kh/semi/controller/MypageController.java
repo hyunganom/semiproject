@@ -54,7 +54,6 @@ public class MypageController {
 				
 		model.addAttribute("paymentListVO", mypagePaymentInfoVO);
 
-
 		return "mypage/order_list";	
 	}
 	
@@ -96,9 +95,13 @@ public class MypageController {
 	//마이페이지 내 쿠폰 보기
 	@GetMapping("/coupon")
 	public String coupon(Model model,  HttpSession session) {
-		String memberId = (String)session.getAttribute("loginId");		
+		String memberId = (String)session.getAttribute("loginId");	
 		
 		model.addAttribute("couponList", couponDao.couponList(memberId));
+		String loginId = (String) session.getAttribute("loginId");
+		CouponCountVO couponMember = couponDao.selectOne(loginId);
+		//3. 불러온 회원 정보를 모델에 첨부한다
+		model.addAttribute("memberDto", couponMember);	
 		
 		//쿠폰 페이지로(coupon.jsp) 연결
 		return "mypage/coupon";
