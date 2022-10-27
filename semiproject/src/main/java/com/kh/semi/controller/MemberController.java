@@ -47,7 +47,7 @@ public class MemberController {
 				.couponId(memberId)
 				.couponStartdate(couponDto.getCouponStartdate())
 				.couponEnddate(couponDto.getCouponEnddate())
-				.couponYn(couponDto.getCouponYn())			
+				.couponValid(couponDto.getCouponValid())			
 				.build()						
 				);
 		
