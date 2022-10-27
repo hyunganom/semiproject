@@ -1,5 +1,7 @@
 package com.kh.semi.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.kh.semi.entity.MemberDto;
 import com.kh.semi.repository.CouponDao;
 import com.kh.semi.repository.MemberDao;
+import com.kh.semi.repository.MypageDao;
 import com.kh.semi.vo.CouponCountVO;
+import com.kh.semi.vo.MypagePaymentInfoVO;
 
 @Controller
 @RequestMapping("/mypage")
@@ -22,6 +26,9 @@ public class MypageController {
 	
 	@Autowired
 	private CouponDao couponDao;
+	
+	@Autowired
+	private MypageDao mypageDao;
 	
 //	@Autowired
 //	private CouponDao couponDao;
@@ -71,9 +78,14 @@ public class MypageController {
 	
 	//마이페이지 내 주문상세
 	@GetMapping("/detail")
-	public String detail() {
+	public String detail(HttpSession session, Model model) {
+		//1. 세션에 들어있는 아이디를 꺼낸다
+		//(참고) 세션에 데이터는 Object 형태로 저장되므로 꺼내려면 다운캐스팅 필요
+		String loginId = (String) session.getAttribute("loginId");
 		
+		List<MypagePaymentInfoVO> mypagePaymentInfoVO = mypageDao.selectMyPaymentInfo(loginId);
 		
+		model.addAttribute("paymentListVO", mypagePaymentInfoVO);
 		return "mypage/detail";			
 	}
 	
