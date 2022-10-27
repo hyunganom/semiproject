@@ -143,6 +143,7 @@ public class AttachmentController {
 			return ResponseEntity.notFound().build();//404 error 전송
 		}
 		//[2]파일 불러오기
+		//D드라이브에 있는 리뷰이미지 파일에 
 		File directory = new File("D:\\saluv\\reviewImg");
 		File target = new File(directory, String.valueOf(attachmentNo));
 		directory.mkdir();//폴더 생성 명령
