@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -37,13 +38,10 @@ public class CouponDaoImpl implements CouponDao{
 	public void insert(CouponDto couponDto) {
 		String sql = "insert into coupon "
 					+ "(coupon_issue, coupon_no, coupon_id, coupon_startdate, "
-					+ "coupon_enddate, coupon_yn) "
-						+ "values (coupon_issue_seq.nextval, ?, ?, sysdate, ?, ?)";
+					+ "coupon_enddate) "
+						+ "values (coupon_issue_seq.nextval, 1, ?, sysdate, sysdate+30)";
 		Object[] param = {
-					couponDto.getCouponIssue(),
-					couponDto.getCouponNo(),
 					couponDto.getCouponId(),
-					couponDto.getCouponYn()					
 		};
 		jdbcTemplate.update(sql, param);		
 	}
@@ -67,21 +65,22 @@ public class CouponDaoImpl implements CouponDao{
 		return jdbcTemplate.update(sql, param) > 0;
 	}
 	
-	//사용 쿠폰 조회
+	//사용한 쿠폰 조회
 	@Override
-	public List<CouponDto> used(String couponId) {
+	public List<CouponDto> usedCoupon(String memberId) {
 		String sql = "select * from coupon where coupon_id=? and coupon_yn='y'";
-		Object[] param = {couponId};
+		Object[] param = {memberId};
 		return jdbcTemplate.query(sql, mapper,param);
 	}
 	
 	//미사용 쿠폰 조회
 	@Override
-	public List<CouponDto> unUsed(String couponId) {
+	public List<CouponDto> unUsedCoupon(String memberId) {
 		String sql = "select * from coupon where coupon_id=? and coupon_yn='n'";
-		Object[] param = {couponId};
+		Object[] param = {memberId};
 		return jdbcTemplate.query(sql, mapper,param);
 	}
+
 	
 	//쿠폰 삭제
 	@Override
@@ -92,21 +91,65 @@ public class CouponDaoImpl implements CouponDao{
 	}
 	
 	//쿠폰 갯수를 세기 CouponCountVO에 대한 RowMapper
-	private RowMapper<CouponCountVO> countMapper = new RowMapper<CouponCountVO>() {
+	private RowMapper<CouponCountVO> countMapper = new RowMapper<CouponCountVO>() {		
 		@Override
 		public CouponCountVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-			CouponCountVO couponCountVo = new CouponCountVO();
-			couponCountVo.setCouponId(rs.getString("couponId"));
-			couponCountVo.setCnt(rs.getInt("cnt"));
-			return null;
+			CouponCountVO couponCountVO = new CouponCountVO();
+			couponCountVO.setMemberId(rs.getString("member_id"));
+			couponCountVO.setMemberPw(rs.getString("member_pw"));
+			couponCountVO.setMemberName(rs.getString("member_name"));
+			couponCountVO.setMemberEmail(rs.getString("member_email"));
+			couponCountVO.setMemberTel(rs.getString("member_tel"));
+			couponCountVO.setMemberPost(rs.getString("member_post"));
+			couponCountVO.setMemberBaseAddress(rs.getString("member_base_address"));
+			couponCountVO.setMemberDetailAddress(rs.getString("member_detail.address"));
+			couponCountVO.setMemberGender(rs.getString("member_gender"));
+			couponCountVO.setMemberGrade(rs.getString("member_grade"));
+			couponCountVO.setMemberBirth(rs.getString("member_birth"));
+			couponCountVO.setMemberPoint(rs.getInt("member_point"));
+			couponCountVO.setMemberLogindate(rs.getDate("member_logindate"));			
+			couponCountVO.setCnt(rs.getInt("cnt"));
+			return couponCountVO;
 		}
-	};
 
+		};
+		
+		private ResultSetExtractor<CouponCountVO> extractor = (rs)->{
+			if(rs.next()) {
+				CouponCountVO couponCountVO = new CouponCountVO();
+				couponCountVO.setMemberId(rs.getString("member_id"));
+				couponCountVO.setMemberPw(rs.getString("member_pw"));
+				couponCountVO.setMemberName(rs.getString("member_name"));
+				couponCountVO.setMemberEmail(rs.getString("member_email"));
+				couponCountVO.setMemberTel(rs.getString("member_tel"));
+				couponCountVO.setMemberPost(rs.getString("member_post"));
+				couponCountVO.setMemberBaseAddress(rs.getString("member_base_address"));
+				couponCountVO.setMemberDetailAddress(rs.getString("member_detail_address"));
+				couponCountVO.setMemberGender(rs.getString("member_gender"));
+				couponCountVO.setMemberGrade(rs.getString("member_grade"));
+				couponCountVO.setMemberBirth(rs.getString("member_birth"));
+				couponCountVO.setMemberPoint(rs.getInt("member_point"));
+				couponCountVO.setMemberLogindate(rs.getDate("member_logindate"));			
+				couponCountVO.setCnt(rs.getInt("cnt"));
+				return couponCountVO;
+			}
+			else {
+				return null;
+			}
+		};
+		
 	@Override 
 	public List<CouponCountVO> selectCountList() {
 		String sql = "select coupon_id, count(*) cnt from coupon "
 						+ "group by coupon_id";
 		return jdbcTemplate.query(sql,  countMapper);
+	}
+
+	@Override
+	public CouponCountVO selectOne(String memberId) {
+		String sql ="select m.*, (select COUNT(*) cnt from coupon where coupon_id=?) cnt from coupon c inner join member m on c.coupon_id=m.member_id where m.member_id=?";
+		Object[] param = {memberId, memberId};
+		return jdbcTemplate.query(sql, extractor, param);
 	}	
 	
 }
