@@ -22,8 +22,7 @@
 				$("input[name=orderTel]").val("");
 			}
 		});
-		
-		
+
 		
 		<!-- 최종 금액 산출 -->
 		<!-- model로 넘어온 basketList의 상품가격, 수량 js에서도 사용가능하도록 처리 -->
@@ -72,13 +71,21 @@
 			var total = itemsPrice+deliveryFee(); //상품가격+배송비
 			var point = ${memberDto.memberPoint}; //보유 적립금
 			
-			// if문(true) : 총 상품금액보다 적립금이 많을 경우 금액만큼 사용하도록 최대값 설정
+			// if문(true) : 총 상품금액 < 적립금, 금액만큼 사용하도록 최대값 설정
 			if(total<point){
 				$("input[name=orderUsePoint]").val(total); //클릭하면 입력창에 전체적립금 표시
-				$(".discount-price").text(totalPrice); //할인창에 할인금액표시
+				$(".discount-price").text(total); //할인창에 할인금액표시
+				var discount = $(".discount-price").text();
+				$(".after-price").text(totalPrice(itemsPrice,delivery,0));
+			// if문(false) : 총 상품금액 > 적립금	
+			}else{
+				$("input[name=orderUsePoint]").val(point);
+				$(".discount-price").text(point);
 				var discount = $(".discount-price").text();
 				$(".after-price").text(totalPrice(itemsPrice,delivery,discount));
 			}
+			var inputValue = parseInt($(".after-price").text());
+			$('input[name=orderPayPrice]').val(inputValue); //총 결제금액
 		});
 		
 		<!-- 적립금 일부 사용 블러 이벤트 -->
@@ -89,21 +96,22 @@
 			var point = ${memberDto.memberPoint}; //보유 적립금
 			var inputPoint = $(this).val();	//입력값
 			
-			// if문(true) : 총 상품금액보다 적립금이 적을경우
 			$(this).removeClass("error");
 			if(inputPoint>point){// 보유포인트보다 입력값이 크면 에러문구 표시
 				$(this).addClass("error");
 				$(this).text(0);
 				$(".discount-price").text(0);
-				$(".after-price").text(totalPrice(itemsPrice,delivery,0));
-			}else if(inputPoint==""){
+				$(".after-price").text(totalPrice(itemsPrice,delivery,0));				
+			}else if(inputPoint==""){ //입력값이 없으면 할인 0 으로 출력
 				$(".discount-price").text(0);
 				$(".after-price").text(totalPrice(itemsPrice,delivery,0));
-			}else{ //적게 입력하면 적립금 할인금액 표시
+			}else{ //상품가격보다 적게 입력하면 입력값으로 할인금액 표시
 				$(".discount-price").text(inputPoint); //할인금액 출력
 				var discount = $(".discount-price").text();
 				$(".after-price").text(totalPrice(itemsPrice,delivery,discount));
 			}
+			var inputValue = parseInt($(".after-price").text());
+			$('input[name=orderPayPrice]').val(inputValue); //총 결제금액
 		});
 		
 		<!-- 하단 금액 부분 (고정값)출력 -->
@@ -111,10 +119,13 @@
 		$(".delivery-price").text(deliveryFee()); //배송비
 		
 		var totalItemPrice = $(".before-price").text();
+		$('input[name=orderPrice]').val(totalItemPrice);//할인전 금액(총상품가격)
 		var totalDelivery = $(".delivery-price").text();
 		var totalDiscount = $(".discount-price").text();
 		$(".after-price").text(totalPrice(totalItemPrice, totalDelivery,totalDiscount)); //총 금액
 		
+		var inputValue = parseInt($(".after-price").text());
+		$('input[name=orderPayPrice]').val(inputValue); //총 결제금액
 		
 	});
 </script>
