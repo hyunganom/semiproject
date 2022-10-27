@@ -117,15 +117,18 @@
 		<!-- 하단 금액 부분 (고정값)출력 -->
 		$(".before-price").text(productPrice()); //상품금액
 		$(".delivery-price").text(deliveryFee()); //배송비
-		
 		var totalItemPrice = $(".before-price").text();
-		$('input[name=orderPrice]').val(totalItemPrice);//할인전 금액(총상품가격)
+		$('input[name=orderPrice]').val(totalItemPrice); //할인전 금액(총상품가격) value값 넣기
 		var totalDelivery = $(".delivery-price").text();
 		var totalDiscount = $(".discount-price").text();
 		$(".after-price").text(totalPrice(totalItemPrice, totalDelivery,totalDiscount)); //총 금액
-		
 		var inputValue = parseInt($(".after-price").text());
-		$('input[name=orderPayPrice]').val(inputValue); //총 결제금액
+		$('input[name=orderPayPrice]').val(inputValue); //총 결제금액 value값 넣기
+		
+		<!-- 적립예상금액 계산 후 value값 넣기 -->
+		var result = ($(".before-price").text())*0.01;
+		$('input[name=orderPoint]+span').text(result);
+		$('input[name=orderPoint]').val(result);
 		
 	});
 </script>
@@ -185,8 +188,8 @@
             <tr>
               <td colspan="3">
                 <i class="fa-solid fa-angles-right"></i>
-                적립 <input type="hidden" name="orderPoint" value="100">
-                <span>예상금액</span>
+                적립예정 <input type="hidden" name="orderPoint" value="">
+                <span></span>원
               </td>
             </tr>
           </tbody>
