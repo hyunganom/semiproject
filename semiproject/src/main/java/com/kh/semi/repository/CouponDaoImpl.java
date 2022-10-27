@@ -172,6 +172,7 @@ public class CouponDaoImpl implements CouponDao{
 		}
 	};
 	
+	//쿠폰리스트 출력, 사용되지않은 쿠폰리스트도 함께 출력하기 -> outer join 사용
 	@Override
 	public List<CouponListVO> couponList(String memberId) {
 		String sql = "select CCL.coupon_no, CCL.coupon_name, CCL.coupon_discount, CCL.coupon_info, CCL.coupon_startdate, CCL.coupon_enddate, "
@@ -180,5 +181,14 @@ public class CouponDaoImpl implements CouponDao{
 		Object[] param = new Object[] {memberId};
 		return jdbcTemplate.query(sql, couponMapper, param);
 		
+	}
+	
+	
+	//만료가 되지 않은 사용가능한 쿠폰만 출력
+	@Override
+	public int selectUsable(String memberId) {
+		String sql ="select count(*) cnt from coupon where coupon_id=? and coupon_enddate > sysdate group by coupon_id";
+		Object[] param = {memberId};
+		return jdbcTemplate.queryForObject(sql, int.class, param);
 	}
 }

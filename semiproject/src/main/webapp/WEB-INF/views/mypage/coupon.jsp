@@ -14,7 +14,7 @@
 		<div class="row center">
 			<hr>
 				<h3>${memberDto.memberName}님 환영합니다</h3>
-				<h3>등급 : ${memberDto.memberGrade}  / 적립금 : ${memberDto.memberPoint}원 / 쿠폰 :${memberDto.cnt}개  </h3>
+				<h3>등급 : ${memberDto.memberGrade}  / 적립금 : ${memberDto.memberPoint}원 / 쿠폰 :${couponUsable}개  </h3>
 			 <hr>
 		</div>
 	</div>

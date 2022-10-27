@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
@@ -6,9 +7,30 @@
 	<jsp:param value="주문 내역" name="title"/>
 </jsp:include>	
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="commons.css">
+	<style>
+	        /* 확장스타일 : 마우스에 반응하는 테이블 */
+        .table.table-hover > thead > tr:hover, 
+        .table.table-hover > tbody > tr:hover, 
+        .table.table-hover > tfoot > tr:hover{
+            background-color: #ebf7f2;
+            color : #29995d;
+            font-weight: bolder;
+            font-size: medium;
+        }	
+        a { text-decoration:none;
+        	color:#525252
+	    }
+        
+	</style>
+	<body>
+	<div class="container-1100 mt-40 mb-40">
+	<div class="row center">
+	<hr>
+	<h3>${memberDto.memberName}님 환영합니다</h3>
+	<h3>등급 : ${memberDto.memberGrade}  / 적립금 : ${memberDto.memberPoint}원 / 쿠폰 :${couponUsable}개
+	 </h3>
+	 <hr>
 
 <style>
 	a:hover {
