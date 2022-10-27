@@ -263,13 +263,5 @@ public class MemberDaoImpl implements MemberDao{
 		return jdbcTemplate.update(sql, param)>0;
 	}
 
-	@Override
-	public boolean minusUsedPoint(String memberId, int point) {
-		String sql="update member set member_point=member_point-? "
-				+ "where member_id=?";
-		Object[] param= {point, memberId};
-		return jdbcTemplate.update(sql, param)>0;
-	}
-
 
 }
