@@ -11,7 +11,10 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.kh.semi.entity.CouponDto;
+import com.kh.semi.entity.ProductDto;
 import com.kh.semi.vo.CouponCountVO;
+import com.kh.semi.vo.CouponListVO;
+import com.kh.semi.vo.ProductListSearchVO;
 
 @Repository
 public class CouponDaoImpl implements CouponDao{
@@ -150,6 +153,31 @@ public class CouponDaoImpl implements CouponDao{
 		String sql ="select m.*, (select COUNT(*) cnt from coupon where coupon_id=?) cnt from coupon c inner join member m on c.coupon_id=m.member_id where m.member_id=?";
 		Object[] param = {memberId, memberId};
 		return jdbcTemplate.query(sql, extractor, param);
-	}	
+	}
 	
+	
+	//쿠폰 리스트 조회를 위한 RowMapper 추가
+	private RowMapper<CouponListVO> couponMapper = new RowMapper<>() {
+		@Override
+		public CouponListVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+			return CouponListVO.builder()
+					.CouponNo(rs.getInt("coupon_issue"))
+					.CouponName(rs.getString("coupon_name"))
+					.CouponDiscount(rs.getInt("coupon_discount"))
+					.CouponInfo(rs.getString("coupon_info"))
+					.CouponStartdate(rs.getDate("coupon_startdate"))
+					.CouponEnddate(rs.getDate("coupon_enddate"))
+					.CouponUseDate(rs.getDate("coupon_use_date"))
+					.CouponYn(rs.getString("coupon_yn"))					
+				.build();		
+		}
+	};
+	
+	@Override
+	public List<CouponListVO> couponList(String memberId) {
+		String sql = "select CCL.coupon_issue, CCL.coupon_name, CCL.coupon_info,CCL.coupon_discount, CU.coupon_use_date, CCL.coupon_startdate, CCL.coupon_enddate, CCL.coupon_yn  from (select * from coupon C inner join coupon_list CL on CL.coupon_list_no = C.coupon_no) CCL inner join coupon_use CU on CCL.coupon_issue = CU.coupon_issue_no where CCL.coupon_id=?";
+		Object[] param = new Object[] {memberId};
+		return jdbcTemplate.query(sql, couponMapper, param);
+		
+	}
 }

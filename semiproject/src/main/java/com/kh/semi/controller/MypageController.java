@@ -6,12 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.semi.entity.MemberDto;
 import com.kh.semi.repository.CouponDao;
 import com.kh.semi.repository.MemberDao;
 import com.kh.semi.vo.CouponCountVO;
+import com.kh.semi.vo.CouponListVO;
 
 @Controller
 @RequestMapping("/mypage")
@@ -35,7 +37,12 @@ public class MypageController {
 		//2. 아이디를 이용하여 회원 정보를 불러온다
 		CouponCountVO couponMember = couponDao.selectOne(loginId);
 		//3. 불러온 회원 정보를 모델에 첨부한다
-		model.addAttribute("memberDto", couponMember);		
+		model.addAttribute("memberDto", couponMember);	
+		
+		
+		
+		
+		
 		
 
 		return "mypage/order_list";	
@@ -79,8 +86,12 @@ public class MypageController {
 	
 	//마이페이지 내 쿠폰 보기
 	@GetMapping("/coupon")
-	public String coupon() {
+	public String coupon(Model model,  HttpSession session) {
+		String memberId = (String)session.getAttribute("loginId");		
 		
+		model.addAttribute("couponList", couponDao.couponList(memberId));
+		
+		//쿠폰 페이지로(coupon.jsp) 연결
 		return "mypage/coupon";
 	}
 	
