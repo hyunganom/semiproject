@@ -58,11 +58,17 @@ public class ProductController {
 		// 상위 카테고리 등록을 위한 다음 시퀀스 번호 반환
 		int categoryHighNo = productDao.sequencecategoryHigh();
 		
-		// 상위 카테고리 등록
-		productDao.createCategoryHigh(categoryHighNo, productCategoryListVO.getCategoryHighName());
-		
-		// 상위 카테고리와 하위 카테고리 등록 후 상품 등록 Mapping으로 강제 이동(redirect)
-		return "redirect:insert";
+		// 구독 상품인지를 판정
+		if(productCategoryListVO.isCateghoryHighSub()) {
+			// 구독 상품용 상위 카테고리 등록
+			productDao.createCategoryHigh(categoryHighNo, productCategoryListVO.getCategoryHighName(), productCategoryListVO.getCategoryHighSub());
+			return "redirect:insert";
+		}
+		else {
+			// 일반 상품용 상위 카테고리 등록
+			productDao.createCategoryHigh(categoryHighNo, productCategoryListVO.getCategoryHighName());
+			return "redirect:insert";
+		}
 	}
 	
 	// *. 하위 카테고리 생성 Mapping - 상품 등록 Mapping에서 연결됨

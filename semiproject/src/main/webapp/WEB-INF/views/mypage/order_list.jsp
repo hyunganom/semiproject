@@ -84,7 +84,8 @@
 			</div>
 		</div>
 		</body>
-			
+		
+		<a href = "/review/write?reviewPaymentNo=134">hello111의 paymentNo=134에 대한 리뷰 작성하기</a>
 			
 
 

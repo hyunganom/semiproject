@@ -36,11 +36,19 @@ public class ProductDaoImpl implements ProductDao {
 		return jdbcTemplate.queryForObject(sql, int.class);
 	}
 	
-	// 추상 메소드 오버라이딩 - 상위 카테고리 생성
+	// 추상 메소드 오버라이딩 - 상위 카테고리 생성 (일반 상품용)
 	@Override
 	public void createCategoryHigh(int categoryHighNo, String categoryHighName) {
 		String sql = "insert into category_high(category_high_no, category_high_name) values (?, ?)";
 		Object[] param = new Object[] {categoryHighNo, categoryHighName};
+		jdbcTemplate.update(sql, param);
+	}
+	
+	// 추상 메소드 오버라이딩 - 상위 카테고리 생성 (구독 상품용)
+	@Override
+	public void createCategoryHigh(int categoryHighNo, String categoryHighName, String categoryHighSub) {
+		String sql = "insert into category_high(category_high_no, category_high_name, category_high_sub) values (?, ?, ?)";
+		Object[] param = new Object[] {categoryHighNo, categoryHighName, categoryHighSub};
 		jdbcTemplate.update(sql, param);
 	}
 	
@@ -454,4 +462,5 @@ public class ProductDaoImpl implements ProductDao {
 		Object[] param = {paymentVO.getPaymentCount(), paymentVO.getPaymentProductNo()};
 		return jdbcTemplate.update(sql,param)>0;
 	}
+
 }
