@@ -31,7 +31,7 @@
 		</div>
 	</div>
 
-	<form action = "write" method = "post">
+	<form action = "write" method = "post" enctype = "multipart/form-data">
 		<%-- 리뷰 작성을 누를 때 등록 전 별점의 총점과 리뷰의 갯수를 구하기 위함 --%>
 		<input name = "productNo" value = "${reviewPaymentNoVO.paymentProductNo}">
 		<%-- 리뷰 등록에 필요한 항목 --%>
@@ -47,13 +47,16 @@
 		<div class = "row">
 			리뷰 내용 : <textarea name = "reviewContent"></textarea>
 		</div>
+    
+    <div class = "row">
+			리뷰 이미지 : <input name = "attachmentReviewImg" type="file" accept = ".png, .jpg" multiple>
+		</div>
 		
 		<div class = "row">
 			<button type = "submit">작성</button>
 		</div>
 	</form>
 </div>
-
 
 
 <%-- footer.jsp 불러오기 --%>
