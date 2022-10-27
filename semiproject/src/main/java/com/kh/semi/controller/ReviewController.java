@@ -55,7 +55,7 @@ public class ReviewController {
 	}
 	
 	// - DB 처리 및 강제 이동
-	public String write(@ModelAttribute ReviewDto reviewDto,
+	public String write(@ModelAttribute ReviewDto reviewDto, @RequestParam int productNo,
 			@RequestParam List<MultipartFile> attachmentReviewImg//리뷰이미지 첨부파일에 관한 파라미터
 			) throws IllegalStateException, IOException {
 		
