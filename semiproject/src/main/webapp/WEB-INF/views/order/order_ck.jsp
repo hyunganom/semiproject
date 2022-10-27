@@ -157,12 +157,12 @@
 
         <div class="row">
           <div class="row">
-            <p>쿠폰 (보유 : <span>${coupon.size()}</span>개)</p>
+            <p>쿠폰 (보유 : <span>${unusedCoupon.size()}</span>개)</p>
             <input type="text" class="input w-50">
             <a href="#" class="btns btns-positive">쿠폰 적용</a>
           </div>
           <div class="row">
-          	<p>적립금 (사용가능 적립금 : <span>?</span>)</p>
+          	<p>적립금 (사용가능 적립금 : <span>${memberDto.memberPoint}</span>)</p>
 			<input type="text" class="input w-50" name="orderUsePoint">
 			<a href="#" class="btns btns-positive">전액 사용</a>
           </div>

@@ -21,8 +21,6 @@ public interface MemberDao {
 	MemberDto findId(String memberName, String memberEmail);
 	//비밀번호 찾기
 	MemberDto findPw(String memberId, String memberName, String memberTel);
-	//보유 적립금 조회
-	MemberDto findPoint(String memberId);
 	
 	//회원정보수정
 	boolean update(MemberDto memberDto);
@@ -34,6 +32,8 @@ public interface MemberDao {
 	boolean changeInformation(MemberDto memberDto);
 	//로그인시간 갱신
 	boolean updateLoginTime(String memberId);
+	//주문완료 후 적립금 차감
+	boolean minusUsedPoint(String memberId, int point);
 	
 	List<MemberVO> selectList(MemberSearchVO vo);
 	List<MemberVO> list(MemberSearchVO vo);

@@ -124,6 +124,7 @@
                 		</tr>
                 	</c:when>
                 	<c:otherwise>
+                		
                 		<c:forEach var="vo" items="${basketVO}">
 	                    	<tr class="center">
 		                        <td class="w-5"><input type="checkbox" class="checked"></td>

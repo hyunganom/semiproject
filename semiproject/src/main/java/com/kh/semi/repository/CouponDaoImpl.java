@@ -67,10 +67,18 @@ public class CouponDaoImpl implements CouponDao{
 		return jdbcTemplate.update(sql, param) > 0;
 	}
 	
-	//쿠폰 조회
+	//사용 쿠폰 조회
 	@Override
-	public List<CouponDto> selectList(String couponId) {
+	public List<CouponDto> used(String couponId) {
 		String sql = "select * from coupon where coupon_id=? and coupon_yn='y'";
+		Object[] param = {couponId};
+		return jdbcTemplate.query(sql, mapper,param);
+	}
+	
+	//미사용 쿠폰 조회
+	@Override
+	public List<CouponDto> unUsed(String couponId) {
+		String sql = "select * from coupon where coupon_id=? and coupon_yn='n'";
 		Object[] param = {couponId};
 		return jdbcTemplate.query(sql, mapper,param);
 	}
