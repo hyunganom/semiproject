@@ -46,7 +46,7 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
     
     <%--script 링크 --%>
-    <script src="script/main.js"></script>
+    <script src="/script/main.js"></script>
 	
 </head>
 
@@ -66,7 +66,7 @@
         </div> <!--//header1-->
         <div class="header2">
             <div class="inner">
-                <h1><a href="/" class="logo"><img class="image" width="100px;" height="100px" src="./image/semilogo.png" alt="로고"></a></h1>
+                <h1><a href="/" class="logo"><img class="image" width="100px;" height="100px" src="/image/semilogo.png" alt="로고"></a></h1>
                 <div class="formdiv">
                     <h2 class="search">검색</h2>
                     <form action="">
