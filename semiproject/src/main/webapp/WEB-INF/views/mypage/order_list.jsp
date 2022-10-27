@@ -1,34 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
-    <jsp:include page="/WEB-INF/views/template/header.jsp">
+    
+<jsp:include page="/WEB-INF/views/template/header.jsp">
 	<jsp:param value="주문 내역" name="title"/>
-	</jsp:include>	
-	<!DOCTYPE html>
-	<html lang="ko">
-	<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Table design</title>
-    
-     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+</jsp:include>	
 
-    <link rel="stylesheet" type="text/css" href="reset.css">
-    <link rel="stylesheet" type="text/css" href="commons.css">
-    <link rel="stylesheet" type="text/css" href="layout.css">
-    
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" href="commons.css">
-	<style>
+<style>
 
-	        /* 확장스타일 : 마우스에 반응하는 테이블 */
-        .table.table-hover > thead > tr:hover, 
-        .table.table-hover > tbody > tr:hover, 
-        .table.table-hover > tfoot > tr:hover{
-            background-color: #ebf7f2;
+	/* 확장스타일 : 마우스에 반응하는 테이블 */
+	.table.table-hover > thead > tr:hover,
+	.table.table-hover > tbody > tr:hover,
+	.table.table-hover > tfoot > tr:hover{
+		background-color: #ebf7f2;
             color : #29995d;
             font-weight: bolder;
             font-size: medium;
@@ -37,8 +25,8 @@
         	color:#525252
 	    }
 
-        
-	</style>
+</style>
+
 	<body>
 	<div class="container-1100 mt-40 mb-40">
 	<div class="row center">
