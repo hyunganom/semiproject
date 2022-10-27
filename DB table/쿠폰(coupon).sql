@@ -7,8 +7,7 @@
 -- 쿠폰 아이디(coupon_id) 외래키, 회원(member)테이블의 member_id 참조
 -- 쿠폰 발행일(coupon_startdate) 쿠폰 발행 날짜, 지정 설정
 -- 쿠폰 만료일(coupon_enddate) 쿠폰 만료 날짜, 지정 설정
--- 쿠폰 사용여부(coupon_yn) 1글자, y,n 중 하나로 설정
-
+-- 쿠폰 사용여부(coupon_valid) varchar(9), 사용, 미사용, 만료 중 하나, 기본값 미사용
 
 create table coupon(
 coupon_issue number primary key,
@@ -16,19 +15,5 @@ coupon_no references coupon_list(coupon_list_no) on delete  cascade,
 coupon_id references member(member_id) on delete cascade,
 coupon_startdate date default sysdate not null,
 coupon_enddate date not null,
-coupon_yn char(1) 
+coupon_valid varchar2(9) default '미사용' check(coupon_valid in ('사용', '미사용', '만료'))
 );
-
--- 테이블 삭제
-drop table coupon;
-
-create sequence coupon_issue_seq;
-
-insert into coupon(coupon_issue, coupon_no, coupon_id, coupon_startdate, coupon_enddate, coupon_yn)
-values (coupon_issue_seq.nextval, 1, 'hello1234', sysdate, '2022-11-26', 'y');
-insert into coupon(coupon_issue, coupon_no, coupon_id, coupon_startdate, coupon_enddate, coupon_yn)
-values (coupon_issue_seq.nextval, 1, 'hello123', sysdate, '2022-11-26', 'y');
-
-commit;
-
-select * from coupon;
