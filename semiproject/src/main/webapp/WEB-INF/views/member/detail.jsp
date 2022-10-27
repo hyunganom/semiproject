@@ -46,6 +46,12 @@
 	a{
 		text-decoration: none;
 	}
+	.footer{
+		position:fixed;
+		bottom:0;
+		left:0;
+		width:100%;
+	}
 </style>
 
 <div class="container-500 mt-40 mb-40">
