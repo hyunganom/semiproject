@@ -7,30 +7,7 @@
 	<jsp:param value="주문 내역" name="title"/>
 </jsp:include>	
 
-    <link rel="stylesheet" type="text/css" href="commons.css">
-	<style>
-	        /* 확장스타일 : 마우스에 반응하는 테이블 */
-        .table.table-hover > thead > tr:hover, 
-        .table.table-hover > tbody > tr:hover, 
-        .table.table-hover > tfoot > tr:hover{
-            background-color: #ebf7f2;
-            color : #29995d;
-            font-weight: bolder;
-            font-size: medium;
-        }	
-        a { text-decoration:none;
-        	color:#525252
-	    }
-        
-	</style>
-	<body>
-	<div class="container-1100 mt-40 mb-40">
-	<div class="row center">
-	<hr>
-	<h3>${memberDto.memberName}님 환영합니다</h3>
-	<h3>등급 : ${memberDto.memberGrade}  / 적립금 : ${memberDto.memberPoint}원 / 쿠폰 :${couponUsable}개
-	 </h3>
-	 <hr>
+<link rel="stylesheet" type="text/css" href="commons.css">
 
 <style>
 	a:hover {
@@ -78,16 +55,15 @@
 	} */
 </style>
 
-<main>
 <div class="container-1100 mt-40 mb-40">
 	<header>
 		<div class="row center">
-			<h2>${memberDto.memberName}님 환영합니다</h2>
+			<h3>${memberDto.memberName}님 환영합니다</h3>
 		</div>
 		<div class="row center">
-			<h2>
-				등급 : ${memberDto.memberGrade}  / 적립금 : ${memberDto.memberPoint}원 / 쿠폰 : ${memberDto.cnt}개  
-			</h2>
+			<h3>
+				등급 : ${memberDto.memberGrade}  / 적립금 : ${memberDto.memberPoint}원 / 쿠폰 :${couponUsable}개
+			</h3>
 			<br><br><br>
 		</div>
 	</header>
@@ -137,9 +113,15 @@
 								    <tr>
 									    <td>${paymentListVO.paymentOrderNo}</td>
 									    <td>${paymentListVO.paymentNo}</td>
-									    <td>${paymentListVO.productName}<br></td>
+									    <td>
+									    	${paymentListVO.productName}
+									    	<button class = "btn" onclick = "location.href='/review/write?paymentNo=${paymentListVO.paymentNo}&paymentProductNo=${paymentListVO.productOriginNo}';">리뷰</button>
+									    </td>
 									    <td class="left" width="350">
-									    	<img width=50 height=50 src="/attachment/download/productTumbnail?attachmentNo=${paymentListVO.productAttachmentNo}">${paymentListVO.paymentOption}
+									    	<a href = "/review/write?reviewPaymentNo=134&">
+									    		<img width=50 height=50 src="/attachment/download/productTumbnail?attachmentNo=${paymentListVO.productAttachmentNo}">
+									    	</a>
+									    	${paymentListVO.paymentOption}
 									    </td>
 									    <td>${paymentListVO.paymentCount}</td>
 									    <td>${paymentListVO.paymentPrice}</td>
@@ -156,11 +138,6 @@
 		</div>
 		
 </div>
-
-</main>
-	
-		<a href = "/review/write?reviewPaymentNo=134">hello111의 paymentNo=134에 대한 리뷰 작성하기</a>
-</html>		
 
 	
 <!-- 	<div class="row left">

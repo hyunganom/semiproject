@@ -48,13 +48,14 @@ public class ReviewController {
 		model.addAttribute("productDto", productDao.selectOneProductUser(reviewPaymentNoVO.getPaymentProductNo()));
 		
 		// 전달받은 reviewPaymentNoVO를 model에 첨부
-		model.addAttribute("reviewPaymentNoVO", reviewPaymentNoVO);
+		model.addAttribute("reviewPaymentNo", reviewPaymentNoVO.getPaymentNo());
 		
 		// 리뷰 작성 페이지(wrtie.jsp)로 이동
 		return  "review/write";
 	}
 	
 	// - DB 처리 및 강제 이동
+	@PostMapping("/write")
 	public String write(@ModelAttribute ReviewDto reviewDto, @RequestParam int productNo,
 			@RequestParam List<MultipartFile> attachmentReviewImg//리뷰이미지 첨부파일에 관한 파라미터
 			) throws IllegalStateException, IOException {
