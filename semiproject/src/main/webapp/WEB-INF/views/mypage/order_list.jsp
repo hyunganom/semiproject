@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
     
 <jsp:include page="/WEB-INF/views/template/header.jsp">
 	<jsp:param value="주문 내역" name="title"/>
@@ -76,6 +77,18 @@
 		<a href = "/review/write?reviewPaymentNo=134">hello111의 paymentNo=134에 대한 리뷰 작성하기</a>
 			
 
+    <c:forEach var="paymentListVO" items="${paymentListVO}">
+    주문번호 : ${paymentListVO.paymentOrderNo}<br>
+    결제번호 : ${paymentListVO.paymentNo}<br>
+    상품명 : ${paymentListVO.productName}<br>
+    상품옵션 : ${paymentListVO.paymentOption}<br>
+    상품구매갯수 : ${paymentListVO.paymentCount}<br>
+    상품결제가격 : ${paymentListVO.paymentPrice}<br>
+    주문일자 : ${paymentListVO.orderDate}<br>
+    상품이미지 : <img width=50 height=50 src="/attachment/download/productTumbnail?attachmentNo=${paymentListVO.productAttachmentNo}">
+    <hr>
+    </c:forEach>
+    
 
 			
 			
