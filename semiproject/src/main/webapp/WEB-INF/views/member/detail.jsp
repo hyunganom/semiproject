@@ -4,10 +4,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<%-- header.jsp 불러오기 --%>
-<jsp:include page="/WEB-INF/views/template/header.jsp">
-	<jsp:param value="${memberDto.memberId} 회원 상세정보" name="title"/>
-</jsp:include>
+<%-- 관리자 메뉴일 경우와 아닐 경우 다른 헤더를 설정 --%>
+<c:choose>
+	<c:when test="${mg == '관리자'}">
+		<jsp:include page="/WEB-INF/views/template/adminHeader.jsp">
+			<jsp:param value="${memberDto.memberId} 회원 상세 정보" name="title"/>
+		</jsp:include>
+	</c:when>
+	<c:otherwise>
+		<jsp:include page="/WEB-INF/views/template/header.jsp">
+			<jsp:param value="${memberDto.memberId} 회원 상세 정보" name="title"/>
+		</jsp:include>
+	</c:otherwise>
+</c:choose>
 
 <style>
 /* 확장스타일 : 테두리가 있는 테이블 */
