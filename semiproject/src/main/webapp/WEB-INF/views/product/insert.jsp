@@ -49,8 +49,8 @@
 <script type = "text/template" id = "option-categoryLow">
 	<option value = "{{categoryLowNo}}">{{categoryLowName}}</option>
 </script>
-
-<<style>
+    
+<style>
 	/* 확장스타일 : 테두리가 있는 테이블 */
 	.table.table-border {
 		border:1px solid gray;
@@ -93,6 +93,7 @@
 					<th>상위 카테고리</th>
 					<td>
 						상위 카테고리명 : <input name = "categoryHighName">
+            <input type = "checkbox" name = "categoryHighSub" value = "Y"> (정기배송인지)
 						<button type = "submit">생성</button>
 					</td>
 				</tr>
