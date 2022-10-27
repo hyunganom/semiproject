@@ -68,7 +68,7 @@
 		</div>
 		
 		<div class="row">
-		<table class="table table-slit table-hover"> <!-- border="1" width="1000"> -->
+		<table class="table table-slit table-hover table-border"> <!-- border="1" width="1000"> -->
 			<thead>
 				<tr>
 					<th>아이디</th>

@@ -7,9 +7,18 @@
 	<jsp:param value="비밀번호 변경" name="title"/>
 </jsp:include>
 
+<style>
+	.footer{
+		position:fixed;
+		bottom:0;
+		left:0;
+		width:100%;
+	}
+</style>
+
 <form action="change_pw" method="post">
 
-<div class="container-300 mt-30">
+<div class="container-300 mt-50">
 	<div class="row center">
 		<h1>비밀번호 변경</h1>
 	</div>
