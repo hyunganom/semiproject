@@ -45,7 +45,7 @@
 				<td>${couponList.couponStartdate}</td>
 				<td>${couponList.couponEnddate}</td>
 				<td>${couponList.couponUseDate}</td>
-				<td>${couponList.couponYn}</td>
+				<td>${couponList.couponValid}</td>
 			</tr>
 			</c:forEach>
 		</tbody>	

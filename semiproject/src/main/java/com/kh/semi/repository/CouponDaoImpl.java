@@ -11,10 +11,9 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.kh.semi.entity.CouponDto;
-import com.kh.semi.entity.ProductDto;
 import com.kh.semi.vo.CouponCountVO;
 import com.kh.semi.vo.CouponListVO;
-import com.kh.semi.vo.ProductListSearchVO;
+
 
 @Repository
 public class CouponDaoImpl implements CouponDao{
@@ -31,7 +30,7 @@ public class CouponDaoImpl implements CouponDao{
 			couponDto.setCouponId(rs.getString("coupon_id"));
 			couponDto.setCouponStartdate(rs.getDate("coupon_startdate"));
 			couponDto.setCouponEnddate(rs.getDate("coupon_enddate"));
-			couponDto.setCouponYn(rs.getString("coupon_yn"));
+			couponDto.setCouponValid(rs.getString("coupon_valid"));
 			return couponDto;
 		}
 	};
@@ -57,12 +56,12 @@ public class CouponDaoImpl implements CouponDao{
 					+ "coupon_id =? "
 					+ "coupon_startdate=? "
 					+ "coupon_enddate=? "
-					+ "coupon_yn =? "					
+					+ "coupon_valid =? "					
 						+"where coupon_no=?";
 		Object[] param = {
 					couponDto.getCouponIssue(),
 					couponDto.getCouponId(),
-					couponDto.getCouponYn(),					
+					couponDto.getCouponValid(),					
 					couponDto.getCouponNo()
 					};
 		return jdbcTemplate.update(sql, param) > 0;
@@ -71,7 +70,7 @@ public class CouponDaoImpl implements CouponDao{
 	//사용한 쿠폰 조회
 	@Override
 	public List<CouponDto> usedCoupon(String memberId) {
-		String sql = "select * from coupon where coupon_id=? and coupon_yn='y'";
+		String sql = "select * from coupon where coupon_id=? and coupon_valid='y'";
 		Object[] param = {memberId};
 		return jdbcTemplate.query(sql, mapper,param);
 	}
@@ -79,7 +78,7 @@ public class CouponDaoImpl implements CouponDao{
 	//미사용 쿠폰 조회
 	@Override
 	public List<CouponDto> unUsedCoupon(String memberId) {
-		String sql = "select * from coupon where coupon_id=? and coupon_yn='n'";
+		String sql = "select * from coupon where coupon_id=? and coupon_valid='n'";
 		Object[] param = {memberId};
 		return jdbcTemplate.query(sql, mapper,param);
 	}
@@ -168,14 +167,14 @@ public class CouponDaoImpl implements CouponDao{
 					.CouponStartdate(rs.getDate("coupon_startdate"))
 					.CouponEnddate(rs.getDate("coupon_enddate"))
 					.CouponUseDate(rs.getDate("coupon_use_date"))
-					.CouponYn(rs.getString("coupon_yn"))					
+					.CouponValid(rs.getString("coupon_valid"))					
 				.build();		
 		}
 	};
 	
 	@Override
 	public List<CouponListVO> couponList(String memberId) {
-		String sql = "select CCL.coupon_issue, CCL.coupon_name, CCL.coupon_info,CCL.coupon_discount, CU.coupon_use_date, CCL.coupon_startdate, CCL.coupon_enddate, CCL.coupon_yn  from (select * from coupon C inner join coupon_list CL on CL.coupon_list_no = C.coupon_no) CCL inner join coupon_use CU on CCL.coupon_issue = CU.coupon_issue_no where CCL.coupon_id=?";
+		String sql = "select CCL.coupon_issue, CCL.coupon_name, CCL.coupon_info,CCL.coupon_discount, CU.coupon_use_date, CCL.coupon_startdate, CCL.coupon_enddate, CCL.coupon_valid  from (select * from coupon C inner join coupon_list CL on CL.coupon_list_no = C.coupon_no) CCL inner join coupon_use CU on CCL.coupon_issue = CU.coupon_issue_no where CCL.coupon_id=?";
 		Object[] param = new Object[] {memberId};
 		return jdbcTemplate.query(sql, couponMapper, param);
 		
