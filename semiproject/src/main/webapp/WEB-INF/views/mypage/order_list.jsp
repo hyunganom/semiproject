@@ -1,33 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <jsp:include page="/WEB-INF/views/template/header.jsp">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+    
+<jsp:include page="/WEB-INF/views/template/header.jsp">
 	<jsp:param value="주문 내역" name="title"/>
-	</jsp:include>	
-	<!DOCTYPE html>
-	<html lang="ko">
-	<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Table design</title>
-    
-     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+</jsp:include>	
 
-    <link rel="stylesheet" type="text/css" href="reset.css">
-    <link rel="stylesheet" type="text/css" href="commons.css">
-    <link rel="stylesheet" type="text/css" href="layout.css">
-    
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" href="commons.css">
-	<style>
+<style>
 
-	        /* 확장스타일 : 마우스에 반응하는 테이블 */
-        .table.table-hover > thead > tr:hover, 
-        .table.table-hover > tbody > tr:hover, 
-        .table.table-hover > tfoot > tr:hover{
-            background-color: #ebf7f2;
+	/* 확장스타일 : 마우스에 반응하는 테이블 */
+	.table.table-hover > thead > tr:hover,
+	.table.table-hover > tbody > tr:hover,
+	.table.table-hover > tfoot > tr:hover{
+		background-color: #ebf7f2;
             color : #29995d;
             font-weight: bolder;
             font-size: medium;
@@ -36,8 +25,8 @@
         	color:#525252
 	    }
 
-        
-	</style>
+</style>
+
 	<body>
 	<div class="container-1100 mt-40 mb-40">
 	<div class="row center">
@@ -88,6 +77,18 @@
 		<a href = "/review/write?paymentNo=134&paymentProductNo=1315">hello111의 paymentNo=134에 대한 리뷰 작성하기</a>
 			
 
+    <c:forEach var="paymentListVO" items="${paymentListVO}">
+    주문번호 : ${paymentListVO.paymentOrderNo}<br>
+    결제번호 : ${paymentListVO.paymentNo}<br>
+    상품명 : ${paymentListVO.productName}<br>
+    상품옵션 : ${paymentListVO.paymentOption}<br>
+    상품구매갯수 : ${paymentListVO.paymentCount}<br>
+    상품결제가격 : ${paymentListVO.paymentPrice}<br>
+    주문일자 : ${paymentListVO.orderDate}<br>
+    상품이미지 : <img width=50 height=50 src="/attachment/download/productTumbnail?attachmentNo=${paymentListVO.productAttachmentNo}">
+    <hr>
+    </c:forEach>
+    
 
 	
 <!-- 	<div class="row left">

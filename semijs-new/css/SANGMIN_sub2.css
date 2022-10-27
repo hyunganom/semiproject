@@ -137,6 +137,7 @@
 }
 .itemtitle{
     border: 1px solid pink;
+    height: 1600px;
     display: flex;
     flex-direction: column;
     margin-bottom: 15%;
@@ -199,6 +200,17 @@
     margin: 0 0 0 -1px;
     font-size: 0px;
 }
+.itemselect{
+    display: flex;
+    flex-direction: column;
+    margin-top: 4%;
+    width: 40%;
+}
+.itemselect > select{
+    margin-top: 30px;
+    height: 40px;
+}
+
 .itembox{
     margin-top: 5%;
 }
