@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <jsp:include page="/WEB-INF/views/template/header.jsp">
@@ -22,7 +23,6 @@
 
     <link rel="stylesheet" type="text/css" href="commons.css">
 	<style>
-
 	        /* 확장스타일 : 마우스에 반응하는 테이블 */
         .table.table-hover > thead > tr:hover, 
         .table.table-hover > tbody > tr:hover, 
@@ -35,7 +35,6 @@
         a { text-decoration:none;
         	color:#525252
 	    }
-
         
 	</style>
 	<body>
@@ -43,7 +42,7 @@
 	<div class="row center">
 	<hr>
 	<h3>${memberDto.memberName}님 환영합니다</h3>
-	<h3>등급 : ${memberDto.memberGrade}  / 적립금 : ${memberDto.memberPoint}원 / 쿠폰 : ${memberDto.cnt}개  
+	<h3>등급 : ${memberDto.memberGrade}  / 적립금 : ${memberDto.memberPoint}원 / 쿠폰 :${couponUsable}개
 	 </h3>
 	 <hr>
 

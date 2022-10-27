@@ -38,7 +38,7 @@ public class MypageController {
 		CouponCountVO couponMember = couponDao.selectOne(loginId);
 		//3. 불러온 회원 정보를 모델에 첨부한다
 		model.addAttribute("memberDto", couponMember);	
-		
+		model.addAttribute("couponUsable" , couponDao.selectUsable(loginId));	
 
 		return "mypage/order_list";	
 	}
@@ -53,6 +53,7 @@ public class MypageController {
 		MemberDto memberDto = memberDao.selectOne(loginId);
 		//3. 불러온 회원 정보를 모델에 첨부한다
 		model.addAttribute("memberDto", memberDto);
+		
     
 		return "mypage/wish_list";			
 	}
@@ -85,10 +86,13 @@ public class MypageController {
 		String memberId = (String)session.getAttribute("loginId");	
 		
 		model.addAttribute("couponList", couponDao.couponList(memberId));
+		
 		String loginId = (String) session.getAttribute("loginId");
 		CouponCountVO couponMember = couponDao.selectOne(loginId);
 		//3. 불러온 회원 정보를 모델에 첨부한다
 		model.addAttribute("memberDto", couponMember);	
+		model.addAttribute("couponUsable" , couponDao.selectUsable(loginId));	
+		
 		
 		//쿠폰 페이지로(coupon.jsp) 연결
 		return "mypage/coupon";
