@@ -58,9 +58,18 @@
         <div class="header1">
             <div class="inner">
                 <ul class="log1">
-                    <li><a href="/member/login" title="로그인">로그인</a></li>
-                    <li><a href="/member/join" title="회원가입">회원가입</a></li>
-                    <li><a href="#" title="고객센터">고객센터</a></li>
+                <c:choose>
+				<c:when test="${loginId !=null}">
+					<li>${loginId} 님<li>
+					<li><a href="/member/logout" title="로그아웃">로그아웃</a><li>
+					<li><a href="#" title="고객센터">고객센터</a></li>				
+				</c:when>
+				<c:otherwise>
+					<li><a href="/member/login" title="로그인">로그인</a><li>				
+					<li><a href="/member/join" title="회원가입">회원가입</a><li>
+					<li><a href="#" title="고객센터">고객센터</a></li>
+				</c:otherwise>
+			</c:choose>
                 </ul> <!--//log1-->
             </div> <!--//inner-->
         </div> <!--//header1-->
