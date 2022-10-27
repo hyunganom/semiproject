@@ -3,7 +3,6 @@ package com.kh.semi.controller;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -133,4 +132,40 @@ public class AttachmentController {
 						.build().toString())
 				.body(resource);
 	}
+	
+	//리뷰 첨부파일 이미지 다운로드 주소
+	@GetMapping("/download/reviewImg")
+	public ResponseEntity<ByteArrayResource> downloadReviewImg(@RequestParam int attachmentNo) throws IOException{
+		//[1] 파일탐색(DB)
+		//jsp에서 받은 번호 하나만 조회
+		AttachmentDto dto = attachmentDao.selectOne(attachmentNo);
+		if(dto==null) {//파일이 없으면
+			return ResponseEntity.notFound().build();//404 error 전송
+		}
+		//[2]파일 불러오기
+		File directory = new File("D:\\saluv\\reviewImg");
+		File target = new File(directory, String.valueOf(attachmentNo));
+		directory.mkdir();//폴더 생성 명령
+		byte[] data = FileUtils.readFileToByteArray(target);
+		ByteArrayResource resource = new ByteArrayResource(data);
+		
+		//[3]응답 객체를 만들어 데이터 전송
+		return ResponseEntity.ok()
+//						.header("Content-Encoding","UTF-8")
+				.header(HttpHeaders.CONTENT_ENCODING, 
+						StandardCharsets.UTF_8.name())
+//						.header("Content-Length",String.valueOf(dto.getAttachmentSize()))
+				.contentLength(dto.getAttachmentSize())
+//						.header("Content-Disposition", "attachment; filename="+dto.getAttachmentName())
+				.header(HttpHeaders.CONTENT_DISPOSITION,
+						ContentDisposition.attachment().
+						filename(
+						dto.getAttachmentName(),
+						StandardCharsets.UTF_8)
+						.build().toString())
+//						.header("Content-Type", dto.getAttachmentType())
+				.contentType(MediaType.APPLICATION_OCTET_STREAM)
+				.body(resource);
+	}
+	
 }
