@@ -59,7 +59,8 @@
 		
 		<form action = "createCategoryHigh" method = "post">
 		<div>
-			상위 카테고리명 : <input name = "categoryHighName">
+			상위 카테고리명 : <input name = "categoryHighName"><br>
+			구독 상품 여부 : <input type = "checkbox" name = "categoryHighSub" value = "Y">
 		</div>
 		<div>
 			<button type = "submit">생성</button>
