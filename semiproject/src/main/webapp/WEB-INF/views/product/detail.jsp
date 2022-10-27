@@ -105,5 +105,5 @@
 
 </div>
 
-</body>
-</html>
+<%-- footer.jsp 불러오기 --%>
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

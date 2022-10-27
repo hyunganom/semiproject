@@ -70,7 +70,7 @@
                 }
             } 
             $("span.total-items").text(sum);
-            
+
             <!-- 배송비 + 총 금액 -->
             var itemPrice = parseInt($("span.total-items").text());
             if(sum>=50000){
@@ -87,6 +87,8 @@
             	$(".delivery").text("3000");
             }
 		}
+		
+		
 		
 		<!-- 주문하기 버튼 이벤트 (전체 or 체크된것만 넘기기) -->
 		$(".form-btn").click(function(){

@@ -32,8 +32,10 @@ public interface MemberDao {
 	boolean changeInformation(MemberDto memberDto);
 	//로그인시간 갱신
 	boolean updateLoginTime(String memberId);
-	//주문완료 후 적립금 차감
+	//주문완료 후 포인트(적립금) 차감
 	boolean minusUsedPoint(String memberId, int point);
+	//주문완료 후 총 결제금액(적립금) 차감
+	boolean minusPayPrice(String memberId, int point);
 	
 	List<MemberVO> selectList(MemberSearchVO vo);
 	List<MemberVO> list(MemberSearchVO vo);

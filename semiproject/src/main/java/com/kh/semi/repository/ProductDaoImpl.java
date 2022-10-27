@@ -15,7 +15,7 @@ import com.kh.semi.entity.CategoryHighDto;
 import com.kh.semi.entity.CategoryLowDto;
 import com.kh.semi.entity.ProductDto;
 import com.kh.semi.vo.PaymentVO;
-import com.kh.semi.vo.ProductCategoryListVO;
+import com.kh.semi.vo.ProductDetailVO;
 import com.kh.semi.vo.ProductListSearchCategoryVO;
 import com.kh.semi.vo.ProductListSearchVO;
 import com.kh.semi.vo.ProductListVO;
@@ -36,11 +36,19 @@ public class ProductDaoImpl implements ProductDao {
 		return jdbcTemplate.queryForObject(sql, int.class);
 	}
 	
-	// 추상 메소드 오버라이딩 - 상위 카테고리 생성
+	// 추상 메소드 오버라이딩 - 상위 카테고리 생성 (일반 상품용)
 	@Override
 	public void createCategoryHigh(int categoryHighNo, String categoryHighName) {
 		String sql = "insert into category_high(category_high_no, category_high_name) values (?, ?)";
 		Object[] param = new Object[] {categoryHighNo, categoryHighName};
+		jdbcTemplate.update(sql, param);
+	}
+	
+	// 추상 메소드 오버라이딩 - 상위 카테고리 생성 (구독 상품용)
+	@Override
+	public void createCategoryHigh(int categoryHighNo, String categoryHighName, String categoryHighSub) {
+		String sql = "insert into category_high(category_high_no, category_high_name, category_high_sub) values (?, ?, ?)";
+		Object[] param = new Object[] {categoryHighNo, categoryHighName, categoryHighSub};
 		jdbcTemplate.update(sql, param);
 	}
 	
@@ -281,6 +289,36 @@ public class ProductDaoImpl implements ProductDao {
 		String sql = "select * from product where product_no = ?";
 		Object[] param = new Object[] {productNo};
 		return jdbcTemplate.query(sql, extractor, param);
+	}
+	
+	// ReviewProductVO에 대한 ResultSetExtractor
+	private ResultSetExtractor<ProductDetailVO> extractorDetail = new ResultSetExtractor<>() {
+
+		@Override
+		public ProductDetailVO extractData(ResultSet rs) throws SQLException, DataAccessException {
+			if(rs.next()) {
+				return ProductDetailVO.builder()
+							.productNo(rs.getInt("product_no"))
+							.productName(rs.getString("product_name"))
+							.productPrice(rs.getInt("product_price"))
+							.productGood(rs.getInt("product_good"))
+							.productInactive(rs.getString("product_inactive") != null)
+							.productAttachmentNo(rs.getInt("product_attachment_no"))
+						.build();
+			}
+			else {
+				return null;
+			}
+		}
+		
+	};
+	
+	// 추상 메소드 오버라이딩 - 회원용 상품 상세(DETAIL)
+	@Override
+	public ProductDetailVO selectOneProductUser(int productNo) {
+		String sql = "select p.product_no, p.product_name, p.product_price, p.product_good, p.product_inactive, pa.product_attachment_no from product p inner join product_attachment pa on p.product_no = pa.product_origin_no where p.product_no = ?";
+		Object[] param = new Object[] {productNo};
+		return jdbcTemplate.query(sql, extractorDetail, param);
 	}
 	
 	// ProductNoNameVO에 대한 Mapper

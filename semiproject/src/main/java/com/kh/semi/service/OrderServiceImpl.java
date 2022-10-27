@@ -57,7 +57,7 @@ public class OrderServiceImpl implements OrderService{
 				// 적립금 사용했을 경우 회원테이블 정보 변경
 				memberDao.minusUsedPoint(orderVO.getOrderId(), orderVO.getOrderUsePoint());
 				// 결제금액만큼 보유 포인트 차감
-				
+				memberDao.minusPayPrice(orderVO.getOrderId(), orderVO.getOrderPayPrice());
 				// 쿠폰사용했을 경우 쿠폰사용내역, 보유쿠폰 테이블 정보 변경
 				
 				
