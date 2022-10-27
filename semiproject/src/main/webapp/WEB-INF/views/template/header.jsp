@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%-- <c:set var="login" value="${loginId != null}"></c:set>
+<c:set var="admin" value="${mg == '관리자'}"></c:set> --%>
 
 <!DOCTYPE html>
 <html>
@@ -25,8 +27,9 @@
 	<%-- static의 CSS 적용 --%>
 	<link rel = "stylesheet" type = "text/css" href = "/css/reset.css">
     <link rel = "stylesheet" type = "text/css" href = "/css/commons.css">
-    <link rel = "stylesheet" type = "text/css" href = "/css/layout.css">
-    <link rel = "stylesheet" type = "text/css" href = "/css/test.css">
+    <link rel = "stylesheet" type = "text/css" href = "/css/SANGMIN_commons.css">
+    <link rel = "stylesheet" type = "text/css" href = "/css/SANGMIN_header.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
     
     <%-- Font Awesome CDN --%>
     <link rel="stylesheet" type = "text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -40,39 +43,120 @@
     
     <%-- Lodash CDN --%>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <%-- swiper --%>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    
+    <%--script 링크 --%>
+    <script src="/script/main.js"></script>
 	
 </head>
 
 <%-- 바디 --%>
 <body>
 
-<div class = "container-1200">
-
-	<%-- 필요한 하이퍼링크 작성(절대경로로) --%>
-	<div class = "row">
-	
-		<%-- 회원 관련 --%>
-		<div class = "row mt-20 right">
-			<a href = "/">홈</a>|
-			<c:choose>
-				<c:when test="${loginId != null}">
-					<a href="/member/logout">로그아웃</a>
+<div class="wrapper">
+    <header class="header">
+        <div class="header1">
+            <div class="inner">
+                <ul class="log1">
+                <c:choose>
+				<c:when test="${loginId !=null}">
+					<li>${loginId} 님<li>
+					<!-- 관리자 기능 -->
+					<%-- <c:if test="${login && admin}">
+						<li><a href="/admin/home">관리자 페이지</a></li>
+					</c:if> --%>
+					
+					<li><a href="/member/logout" title="로그아웃">로그아웃</a><li>
+					<li><a href="#" title="고객센터">고객센터</a></li>				
 				</c:when>
 				<c:otherwise>
-					<a href="/member/login">로그인</a>
-					<a href="/member/join">회원가입</a>
+					<li><a href="/member/login" title="로그인">로그인</a><li>				
+					<li><a href="/member/join" title="회원가입">회원가입</a><li>
+					<li><a href="#" title="고객센터">고객센터</a></li>
 				</c:otherwise>
 			</c:choose>
-			<a href = "/member/list">회원 목록</a>
-			<a href = "/mypage/order_list">마이페이지</a>
-		</div>
+                </ul> <!--//log1-->
+            </div> <!--//inner-->
+        </div> <!--//header1-->
+        <div class="header2">
+            <div class="inner">
+                <h1><a href="/" class="logo"><img class="image" width="100px;" height="100px" src="/image/semilogo.png" alt="로고"></a></h1>
+                <div class="formdiv">
+                    <h2 class="search">검색</h2>
+                    <form action="">
+                        <fieldset>
+                            <legend>
+                                <input type="submit" class="btnSearch" value="검색">
+                                <input type="text" class="textinput" placeholder="검색어를 입력하시오.">
+                            </legend>
+                        </fieldset>
+                    </form>
+                </div> <!--//formdiv-->
+                <div class="icon1">
+                    <ul>
+                        <li><a href="#" title="배송지등록"><i class="fa-regular fa-paste"></i></a></li>
+                        <li><a href="/mypage/order_list" title="마이페이지"><i class="fa-regular fa-user"></i></a></li>
+                        <li><a href="/basket/list" title="장바구니"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                    </ul>
+                </div> <!--//icon1-->
+            </div> <!--//inner-->
+        </div> <!--//header2-->
+        <nav class="menu">
+            <div class="inner">
+                    <ul>
+                        <li class="menubtn">
+                            <a href="#">
+                                <i class="fa-solid fa-bars" style="color: black; margin: 15px;">
+                                </i>전체 카테고리
+                            </a>
+                        </li>
+                        <li><a href="/product/category?categoryHighNo=41">정기배송</a></li>
+                        <li><a href="/product/category?categoryHighNo=42">샐러드</a></li>
+                        <li><a href="/product/category?categoryHighNo=43">닭,간,음</a></li>
+                        <li><a href="#">이벤트</a></li>
+                    </ul>
+                    <div class="bottommenu">
+                        <div class="inner">
+                            <ul>
+                                <li>
+                                    <a href="/product/category?categoryHighNo=41">정기배송</a>
+                                    <ul>
+                                        <li><a href="/product/category?categoryHighNo=41&categoryLowNo=21">2주 식단</a></li>
+                                        <li><a href="/product/category?categoryHighNo=41&categoryLowNo=49">4주 식단</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="/product/category?categoryHighNo=42">샐러드</a>
+                                    <ul>
+                                        <li><a href="/product/category?categoryHighNo=42&categoryLowNo=50">데일리 샐러드</a></li>
+                                        <li><a href="/product/category?categoryHighNo=42&categoryLowNo=51">테이스티 샐러드</a></li>
+                                        <li><a href="/product/category?categoryHighNo=42&categoryLowNo=52">파우치 샐러드</a></li>
+                                        <li><a href="#">맛보기 세트</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="/product/category?categoryHighNo=43">닭,간,음</a>
+                                    <ul>
+                                        <li><a href="#">닭가슴살</a></li>
+                                        <li><a href="/product/category?categoryHighNo=43&categoryLowNo=54">만두</a></li>
+                                        <li><a href="#">소시지</a></li>
+                                        <li><a href="/product/category?categoryHighNo=43&categoryLowNo=53">간식</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                 </div> <!--//inner-->
+        </nav> <!--//nav-->
+        </header> <!--//header-->
+
 		
-		<%-- 장바구니 관련 --%>
-		<div class = "row mt-20 right">
-			<a href = "/basket/list">장바구니 목록</a>
-		</div>
+			
+		<%-- 		
 		
-		<%-- 문의글 관련 --%>
+		문의글 관련
 		<div class = "row mt-20 center">
 			<a href = "/inquire/list">문의글 목록(회원용 - 내가 쓴 문의글)</a>
 			<a href = "/inquire/listAdmin">문의글 목록(관리자용)</a>
@@ -82,31 +166,13 @@
 			<a href = "/product/list">전체 상품 목록(관리자용 - 상품의 모든 정보가 나옴)</a> 
 		</div>
 		
-		<div class = "row center mt-20">
-			<a href = "/product/category?categoryHighNo=41">구독상품(상위41)</a>
-			<a href = "/product/category?categoryHighNo=41&categoryLowNo=21">구독상품(상위41) 2주식단(하위21)</a> 
-			<a href = "/product/category?categoryHighNo=41&categoryLowNo=49">구독상품(상위41) 4주식단(하위49)</a>
-		</div>
 		
-		<div class = "row center mt-20">
-			<a href = "/product/category?categoryHighNo=42">샐러드(상위42)</a> 
-			<a href = "/product/category?categoryHighNo=42&categoryLowNo=50">샐러드(상위42) 데일리 샐러드(하위50)</a> 
-			<a href = "/product/category?categoryHighNo=42&categoryLowNo=51">샐러드(상위42) 테이스티 샐러드(하위51)</a>
-			<a href = "/product/category?categoryHighNo=42&categoryLowNo=52">샐러드(상위42) 파우치 샐러드(하위52)</a>
-		</div>
-		
-		<div class = "row center mt-20">
-			<a href = "/product/category?categoryHighNo=43">간식(상위43)</a> 
-			<a href = "/product/category?categoryHighNo=43&categoryLowNo=53">간식(상위43) 간식(하위53)</a> 
-			<a href = "/product/category?categoryHighNo=43&categoryLowNo=54">간식(상위43) 만두(하위54)</a>
-		</div>
 		
 		<div class = "row center mt-20">
 			<a href = "/mypage/order_list">마이페이지</a>
-			<a href = "/notice/list">공지게시판</a>
 		</div>
 	
-	</div>
-	
-<hr>
+	</div> --%>
+		
+
 
