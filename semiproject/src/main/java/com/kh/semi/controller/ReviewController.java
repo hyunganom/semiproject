@@ -133,6 +133,4 @@ public class ReviewController {
 		}
 		return "redirect:/";
 	}
-	
-	// 2. 리뷰 
 }
