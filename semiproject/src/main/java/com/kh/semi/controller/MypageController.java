@@ -46,9 +46,16 @@ public class MypageController {
 		CouponCountVO couponMember = couponDao.selectOne(loginId);
 		//3. 불러온 회원 정보를 모델에 첨부한다
 		model.addAttribute("memberDto", couponMember);	
-    
+		
+		//1. 세션에 들어있는 아이디를 꺼낸다
+		//(참고) 세션에 데이터는 Object 형태로 저장되므로 꺼내려면 다운캐스팅 필요
+				
+		List<MypagePaymentInfoVO> mypagePaymentInfoVO = mypageDao.selectMyPaymentInfo(loginId);
+				
+		model.addAttribute("paymentListVO", mypagePaymentInfoVO);
+		
+		// 현재 로그인 중인 회원이 가지고있는 쿠폰 중 사용 가능한(기간이 만료되지 않은) 쿠폰 수 
 		model.addAttribute("couponUsable" , couponDao.selectUsable(loginId));	
-
 
 		return "mypage/order_list";	
 	}
