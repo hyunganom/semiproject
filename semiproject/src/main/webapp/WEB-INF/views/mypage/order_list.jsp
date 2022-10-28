@@ -35,7 +35,7 @@
     .table.table-slit > thead > tr,
     .table.table-slit > thead > th{
     	background-color: #efefef;
-    	border: 3px solid gray;
+    	border: 2px solid gray;
     }
     
     /* 확장스타일 : 테두리가 있는 테이블 */
@@ -44,11 +44,18 @@
     .table.table-border > tbody > tr,
     .table.table-border > tbody > th,
     .table.table-border > tbody > td{
-    	border: 3px solid gray;
+    	border: 2px solid gray;
+    }
+    
+    .talbe.table-border > tfoot > tr,
+    .table.table-border > tfoot > tr > th,
+    .table.table-border > tfoot > tr > td{
+	    border: none;
     }
 	
-	th, td {
+	th, td, h3 {
     	vertical-align : middle;
+    	line-height : 1.2em;
     }
 	/* div {
 		border:1px dotted gray;
@@ -92,44 +99,38 @@
 			<section>
 				<div class="float-right w-80">
 					<div class="row center">
-						<div class="row mb-30">
+						<div class="row">
 							<h2>주문 내역</h2>
 						</div>
 						
-						<table class="table table-slit table-border">
-							<c:forEach var="paymentListVO" items="${paymentListVO}">
+						<c:forEach var="paymentListVO" items="${paymentListVO}">
+							<table class="table table-slit table-border">
 								<thead>
 									<tr>
-										<th>주문 <br> 번호</th>
-										<th>결제 <br> 번호</th>
-										<th>상품명</th>
-										<th>상품옵션</th>
-										<th>구매 <br> 갯수</th>
-										<th>결제 <br> 금액</th>
-										<th>주문일자</th>
+										<th colspan="2">상품정보 &nbsp; ${paymentListVO.orderDate}</th>
+										<th>구매갯수</th>
+										<th>결제금액</th>
 									</tr>
 								</thead>
 								<tbody>
 								    <tr>
-									    <td>${paymentListVO.paymentOrderNo}</td>
-									    <td>${paymentListVO.paymentNo}</td>
-									    <td>
-									    	${paymentListVO.productName}
-									    	<button class = "btn" onclick = "location.href='/review/write?paymentNo=${paymentListVO.paymentNo}&paymentProductNo=${paymentListVO.productOriginNo}';">리뷰</button>
+								    	<td class="img" width="100" colspan="">
+									    	<img width=100 height=100 src="/attachment/download/productTumbnail?attachmentNo=${paymentListVO.productAttachmentNo}">
 									    </td>
-									    <td class="left" width="350">
-									    	<a href = "/review/write?reviewPaymentNo=134&">
-									    		<img width=50 height=50 src="/attachment/download/productTumbnail?attachmentNo=${paymentListVO.productAttachmentNo}">
-									    	</a>
-									    	${paymentListVO.paymentOption}
+									    <td class="row left" width="400" height="30">
+									    	주문번호 : ${paymentListVO.paymentOrderNo} <br>
+									    	결제번호 : ${paymentListVO.paymentNo} <br>
+									    	상품명 : ${paymentListVO.productName} <br>
+									    	상품윱션 : ${paymentListVO.paymentOption} <br>
+									    	<button onclick = "location.href='/review/write?paymentNo=${paymentListVO.paymentNo}&paymentProductNo=${paymentListVO.productOriginNo}';">리뷰</button>
 									    </td>
-									    <td>${paymentListVO.paymentCount}</td>
-									    <td>${paymentListVO.paymentPrice}</td>
-									    <td>${paymentListVO.orderDate}</td>
+									    <td width="80">${paymentListVO.paymentCount}</td>
+									    <td width="90">${paymentListVO.paymentPrice}</td>
 								   </tr>
 								</tbody>
-							</c:forEach>
-					    </table>
+								<br><br>
+					    	</table>
+						</c:forEach>
 					    
 					</div>
 				</div>
