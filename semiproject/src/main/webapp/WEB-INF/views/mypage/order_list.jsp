@@ -46,12 +46,6 @@
     .table.table-border > tbody > td{
     	border: 2px solid gray;
     }
-    
-    .talbe.table-border > tfoot > tr,
-    .table.table-border > tfoot > tr > th,
-    .table.table-border > tfoot > tr > td{
-	    border: none;
-    }
 	
 	th, td, h3 {
     	vertical-align : middle;
@@ -107,7 +101,7 @@
 							<table class="table table-slit table-border">
 								<thead>
 									<tr>
-										<th colspan="2">상품정보 &nbsp; ${paymentListVO.orderDate}</th>
+										<th colspan="2">${paymentListVO.orderDate} &nbsp; 상품정보</th>
 										<th>구매갯수</th>
 										<th>결제금액</th>
 									</tr>
@@ -121,7 +115,7 @@
 									    	주문번호 : ${paymentListVO.paymentOrderNo} <br>
 									    	결제번호 : ${paymentListVO.paymentNo} <br>
 									    	상품명 : ${paymentListVO.productName} <br>
-									    	상품윱션 : ${paymentListVO.paymentOption} <br>
+									    	상품옵션 : ${paymentListVO.paymentOption} <br>
 									    	<button onclick = "location.href='/review/write?paymentNo=${paymentListVO.paymentNo}&paymentProductNo=${paymentListVO.productOriginNo}';">리뷰</button>
 									    </td>
 									    <td width="80">${paymentListVO.paymentCount}</td>
