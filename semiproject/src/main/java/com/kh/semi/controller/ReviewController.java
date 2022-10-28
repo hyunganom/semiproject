@@ -35,9 +35,11 @@ public class ReviewController {
 	@Autowired
 	private ProductDao productDao;
 
+	//첨부파일
 	@Autowired
 	private AttachmentDao attachmentDao;
 	
+	//리뷰 첨부파일 업로드 경로
 	private final File reviewImg = new File("D:\\saluv\\reviewImg");
 	
 	// 1. 리뷰 작성
@@ -79,6 +81,15 @@ public class ReviewController {
 		// 현재 해당 상품의 리뷰 갯수가 0인지에 따라 다른 처리릃 하도록 구현 (0 나누기 0을 하면 에러가 발생하기 때문)
 		if(beforeCount == 0) {
 			
+			// 작성자가 입력한 리뷰 점수 반환
+			int scoreNow = reviewDto.getReviewGood();
+			
+			// 1)과 2)를 사용하여 새로 평균낸 리뷰 평점 구하기
+			double insertScore = (scoreNow * 10) / 10.0;
+			
+			// 새로 평균낸 리뷰 평점을 해당 상품의 리뷰 평점으로 수정
+			reviewDao.updateProductGood(insertScore, productNo);
+			
 			// DB에 등록(INSERT) 처리
 			reviewDao.writeReview(reviewDto);
 		}
@@ -111,6 +122,7 @@ public class ReviewController {
 		
 		//리뷰 첨부파일 이미지 등록처리
 		//1. 시퀀스 발급
+			//첨부파일 시퀀스 발급
 		for(MultipartFile file : attachmentReviewImg) {
 			if(!file.isEmpty()) {
 			//첨부파일 시퀀스 발급
@@ -126,11 +138,17 @@ public class ReviewController {
 			//파일저장
 			File target = new File(reviewImg, String.valueOf(attachmentNo));
 			reviewImg.mkdirs();//폴더 생성 명령
-			file.transferTo(target);//해당폴더에 변환과정을 거쳐서 파일등록
-			//review_attachment 연결테이블 정보 저장
+			file.transferTo(target);
+			//reviewConnectAttachment 연결테이블 정보 저장
 			attachmentDao.reviewConnectAttachment(reviewNo, attachmentNo);
 			}
 		}
+		
 		return "redirect:/";
 	}
+	
+	// ** 특정 상품에 대해 작성된 전체 리뷰 목록은 ProductController를 통해 표시
+	
+	// ** 로그인 한 회원이 작성한 전체 리뷰 목록은 MypageController를 통해 표시 
+	
 }

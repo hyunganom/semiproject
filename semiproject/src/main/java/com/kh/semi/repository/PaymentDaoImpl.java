@@ -48,8 +48,9 @@ public class PaymentDaoImpl implements PaymentDao{
 		String sql = "insert into payment("
 				+ "payment_no, payment_order_no, payment_product_no, "
 				+ "payment_count, payment_price, payment_option) values("
-				+ "payment_seq.nextval, ?, ?, ?, ?, ?)";
+				+ "?, ?, ?, ?, ?, ?)";
 		Object[] param = {
+				payment.getPaymentNo(),
 				payment.getPaymentOrderNo(),
 				payment.getPaymentProductNo(),
 				payment.getPaymentCount(),

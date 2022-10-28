@@ -1,5 +1,9 @@
 package com.kh.semi.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +21,8 @@ import com.kh.semi.repository.CouponDao;
 import com.kh.semi.repository.MemberDao;
 import com.kh.semi.service.OrderService;
 import com.kh.semi.vo.CouponCountVO;
+import com.kh.semi.vo.CouponListVO;
+import com.kh.semi.vo.BasketVO;
 import com.kh.semi.vo.OrderVO;
 
 @Controller
@@ -32,17 +38,25 @@ public class OrdersController {
 	@Autowired
 	private BasketDao basketDao;
 
-
-
 	//장바구니에서 주문서로 넘어오는 화면 + 쿠폰 사용 내역에서 불러오는 화면
 	@GetMapping("/order_ck")
-	public String order(HttpSession session, Model model, OrderVO orderVO) {
+	public String order(HttpServletRequest request,
+			HttpSession session, Model model) {
 		// 회원 아이디 꺼내옴
 		String memberId = (String)session.getAttribute(SessionConstant.ID);
 		// 주문자 정보 model로 출력준비
 		model.addAttribute("memberDto", memberDao.selectOne(memberId));
-		// 장바구니 정보 model로 출력준비
-		model.addAttribute("basketList", basketDao.selectList(memberId));
+		
+		// basketNo로 넘어오는 값 처리
+		String[] arr = request.getParameterValues("basketNo");
+		List<BasketVO> orderList = new ArrayList<>();
+		for(int i=0; i<arr.length; i++) {
+			BasketVO vo = basketDao.orderList(Integer.parseInt(arr[i]));
+			orderList.add(vo);
+		}
+		// 넘어오는 상품만 model로 출력준비
+		model.addAttribute("basketList", orderList);
+				
 		// 미사용 쿠폰 model로 출력준비
 		//model.addAttribute("unusedCoupon", couponDao.unUsedCoupon(memberId));		
 		model.addAttribute("couponUsable", couponDao.selectUsable(memberId));
