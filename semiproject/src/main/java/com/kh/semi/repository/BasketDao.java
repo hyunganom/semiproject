@@ -21,6 +21,8 @@ public interface BasketDao {
 	BasketVO orderBeforeList(String memberId, int productNo);
 	//3-4. 장바구니 내 동일 상품있는지 조회(옵션 없는 단일상품만!)
 	BasketDto sameItem(String memberId, int productNo);
+	//3-5. 선택상품 조회(장바구니 번호로 조회)
+	BasketVO orderList(int basketNo);
 	
 	//4-1. 삭제(상품 번호로 삭제)
 	boolean delete(int productNo);
