@@ -309,12 +309,12 @@
         <div class="row">
           <div class="row">
             <p>쿠폰 (보유 : <span>${couponUsable}</span>개)                
-					<select name="selectcoupon">
-                				<option value="">선택</option>		 				  
-									<c:forEach var = "couponList" items = "${couponList}">
-								<option value = "${couponList.couponNo}">${couponList.couponDiscount}</option>
-								</c:forEach>
-						</select>     		            			              				  
+					<select name="couponIssue">
+                				<option value="">선택</option>	
+                				<c:forEach var="couponUse" items="${couponUse}">
+                				<option value="${couponUse.couponIssue}">${couponUse.couponName}</option>
+                				</c:forEach>
+					</select>     		            			              				  
         	</p> 
        	
         	
