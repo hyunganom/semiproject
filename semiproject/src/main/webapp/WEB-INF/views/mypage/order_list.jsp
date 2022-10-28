@@ -110,13 +110,13 @@
 								    <tr>
 								    	<td class="img" width="100" colspan="">
 									    	<img width=100 height=100 src="/attachment/download/productTumbnail?attachmentNo=${paymentListVO.productAttachmentNo}">
+											<button class="row w-80" onclick = "location.href='/review/write?paymentNo=${paymentListVO.paymentNo}&paymentProductNo=${paymentListVO.productOriginNo}';">리뷰작성</button>
 									    </td>
 									    <td class="row left" width="400" height="30">
 									    	주문번호 : ${paymentListVO.paymentOrderNo} <br>
 									    	결제번호 : ${paymentListVO.paymentNo} <br>
 									    	상품명 : ${paymentListVO.productName} <br>
 									    	상품옵션 : ${paymentListVO.paymentOption} <br>
-									    	<button onclick = "location.href='/review/write?paymentNo=${paymentListVO.paymentNo}&paymentProductNo=${paymentListVO.productOriginNo}';">리뷰</button>
 									    </td>
 									    <td width="80">${paymentListVO.paymentCount}</td>
 									    <td width="90">${paymentListVO.paymentPrice}</td>
