@@ -183,4 +183,6 @@ select * from (select TMP.*, rownum rn from (select P.product_no, P.product_name
 -- - 하위 카테고리가 존재하지 않을 경우
 select * from (select TMP.*, rownum rn from (select P.product_no, P.product_name, P.product_price, P.product_good, P.product_inactive, PA.attachment_no from product P inner join (select * from product_attachment inner join attachment on product_attachment_no = attachment_no)PA on P.product_no = PA.product_origin_no where P.category_high_no = ? and instr(#1, ?) > 0 order by product_no desc)TMP) where rn between ? and ?;
 
-
+-- 정기 배송 상품을 제외한 모든 상품의 상품 번호와 상품명 조회
+select product_no, product_name from product where category_high_no = 42 or category_high_no = 43;
+select product_no, product_name from product where category_high_no = ? or category_high_no = ?;

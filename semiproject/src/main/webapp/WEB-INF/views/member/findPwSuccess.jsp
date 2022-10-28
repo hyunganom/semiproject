@@ -9,18 +9,26 @@
 	a{
 	text-decoration: none;
 	}
+	.footer{
+		position:fixed;
+		bottom:0;
+		left:0;
+		width:100%;
+	}
 </style>
 
-<div class="container-500 mt-30">
+<div class="container-500 mt-50">
 	<div class="row center">
 		<h1>비밀번호 찾기 완료</h1>
 	</div>
+	
+	<br>
 	
 	<div class="row center">
 		<h2>찾으시는 비밀번호는 "${memberDto.memberPw}" 입니다.</h2>
 	</div>
 	
-	<br>
+	<br><br><br>
 	
 	<div class="row center mb-30">
 		<h2>

@@ -58,11 +58,17 @@ public class ProductController {
 		// 상위 카테고리 등록을 위한 다음 시퀀스 번호 반환
 		int categoryHighNo = productDao.sequencecategoryHigh();
 		
-		// 상위 카테고리 등록
-		productDao.createCategoryHigh(categoryHighNo, productCategoryListVO.getCategoryHighName());
-		
-		// 상위 카테고리와 하위 카테고리 등록 후 상품 등록 Mapping으로 강제 이동(redirect)
-		return "redirect:insert";
+		// 구독 상품인지를 판정
+		if(productCategoryListVO.isCateghoryHighSub()) {
+			// 구독 상품용 상위 카테고리 등록
+			productDao.createCategoryHigh(categoryHighNo, productCategoryListVO.getCategoryHighName(), productCategoryListVO.getCategoryHighSub());
+			return "redirect:insert";
+		}
+		else {
+			// 일반 상품용 상위 카테고리 등록
+			productDao.createCategoryHigh(categoryHighNo, productCategoryListVO.getCategoryHighName());
+			return "redirect:insert";
+		}
 	}
 	
 	// *. 하위 카테고리 생성 Mapping - 상품 등록 Mapping에서 연결됨
@@ -236,7 +242,6 @@ public class ProductController {
 		basketDto.setBasketCountNumber(productCount);
 		// 파라미터 옵션항목값 배열로 가져오기(옵션값)
 		String[] arrayParam = request.getParameterValues("productOption");
-		System.out.println(arrayParam);
 		//동일한 상품이 있는지 확인 후 없으면 등록, 있으면 수량 증가
 		if(basketDao.sameItem(memberId, productNo)==null) {
 			if(arrayParam==null) { //단일상품 및 옵션없음
@@ -248,8 +253,9 @@ public class ProductController {
 				for(int i=0; i<arrayParam.length; i++) {
 					int no = Integer.parseInt(arrayParam[i]);
 					option = option+productDao.selectName(no)+" / ";
-					System.out.println(option);
 				}
+				//마지막 / 구분자 문자열 자르기
+				option= option.substring(0, option.length()-2);
 				//장바구니 옵션 컬럼에 들어갈 데이터 세팅
 				basketDto.setBasketProductOption(option);
 			}

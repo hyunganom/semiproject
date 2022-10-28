@@ -8,6 +8,7 @@
 -- 리뷰 수정시간(review_updatetime) : 날짜
 -- 리뷰 별점(review_good) : 숫자, 필수 입력
 -- 리뷰 좋아요(review_like) : 숫자, 기본값은 0으로, 0 이상의 숫자만 입력 가능 
+-- 리뷰 비활성화(review_inactive) : 문자(1byte), 리뷰 블라인드 시 'Y' 
 
 -- 테이블 생성
 create table review (
@@ -18,8 +19,9 @@ review_title varchar2(300) not null,
 review_content varchar2(4000) not null,
 review_writetime date default sysdate not null,
 review_updatetime date,
-review_good number not null,
-review_like number default 0 check(review_like >= 0)
+review_good number check(review_good between 1 and 5) not null,
+review_like number default 0 check(review_like >= 0),
+review_inactive char(1) check(review_inactive = 'Y')
 );
 
 -- 테이블 삭제
@@ -30,3 +32,13 @@ create sequence review_seq;
 
 -- 시퀀스 삭제
 drop sequence review_seq;
+
+-- 결제 번호에 엮여있는 주문자 아이디 조회
+select P.payment_no, O.order_id from orders O inner join payment P on o.order_no = P.payment_order_no;
+
+-- 리뷰 등록을 위해 다음 시퀀스 번호 반환
+select review_seq.nextval from dual;
+
+-- 리뷰 작성 구문
+insert into review(review_no, review_id, review_title, review_content) values(?, ?, ?, ?, ?);
+insert into review(review_no, review_payment_no, review_id, review_title, review_content, review_good) values(review_seq.nextVal, 134, 'hello1234', '테스트용 제목', '테스트용 내용', 3);
