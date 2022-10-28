@@ -3,6 +3,7 @@ package com.kh.semi.repository;
 import java.util.List;
 
 import com.kh.semi.entity.ReviewDto;
+import com.kh.semi.vo.ReviewMypageVO;
 import com.kh.semi.vo.ReviewProductVO;
 
 public interface ReviewDao {
@@ -26,6 +27,7 @@ public interface ReviewDao {
 	public List<ReviewProductVO> selectProductAllReview(int productNo);
 	
 	// 추상 메소드 - 내가 작성한 리뷰 목록
+	public List<ReviewMypageVO> selectMypageAllReview(String reviewId);
 	
 	//리뷰 작성 수정(UPDATE)
 	boolean updateReview(ReviewDto reviewDto);
