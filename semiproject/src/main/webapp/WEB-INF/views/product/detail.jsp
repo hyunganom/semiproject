@@ -22,7 +22,6 @@
 	        $("#product-data").attr("method", "post"); // post 방식
 	    });
 	});
-	});
 	
 </script>
 
