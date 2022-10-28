@@ -2,7 +2,6 @@ package com.kh.semi.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +25,7 @@ import com.kh.semi.entity.ProductDto;
 import com.kh.semi.repository.AttachmentDao;
 import com.kh.semi.repository.BasketDao;
 import com.kh.semi.repository.ProductDao;
-import com.kh.semi.vo.BasketVO;
+import com.kh.semi.repository.ReviewDao;
 import com.kh.semi.vo.ProductCategoryListVO;
 import com.kh.semi.vo.ProductListSearchCategoryVO;
 import com.kh.semi.vo.ProductListSearchVO;
@@ -38,6 +37,10 @@ public class ProductController {
 	// 의존성 주입
 	@Autowired
 	private ProductDao productDao;
+	
+	// 리뷰 의존성 주입
+	@Autowired
+	private ReviewDao reviewDao;
 	
 	//장바구니 의존성 주입
 	@Autowired
@@ -216,6 +219,9 @@ public class ProductController {
 		
 		// 모든 상품 번호와 이름을 조회하고 첨부
 		model.addAttribute("productNoNameList", productDao.selectNoName());
+		
+		// 해당 상품에 달린 모든 리뷰 조회
+		model.addAttribute("productReviewList", reviewDao.selectProductAllReview(productNo));
 		
 		if(categoryHighSub) {
 			// 상품 상세 페이지(detail.jsp)로 연결

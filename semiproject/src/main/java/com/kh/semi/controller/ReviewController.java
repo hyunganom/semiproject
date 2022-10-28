@@ -58,7 +58,7 @@ public class ReviewController {
 	// - DB 처리 및 강제 이동
 	@PostMapping("/write")
 	public String write(HttpSession session, @ModelAttribute ReviewDto reviewDto, @RequestParam int productNo,
-			@RequestParam List<MultipartFile> attachmentReviewImg//리뷰이미지 첨부파일에 관한 파라미터
+			@RequestParam MultipartFile attachmentReviewImg//리뷰이미지 첨부파일에 관한 파라미터
 			) throws IllegalStateException, IOException {
 		
 		// 리뷰 등록을 위해 로그인 중인 아이디 반환
@@ -78,6 +78,15 @@ public class ReviewController {
 				
 		// 현재 해당 상품의 리뷰 갯수가 0인지에 따라 다른 처리릃 하도록 구현 (0 나누기 0을 하면 에러가 발생하기 때문)
 		if(beforeCount == 0) {
+			
+			// 작성자가 입력한 리뷰 점수 반환
+			int scoreNow = reviewDto.getReviewGood();
+			
+			// 1)과 2)를 사용하여 새로 평균낸 리뷰 평점 구하기
+			double insertScore = (scoreNow * 10) / 10.0;
+			
+			// 새로 평균낸 리뷰 평점을 해당 상품의 리뷰 평점으로 수정
+			reviewDao.updateProductGood(insertScore, productNo);
 			
 			// DB에 등록(INSERT) 처리
 			reviewDao.writeReview(reviewDto);
@@ -111,26 +120,23 @@ public class ReviewController {
 		
 		//리뷰 첨부파일 이미지 등록처리
 		//1. 시퀀스 발급
-		for(MultipartFile file : attachmentReviewImg) {
-			if(!file.isEmpty()) {
 			//첨부파일 시퀀스 발급
 			int attachmentNo = attachmentDao.sequence();
 			//첨부 DB등록
 			attachmentDao.insert(AttachmentDto.builder()
 					.attachmentNo(attachmentNo)
-					.attachmentName(file.getOriginalFilename())
-					.attachmentType(file.getContentType())
-					.attachmentSize(file.getSize())
+					.attachmentName(attachmentReviewImg.getOriginalFilename())
+					.attachmentType(attachmentReviewImg.getContentType())
+					.attachmentSize(attachmentReviewImg.getSize())
 				.build());
 			
 			//파일저장
 			File target = new File(reviewImg, String.valueOf(attachmentNo));
 			reviewImg.mkdirs();//폴더 생성 명령
-			file.transferTo(target);//해당폴더에 변환과정을 거쳐서 파일등록
+			attachmentReviewImg.transferTo(target);//해당폴더에 변환과정을 거쳐서 파일등록
 			//review_attachment 연결테이블 정보 저장
 			attachmentDao.reviewConnectAttachment(reviewNo, attachmentNo);
-			}
-		}
+		
 		return "redirect:/";
 	}
 }
