@@ -91,7 +91,7 @@
 				<td>${productList.productPrice}</td>
 				<td>${productList.productInformation}</td>
 				<td>${productList.productInventory}</td>
-				<td>${productList.productGood}</td>
+				<td><fmt:formatNumber value="${productList.productGood}" type="number" pattern=".00"/></td>
 				<td>${productList.productRegisttime}</td>
 				<td>${productList.productUpdatetime}</td>
 				<td>${productList.productInactive}</td>

@@ -241,7 +241,7 @@
 				<a href = "detail?productNo=${productList.productNo}&categoryHighSub=${productList.categoryHighSub}">${productList.productName}</a>
 			</td>
 			<td>${productList.productPrice}</td>
-			<td>${productList.productGood}</td>
+			<td><fmt:formatNumber value="${productList.productGood}" type="number" pattern="0.0"/></td>
 			<td>${productList.productInactive}</td>
 			<td><img width=50 height=50 src="/attachment/download/productTumbnail?attachmentNo=${productList.attachmentNo}"></td>
 		</tr>

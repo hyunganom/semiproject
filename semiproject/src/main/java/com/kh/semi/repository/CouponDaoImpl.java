@@ -34,7 +34,7 @@ public class CouponDaoImpl implements CouponDao{
 			return couponDto;
 		}
 	};
-			
+	
 	//쿠폰 추가
 	@Override
 	public void insert(CouponDto couponDto) {
@@ -172,6 +172,18 @@ public class CouponDaoImpl implements CouponDao{
 		}
 	};
 	
+	//쿠폰 셀렉트 박스 조회를 위한 RowMapper 추가
+	private RowMapper<CouponListVO> couponSelectMapper = new RowMapper<>() {
+		@Override
+		public CouponListVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+			return CouponListVO.builder()
+					.CouponName(rs.getString("coupon_name"))
+					.CouponDiscount(rs.getInt("coupon_discount"))
+					.CouponEnddate(rs.getDate("coupon_enddate"))				
+				.build();		
+		}
+	};
+	
 	//쿠폰리스트 출력, 사용되지않은 쿠폰리스트도 함께 출력하기 -> outer join 사용
 	@Override
 	public List<CouponListVO> couponList(String memberId) {
@@ -191,4 +203,15 @@ public class CouponDaoImpl implements CouponDao{
 		Object[] param = {memberId};
 		return jdbcTemplate.queryForObject(sql, int.class, param);
 	}
+
+	//주문 페이지 내 쿠폰 셀렉트박스 생성 및 관련 컬럼 데이터만 출력 -> outer join사용
+	@Override
+	public List<CouponListVO> selectCoupon(String memberId) {
+		String sql = "select CCL.coupon_name, CCL.coupon_discount, CCL.coupon_enddate, "
+				+ "from coupon_use CU right outer join(select * from coupon C inner join coupon_list CL on C.coupon_no=CL.coupon_list_no) "
+				+ "CCL on CU.coupon_issue_no=CCL.coupon_issue where CCL.coupon_id=?";
+		Object[] param = new Object[] {memberId};
+		return jdbcTemplate.query(sql, couponSelectMapper, param);
+	}
+	
 }
