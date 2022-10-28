@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.semi.entity.AttachmentDto;
 import com.kh.semi.entity.ReviewDto;
-
-import com.kh.semi.repository.ProductDao;
 import com.kh.semi.repository.AttachmentDao;
+import com.kh.semi.repository.ProductDao;
 import com.kh.semi.repository.ReviewDao;
 import com.kh.semi.vo.ReviewPaymentNoVO;
 
@@ -56,12 +57,15 @@ public class ReviewController {
 	
 	// - DB 처리 및 강제 이동
 	@PostMapping("/write")
-	public String write(@ModelAttribute ReviewDto reviewDto, @RequestParam int productNo,
+	public String write(HttpSession session, @ModelAttribute ReviewDto reviewDto, @RequestParam int productNo,
 			@RequestParam List<MultipartFile> attachmentReviewImg//리뷰이미지 첨부파일에 관한 파라미터
 			) throws IllegalStateException, IOException {
 		
-		// 리뷰 작성 전 리뷰의 총 갯수 반환
-		int beforeCount = reviewDao.countBeforeWrite(productNo);
+		// 리뷰 등록을 위해 로그인 중인 아이디 반환
+		String reviewId = (String) session.getAttribute("loginId");
+		
+		// 반환한 아이디를 리뷰 작성자로 설정
+		reviewDto.setReviewId(reviewId);
 		
 		// 리뷰 등록을 위해 다음 시퀀스 번호 반환
 		int reviewNo = reviewDao.nextSequence();
@@ -69,6 +73,9 @@ public class ReviewController {
 		// 반환한 시퀀스 번호를 리뷰 번호로 설정
 		reviewDto.setReviewNo(reviewNo);
 		
+		// 리뷰 작성 전 리뷰의 총 갯수 반환
+		int beforeCount = reviewDao.countBeforeWrite(productNo);
+				
 		// 현재 해당 상품의 리뷰 갯수가 0인지에 따라 다른 처리릃 하도록 구현 (0 나누기 0을 하면 에러가 발생하기 때문)
 		if(beforeCount == 0) {
 			
