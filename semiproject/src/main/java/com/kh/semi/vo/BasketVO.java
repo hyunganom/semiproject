@@ -16,4 +16,8 @@ public class BasketVO {
 	private String basketProductOption;
 	private String productName;
 	private int productPrice;
+	
+	//이미지 추가
+	private int productOriginNo;
+	private int productAttachmentNo;
 }
