@@ -49,7 +49,7 @@
 		</div>
     
     <div class = "row">
-			리뷰 이미지 : <input name = "attachmentReviewImg" type="file" accept = ".png, .jpg" multiple>
+			리뷰 이미지 : <input name = "attachmentReviewImg" type="file" accept = ".png, .jpg">
 		</div>
 		
 		<div class = "row">
