@@ -140,7 +140,7 @@ ${imgList}
 		                        	${vo.basketCountNumber}<br>
 		                            <button type="button">수량 변경</button>
 		                        <td class="w-15">
-		                            <span class="items-price">${vo.productPrice}</span>
+		                        	<fmt:formatNumber type="number" maxFractionDigits="3" value="${vo.productPrice}">	</fmt:formatNumber>
 		                        	<a href="delete?productNo=${vo.basketProductNo}">
 		                        		<i class="fa-solid fa-trash-can"></i>
 		                        	</a>

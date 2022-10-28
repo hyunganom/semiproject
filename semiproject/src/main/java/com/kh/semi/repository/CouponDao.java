@@ -5,6 +5,7 @@ import java.util.List;
 import com.kh.semi.entity.CouponDto;
 import com.kh.semi.vo.CouponCountVO;
 import com.kh.semi.vo.CouponListVO;
+import com.kh.semi.vo.CouponUseVO;
 
 public interface CouponDao {
 	//회원 개인이 보유하는 쿠폰
@@ -34,6 +35,9 @@ public interface CouponDao {
 	
 	//6. 쿠폰 셀렉트박스 생성(주문 페이지에서 사용)
 	public List<CouponListVO> selectCoupon(String memberId);
+	
+	//7. 주문관련 쿠폰 데이터 불러오기
+	public List<CouponUseVO> useCoupon(String couponId);
 	
 	
 }
