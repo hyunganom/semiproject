@@ -254,9 +254,18 @@ public class MemberDaoImpl implements MemberDao{
 		return jdbcTemplate.queryForObject(sql, int.class);
 	}
 	
-	//주문 완료 후 포인트 차감
+	//주문완료 후 포인트(적립금) 차감
 	@Override
 	public boolean minusUsedPoint(String memberId, int point) {
+		String sql="update member set member_point=member_point-? "
+				+ "where member_id=?";
+		Object[] param= {point, memberId};
+		return jdbcTemplate.update(sql, param)>0;
+	}
+
+	//주문완료 후 총 결제금액(적립금) 차감
+	@Override
+	public boolean minusPayPrice(String memberId, int point) {
 		String sql="update member set member_point=member_point-? "
 				+ "where member_id=?";
 		Object[] param= {point, memberId};

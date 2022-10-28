@@ -28,11 +28,12 @@ public interface CouponDao {
 	boolean delete(int couponNo);
 	
 	//5. 회원별 쿠폰 리스트 출력
-	List<CouponListVO> couponList(String memberId);
-	
+	List<CouponListVO> couponList(String memberId);	
 	
 	List<CouponCountVO> selectCountList();
 	
+	//6. 쿠폰 셀렉트박스 생성(주문 페이지에서 사용)
+	public List<CouponListVO> selectCoupon(String memberId);
 	
 	
 }

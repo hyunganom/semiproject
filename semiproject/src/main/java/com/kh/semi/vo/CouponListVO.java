@@ -21,4 +21,6 @@ public class CouponListVO {
 	private String CouponValid;
 	
 
+	
+
 }
