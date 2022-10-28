@@ -8,15 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.semi.entity.MemberDto;
 import com.kh.semi.repository.CouponDao;
 import com.kh.semi.repository.MemberDao;
 import com.kh.semi.repository.MypageDao;
+import com.kh.semi.repository.ReviewDao;
 import com.kh.semi.vo.CouponCountVO;
-import com.kh.semi.vo.CouponListVO;
 import com.kh.semi.vo.MypagePaymentInfoVO;
 
 
@@ -36,6 +35,10 @@ public class MypageController {
 //	@Autowired
 //	private CouponDao couponDao;
 	
+	// ReviewDao 의존성 주입
+	@Autowired
+	private ReviewDao reviewDao;
+	
 	//마이페이지
 	@GetMapping("/order_list")
 	public String orderList(HttpSession session, Model model) {
@@ -46,9 +49,16 @@ public class MypageController {
 		CouponCountVO couponMember = couponDao.selectOne(loginId);
 		//3. 불러온 회원 정보를 모델에 첨부한다
 		model.addAttribute("memberDto", couponMember);	
-    
+		
+		//1. 세션에 들어있는 아이디를 꺼낸다
+		//(참고) 세션에 데이터는 Object 형태로 저장되므로 꺼내려면 다운캐스팅 필요
+				
+		List<MypagePaymentInfoVO> mypagePaymentInfoVO = mypageDao.selectMyPaymentInfo(loginId);
+				
+		model.addAttribute("paymentListVO", mypagePaymentInfoVO);
+		
+		// 현재 로그인 중인 회원이 가지고있는 쿠폰 중 사용 가능한(기간이 만료되지 않은) 쿠폰 수 
 		model.addAttribute("couponUsable" , couponDao.selectUsable(loginId));	
-
 
 		return "mypage/order_list";	
 	}
@@ -104,8 +114,8 @@ public class MypageController {
 		
 		
 		//쿠폰 페이지로(coupon.jsp) 연결
-		return "mypage/coupon";
-	}
+		return "mypage/coupon";	
+		}
 	
 
 	
@@ -131,5 +141,18 @@ public class MypageController {
 	}
 		
 
+	// 2. 작성자가 적성한 리뷰 조회
+	@GetMapping("/review_list")
+	public String list(HttpSession session, Model model) {
+		
+		// 현재 로그인 중인 회원 아이디 반환
+		String loginId = (String) session.getAttribute("loginId");
+		
+		// 반환한 회원 아이디로 작성한 리뷰 조회를 실행한 후 그 결과를 Model에 추가
+		model.addAttribute("reviewList", reviewDao.selectMypageAllReview(loginId));
+		
+		// 마이 페이지에 있는 상품 후기로 연결
+		return "mypage/review_list";
+	}
 }
 

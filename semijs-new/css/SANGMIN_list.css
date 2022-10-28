@@ -78,7 +78,6 @@
     text-align: center;
 }
 .menu > div > ul > li > a{
-	color: #900020;
     font-size: 18px;
     font-weight: bold;
 }
@@ -101,7 +100,7 @@
 }
 .bottommenu > div > ul > li > a {
     display: block;
-	color: #900020;
+    color: black;
     font-size: 18px;
     font-weight: bold;
     padding-bottom: 10px;
@@ -116,6 +115,113 @@
     margin-top: 20px;
 }
 .bottommenu > div > ul > li > ul > li > a {
-    color: rgb(66, 64, 64);
+    color: black;
 }
 /* header end */
+
+/* 상품 리스트 페이지 start */
+.search1{
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    text-indent: -9999px;
+    overflow: hidden;
+    border: none;
+}
+.header5 > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.listselect{
+    position: absolute;
+    left: 31%;
+    bottom: 1px;
+}
+.listselect > select{
+    font-size: 20px;
+}
+
+.header5 .formdiv1{
+    position: relative;
+    left: 38%;
+    margin-top: 6%;
+}
+.header5 .formdiv1 .btnSearch1{
+    position: absolute;
+    width: 100px;
+    height: 26px;
+    line-height: 26px;
+    top: 0;
+    left: 80%;
+    background-color: #009539;
+    color: azure;
+}
+.header5 .formdiv1 .textinput1{
+    width: 250px;
+    height: 26px;
+    border: 1px solid black;
+    padding-left: 10px;
+    box-sizing: border-box;
+    
+}
+
+.listitemtitle {
+    color: #900020;
+    margin-top: 80px;
+    margin-bottom: 10%;
+    text-align: center;
+    font-size: 25px;
+}
+.listitem1 > ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20%;
+}
+.listitem1 p {
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
+}
+.listimg1 {
+    width: 280px;
+    height: 280px;
+    border: 1px solid black;
+}
+/* 상품 리스트 페이지 end */
+
+/* footer start*/
+.footer .topfooter{
+    border: 1px solid black;
+    background-color: #FAF7F0;
+}
+
+.footer .sns1{
+    display: flex;
+    align-items: center;
+    height: 70px;
+}
+.footer .sns1 li {
+    margin-top: 40px;
+    margin-left: 15px;
+    
+}
+.btmfooter {
+    padding: 30px 0;
+    box-sizing: border-box;
+    background: #FAF7F0;
+}
+.btmfooter li + li {
+    margin-top: 10px;
+}
+.footerlog {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    font-size: 40px;
+    font-weight: bold;
+}
+/* footer end */

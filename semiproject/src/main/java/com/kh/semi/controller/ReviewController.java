@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.semi.entity.AttachmentDto;
 import com.kh.semi.entity.ReviewDto;
-
-import com.kh.semi.repository.ProductDao;
 import com.kh.semi.repository.AttachmentDao;
+import com.kh.semi.repository.ProductDao;
 import com.kh.semi.repository.ReviewDao;
 import com.kh.semi.vo.ReviewPaymentNoVO;
 
@@ -34,9 +35,11 @@ public class ReviewController {
 	@Autowired
 	private ProductDao productDao;
 
+	//첨부파일
 	@Autowired
 	private AttachmentDao attachmentDao;
 	
+	//리뷰 첨부파일 업로드 경로
 	private final File reviewImg = new File("D:\\saluv\\reviewImg");
 	
 	// 1. 리뷰 작성
@@ -48,19 +51,23 @@ public class ReviewController {
 		model.addAttribute("productDto", productDao.selectOneProductUser(reviewPaymentNoVO.getPaymentProductNo()));
 		
 		// 전달받은 reviewPaymentNoVO를 model에 첨부
-		model.addAttribute("reviewPaymentNoVO", reviewPaymentNoVO);
+		model.addAttribute("reviewPaymentNo", reviewPaymentNoVO.getPaymentNo());
 		
 		// 리뷰 작성 페이지(wrtie.jsp)로 이동
 		return  "review/write";
 	}
 	
 	// - DB 처리 및 강제 이동
-	public String write(@ModelAttribute ReviewDto reviewDto,
+	@PostMapping("/write")
+	public String write(HttpSession session, @ModelAttribute ReviewDto reviewDto, @RequestParam int productNo,
 			@RequestParam List<MultipartFile> attachmentReviewImg//리뷰이미지 첨부파일에 관한 파라미터
 			) throws IllegalStateException, IOException {
 		
-		// 리뷰 작성 전 리뷰의 총 갯수 반환
-		int beforeCount = reviewDao.countBeforeWrite(productNo);
+		// 리뷰 등록을 위해 로그인 중인 아이디 반환
+		String reviewId = (String) session.getAttribute("loginId");
+		
+		// 반환한 아이디를 리뷰 작성자로 설정
+		reviewDto.setReviewId(reviewId);
 		
 		// 리뷰 등록을 위해 다음 시퀀스 번호 반환
 		int reviewNo = reviewDao.nextSequence();
@@ -68,8 +75,20 @@ public class ReviewController {
 		// 반환한 시퀀스 번호를 리뷰 번호로 설정
 		reviewDto.setReviewNo(reviewNo);
 		
+		// 리뷰 작성 전 리뷰의 총 갯수 반환
+		int beforeCount = reviewDao.countBeforeWrite(productNo);
+				
 		// 현재 해당 상품의 리뷰 갯수가 0인지에 따라 다른 처리릃 하도록 구현 (0 나누기 0을 하면 에러가 발생하기 때문)
 		if(beforeCount == 0) {
+			
+			// 작성자가 입력한 리뷰 점수 반환
+			int scoreNow = reviewDto.getReviewGood();
+			
+			// 1)과 2)를 사용하여 새로 평균낸 리뷰 평점 구하기
+			double insertScore = (scoreNow * 10) / 10.0;
+			
+			// 새로 평균낸 리뷰 평점을 해당 상품의 리뷰 평점으로 수정
+			reviewDao.updateProductGood(insertScore, productNo);
 			
 			// DB에 등록(INSERT) 처리
 			reviewDao.writeReview(reviewDto);
@@ -103,6 +122,7 @@ public class ReviewController {
 		
 		//리뷰 첨부파일 이미지 등록처리
 		//1. 시퀀스 발급
+			//첨부파일 시퀀스 발급
 		for(MultipartFile file : attachmentReviewImg) {
 			if(!file.isEmpty()) {
 			//첨부파일 시퀀스 발급
@@ -118,13 +138,17 @@ public class ReviewController {
 			//파일저장
 			File target = new File(reviewImg, String.valueOf(attachmentNo));
 			reviewImg.mkdirs();//폴더 생성 명령
-			file.transferTo(target);//해당폴더에 변환과정을 거쳐서 파일등록
-			//review_attachment 연결테이블 정보 저장
+			file.transferTo(target);
+			//reviewConnectAttachment 연결테이블 정보 저장
 			attachmentDao.reviewConnectAttachment(reviewNo, attachmentNo);
 			}
 		}
+		
 		return "redirect:/";
 	}
 	
-	// 2. 리뷰 
+	// ** 특정 상품에 대해 작성된 전체 리뷰 목록은 ProductController를 통해 표시
+	
+	// ** 로그인 한 회원이 작성한 전체 리뷰 목록은 MypageController를 통해 표시 
+	
 }

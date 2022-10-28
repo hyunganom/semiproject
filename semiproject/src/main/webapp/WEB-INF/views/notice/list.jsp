@@ -7,44 +7,84 @@
 	<jsp:param value="공지 게시판" name="title"/>
 </jsp:include>
 
-<div class = "container-1200">
+<style>
+	.table > thead {
+    	font-size: 16px;
+    }
+    .table > tbody {
+    	font-size: 14px;
+    }
+	
+	/* 확장 스타일 : 옆트임 테이블*/
+    .table.table-slit > thead > tr,
+    .table.table-slit > tfoot > tr{
+    	background-color: #efefef;
+    	border: 2px solid gray;
+    }
+    
+    /* 확장스타일 : 테두리가 있는 테이블 */
+    .table.table-border > thead > th,
+    .table.table-border > thead > td,
+    .table.table-border > tbody > tr,
+    .table.table-border > tbody > td{
+    	border: 2px solid gray;
+    }
+</style>
 
+<div class = "container-1100 mt-40 mb-40">
 	<div class = "row center">
 		<h1>NOTICE</h1>
 	</div>
-
-	<hr>
-
 	
-	<div class = "row">
-	<table border = "1" width = "1200">
-		<tbody>
-			<tr>
-				<th>번호</th>
-				<th>제목</th>
-				<th>작성자</th>
-				<th>작성일</th>
-				<th>조회수</th>
-			</tr>
+	<div class="row mt-30">
+		<table class="table table-slit table-border"> <!-- border="1" width="1000"> -->
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>제목</th>
+					<th>작성자</th>
+					<th>작성일</th>
+					<th>조회수</th>
+					<th>메뉴</th>
+				</tr>
+			</thead>
+			<tbody align="center">
+				<c:forEach var = "list" items = "${list}">
+				<tr>
+					<td>${list.noticeNo}</td>
+					<td><a href = "detail?noticeNo=${list.noticeNo}">${list.noticeTitle}</a></td>
+					<td>${list.noticeId}</td>
+					<td>${list.noticeWritedate}</td>
+					<td>${list.noticeRead}</td>
+					<td>
+						<a class="btn btn-neutral" style="padding:4px;" href = "editAdmin?noticeNo=${list.noticeNo}">수정</a>
+						<a class="btn btn-neutral" style="padding:4px;" href = "deleteAdmin?noticeNo=${list.noticeNo}">삭제</a>
+					</td>
+				</tr>
+				</c:forEach>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="8" align="right">
+						<a href = "write"><i class="fa-solid fa-plus"></i> 등록</a>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+		</div>
+	<!-- 검색창 -->
+	<div class="row center">
+		<form action="list" method="get">
+			<input type="hidden" name="size" value="${noticeListSearchVO.size}">
+			<select class="input" name="type" required>
+				<option value="notice_title" <c:if test="${noticeListSearchVO.type == 'notice_title'}">selected</c:if>>제목</option>
+				<option value="notice_id" <c:if test="${noticeListSearchVO.type == 'notice_title'}">selected</c:if>>작성자</option>
+			</select>
 			
-			<c:forEach var = "list" items = "${list}">
-			<tr>
-				<th>${list.noticeNo}</th>
-				<th><a href = "detail?noticeNo=${list.noticeNo}">${list.noticeTitle}</a></th>
-				<th>${list.noticeId}</th>
-				<th>${list.noticeWritedate}</th>
-				<th>${list.noticeRead}</th>
-				<th><a href = "editAdmin?noticeNo=${list.noticeNo}">수정</a></th>
-				<th><a href = "deleteAdmin?noticeNo=${list.noticeNo}">삭제</a></th>			
-			</tr>
-			</c:forEach>
-		</tbody>
-	</table>
-	
-	<hr>
-	
-	<div class = "row right">
-		<a href = "write">등록</a>
+			<input class="input" type="search" name="keyword" placeholder="검색어" required value="${noticeListSearchVO.keyword}">
+			
+			<button class="btn btn-positive" type="submit">검색</button>
+		</form>
 	</div>
 	
 <!-- 페이지 네비게이터  --> 
@@ -100,21 +140,6 @@
 	</div>
 	</div>
 	
-	<!-- 검색창 -->
-	<div class="row center">
-		<form action="list" method="get">
-			<input type="hidden" name="size" value="${noticeListSearchVO.size}">
-			<select class="input" name="type" required>
-				<option value="notice_title" <c:if test="${noticeListSearchVO.type == 'notice_title'}">selected</c:if>>제목</option>
-				<option value="notice_id" <c:if test="${noticeListSearchVO.type == 'notice_title'}">selected</c:if>>작성자</option>
-			</select>
-			
-			<input class="input" type="search" name="keyword" placeholder="검색어" required value="${noticeListSearchVO.keyword}">
-			
-			<button class="btn btn-positive" type="submit">검색</button>
-		</form>
-	</div>
-
 </div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

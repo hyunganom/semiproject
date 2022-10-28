@@ -92,6 +92,8 @@ public class BasketDaoImpl implements BasketDao{
 				.basketProductOption(rs.getString("basket_product_option"))
 				.productName(rs.getString("product_name"))
 				.productPrice(rs.getInt("product_price"))
+				.productOriginNo(rs.getInt("product_origin_no"))
+				.productAttachmentNo(rs.getInt("product_attachment_no"))
 				.build();
 	};
 	//BasketVO Extractor
@@ -106,18 +108,20 @@ public class BasketDaoImpl implements BasketDao{
 					.basketProductOption(rs.getString("basket_product_option"))
 					.productName(rs.getString("product_name"))
 					.productPrice(rs.getInt("product_price"))
+					.productOriginNo(rs.getInt("product_origin_no"))
+					.productAttachmentNo(rs.getInt("product_attachment_no"))
 					.build();
 		}else {
 			return null;
 		}
 	};
 	
-	//3-2. 장바구니 조회(BasketVO, 매개변수:회원ID)
+	//3-2. 장바구니 조회(BasketVO, 매개변수:회원ID) + 이미지 추가
 	@Override
 	public List<BasketVO> selectList(String memberId) {
-		String sql = "select b.*, p.product_name, p.product_price "
-				+ "from basket b inner join product p "
-				+ "on b.basket_product_no=p.product_no "
+		String sql = "select b.*, p.product_name, p.product_price, att.* from basket b "
+				+ "inner join product p on b.basket_product_no=p.product_no "
+				+ "inner join product_attachment att on p.product_no=att.product_origin_no "
 				+ "where basket_id=? order by basket_adddate desc";
 		Object[] param = {memberId};
 		return jdbcTemplate.query(sql, voMapper, param);
@@ -141,6 +145,17 @@ public class BasketDaoImpl implements BasketDao{
 		return jdbcTemplate.query(sql, extractor, param);
 	}
 	
+	//3-5. 선택상품 조회(장바구니 번호로 조회)
+	@Override
+	public BasketVO orderList(int basketNo) {
+		String sql ="select b.*, p.product_name, p.product_price, att.* "
+				+ "from basket b "
+				+ "inner join product p on b.basket_product_no=p.product_no "
+				+ "inner join product_attachment att on p.product_no=att.product_origin_no "
+				+ "where basket_no=?";
+		Object[] param= {basketNo};
+		return jdbcTemplate.query(sql, voExtractor, param);
+	}
 	
 	
 	//4-1. 장바구니 상품삭제(매개변수:장바구니 번호)
@@ -158,6 +173,8 @@ public class BasketDaoImpl implements BasketDao{
 		Object[] param= {basketNo};
 		return jdbcTemplate.update(sql, param)>0;
 	}
+
+
 
 	
 }
