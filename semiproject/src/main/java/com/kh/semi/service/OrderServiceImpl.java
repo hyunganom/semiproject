@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.semi.repository.BasketDao;
+import com.kh.semi.repository.CouponUseDao;
 import com.kh.semi.repository.MemberDao;
 import com.kh.semi.repository.OrdersDao;
 import com.kh.semi.repository.PaymentDao;
@@ -24,9 +25,11 @@ public class OrderServiceImpl implements OrderService{
 	private BasketDao basketDao;
 	@Autowired
 	private MemberDao memberDao;
+	@Autowired
+	private CouponUseDao couponUseDao;
 
 	@Override
-	public void buy(OrderVO orderVO) {
+	public void buy(OrderVO orderVO, int CouponIssue) {
 		// 주문번호 시퀀스로 미리 생성 후 세팅
 		int orderNo = ordersDao.sequence();
 		orderVO.setOrderNo(orderNo);
@@ -61,6 +64,8 @@ public class OrderServiceImpl implements OrderService{
 				memberDao.minusPayPrice(orderVO.getOrderId(), orderVO.getOrderPayPrice());
 
 				// 쿠폰사용했을 경우 쿠폰사용내역, 보유쿠폰 테이블 정보 변경
+				couponUseDao.insert(orderNo, CouponIssue);
+				
 				
 				
 	}

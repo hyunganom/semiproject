@@ -8,20 +8,13 @@ import lombok.Data;
 @Data
 @Builder
 
-public class CouponListVO {
-	
+public class CouponUseVO {
 	//필드
-	private int CouponNo;
 	private String CouponName;
 	private int CouponDiscount;
 	private String CouponInfo;
-	private Date CouponStartdate;
 	private Date CouponEnddate;
-	private Date CouponUseDate;
-	private String CouponValid;
-
-	
-
+	private int CouponIssue;
 	
 
 }
