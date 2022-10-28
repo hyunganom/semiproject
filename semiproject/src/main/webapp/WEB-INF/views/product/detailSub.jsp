@@ -12,12 +12,14 @@
 	$(function(){
 		// 만약 구매 버튼을 눌렀다면 
 	    $("#submit-purchase").click(function(){
-	        $("#product-data").attr("action", "/");
+	        $("#product-data").attr("action", "상품 구매 Mapping"); // 상품 구매 Mapping으로 전송
+	        $("#product-data").attr("method", "get"); // get 방식
 	    });
 		
-		 // 만약 장바구니 버튼을 눌렀다면 /basket Mapping으로 form의 값을 전송
+		 // 만약 장바구니 버튼을 눌렀다면 
 	    $("#submit-basket").click(function(){
-	        $("#product-data").attr("action", "detail"); // 장바구니 Mapping 주소를 넣어주세요
+	        $("#product-data").attr("action", "detail"); // 장바구니 등록 Mapping으로 전송
+	        $("#product-data").attr("method", "post"); // post 방식
 	    });
 	});
 	
@@ -90,7 +92,7 @@
 
 <div>
 
-	<form id = "product-data" method = "post">
+	<form id = "product-data">
 		<input type = "hidden" name = "productNo" value = "${productDto.productNo}"> <%-- 상품 번호 --%>
 		<div class = "row">
 			수량 : <input type = "number" name = "productCount" placeholder = "수량">
