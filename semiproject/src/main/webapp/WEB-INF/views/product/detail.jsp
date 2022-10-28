@@ -12,7 +12,7 @@
 	$(function(){
 		// 만약 구매 버튼을 눌렀다면 
 	    $("#submit-purchase").click(function(){
-	        $("#product-data").attr("action", "상품 구매 Mapping"); // 상품 구매 Mapping으로 전송
+	        $("#product-data").attr("action", "/order/order_ck"); // 상품 구매 Mapping으로 전송
 	        $("#product-data").attr("method", "get"); // get 방식
 	    });
 		
