@@ -18,4 +18,6 @@ public interface ReviewDao {
 	
 	// 추상 메소드 - 리뷰 등록시 해당 상품의 리뷰 점수 수정(UPDATE)
 	public boolean updateProductGood(double insertScore, int productNo);
+	
+	// 추상 메소드 - 내가 작성한 리뷰 목록
 }
