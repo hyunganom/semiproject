@@ -66,7 +66,7 @@
 			<tfoot>
 				<tr>
 					<td colspan="8" align="right">
-						<a href = "write">등록</a>
+						<a href = "write"><i class="fa-solid fa-plus"></i> 등록</a>
 					</td>
 				</tr>
 			</tfoot>
