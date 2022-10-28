@@ -18,7 +18,7 @@ $(function(){
         },
         send:{
             sendable:true,
-            name:"reviewScore"
+            name:"reviewGood"
         }
     });
 });
@@ -63,9 +63,9 @@ $(function(){
 			</div>
 			<div class = "row mt-20">
 				<label class="float-right">
-					<div class="star-score-edit" data-max="5" name = "reviewGood" type = "number"></div>
+					<input class="input input-underline w-50" name = "reviewGood" type = "number" placeholder="별점">
 				</label>
-				<textarea class="input w-100 fix-size mt-10" rows="8" placeholder="내용"></textarea>
+				<textarea name = "reviewContent" class="input w-100 fix-size mt-10" rows="8" placeholder="내용"></textarea>
 			</div>
 				<i class="fa-solid fa-camera"></i>
 				<input class="row" name = "attachmentReviewImg" type="file" accept = ".png, .jpg" multiple>

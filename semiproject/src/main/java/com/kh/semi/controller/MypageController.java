@@ -111,8 +111,8 @@ public class MypageController {
 		
 		
 		//쿠폰 페이지로(coupon.jsp) 연결
-		return "mypage/coupon";
-	}
+		return "mypage/coupon";	
+		}
 	
 
 	

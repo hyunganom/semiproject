@@ -1,10 +1,16 @@
 package com.kh.semi.repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.kh.semi.entity.ReviewDto;
+import com.kh.semi.vo.ReviewProductVO;
 
 @Repository
 public class ReviewDaoImpl implements ReviewDao {
@@ -50,6 +56,31 @@ public class ReviewDaoImpl implements ReviewDao {
 		String sql = "update product set product_good = ? where product_no = ?";
 		Object[] param = new Object[] {insertScore, productNo};
 		return jdbcTemplate.update(sql, param) > 0;
+	}
+	
+	// ReviewProductVO에 대한 RowMapper
+	private RowMapper<ReviewProductVO> mapperReviewProduct = new RowMapper<>() {
+		@Override
+		public ReviewProductVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+			return ReviewProductVO.builder()
+						.reviewId(rs.getString("review_id"))
+						.reviewWritetime(rs.getDate("review_writetime"))
+						.paymentOption(rs.getString("payment_option"))
+						.reviewGood(rs.getInt("review_good"))
+						.reviewTitle(rs.getString("review_title"))
+						.reviewContent(rs.getString("review_content"))
+						.reviewAttachmentNo(rs.getInt("review_attachment_no"))
+					.build();
+		}
+	};
+	
+	
+	// 추상 메소드 오버라이딩 - 상품에 표시될 리뷰 조회
+	@Override
+	public List<ReviewProductVO> selectProductAllReview(int productNo) {
+		String sql = "select rra.review_id, rra.review_writetime, pa.payment_option, rra.review_good, rra.review_title, rra.review_content, rra.review_attachment_no from payment pa inner join (select * from review r inner join review_attachment ra on r.review_no = ra.review_attachment_origin_no) rra on pa.payment_no = rra.review_payment_no where pa.payment_product_no = ? order by rra.review_writetime desc";
+		Object[] param = new Object[] {productNo};
+		return jdbcTemplate.query(sql, mapperReviewProduct, param);
 	}
 
 	// 
