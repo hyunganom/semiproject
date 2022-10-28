@@ -9,6 +9,14 @@
 <script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.min.js"></script> 
 <link rel = "stylesheet" type = "text/css" href = "/css/SANGMIN_detailsub.css">
 
+<style>
+	td{
+    	vertical-align : middle;
+    	line-height : 1.2em;
+    	font-size : 10px;
+    }
+</style>
+
 <!--본문 시작-->
 <section class="itemsection1">
     <div class="inner">
@@ -121,10 +129,33 @@
     		</div> <!--//inner-->
 		</section> <!--//itemsection2-->
 		<section class="itemsection3">
-    		<div class="review">
-        		<img src="/image/itemreview.png" alt="구매후기/포토후기">
-    		</div>
+    	<div class="review mt-10 mb-10">
+        	<img src="/image/itemreview.png" alt="구매후기/포토후기">
+    	</div>
 		</section> <!--//itemsection3-->
+		
+	<div class = "container-800">
+			<c:forEach var = "productReviewList" items = "${productReviewList}">
+				<table class="table mt-10 mb-10">
+					 <tr>
+					 	<td class="img center" width="80">
+					 		리뷰 별점 : ${productReviewList.reviewGood} <br>
+					 		<img width=50 height=50 src="/attachment/download/reviewImg?attachmentNo=${productReviewList.reviewAttachmentNo}">
+					 	</td>
+					 	<td class="row left" width="400" height="30">
+						 	작성자 : ${productReviewList.reviewId} <br>
+						 	작성일 : ${productReviewList.reviewWritetime} <br><br>
+						 	제목 : ${productReviewList.reviewTitle}<br>
+						 	옵션 : ${productReviewList.paymentOption} <br>
+						 	내용 : ${productReviewList.reviewContent} <br>
+					 	</td>
+					 </tr>
+				</table>
+				<hr>
+			</c:forEach>
+	</div>
+
+<br><br><br><br><br><br><br>
 
 <script type = "text/javascript">
 
@@ -306,33 +337,6 @@
 	</form>
 </div>
 
-<div class = "container-1200 mt-50 center">
-	<c:forEach var = "productReviewList" items = "${productReviewList}">
-		<div class = "row w-100" style = "background-color : skyblue;">
-			<div class = "row">
-				리뷰 작성자 : ${productReviewList.reviewId}
-			</div>
-			<div class = "row">
-				리뷰 작성일 : ${productReviewList.reviewWritetime}
-			</div>
-			<div class = "row">
-				상품 옵션 : ${productReviewList.paymentOption}
-			</div>
-			<div class = "row">
-				리뷰 별점 : ${productReviewList.reviewGood}
-			</div>
-			<div class = "row">
-				리뷰 제목 : ${productReviewList.reviewTitle}
-			</div>
-			<div class = "row">
-				리뷰 내용 : ${productReviewList.reviewContent}
-			</div>
-			<div class = "row">
-				리뷰 첨부파일 이미지 :<img width=50 height=50 src="/attachment/download/reviewImg?attachmentNo=${productReviewList.reviewAttachmentNo}">
-			</div>
-		</div>
-	</c:forEach>
-</div>
 
 </div>
 
