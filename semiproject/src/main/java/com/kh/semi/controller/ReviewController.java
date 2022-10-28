@@ -58,7 +58,7 @@ public class ReviewController {
 	// - DB 처리 및 강제 이동
 	@PostMapping("/write")
 	public String write(HttpSession session, @ModelAttribute ReviewDto reviewDto, @RequestParam int productNo,
-			@RequestParam List<MultipartFile> attachmentReviewImg//리뷰이미지 첨부파일에 관한 파라미터
+			@RequestParam MultipartFile attachmentReviewImg//리뷰이미지 첨부파일에 관한 파라미터
 			) throws IllegalStateException, IOException {
 		
 		// 리뷰 등록을 위해 로그인 중인 아이디 반환
@@ -120,26 +120,23 @@ public class ReviewController {
 		
 		//리뷰 첨부파일 이미지 등록처리
 		//1. 시퀀스 발급
-		for(MultipartFile file : attachmentReviewImg) {
-			if(!file.isEmpty()) {
 			//첨부파일 시퀀스 발급
 			int attachmentNo = attachmentDao.sequence();
 			//첨부 DB등록
 			attachmentDao.insert(AttachmentDto.builder()
 					.attachmentNo(attachmentNo)
-					.attachmentName(file.getOriginalFilename())
-					.attachmentType(file.getContentType())
-					.attachmentSize(file.getSize())
+					.attachmentName(attachmentReviewImg.getOriginalFilename())
+					.attachmentType(attachmentReviewImg.getContentType())
+					.attachmentSize(attachmentReviewImg.getSize())
 				.build());
 			
 			//파일저장
 			File target = new File(reviewImg, String.valueOf(attachmentNo));
 			reviewImg.mkdirs();//폴더 생성 명령
-			file.transferTo(target);//해당폴더에 변환과정을 거쳐서 파일등록
+			attachmentReviewImg.transferTo(target);//해당폴더에 변환과정을 거쳐서 파일등록
 			//review_attachment 연결테이블 정보 저장
 			attachmentDao.reviewConnectAttachment(reviewNo, attachmentNo);
-			}
-		}
+		
 		return "redirect:/";
 	}
 }
