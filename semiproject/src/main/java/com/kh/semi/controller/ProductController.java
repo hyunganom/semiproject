@@ -2,7 +2,6 @@ package com.kh.semi.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +25,7 @@ import com.kh.semi.entity.ProductDto;
 import com.kh.semi.repository.AttachmentDao;
 import com.kh.semi.repository.BasketDao;
 import com.kh.semi.repository.ProductDao;
-import com.kh.semi.vo.BasketVO;
+import com.kh.semi.repository.ReviewDao;
 import com.kh.semi.vo.ProductCategoryListVO;
 import com.kh.semi.vo.ProductListSearchCategoryVO;
 import com.kh.semi.vo.ProductListSearchVO;
@@ -38,6 +37,10 @@ public class ProductController {
 	// 의존성 주입
 	@Autowired
 	private ProductDao productDao;
+	
+	// 리뷰 의존성 주입
+	@Autowired
+	private ReviewDao reviewDao;
 	
 	//장바구니 의존성 주입
 	@Autowired
@@ -58,11 +61,17 @@ public class ProductController {
 		// 상위 카테고리 등록을 위한 다음 시퀀스 번호 반환
 		int categoryHighNo = productDao.sequencecategoryHigh();
 		
-		// 상위 카테고리 등록
-		productDao.createCategoryHigh(categoryHighNo, productCategoryListVO.getCategoryHighName());
-		
-		// 상위 카테고리와 하위 카테고리 등록 후 상품 등록 Mapping으로 강제 이동(redirect)
-		return "redirect:insert";
+		// 구독 상품인지를 판정
+		if(productCategoryListVO.isCateghoryHighSub()) {
+			// 구독 상품용 상위 카테고리 등록
+			productDao.createCategoryHigh(categoryHighNo, productCategoryListVO.getCategoryHighName(), productCategoryListVO.getCategoryHighSub());
+			return "redirect:insert";
+		}
+		else {
+			// 일반 상품용 상위 카테고리 등록
+			productDao.createCategoryHigh(categoryHighNo, productCategoryListVO.getCategoryHighName());
+			return "redirect:insert";
+		}
 	}
 	
 	// *. 하위 카테고리 생성 Mapping - 상품 등록 Mapping에서 연결됨
@@ -211,6 +220,9 @@ public class ProductController {
 		// 모든 상품 번호와 이름을 조회하고 첨부
 		model.addAttribute("productNoNameList", productDao.selectNoName());
 		
+		// 해당 상품에 달린 모든 리뷰 조회
+		model.addAttribute("productReviewList", reviewDao.selectProductAllReview(productNo));
+		
 		if(categoryHighSub) {
 			// 상품 상세 페이지(detail.jsp)로 연결
 			return "product/detailSub";
@@ -222,46 +234,46 @@ public class ProductController {
 	}
 
 	//2) 장바구니로 이동
-	@PostMapping("/detail")
-	public String detail(@ModelAttribute BasketDto basketDto,
-			@RequestParam int productNo,
-			@RequestParam int productCount,
-			HttpServletRequest request, HttpSession session) {
-		// 세션아이디 꺼내와서 세팅
-		String memberId = (String)session.getAttribute(SessionConstant.ID);
-		basketDto.setBasketId(memberId);
-		//상품번호 세팅
-		basketDto.setBasketProductNo(productNo);
-		//상품 수량 세팅
-		basketDto.setBasketCountNumber(productCount);
-		// 파라미터 옵션항목값 배열로 가져오기(옵션값)
-		String[] arrayParam = request.getParameterValues("productOption");
-		System.out.println(arrayParam);
-		//동일한 상품이 있는지 확인 후 없으면 등록, 있으면 수량 증가
-		if(basketDao.sameItem(memberId, productNo)==null) {
-			if(arrayParam==null) { //단일상품 및 옵션없음
-				basketDto.setBasketProductOption(""); //옵션에 빈값넣기
-				
-			}else { //구독상품 및 옵션있음
-				// 상품번호로 상품명 조회 후 가져오기(상품명만 나오게 toString 재정의)
-				String option = "";
-				for(int i=0; i<arrayParam.length; i++) {
-					int no = Integer.parseInt(arrayParam[i]);
-					option = option+productDao.selectName(no)+" / ";
-					System.out.println(option);
-				}
-				//장바구니 옵션 컬럼에 들어갈 데이터 세팅
-				basketDto.setBasketProductOption(option);
-			}
-			// 등록
-			basketDao.insert(basketDto);
-		}else {
-			// 수량 수정
-			basketDao.changeCount(basketDto);
-		}
+	   @PostMapping("/detail")
+	   public String detail(@ModelAttribute BasketDto basketDto,
+	         @RequestParam int productNo,
+	         @RequestParam int productCount,
+	         HttpServletRequest request, HttpSession session) {
+	      // 세션아이디 꺼내와서 세팅
+	      String memberId = (String)session.getAttribute(SessionConstant.ID);
+	      basketDto.setBasketId(memberId);
+	      //상품번호 세팅
+	      basketDto.setBasketProductNo(productNo);
+	      //상품 수량 세팅
+	      basketDto.setBasketCountNumber(productCount);
+	      // 파라미터 옵션항목값 배열로 가져오기(옵션값)
+	      String[] arrayParam = request.getParameterValues("productOption");
+	      //동일한 상품이 있는지 확인 후 없으면 등록, 있으면 수량 증가
+	      if(basketDao.sameItem(memberId, productNo)==null) {
+	         if(arrayParam==null) { //단일상품 및 옵션없음
+	            basketDto.setBasketProductOption(""); //옵션에 빈값넣기
+	            
+	         }else { //구독상품 및 옵션있음
+	            // 상품번호로 상품명 조회 후 가져오기(상품명만 나오게 toString 재정의)
+	            String option = "";
+	            for(int i=0; i<arrayParam.length; i++) {
+	               int no = Integer.parseInt(arrayParam[i]);
+	               option = option+productDao.selectName(no)+" / ";
+	            }
+	            //마지막 / 구분자 문자열 자르기
+	            option= option.substring(0, option.length()-2);
+	            //장바구니 옵션 컬럼에 들어갈 데이터 세팅
+	            basketDto.setBasketProductOption(option);
+	         }
+	         // 등록
+	         basketDao.insert(basketDto);
+	      }else {
+	         // 수량 수정
+	         basketDao.changeCount(basketDto);
+	      }
 
-		return "redirect:/basket/list";
-	}
+	      return "redirect:/basket/list";
+	   }
 	
 	
 	// 3. 상품 수정 Mapping

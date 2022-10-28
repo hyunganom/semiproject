@@ -11,6 +11,20 @@ category_high_no references category_high(category_high_no) on delete cascade,
 category_low_name varchar2(30) not null
 );
 
-drop table category_low;
-
+-- 시퀀스 생성
 create sequence category_low_seq;
+
+-- 하위 카테고리 다음 시퀀스 번호 생성
+select category_high_seq.nextval from dual;
+
+-- 하위 카테고리 생성
+insert into category_low(category_high_no, category_low_no, category_low_name) values(?, ?, ?);
+
+select b.*, p.product_name, p.product_price from basket b inner join product p on b.basket_product_no=p.product_no where basket_id=? and basket_product_no=?;
+
+select b.*, p.product_name, p.product_price from basket b inner join product p on b.basket_product_no=p.product_no where basket_id='hello1234';
+
+
+select b.*, p.product_name, p.product_price from basket b inner join product p on b.basket_product_no = p.product_no where basket_id='hello1234' order by basket_adddate desc;
+
+select * from basket b inner join product p on b.basket_product_no = p.product_no;

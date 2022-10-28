@@ -10,14 +10,20 @@
 	a{
 	text-decoration: none;
 	}
+	.footer{
+		position:fixed;
+		bottom:0;
+		left:0;
+		width:100%;
+	}
 </style>
 
-<div class="container-500 mt-30">
+<div class="container-500 mt-50">
 	<div class="row center">
 		<h1>회원가입이 완료되었습니다.</h1>
 	</div>
 	
-	<br>
+	<br><br>
 	
 	<div class="row center mb-30">
 		<h2>

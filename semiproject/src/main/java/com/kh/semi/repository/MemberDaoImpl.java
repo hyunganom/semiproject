@@ -183,14 +183,6 @@ public class MemberDaoImpl implements MemberDao{
 		return jdbcTemplate.query(sql, extractor, param);
 	}
 	
-	//보유 적립금 조회
-	@Override
-	public MemberDto findPoint(String memberId) {
-		String sql="select member_point from member where member_id=?";
-		Object[] param = {memberId};
-		return jdbcTemplate.query(sql, extractor, param);
-	}
-	
 	private RowMapper<MemberVO> listMapper = new RowMapper<MemberVO>() {
 		@Override
 		public MemberVO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -260,6 +252,24 @@ public class MemberDaoImpl implements MemberDao{
 	public int listCount(MemberSearchVO vo) {
 		String sql = "select count(*) from member";
 		return jdbcTemplate.queryForObject(sql, int.class);
+	}
+	
+	//주문완료 후 포인트(적립금) 차감
+	@Override
+	public boolean minusUsedPoint(String memberId, int point) {
+		String sql="update member set member_point=member_point-? "
+				+ "where member_id=?";
+		Object[] param= {point, memberId};
+		return jdbcTemplate.update(sql, param)>0;
+	}
+
+	//주문완료 후 총 결제금액(적립금) 차감
+	@Override
+	public boolean minusPayPrice(String memberId, int point) {
+		String sql="update member set member_point=member_point-? "
+				+ "where member_id=?";
+		Object[] param= {point, memberId};
+		return jdbcTemplate.update(sql, param)>0;
 	}
 
 

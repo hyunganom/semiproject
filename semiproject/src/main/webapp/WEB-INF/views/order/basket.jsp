@@ -70,7 +70,7 @@
                 }
             } 
             $("span.total-items").text(sum);
-            
+
             <!-- 배송비 + 총 금액 -->
             var itemPrice = parseInt($("span.total-items").text());
             if(sum>=50000){
@@ -87,15 +87,9 @@
             	$(".delivery").text("3000");
             }
 		}
-		
-		<!-- 주문하기 버튼 이벤트 (전체 or 체크된것만 넘기기) -->
-		$(".form-btn").click(function(){
-			
-		});
-
+	
 	});
 </script>
-
     <div class="container-1050 mt-50">
         <div class="row left">
             <h1>장바구니</h1>
@@ -108,10 +102,11 @@
                         <th class="w-5">
                             <input type="checkbox" class="checkedAll">
                         </th>
-                        <th class="w-50 sideline">상품 정보</th>
+                        <th class="w-10 sideline">상품</th>
+                        <th class="w-50 sideline">상품명</th>
                         <th class="w-15">수량</th>
-                        <th class="w-15">가격</th>
-                        <th class="w-15">배송비</th>
+                        <th class="w-10">가격</th>
+                        <th class="w-10">배송비</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -124,16 +119,21 @@
                 		</tr>
                 	</c:when>
                 	<c:otherwise>
+                		
                 		<c:forEach var="vo" items="${basketVO}">
 	                    	<tr class="center">
-		                        <td class="w-5"><input type="checkbox" class="checked"></td>
+		                        <td class="w-5">
+		                        	<input type="checkbox" class="checked" name="basketNo" value="${vo.basketNo}"></td>
+		                        <td>
+		                        	<img width=50 height=50 src="/attachment/download/productTumbnail?attachmentNo=${vo.productAttachmentNo}">
+		                        </td>
 		                        <td class="w-50">
 		                        	<span>${vo.productName}<br></span>
 		                        	<span>${vo.basketProductOption}</span>
 		                        </td>
 		                        <td class="w-15">
 		                        	${vo.basketCountNumber}<br>
-		                            <button type="button">옵션/수량 변경</button>
+		                            <button type="button">수량 변경</button>
 		                        <td class="w-15">
 		                            <span class="items-price">${vo.productPrice}</span>
 		                        	<a href="delete?productNo=${vo.basketProductNo}">
@@ -177,14 +177,13 @@
 					</tr>
 				</tbody>
 			</table>
-            
             <div class="row center mt-50">
             	<c:forEach var="vo" items="${basketVO}" varStatus="status">
             		<input type="hidden" name="basketNo[${status.index}]" value="${vo.basketNo}">
             		<input type="hidden" name="basketProductNo[${status.index}]" value="${vo.basketProductNo}">
             	</c:forEach>
             	<button type="submit" class="form-btn btns btns-positive">주문하기</button>
-            </div>
+            </div> 
         </div>
         </form>
     </div>

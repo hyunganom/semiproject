@@ -22,7 +22,151 @@
 				$("input[name=orderTel]").val("");
 			}
 		});
+
 		
+		<!-- 최종 금액 산출 -->
+		<!-- model로 넘어온 basketList의 상품가격, 수량 js에서도 사용가능하도록 처리 -->
+		<!-- 상품 금액(콜백함수) -->
+		function productPrice(){
+			var prices = new Array();
+			var cnts = new Array();
+			<c:forEach items="${basketList}" var="vo">
+				prices.push("${vo.productPrice}");
+				cnts.push("${vo.basketCountNumber}");
+			</c:forEach>
+			
+			var itemsPrice = 0;
+			for(var i=0; i<${basketList.size()}; i++){
+				itemsPrice += (parseInt(prices[i])*parseInt(cnts[i]));
+			}
+			return itemsPrice;
+		}
+		<!-- 배송비(콜백함수) -->
+		function deliveryFee(){
+			var itemsPrice = parseInt($(".before-price").text()); //상품금액
+			
+			var delivery;
+			if(itemsPrice>=50000){
+				delivery=0;
+			}else{
+				delivery=3000;
+			}
+			return delivery;
+		}
+		<!-- 총 금액(콜백함수) -->
+		function totalPrice(totalItemPrice, totalDelivery, totalDiscount){
+			var totalItemPrice = parseInt($(".before-price").text());
+			var totalDelivery = parseInt($(".delivery-price").text());
+			var totalDiscount = parseInt($(".discount-price").text());
+			//총금액(상품금액+배송비-할인금액)
+			var totalPrice = (totalItemPrice+totalDelivery)-totalDiscount;
+			return totalPrice;
+		}
+		
+		<!-- 적립금 전체 사용 버튼 이벤트 -->
+		$(".point-btn").one("click",function(e){
+			e.preventDefault(); //a 태그 전송 막기
+			var itemsPrice = parseInt($(".before-price").text()); //상품 가격
+			var delivery = deliveryFee(); //배송비
+			var total = itemsPrice+deliveryFee(); //상품가격+배송비
+			var point = ${memberDto.memberPoint}; //보유 적립금
+			
+			// if문(true) : 총 상품금액 < 적립금, 금액만큼 사용하도록 최대값 설정
+			if(total<point){
+				$("input[name=orderUsePoint]").val(total); //클릭하면 입력창에 전체적립금 표시
+				$(".discount-price").text(total); //할인창에 할인금액표시
+				var discount = $(".discount-price").text();
+				$(".after-price").text(totalPrice(itemsPrice,delivery,0));
+			// if문(false) : 총 상품금액 > 적립금	
+			}else{
+				$("input[name=orderUsePoint]").val(point);
+				$(".discount-price").text(point);
+				var discount = $(".discount-price").text();
+				$(".after-price").text(totalPrice(itemsPrice,delivery,discount));
+			}
+			var inputValue = parseInt($(".after-price").text());
+			$('input[name=orderPayPrice]').val(inputValue); //총 결제금액
+		});
+		
+		<!-- 적립금 일부 사용 블러 이벤트 -->
+		$("input[name=orderUsePoint]").blur(function(){
+			var itemsPrice = parseInt($(".before-price").text()); //상품 가격
+			var delivery = deliveryFee(); //배송비
+			var total = itemsPrice+deliveryFee(); //상품가격+배송비
+			var point = ${memberDto.memberPoint}; //보유 적립금
+			var inputPoint = $(this).val();	//입력값
+			
+			$(this).removeClass("error");
+			if(inputPoint>point){// 보유포인트보다 입력값이 크면 에러문구 표시
+				$(this).addClass("error");
+				$(this).text(0);
+				$(".discount-price").text(0);
+				$(".after-price").text(totalPrice(itemsPrice,delivery,0));				
+			}else if(inputPoint==""){ //입력값이 없으면 할인 0 으로 출력
+				$(".discount-price").text(0);
+				$(".after-price").text(totalPrice(itemsPrice,delivery,0));
+			}else{ //상품가격보다 적게 입력하면 입력값으로 할인금액 표시
+				$(".discount-price").text(inputPoint); //할인금액 출력
+				var discount = $(".discount-price").text();
+				$(".after-price").text(totalPrice(itemsPrice,delivery,discount));
+			}
+			var inputValue = parseInt($(".after-price").text());
+			$('input[name=orderPayPrice]').val(inputValue); //총 결제금액
+		});
+		
+		<!-- 하단 금액 부분 (고정값)출력 -->
+		$(".before-price").text(productPrice()); //상품금액
+		$(".delivery-price").text(deliveryFee()); //배송비
+		var totalItemPrice = $(".before-price").text();
+		$('input[name=orderPrice]').val(totalItemPrice); //할인전 금액(총상품가격) value값 넣기
+		var totalDelivery = $(".delivery-price").text();
+		var totalDiscount = $(".discount-price").text();
+		$(".after-price").text(totalPrice(totalItemPrice, totalDelivery,totalDiscount)); //총 금액
+		var inputValue = parseInt($(".after-price").text());
+		$('input[name=orderPayPrice]').val(inputValue); //총 결제금액 value값 넣기
+		
+		<!-- 적립예상금액 계산 후 value값 넣기 -->
+		var result = ($(".before-price").text())*0.01;
+		$('input[name=orderPoint]+span').text(result);
+		$('input[name=orderPoint]').val(result);
+		
+	});
+	
+	
+	
+	
+	
+    $(function(){
+		$("#select-categoryHigh").on("change", function(){
+
+			// 상위 카테고리 선택창의 값(value)을 변수로 설정
+			var categoryHighNo = $("#select-categoryHigh").val();
+
+			// 하위 카테고리에 해당하는 select 태그는 유지하며 내부의 선택 항목 삭제(초기화)
+			$("#select-categoryLow").empty();
+
+			$.ajax({
+				// 상위 카테고리 번호를 매개변수로 전체 조회 수행
+				url:"http://localhost:8888/rest/product/categoryLow?categoryHighNo="+categoryHighNo,
+                method:"get",
+                success:function(resp){
+
+					// 상위 카테고리에 연결된 하위 카테고리의 수만큼 option 태그 생성
+					for(var i = 0 ; i < resp.length ; i ++) {
+						// 하위 카테고리 option 태그 생성 template을 변수로 설정
+						var option = $("#option-categoryLow").text();
+						// 임시로 작성했던 하위 카테고리 번호(categoryLowNo)를 resp의 categoryLowNo으로 변환
+						option = option.replace("{{categoryLowNo}}", resp[i].categoryLowNo);
+						// 임시로 작성했던 하위 카테고리 이름(categoryLowName)를 resp의 categoryLowName으로 변환
+						option = option.replace("{{categoryLowName}}", resp[i].categoryLowName);
+						// 변환이 끝난 option을 변수 result로 지정
+						var result = $(option);
+						// result를 이용하여 option 태그 생성
+						$("select[name=categoryLowNo]").append(result);
+					}
+                }
+			});
+		});
 	});
 </script>
 
@@ -33,6 +177,13 @@
 	}
     textarea.memo{
       font-size:15px;
+     }
+     .error-message{
+     	display:none;
+     	color:red;
+     }
+     .point.error ~ .error-message{
+     	display:block;
      }
 </style>
 
@@ -64,18 +215,18 @@
 	              	<div class="mt-10">${list.basketProductOption}</div>
 	              </td>
 	              <td>
-	              	<div class="center">${list.basketCountNumber}</div>
+	              	<div class="center items-count">${list.basketCountNumber}</div>
 	              </td>
 	              <td>
-	              	<div class="center">${list.productPrice}</div>
+	              	<div class="center items-price">${list.productPrice}</div>
 	              </td>
             	</tr>
             </c:forEach>
             <tr>
               <td colspan="3">
                 <i class="fa-solid fa-angles-right"></i>
-                적립 예상금액
-                <input type="hidden" name="orderPoint" value="100">
+                적립예정 <input type="hidden" name="orderPoint" value="">
+                <span></span>원
               </td>
             </tr>
           </tbody>
@@ -157,14 +308,27 @@
 
         <div class="row">
           <div class="row">
-            <p>쿠폰 (보유 : <span>${coupon.size()}</span>개)</p>
-            <input type="text" class="input w-50">
-            <a href="#" class="btns btns-positive">쿠폰 적용</a>
+            <p>쿠폰 (보유 : <span>${couponUsable}</span>개)                
+					<select name="selectcoupon">
+                				<option value="">선택</option>		 				  
+									<c:forEach var = "couponList" items = "${couponList}">
+								<option value = "${couponList.couponNo}">${couponList.couponDiscount}</option>
+								</c:forEach>
+						</select>     		            			              				  
+        	</p> 
+       	
+        	
+        	
+          	</div>
+          <div>  
+             <input type="text" class="input w-50">
+            <a href="#" class="btns btns-positive coupon-btn">쿠폰 적용</a>
           </div>
           <div class="row">
-          	<p>적립금 (사용가능 적립금 : <span>?</span>)</p>
-			<input type="text" class="input w-50" name="orderUsePoint">
-			<a href="#" class="btns btns-positive">전액 사용</a>
+          	<p>적립금 (사용가능 적립금 : <span>${memberDto.memberPoint}</span>원)</p>
+			<input type="text" class="input w-50 point" name="orderUsePoint">
+			<span class="error-message">금액이 부족합니다!</span>
+			<a href="#" class="btns btns-positive point-btn">전액 사용</a>
           </div>
         </div>
 
@@ -183,10 +347,11 @@
                 <th>총 금액</th>
               </tr>
               <tr>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
+                <td><div class="before-price">0</div>
+                </td>
+                <td><div class="delivery-price">0</div></td>
+                <td><div class="discount-price">0</div></td>
+                <td><div class="after-price">0</div></td>
               </tr>
             </tbody>
           </table>
@@ -202,17 +367,17 @@
             <input type="radio" name="orderType" value="무통장입금">무통장입금
         </div>
         
-         <!-- 입력하지않지만 넘어가야하는 정보 -->
+         <!-- orders에 넘어가야하는 정보 -->
         <input type="hidden" name="orderStatus" value="결제완료">
-        <input type="hidden" name="orderPrice" value="50000">
-        <input type="hidden" name="orderPayPrice" value="50000">
-         
+        <input type="hidden" name="orderPayPrice" value="">
+        <input type="hidden" name="orderPrice" value="">
+        
         <!-- payment에 넘어가야하는 정보(paymentDto형태로 들어가야함!) -->
         <c:forEach var="list" items="${basketList}" varStatus="status">
         	<input type="hidden" name="payment[${status.index}].basketNo" value="${list.basketNo}">
 			<input type="hidden" name="payment[${status.index}].paymentProductNo" value="${list.basketProductNo}">
 			<input type="hidden" name="payment[${status.index}].paymentCount" value="${list.basketCountNumber}">
-			<input type="hidden" name="payment[${status.index}].paymentPrice" value="10000">
+			<input type="hidden" name="payment[${status.index}].paymentPrice" value="${list.productPrice}">
 			<input type="hidden" name="payment[${status.index}].paymentOption" value="${list.basketProductOption}">
 		</c:forEach>
 
