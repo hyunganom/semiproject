@@ -26,4 +26,7 @@ public interface ReviewDao {
 	public List<ReviewProductVO> selectProductAllReview(int productNo);
 	
 	// 추상 메소드 - 내가 작성한 리뷰 목록
+	
+	//리뷰 작성 수정(UPDATE)
+	boolean updateReview(ReviewDto reviewDto);
 }

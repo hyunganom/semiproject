@@ -82,6 +82,14 @@ public class ReviewDaoImpl implements ReviewDao {
 		Object[] param = new Object[] {productNo};
 		return jdbcTemplate.query(sql, mapperReviewProduct, param);
 	}
+	
+	//회원이 작성한 리뷰 수정기능
+	@Override
+	public boolean updateReview(ReviewDto reviewDto) {
+		String sql ="update review set review_id= ? , review_payment_no= ? , review_title= ? , review_content= ? , review_updatetime= sysdate , review_good= ?  where review_no= ? ";
+		Object[] param = {reviewDto.getReviewId(), reviewDto.getReviewPaymentNo(), reviewDto.getReviewTitle(), reviewDto.getReviewContent(), reviewDto.getReviewGood(), reviewDto.getReviewNo()};
+		return jdbcTemplate.update(sql, param) > 0;
+	}
 
 	// 
 }
