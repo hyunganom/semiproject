@@ -79,6 +79,15 @@ public class ReviewController {
 		// 현재 해당 상품의 리뷰 갯수가 0인지에 따라 다른 처리릃 하도록 구현 (0 나누기 0을 하면 에러가 발생하기 때문)
 		if(beforeCount == 0) {
 			
+			// 작성자가 입력한 리뷰 점수 반환
+			int scoreNow = reviewDto.getReviewGood();
+			
+			// 1)과 2)를 사용하여 새로 평균낸 리뷰 평점 구하기
+			double insertScore = (scoreNow * 10) / 10.0;
+			
+			// 새로 평균낸 리뷰 평점을 해당 상품의 리뷰 평점으로 수정
+			reviewDao.updateProductGood(insertScore, productNo);
+			
 			// DB에 등록(INSERT) 처리
 			reviewDao.writeReview(reviewDto);
 		}
