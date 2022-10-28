@@ -18,7 +18,7 @@ public class MypageDaoImpl implements MypageDao{
 	@Override
 	public List<MypagePaymentInfoVO> selectMyPaymentInfo(String memberId) {
 		String sql = "select * from (select  p.product_no, p.product_name, op.* from (select py.*, o.order_id, o.order_date from payment py "
-					+ "inner join orders o on py.payment_order_no=o.order_no where o.order_id= ? ) op "
+					+ "inner join orders o on py.payment_order_no=o.order_no where o.order_id= ? order by o.order_no desc) op "
 					+ "INNER JOIN product p on op.payment_product_no = p.product_no) OPP "
 					+ "INNER JOIN product_attachment PA on opp.product_no=pa.product_origin_no";
 		Object[] param = {memberId};

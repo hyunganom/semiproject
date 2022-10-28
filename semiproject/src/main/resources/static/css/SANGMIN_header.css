@@ -78,6 +78,7 @@
     text-align: center;
 }
 .menu > div > ul > li > a{
+	color: #900020;
     font-size: 18px;
     font-weight: bold;
 }
@@ -100,7 +101,7 @@
 }
 .bottommenu > div > ul > li > a {
     display: block;
-    color: black;
+	color: #900020;
     font-size: 18px;
     font-weight: bold;
     padding-bottom: 10px;
@@ -115,6 +116,6 @@
     margin-top: 20px;
 }
 .bottommenu > div > ul > li > ul > li > a {
-    color: black;
+    color: rgb(66, 64, 64);
 }
 /* header end */

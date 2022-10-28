@@ -80,7 +80,7 @@
 						<div class="font-menu">
 							<h3><a href="/mypage/order_list">주문내역</a></h3>
 							<h3><a href="/mypage/delivery_list">배송지관리</a></h3>
-							<h3><a href="">상품후기</a></h3>
+							<h3><a href="/mypage/review_list">상품후기</a></h3>
 							<h3><a href="/mypage/point" >적립금</a></h3>
 							<h3><a href="/mypage/coupon">쿠폰</a></h3>
 							<h3><a href="/member/change">내정보수정</a></h3>
