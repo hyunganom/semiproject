@@ -1,6 +1,9 @@
 package com.kh.semi.repository;
 
+import java.util.List;
+
 import com.kh.semi.entity.ReviewDto;
+import com.kh.semi.vo.ReviewProductVO;
 
 public interface ReviewDao {
 
@@ -18,6 +21,9 @@ public interface ReviewDao {
 	
 	// 추상 메소드 - 리뷰 등록시 해당 상품의 리뷰 점수 수정(UPDATE)
 	public boolean updateProductGood(double insertScore, int productNo);
+	
+	// 추상 메소드 - 상품에 표시될 리뷰 조회
+	public List<ReviewProductVO> selectProductAllReview(int productNo);
 	
 	// 추상 메소드 - 내가 작성한 리뷰 목록
 }
