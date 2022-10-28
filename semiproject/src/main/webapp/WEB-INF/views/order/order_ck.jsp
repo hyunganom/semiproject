@@ -271,7 +271,7 @@
 
         <div class="row">
           <div class="row">
-            <p>쿠폰 (보유 : <span>${unusedCoupon.size()}</span>개)</p>
+            <p>쿠폰 (보유 : <span>${couponUsable}</span>개)</p>
             <input type="text" class="input w-50">
             <a href="#" class="btns btns-positive coupon-btn">쿠폰 적용</a>
           </div>

@@ -11,14 +11,18 @@ import com.kh.semi.vo.ProductListSearchVO;
 import com.kh.semi.vo.ProductListVO;
 import com.kh.semi.vo.ProductNoNameVO;
 import com.kh.semi.vo.ProductSelectNameVO;
+import com.kh.semi.vo.ProductDetailVO;
 
 public interface ProductDao {
 	
 	// 추상 메소드 - 상위 카테고리 다음 시퀀스 번호 반환
 	int sequencecategoryHigh();
-
-	// 추상 메소드 - 상위 카테고리 생성
+	
+	// 추상 메소드 - 상위 카테고리 생성 (일반 상품용)
 	void createCategoryHigh(int categoryHighNo, String categoryHighName);
+
+	// 추상 메소드 - 상위 카테고리 생성 (구독 상품용)
+	void createCategoryHigh(int categoryHighNo, String categoryHighName, String categoryHighSub);
 	
 	// 추상 메소드 - 하위 카테고리 다음 시퀀스 번호 반환
 	int sequencecategoryLow();
@@ -63,6 +67,9 @@ public interface ProductDao {
 	
 	// 추상 메소드 - 관리자 상품 상세(DETAIL)
 	ProductDto selectOneProduct(int productNo);
+	
+	// 추상 메소드 - 회원용 상품 상세(DETAIL)
+	ProductDetailVO selectOneProductUser(int productNo);
 	
 	// 추상 메소드 - 상품 번호와 이름 전체 조회
 	List<ProductNoNameVO> selectNoName();

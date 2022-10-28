@@ -49,105 +49,157 @@
 <script type = "text/template" id = "option-categoryLow">
 	<option value = "{{categoryLowNo}}">{{categoryLowName}}</option>
 </script>
+    
+<style>
+	/* 확장스타일 : 테두리가 있는 테이블 */
+	.table.table-border {
+		border:1px solid gray;
+	}
+	.table.table-border > thead > tr > th,
+	.table.table-border > thead > tr > td,
+	.table.table-border > tbody > tr > th,
+	.table.table-border > tbody > tr > td,
+	.table.table-border > tfoot > tr > th,
+	.table.table-border > tfoot > tr > td {
+		border: 1px solid gray;
+	}
 
-<body>
-	<div class = "container-800">
+	/* 확장 스타일 : 줄무늬 테이블*/
+	.table > tbody > tr > th
+	{
+		background-color: #dfe6e9;
+		width: 200px;
+		background: #efefef;
+	}
 	
-		<div class = "row">
-			<h1>상위 카테고리 생성</h1>
-		</div>
-		
-		<form action = "createCategoryHigh" method = "post">
-		<div>
-			상위 카테고리명 : <input name = "categoryHighName">
-		</div>
-		<div>
-			<button type = "submit">생성</button>
-		</div>
-		</form>
-		
-		<div>
-		<div class = "row">
-			<h1>하위 카테고리 생성</h1>
-		</div>
+	/* 테이블 텍스트 가운데 */
+	th, td {
+    	vertical-align : middle;
+    }
+</style>
 
-		<form action = "createCategoryLow" method = "post">	
-		<div class = "row">
-			상위 카테고리명 : 
-			<select name = "categoryHighNo">
-				<option value = "">선택</option>
-				<c:forEach var = "categoryHighList" items = "${categoryHighList}">
-					<option value = "${categoryHighList.categoryHighNo}">${categoryHighList.categoryHighName}</option>
-				</c:forEach>
-			</select>
-		</div>
-		<div class = "row">
-			하위 카테고리명 : <input name = "categoryLowName">
-		</div>
-		<div class = "row">
-			<button type = "submit">생성</button>
-		</div>
-		</form>
-	</div>
-	</div>
-	
-
-	<div class = "container-800">
+<div class = "container-800">
+	<div class="row center mb-40">
 		<h1>상품 등록</h1>
+	</div>
+	
+	<form action = "createCategoryHigh" method = "post">
+		<div class="row">
+			<h2>카테고리 생성</h2>
+		</div>
+			<table class="table table-border table-slit">
+			<tbody>
+				<tr class="row">
+					<th>상위 카테고리</th>
+					<td>
+						상위 카테고리명 : <input name = "categoryHighName">
+            <input type = "checkbox" name = "categoryHighSub" value = "Y"> (정기배송인지)
+						<button type = "submit">생성</button>
+					</td>
+				</tr>
+	</form>
+			
+	<form action = "createCategoryLow" method = "post">
+				<tr class = "row">
+					<th>하위 카테고리</th>
+					<td>
+						상위 카테고리명 :
+						<select name = "categoryHighNo">
+							<option value = "">선택</option>
+						<c:forEach var = "categoryHighList" items = "${categoryHighList}">
+							<option value = "${categoryHighList.categoryHighNo}">${categoryHighList.categoryHighName}</option>
+						</c:forEach>
+						</select>
+					
+						<br>
+						
+						하위 카테고리명 : <input name = "categoryLowName">
+						<button type = "submit">생성</button>
+					</td>
+				</tr>
+			</tbody>
+			</table>
+		</div>
+	</form>
+</div>
+	
+<div class = "container-800 mt-40 mb-30">
+	<div class="row">
+		<h2>등록 상품 정보</h2>
+	</div>
 	
 	<form action = "insert" method = "post" enctype = "multipart/form-data">
-	<div class = "row">
-		상위 카테고리 번호 : 
-		<select name = "categoryHighNo" id = "select-categoryHigh">
-			<option value = "">선택</option>
-			<c:forEach var = "categoryHighList" items = "${categoryHighList}">
-				<option value = "${categoryHighList.categoryHighNo}">${categoryHighList.categoryHighName}</option>
-			</c:forEach>
-		</select>
-	</div>
-	
-	<div class = "row">
-		하위 카테고리 번호 :
-		<select name = "categoryLowNo" id = "select-categoryLow">
-			<option>선택</option>
-		</select>
-	</div>
-	
-	<div class = "row">
-		상품 이름 : 
-		<input type = "text" name = "productName">
-	</div>
+	<table class="table table-border table-slit">
+		<tbody>
+			<tr>
+				<th>상위 카테고리 번호</th>
+				<td>
+					<select name = "categoryHighNo" id = "select-categoryHigh">
+						<option value = "">선택</option>
+						<c:forEach var = "categoryHighList" items = "${categoryHighList}">
+							<option value = "${categoryHighList.categoryHighNo}">${categoryHighList.categoryHighName}</option>
+						</c:forEach>
+					</select>
+				</td>
+			</tr>
 		
-	<div class = "row">
-		상품 가격 : 
-		<input type = "number" name = "productPrice">
-	</div>
-	
-	<div class = "row">
-		상품 정보 : 
-		<textarea name = "productInformation"></textarea>
-	</div>	
-	
-	<div class = "row">
-		상품 재고 : 
-		<input type = "number" name = "productInventory">
-	</div>
-	
-	<div class = "row">
-		상품 이미지 : 
-		<input type = "file" name = "attachmentMainImg" accept = ".png, .jpg" > 
-	</div>
-	<div class = "row">
-		상품 상세이미지 : 
-		<input type = "file" name = "attachmentSubImg" accept = ".png, .jpg" multiple > 
-	</div>
-	
-	<div class = "row">
-		<button type = "submit">등록</button>
-	</div>
-	
+			<tr>
+				<th>하위 카테고리 번호</th>
+				<td>
+					<select name = "categoryLowNo" id = "select-categoryLow">
+						<option>선택</option>
+					</select>
+				</td>
+			</tr>
+			
+			<tr>
+				<th>상품 이름</th>
+				<td>
+					<input type = "text" name = "productName">
+				</td>
+			</tr>
+				
+			<tr>
+				<th>상품 가격</th>
+				<td>
+					<input type = "number" name = "productPrice">
+				</td>
+			</tr>
+			
+			<tr>
+				<th>상품 정보</th>
+				<td>
+					<textarea class="input w-100 fix-size q1-input" name = "productInformation"></textarea>
+				</td>
+			</tr>	
+			
+			<tr>
+				<th>상품 재고</th>
+				<td>
+					<input type = "number" name = "productInventory">
+				</td>
+			</tr>
+			
+			<tr>
+				<th>상품 이미지</th>
+				<td>
+					<input type = "file" name = "attachmentMainImg" accept = ".png, .jpg" > 
+				</td>
+			</tr>
+			
+			<tr>
+				<th>상품 상세이미지</th>
+				<td>
+					<input type = "file" name = "attachmentSubImg" accept = ".png, .jpg" multiple > 
+				</td>
+			</tr>
+		</tbody>
+	</table>
+			<div class = "row right">
+				<button type = "submit">등록</button>
+			</div>
 	</form>
 	
-	</div>
+</div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

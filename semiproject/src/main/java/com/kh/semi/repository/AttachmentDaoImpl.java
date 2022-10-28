@@ -149,4 +149,16 @@ public class AttachmentDaoImpl implements AttachmentDao{
 		Object[] param = new Object[] {inquireAttachmentOriginNo};
 		return jdbcTemplate.query(sql, mapper, param);
 	}
+
+
+	//리뷰 이미지 업로드 등록
+	@Override
+	public void reviewConnectAttachment(int reviewAttachmentOriginNo, int attachmentNo) {
+		String sql = "insert into review_attachment values(?, ?)";
+		Object[] param = {reviewAttachmentOriginNo, attachmentNo};
+		jdbcTemplate.update(sql, param);
+		
+	}
+	
+	
 }
