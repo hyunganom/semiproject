@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.kh.semi.entity.ReviewDto;
+import com.kh.semi.vo.ReviewMypageVO;
 import com.kh.semi.vo.ReviewProductVO;
 
 @Repository
@@ -81,6 +82,32 @@ public class ReviewDaoImpl implements ReviewDao {
 		String sql = "select rra.review_id, rra.review_writetime, pa.payment_option, rra.review_good, rra.review_title, rra.review_content, rra.review_attachment_no from payment pa inner join (select * from review r inner join review_attachment ra on r.review_no = ra.review_attachment_origin_no) rra on pa.payment_no = rra.review_payment_no where pa.payment_product_no = ? order by rra.review_writetime desc";
 		Object[] param = new Object[] {productNo};
 		return jdbcTemplate.query(sql, mapperReviewProduct, param);
+	}
+	
+	// ReviewMypageVO에 대한 RowMapper
+	private RowMapper<ReviewMypageVO> mapperReviewMypage = new RowMapper<>() {
+		@Override
+		public ReviewMypageVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+			return ReviewMypageVO.builder()
+						.paymentOrderNo(rs.getInt("payment_order_no"))
+						.productName(rs.getNString("product_name"))
+						.paymentCount(rs.getInt("payment_count"))
+						.paymentOption(rs.getString("payment_option"))
+						.reviewGood(rs.getInt("review_good"))
+						.reviewAttachmentNo(rs.getInt("review_attachment_no"))
+						.reviewTitle(rs.getString("review_title"))
+						.reviewContent(rs.getString("review_content"))
+						.reviewWritetime(rs.getDate("review_writetime"))
+					.build();
+		}
+	};
+
+	// 추상 메소드 오버라이딩 - 내가 작성한 리뷰 목록
+	@Override
+	public List<ReviewMypageVO> selectMypageAllReview(String reviewId) {
+		String sql = "select ppa.payment_order_no, ppa.product_name, ppa.payment_count, ppa.payment_option, rra.review_good, rra.review_attachment_no, rra.review_title, rra.review_content, rra.review_writetime from (select * from review r inner join review_attachment ra on r.review_no = ra.review_attachment_origin_no) rra inner join (select * from product p inner join payment pa on p.product_no = pa.payment_product_no) ppa on rra.review_payment_no = ppa.payment_no where rra.review_id = ? order by ppa.payment_order_no desc, ppa.payment_no asc";
+		Object[] param = new Object[] {reviewId};
+		return jdbcTemplate.query(sql, mapperReviewMypage, param);
 	}
 
 	// 
