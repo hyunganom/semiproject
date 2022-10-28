@@ -20,6 +20,8 @@ import com.kh.semi.repository.BasketDao;
 import com.kh.semi.repository.CouponDao;
 import com.kh.semi.repository.MemberDao;
 import com.kh.semi.service.OrderService;
+import com.kh.semi.vo.CouponCountVO;
+import com.kh.semi.vo.CouponListVO;
 import com.kh.semi.vo.BasketVO;
 import com.kh.semi.vo.OrderVO;
 
@@ -93,6 +95,24 @@ public class OrdersController {
 		return "order/order_fail";
 	}
 	
-
-
+	//쿠폰 셀렉트박스 생성 Mapping
+	@PostMapping("/coupon_select")
+	public String couponSelect(Model model,  HttpSession session) {
+		String memberId = (String)session.getAttribute("loginId");	
+		
+		model.addAttribute("couponList", couponDao.couponList(memberId));
+		
+		String loginId = (String) session.getAttribute("loginId");
+		CouponCountVO couponMember = couponDao.selectOne(loginId);
+		//3. 불러온 회원 정보를 모델에 첨부한다
+		model.addAttribute("memberDto", couponMember);	
+		model.addAttribute("couponUsable" , couponDao.selectCoupon(loginId));
+			
+		//쿠폰 셀렉트 박스 등록	
+		
+		
+		//주문 페이지로(coupon.jsp) 연결
+		return "redirect:order_ck";
+	}
 }
+
