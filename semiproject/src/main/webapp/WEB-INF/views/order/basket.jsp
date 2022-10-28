@@ -97,7 +97,7 @@
 
 	});
 </script>
-
+${imgList}
     <div class="container-1050 mt-50">
         <div class="row left">
             <h1>장바구니</h1>
@@ -131,6 +131,7 @@
 	                    	<tr class="center">
 		                        <td class="w-5"><input type="checkbox" class="checked"></td>
 		                        <td class="w-50">
+		                        	<div ><a href="#"><img width=50 height=50 src="/attachment/download/productTumbnail?attachmentNo=${imgList.attachmentNo}"></a></div>
 		                        	<span>${vo.productName}<br></span>
 		                        	<span>${vo.basketProductOption}</span>
 		                        </td>
