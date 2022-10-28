@@ -68,7 +68,7 @@ $(function(){
 				<textarea name = "reviewContent" class="input w-100 fix-size mt-10" rows="8" placeholder="내용"></textarea>
 			</div>
 				<i class="fa-solid fa-camera"></i>
-				<input class="row" name = "attachmentReviewImg" type="file" accept = ".png, .jpg" multiple>
+				<input class="row" name = "attachmentReviewImg" type="file" accept = ".png, .jpg" >
 			<div class = "row right">
 				<a href="/mypage/order_list" class="btn btn-neutral">취소</a>
 				<button type = "submit" class="btn">작성</button>
