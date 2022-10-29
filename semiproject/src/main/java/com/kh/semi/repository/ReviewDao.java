@@ -5,6 +5,7 @@ import java.util.List;
 import com.kh.semi.entity.ReviewDto;
 import com.kh.semi.vo.ReviewMypageVO;
 import com.kh.semi.vo.ReviewProductVO;
+import com.kh.semi.vo.ReviewVO;
 
 public interface ReviewDao {
 
@@ -23,14 +24,20 @@ public interface ReviewDao {
 	// 추상 메소드 - 리뷰 등록시 해당 상품의 리뷰 점수 수정(UPDATE)
 	public boolean updateProductGood(double insertScore, int productNo);
 	
+	// 추상 메소드 - 리뷰 등록시 리뷰에 대한 결제 번호를 매개변수로 하여 리뷰 등록 여부 수정(UPDATE)
+	public boolean updatePaymentReview(int paymentNo);
+	
 	// 추상 메소드 - 상품에 표시될 리뷰 조회
 	public List<ReviewProductVO> selectProductAllReview(int productNo);
 	
 	// 추상 메소드 - 내가 작성한 리뷰 목록
 	public List<ReviewMypageVO> selectMypageAllReview(String reviewId);
 	
-	//리뷰 번호 조회구문
-	ReviewDto selectOneReview(int reviewNo);
+	// 추상 메소드 - 결제 번호를 매개변수로 하여 해당 결제에 대한 리뷰 정보 조회(마이페이지의 결제 내역에서 리뷰 수정과 연결하기 위해 반드시 필요함)
+	ReviewVO selectOneReviewMyPage(int paymentNo);
+	
+	// 추상 메소드 오버라이딩 - 리뷰 번호로 리뷰 조회 (상품 후기에서 리뷰 수정 jsp와 연결하기 위해 반드시 필요함)
+	ReviewVO selectOneReview(int reviewNo);
 	
 	//리뷰 작성 수정(UPDATE)
 	boolean updateReview(ReviewDto reviewDto);

@@ -232,7 +232,8 @@
 
 
 
-		
+<table> <%-- 임시로 추가 --%>
+	<tbody>
 		<c:forEach var = "productList" items = "${productList}">
 		<tr>
 			<td>구독상품인가 : ${productList.categoryHighSub}</td>
@@ -246,6 +247,8 @@
 			<td><img width=50 height=50 src="/attachment/download/productTumbnail?attachmentNo=${productList.attachmentNo}"></td>
 		</tr>
 		</c:forEach>
+	</tbody>
+</table>
 		
 
 
