@@ -38,8 +38,7 @@ public class OrdersController {
 	@Autowired
 	private BasketDao basketDao;
 
-	//@ModelAttribute ArrayList<Integer> basketNoList, // 여러 개의 장바구니 번호가 들어옴
-	//장바구니에서 주문서로 넘어오는 화면
+	//장바구니에서 주문서로 넘어오는 화면 + 쿠폰 사용 내역에서 불러오는 화면
 	@GetMapping("/order_ck")
 	public String order(HttpServletRequest request,
 			HttpSession session, Model model) {
@@ -60,19 +59,20 @@ public class OrdersController {
 				
 		// 미사용 쿠폰 model로 출력준비
 		//model.addAttribute("unusedCoupon", couponDao.unUsedCoupon(memberId));		
-		model.addAttribute("couponUsable" , couponDao.selectUsable(memberId));	
-		
+		model.addAttribute("couponUsable", couponDao.selectUsable(memberId));
+		model.addAttribute("couponUse", couponDao.useCoupon(memberId));		
 		return "order/order_ck";
 	}
 	
 	@PostMapping("/order_ck")
 	public String order(@ModelAttribute OrderVO orderVO, 
-			HttpSession session) {
+			HttpSession session, @RequestParam int couponIssue) {
 		String memberId = (String)session.getAttribute(SessionConstant.ID);
 		orderVO.setOrderId(memberId);
 		
-		// 전체 변수 orderVO로 받아 등록처리
-		orderService.buy(orderVO);
+				
+		// 전체 변수 orderVO로 받아 등록처리 + couponIssue
+		orderService.buy(orderVO, couponIssue);
 		return "redirect:_1";
 
 //		if(주문실패할 경우) { 
@@ -108,10 +108,8 @@ public class OrdersController {
 		model.addAttribute("memberDto", couponMember);	
 		model.addAttribute("couponUsable" , couponDao.selectCoupon(loginId));
 			
-		//쿠폰 셀렉트 박스 등록	
-		
-		
-		//주문 페이지로(coupon.jsp) 연결
+		//쿠폰 셀렉트 박스 등록			
+		//주문 페이지로(order_ck.jsp) 연결
 		return "redirect:order_ck";
 	}
 }

@@ -57,10 +57,6 @@
 		<h1>상품 목록</h1>
 	</div>
 		
-	<div class="row right">
-		<a href = "insert">등록</a>
-	</div>		
-		
 	<div class="row">
 	<table class="table table-slit table-hover table-border">
 		<thead>
@@ -103,7 +99,7 @@
 		</tbody>	
 		<tfoot>
 			<tr align = "right">
-				<td colspan = "15"><a href = "insert">등록</a></td>
+				<td colspan = "15"><a href = "insert"><i class="fa-solid fa-plus"></i> 등록</a></td>
 			</tr>
 		</tfoot>
 	</table>

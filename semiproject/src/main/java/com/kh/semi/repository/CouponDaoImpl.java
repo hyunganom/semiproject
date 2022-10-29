@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.semi.entity.CouponDto;
 import com.kh.semi.vo.CouponCountVO;
 import com.kh.semi.vo.CouponListVO;
+import com.kh.semi.vo.CouponUseVO;
 
 
 @Repository
@@ -70,7 +71,7 @@ public class CouponDaoImpl implements CouponDao{
 	//사용한 쿠폰 조회
 	@Override
 	public List<CouponDto> usedCoupon(String memberId) {
-		String sql = "select * from coupon where coupon_id=? and coupon_valid='y'";
+		String sql = "select * from coupon where coupon_id=? and coupon_valid='사용'";
 		Object[] param = {memberId};
 		return jdbcTemplate.query(sql, mapper,param);
 	}
@@ -78,7 +79,7 @@ public class CouponDaoImpl implements CouponDao{
 	//미사용 쿠폰 조회
 	@Override
 	public List<CouponDto> unUsedCoupon(String memberId) {
-		String sql = "select * from coupon where coupon_id=? and coupon_valid='n'";
+		String sql = "select * from coupon where coupon_id=? and coupon_valid='미사용'";
 		Object[] param = {memberId};
 		return jdbcTemplate.query(sql, mapper,param);
 	}
@@ -184,6 +185,21 @@ public class CouponDaoImpl implements CouponDao{
 		}
 	};
 	
+	private RowMapper<CouponUseVO> couponUseMapper = new RowMapper<>() {
+		@Override
+		public CouponUseVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+			return CouponUseVO.builder()
+					.CouponName(rs.getString("coupon_name"))
+					.CouponDiscount(rs.getInt("coupon_discount"))
+					.CouponEnddate(rs.getDate("coupon_enddate"))
+					.CouponIssue(rs.getInt("coupon_issue"))
+					.CouponInfo(rs.getString("coupon_info"))
+					.build();
+			
+		}
+		
+	};
+	
 	//쿠폰리스트 출력, 사용되지않은 쿠폰리스트도 함께 출력하기 -> outer join 사용
 	@Override
 	public List<CouponListVO> couponList(String memberId) {
@@ -203,15 +219,24 @@ public class CouponDaoImpl implements CouponDao{
 		Object[] param = {memberId};
 		return jdbcTemplate.queryForObject(sql, int.class, param);
 	}
+	
+	//주문페이지로 넘어갈 쿠폰 데이터 불러오기
+	
 
 	//주문 페이지 내 쿠폰 셀렉트박스 생성 및 관련 컬럼 데이터만 출력 -> outer join사용
 	@Override
 	public List<CouponListVO> selectCoupon(String memberId) {
-		String sql = "select CCL.coupon_name, CCL.coupon_discount, CCL.coupon_enddate, "
-				+ "from coupon_use CU right outer join(select * from coupon C inner join coupon_list CL on C.coupon_no=CL.coupon_list_no) "
-				+ "CCL on CU.coupon_issue_no=CCL.coupon_issue where CCL.coupon_id=?";
+		String sql =   "select CCL.coupon_discount, CCL.coupon_name, CCL.coupon_enddate	from coupon_use CU right outer join(select * from coupon C inner join coupon_list CL on C.coupon_no=CL.coupon_list_no) "
+				 + "CCL on CU.coupon_issue_no=CCL.coupon_issue where CCL.coupon_id=?";
 		Object[] param = new Object[] {memberId};
 		return jdbcTemplate.query(sql, couponSelectMapper, param);
+	}
+
+	@Override
+	public List<CouponUseVO> useCoupon(String couponId) {
+		String sql =  "select CL.coupon_name, CL.coupon_discount, CL.coupon_Info, C.coupon_issue, C.coupon_enddate from coupon_list CL inner join coupon C on CL.coupon_list_no = C.coupon_no where coupon_id=? and coupon_valid='미사용'";
+		Object[] param = new Object[] {couponId};
+		return jdbcTemplate.query(sql, couponUseMapper, param);
 	}
 	
 }
