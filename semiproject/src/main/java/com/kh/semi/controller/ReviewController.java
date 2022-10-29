@@ -183,6 +183,11 @@ public class ReviewController {
 		return "redirect:/mypage/review_list";
 	}
 	
+	@GetMapping("/delete")
+	public String reviewDelete(@RequestParam int reviewNo) {
+		return "";
+	}
+	
 	// ** 특정 상품에 대해 작성된 전체 리뷰 목록은 ProductController를 통해 표시
 	
 	// ** 로그인 한 회원이 작성한 전체 리뷰 목록은 MypageController를 통해 표시 
