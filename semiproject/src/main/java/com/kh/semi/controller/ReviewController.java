@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -145,6 +146,41 @@ public class ReviewController {
 		}
 		
 		return "redirect:/";
+	}
+	
+	@GetMapping ("/edit")
+	public String reviewEdit(Model model, HttpSession session, @RequestParam int reviewNo
+//			, @ModelAttribute ReviewPaymentNoVO reviewPaymentNoVO
+			) {
+		
+		String loginId = (String) session.getAttribute("loginId");
+		
+		if(loginId == null) {
+			return "/member/login";
+		}
+	
+		ReviewDto reviewDto = reviewDao.selectOneReview(reviewNo);
+		
+		String reviewId = reviewDto.getReviewId();
+		
+		if(loginId.equals(reviewId)) {
+//			// 전달받은 reviewPaymentNoVO로 단일 조회 실행 후 그 결과를 model에 첨부
+//			model.addAttribute("productDto", productDao.selectOneProductUser(reviewPaymentNoVO.getPaymentProductNo()));
+//			// 전달받은 reviewPaymentNoVO를 model에 첨부
+//			model.addAttribute("reviewPaymentNo", reviewPaymentNoVO.getPaymentNo());
+			
+			model.addAttribute("reviewDto", reviewDto);
+			return "review/edit";
+		}
+		else {
+			return "redirect:/member/login";
+		}
+	}
+	
+	@PostMapping("/edit")
+	public String reviewEdit(@ModelAttribute ReviewDto reviewDto) {
+		reviewDao.updateReview(reviewDto);
+		return "redirect:/mypage/review_list";
 	}
 	
 	// ** 특정 상품에 대해 작성된 전체 리뷰 목록은 ProductController를 통해 표시
