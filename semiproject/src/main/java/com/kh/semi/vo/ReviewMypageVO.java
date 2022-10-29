@@ -16,6 +16,7 @@ import lombok.ToString;
 public class ReviewMypageVO {
 	
 	// 필드
+	private int reviewNo;
 	private int paymentOrderNo; // 상품 주문 번호
 	private String productName; // 상품명
 	private int paymentCount; // 결제 수량

@@ -6,9 +6,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.RowMapperResultSetExtractor;
 import org.springframework.stereotype.Repository;
 
+import com.kh.semi.entity.InquireReplyDto;
 import com.kh.semi.entity.ReviewDto;
 import com.kh.semi.vo.ReviewMypageVO;
 import com.kh.semi.vo.ReviewProductVO;
@@ -89,6 +92,7 @@ public class ReviewDaoImpl implements ReviewDao {
 		@Override
 		public ReviewMypageVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 			return ReviewMypageVO.builder()
+						.reviewNo(rs.getInt("review_no"))
 						.paymentOrderNo(rs.getInt("payment_order_no"))
 						.productName(rs.getNString("product_name"))
 						.paymentCount(rs.getInt("payment_count"))
@@ -114,8 +118,32 @@ public class ReviewDaoImpl implements ReviewDao {
 	//회원이 작성한 리뷰 수정기능
 	@Override
 	public boolean updateReview(ReviewDto reviewDto) {
-		String sql ="update review set review_id= ? , review_payment_no= ? , review_title= ? , review_content= ? , review_updatetime= sysdate , review_good= ?  where review_no= ? ";
-		Object[] param = {reviewDto.getReviewId(), reviewDto.getReviewPaymentNo(), reviewDto.getReviewTitle(), reviewDto.getReviewContent(), reviewDto.getReviewGood(), reviewDto.getReviewNo()};
+		String sql ="update review set review_payment_no= ? , review_title= ? , review_content= ? , review_updatetime= sysdate , review_good= ?  where review_no= ? ";
+		Object[] param = {reviewDto.getReviewPaymentNo(), reviewDto.getReviewTitle(), reviewDto.getReviewContent(), reviewDto.getReviewGood(), reviewDto.getReviewNo()};
 		return jdbcTemplate.update(sql, param) > 0;
 	}
+
+	@Override
+	public ReviewDto selectOneReview(int reviewNo) {
+		String sql ="select * from review where review_no = ?";
+		Object[] param = {reviewNo};
+		return jdbcTemplate.query(sql, extractor, param);
+	}
+	
+	ResultSetExtractor<ReviewDto> extractor = (rs)->{
+		if(rs.next()) {
+			return ReviewDto.builder()
+					.reviewNo(rs.getInt("review_no"))
+					.reviewId(rs.getString("review_id"))
+					.reviewPaymentNo(rs.getInt("review_payment_no"))
+					.reviewTitle(rs.getString("review_title"))
+					.reviewContent(rs.getString("review_content"))
+					.reviewWritetime(rs.getDate("review_writetime"))
+					.reviewUpdatetime(rs.getDate("review_updatetime"))
+					.reviewGood(rs.getInt("review_good"))
+					.reviewInactive(rs.getString("review_inactive"))
+					.build();
+		}
+		else return null;
+	};
 }
