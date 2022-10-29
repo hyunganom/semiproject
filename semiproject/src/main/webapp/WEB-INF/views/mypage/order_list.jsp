@@ -116,10 +116,10 @@
 							<h2>주문 내역</h2>
 						</div>
 						<form id = "form-data-review"> <%-- form 시작 --%>
-							<input type = "hidden" name = "paymentNo" value = "${paymentListVO.paymentNo}">
-							<input type = "hidden" name = "paymentProductNo" value = "${paymentListVO.productOriginNo}">
-							<input type = "hidden" name = "" value = "">
 							<c:forEach var="paymentListVO" items="${paymentListVO}">
+								<input type = "hidden" name = "paymentNo" value = "${paymentListVO.paymentNo}">
+								<input type = "hidden" name = "paymentProductNo" value = "${paymentListVO.productOriginNo}">
+								<input type = "hidden" name = "" value = "">
 								<table class="table table-slit table-border">
 									<thead>
 										<tr>
