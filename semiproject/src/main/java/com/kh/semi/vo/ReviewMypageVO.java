@@ -26,4 +26,5 @@ public class ReviewMypageVO {
 	private String reviewTitle; // 리뷰 제목
 	private String reviewContent; // 리뷰 내용
 	private Date reviewWritetime; // 리뷰 작성일
+	private boolean paymentReview; // 리뷰 작성 여부
 }

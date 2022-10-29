@@ -79,7 +79,7 @@ public class ReviewDaoImpl implements ReviewDao {
 	};
 	
 	
-	// 추상 메소드 오버라이딩 - 상품에 표시될 리뷰 조회
+	// 추상 메소드 오버라이딩 - 상품에 표시될 리뷰 조회 : 작성자, 작성일, 옵션, 별점, 제목, 내용, 리뷰 첨부파일 번호
 	@Override
 	public List<ReviewProductVO> selectProductAllReview(int productNo) {
 		String sql = "select rra.review_id, rra.review_writetime, pa.payment_option, rra.review_good, rra.review_title, rra.review_content, rra.review_attachment_no from payment pa inner join (select * from review r inner join review_attachment ra on r.review_no = ra.review_attachment_origin_no) rra on pa.payment_no = rra.review_payment_no where pa.payment_product_no = ? order by rra.review_writetime desc";
@@ -102,14 +102,15 @@ public class ReviewDaoImpl implements ReviewDao {
 						.reviewTitle(rs.getString("review_title"))
 						.reviewContent(rs.getString("review_content"))
 						.reviewWritetime(rs.getDate("review_writetime"))
+						.paymentReview(rs.getString("payment_review") != null)
 					.build();
 		}
 	};
 
-	// 추상 메소드 오버라이딩 - 내가 작성한 리뷰 목록
+	// 추상 메소드 오버라이딩 - 내가 작성한 리뷰 목록 : 리뷰 번호(수정, 삭제를 위해), 주문 번호, 상품명, 수량, 옵션, 별점, 리뷰 첨부파일 번호, 제목, 내용, 작성일, 리뷰 작성 여부
 	@Override
 	public List<ReviewMypageVO> selectMypageAllReview(String reviewId) {
-		String sql = "select ppa.payment_order_no, ppa.product_name, ppa.payment_count, ppa.payment_option, rra.review_good, rra.review_no, rra.review_attachment_no, rra.review_title, rra.review_content, rra.review_writetime from (select * from review r inner join review_attachment ra on r.review_no = ra.review_attachment_origin_no) rra inner join (select * from product p inner join payment pa on p.product_no = pa.payment_product_no) ppa on rra.review_payment_no = ppa.payment_no where rra.review_id = ? order by ppa.payment_order_no desc, ppa.payment_no asc";
+		String sql = "select rra.review_no, ppa.payment_order_no, ppa.product_name, ppa.payment_count, ppa.payment_option, rra.review_good, rra.review_attachment_no, rra.review_title, rra.review_content, rra.review_writetime, ppa.payment_review from (select * from review r inner join review_attachment ra on r.review_no = ra.review_attachment_origin_no) rra inner join (select * from product p inner join payment pa on p.product_no = pa.payment_product_no) ppa on rra.review_payment_no = ppa.payment_no where rra.review_id = ? order by ppa.payment_order_no desc, ppa.payment_no asc";
 		Object[] param = new Object[] {reviewId};
 		return jdbcTemplate.query(sql, mapperReviewMypage, param);
 	}

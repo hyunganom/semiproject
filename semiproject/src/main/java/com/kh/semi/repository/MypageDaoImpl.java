@@ -35,6 +35,7 @@ public class MypageDaoImpl implements MypageDao{
 				.paymentCount(rs.getInt("payment_count"))
 				.paymentPrice(rs.getInt("payment_price"))
 				.paymentOption(rs.getString("payment_option"))
+				.paymentReview(rs.getString("payment_review") != null)
 				.orderId(rs.getString("order_id"))
 				.orderDate(rs.getDate("order_date"))
 				.productOriginNo(rs.getInt("product_origin_no"))
