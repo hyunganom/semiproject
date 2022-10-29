@@ -7,6 +7,29 @@
 	<jsp:param value="주문서 작성" name="title"/>
 </jsp:include>
 
+<style>
+
+	.sameinfo{
+        font-size:12px;
+        float:right;
+	}
+    textarea.memo{
+      font-size:15px;
+     }
+     .error-message{
+     	display:none;
+     	color:red;
+     }
+     .point.error ~ .error-message{
+     	display:block;
+     }
+     .green{
+     	color:#4CB756;
+     	font-weight: bold;
+     	font-size:23px;
+     }
+</style>
+
 <script type="text/javascript">
 	$(function(){
 		<!-- 수령자 정보와 주문자 정보가 같은 경우의 체크박스 -->
@@ -57,7 +80,7 @@
 		function totalPrice(totalItemPrice, totalDelivery, totalDiscount){
 			var totalItemPrice = parseInt($(".before-price").text());
 			var totalDelivery = parseInt($(".delivery-price").text());
-			var totalDiscount = parseInt($(".discount-price").text());
+			var totalDiscount = parseInt($(".point-price").text());
 			//총금액(상품금액+배송비-할인금액)
 			var totalPrice = ((totalItemPrice+totalDelivery)-totalDiscount).toLocaleString();
 			return totalPrice;
@@ -74,14 +97,14 @@
 			// if문(true) : 총 상품금액 < 적립금, 금액만큼 사용하도록 최대값 설정
 			if(total<point){
 				$("input[name=orderUsePoint]").val(total); //클릭하면 입력창에 전체적립금 표시
-				$(".discount-price").text(total); //할인창에 할인금액표시
-				var discount = $(".discount-price").text();
+				$(".point-price").text(total); //할인창에 할인금액표시
+				var discount = $(".point-price").text();
 				$(".after-price").text(totalPrice(itemsPrice,delivery,0));
 			// if문(false) : 총 상품금액 > 적립금	
 			}else{
 				$("input[name=orderUsePoint]").val(point);
-				$(".discount-price").text(point);
-				var discount = $(".discount-price").text();
+				$(".point-price").text(point);
+				var discount = $(".point-price").text();
 				$(".after-price").text(totalPrice(itemsPrice,delivery,discount));
 			}
 			var inputValue = parseInt($(".after-price").text());
@@ -100,14 +123,14 @@
 			if(inputPoint>point){// 보유포인트보다 입력값이 크면 에러문구 표시
 				$(this).addClass("error");
 				$(this).text(0);
-				$(".discount-price").text(0);
+				$(".point-price").text(0);
 				$(".after-price").text(totalPrice(itemsPrice,delivery,0));				
 			}else if(inputPoint==""){ //입력값이 없으면 할인 0 으로 출력
-				$(".discount-price").text(0);
+				$(".point-price").text(0);
 				$(".after-price").text(totalPrice(itemsPrice,delivery,0));
 			}else{ //상품가격보다 적게 입력하면 입력값으로 할인금액 표시
-				$(".discount-price").text(inputPoint); //할인금액 출력
-				var discount = $(".discount-price").text();
+				$(".point-price").text(inputPoint); //할인금액 출력
+				var discount = $(".point-price").text();
 				$(".after-price").text(totalPrice(itemsPrice,delivery,discount));
 			}
 			var inputValue = parseInt($(".after-price").text());
@@ -120,7 +143,7 @@
 		var totalItemPrice = $(".before-price").text();
 		$('input[name=orderPrice]').val(totalItemPrice); //할인전 금액(총상품가격) value값 넣기
 		var totalDelivery = $(".delivery-price").text();
-		var totalDiscount = $(".discount-price").text();
+		var totalDiscount = $(".point-price").text();
 		$(".after-price").text(totalPrice(totalItemPrice, totalDelivery,totalDiscount)); //총 금액
 		var inputValue = parseInt($(".after-price").text());
 		$('input[name=orderPayPrice]').val(inputValue); //총 결제금액 value값 넣기
@@ -170,22 +193,7 @@
 	});
 </script>
 
-<style>
-	.sameinfo{
-        font-size:12px;
-        float:right;
-	}
-    textarea.memo{
-      font-size:15px;
-     }
-     .error-message{
-     	display:none;
-     	color:red;
-     }
-     .point.error ~ .error-message{
-     	display:block;
-     }
-</style>
+
 
 	<div class="container-900 mt-50">
         <div class="row">
@@ -343,15 +351,36 @@
               <tr>
                 <th>상품금액</th>
                 <th>배송비</th>
-                <th>할인금액</th>
+                <th>적립금</th>
+                <th>쿠폰</th>
                 <th>총 금액</th>
               </tr>
               <tr>
-                <td><div class="before-price">0</div>
+                <td>
+                	<div>
+                		<span class="before-price">0</span>원
+                	</div>
                 </td>
-                <td><div class="delivery-price">0</div></td>
-                <td><div class="discount-price">0</div></td>
-                <td><div class="after-price">0</div></td>
+                <td>
+                	<div>
+                		<span class="delivery-price">0</span>원
+                	</div>
+                </td>
+                <td>
+                	<div>
+                		<span class="point-price">0</span>원
+                	</div>
+                </td>
+                <td>
+                	<div>
+                		<span class="coupon-price">0</span>원
+                	</div>
+                </td>
+                <td>
+                	<div class="green">
+                		<span class="after-price">0</span>원
+                	</div>
+                </td>
               </tr>
             </tbody>
           </table>
