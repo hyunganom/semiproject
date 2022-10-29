@@ -1,5 +1,8 @@
 package com.kh.semi.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.semi.constant.SessionConstant;
+import com.kh.semi.entity.AttachmentDto;
+import com.kh.semi.repository.AttachmentDao;
 import com.kh.semi.repository.BasketDao;
+import com.kh.semi.vo.BasketVO;
 
 @Controller
 @RequestMapping("/basket")
@@ -18,15 +24,19 @@ public class BasketController {
 	
 	@Autowired
 	private BasketDao basketDao;
+	@Autowired
+	private AttachmentDao attachmentDao;
+	
 	
 	//장바구니 페이지로 이동
 	@GetMapping("/list")
-	public String basket(
-			HttpSession session, Model model) {
+	public String basket(HttpSession session, Model model) {
 		//세션 아이디 가져옴
 		String memberId = (String)session.getAttribute(SessionConstant.ID);
+		
+		List<BasketVO> list = basketDao.selectList(memberId);
 		// basketVO(장바구니와 상품테이블 이너조인) model로 출력준비
-		model.addAttribute("basketVO", basketDao.selectList(memberId));
+		model.addAttribute("basketVO", list);
 		
 		//추가로 해야할 것!!!
 		//(+심화:체크된 것만 넘어오게 처리하기, js 체크박스 필요)
