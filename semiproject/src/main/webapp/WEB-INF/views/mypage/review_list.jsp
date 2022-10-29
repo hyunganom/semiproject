@@ -29,6 +29,9 @@
 	리뷰 내용 : ${reviewList.reviewContent}
 	<br>
 	리뷰 작성일 : ${reviewList.reviewWritetime}
+	<br>
+	<a href="/review/edit?reviewNo=${reviewList.reviewNo}">리뷰수정하기</a>
+	<a>삭제하기</a>
 	</div>
 </c:forEach>
 
