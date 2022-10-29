@@ -36,11 +36,11 @@ public class BasketDaoImpl implements BasketDao{
 	@Override
 	public boolean changeCount(BasketDto basketDto) {
 		String sql = "update basket set "
-				+ "basket_count_number=basket_count_number+?, "
+				+ "basket_count_number=?, "
 				+ "basket_adddate=sysdate "
-				+ "where basket_product_no=?";
+				+ "where basket_no=?";
 		Object[] param = {basketDto.getBasketCountNumber(),
-				basketDto.getBasketProductNo()};
+				basketDto.getBasketNo()};
 		return jdbcTemplate.update(sql, param)>0;
 	}
 
