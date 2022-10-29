@@ -10,21 +10,6 @@
 <link rel="stylesheet" type="text/css" href="commons.css">
 
 <script type = "text/javascript">
-
-	<%-- 누르는 버튼에 따라 전송하는 Mapping이 다르도록 설정 --%>
-	$(function(){
-		// 리뷰 수정 버튼을 누르면
-	    $("#btn-edit").click(function(){
-	        $("#form-data-review").attr("action", ""); // 리뷰 작성 Mapping으로 연결
-	        $("#form-data-review").attr("method", "get");
-	    });
-		
-		 // 리뷰 작성 버튼을 누르면
-	    $("#btn-write").click(function(){
-	        $("#product-data").attr("action", ""); // 리뷰 작성 Mapping으로 연결
-	        $("#product-data").attr("method", "get");
-	    });
-	});
 	
 </script>
 
@@ -115,46 +100,41 @@
 						<div class="row">
 							<h2>주문 내역</h2>
 						</div>
-						<form id = "form-data-review"> <%-- form 시작 --%>
 							<c:forEach var="paymentListVO" items="${paymentListVO}">
-								<input type = "hidden" name = "paymentNo" value = "${paymentListVO.paymentNo}">
-								<input type = "hidden" name = "paymentProductNo" value = "${paymentListVO.productOriginNo}">
-								<input type = "hidden" name = "" value = "">
-								<table class="table table-slit table-border">
-									<thead>
-										<tr>
-											<th colspan="2">${paymentListVO.orderDate} &nbsp; 상품정보</th>
-											<th>구매갯수</th>
-											<th>결제금액</th>
-										</tr>
-									</thead>
-									<tbody>
-									    <tr>
-									    	<td class="img" width="100" colspan="">
-										    	<img width=100 height=100 src="/attachment/download/productTumbnail?attachmentNo=${paymentListVO.productAttachmentNo}">
-										    	<c:choose>
-											    	<c:when test = "${paymentListVO.paymentReview != true}">
-											    		<button type = "submit" id = "btn-edit" class="row w-80" onclick = "location.href='/review/write?paymentNo=${paymentListVO.paymentNo}&paymentProductNo=${paymentListVO.productOriginNo}';">리뷰수정</button>
-											    	</c:when>
-											    	<c:otherwise>
-											    		<button type = "submit" id = "btn-write" class="row w-80" onclick = "location.href='/review/write?paymentNo=${paymentListVO.paymentNo}&paymentProductNo=${paymentListVO.productOriginNo}';">리뷰작성</button>
-											    	</c:otherwise>
-										    	</c:choose>
-										    </td>
-										    <td class="row left" width="400" height="30">
-										    	주문번호 : ${paymentListVO.paymentOrderNo} <br>
-										    	결제번호 : ${paymentListVO.paymentNo} <br>
-										    	상품명 : ${paymentListVO.productName} <br>
-										    	상품옵션 : ${paymentListVO.paymentOption} <br>
-										    </td>
-										    <td width="80">${paymentListVO.paymentCount}</td>
-										    <td width="90">${paymentListVO.paymentPrice}</td>
-									   </tr>
-									</tbody>
-									<br><br>
-						    	</table>
+									<table class="table table-slit table-border">
+										<thead>
+											<tr>
+												<th colspan="2">${paymentListVO.orderDate} &nbsp; 상품정보</th>
+												<th>구매갯수</th>
+												<th>결제금액</th>
+											</tr>
+										</thead>
+										<tbody>
+										    <tr>
+										    	<td class="img" width="100" colspan="">
+											    	<img width=100 height=100 src="/attachment/download/productTumbnail?attachmentNo=${paymentListVO.productAttachmentNo}">
+											    	<c:choose>
+												    	<c:when test = "${paymentListVO.paymentReview}">
+												    		<button type = "submit" class="row w-80" onclick = "location.href='/review/edit?paymentNo=${paymentListVO.paymentNo}&paymentProductNo=${paymentListVO.productOriginNo}';">리뷰수정</button>
+												    	</c:when>
+												    	<c:otherwise>
+												    		<button type = "submit" class="row w-80" onclick = "location.href='/review/write?paymentNo=${paymentListVO.paymentNo}&paymentProductNo=${paymentListVO.productOriginNo}';">리뷰작성</button>
+												    	</c:otherwise>
+											    	</c:choose>
+											    </td>
+											    <td class="row left" width="400" height="30">
+											    	주문번호 : ${paymentListVO.paymentOrderNo} <br>
+											    	결제번호 : ${paymentListVO.paymentNo} <br>
+											    	상품명 : ${paymentListVO.productName} <br>
+											    	상품옵션 : ${paymentListVO.paymentOption} <br>
+											    </td>
+											    <td width="80">${paymentListVO.paymentCount}</td>
+											    <td width="90">${paymentListVO.paymentPrice}</td>
+										   </tr>
+										</tbody>
+										<br><br>
+							    	</table>
 							</c:forEach>
-					    </form> <%-- form 끝 --%>
 					</div>
 				</div>
 			</section>
