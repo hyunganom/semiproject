@@ -222,6 +222,7 @@ textarea.input.fix-size {
 .table > tfoot > tr > th,
 .table > tfoot > tr > td {  
     padding:0.5em;
+    vertical-align: middle;
 }
 
 /*  확장 스타일 - 테두리가 있는 테이블 */
@@ -562,6 +563,7 @@ ul.pagination.pagination-small {
 	border:1px solid #d8dbe0;
 	border-left:none;
 	border-right:none;
+	border-bottom:none;
 }
 .table.table-basket > thead,
 .table.table-basket > tbody{
@@ -595,8 +597,14 @@ ul.pagination.pagination-small {
     background-color: #addeb3;
 }
 
-.btns.btns-neutral {
-    border: 1px solid #d8dbe0;
-    background-color: white;
+.btns-neutral {
+	border: 1px solid #d8dbe0;
+	background-color: white;
     color: black;
+    font-size: 12px;
+    padding: 7px 8px;
+    cursor: pointer;
+    display: inline-block;   
+    text-align: center;
+    text-decoration: none;
 }
