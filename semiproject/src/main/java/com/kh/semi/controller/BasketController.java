@@ -50,6 +50,14 @@ public class BasketController {
 		return "redirect:/basket/list";
 	}
 	
+	//선택상품 삭제
+	@GetMapping("/delete_2")
+	@ResponseBody
+	public String selectDelete(@RequestParam int basketNo) {
+		basketDao.clearbasket(basketNo);
+		return "success";
+	}
+	
 	@GetMapping("/update")
 	@ResponseBody
 	public String update(@RequestParam int basketNo,
@@ -57,7 +65,6 @@ public class BasketController {
 		BasketDto dto = new BasketDto();
 		dto.setBasketNo(basketNo);
 		dto.setBasketCountNumber(cnt);
-		System.out.println(dto);
 		basketDao.changeCount(dto);
 		return "success";
 	}
