@@ -33,18 +33,18 @@ $(function(){
 <div>
 	<div class="container-800">
 		<form action = "edit" method = "post" enctype = "multipart/form-data">
-			<input name = "reviewNo" value = "${reviewDto.reviewNo}" type = "hidden">
+			<input name = "reviewNo" value = "${reviewVO.reviewNo}" type = "hidden">
 			
-			<input name = "reviewPaymentNo" value = "${reviewDto.reviewPaymentNo}" type = "hidden">
+			<input name = "reviewPaymentNo" value = "${reviewVO.reviewPaymentNo}" type = "hidden">
 			
 			<div class = "row">	
-				<input class="input input-underline w-50" name = "reviewTitle" type = "text" value="${reviewDto.reviewTitle}">
+				<input class="input input-underline w-50" name = "reviewTitle" type = "text" value="${reviewVO.reviewTitle}">
 			</div>
 			<div class = "row mt-20">
 				<label class="float-right">
-					<input class="input input-underline w-50" name = "reviewGood" type = "number" value="${reviewDto.reviewGood}">
+					<input class="input input-underline w-50" name = "reviewGood" type = "number" value="${reviewVO.reviewGood}">
 				</label>
-				<textarea name = "reviewContent" class="input w-100 fix-size mt-10" rows="8" >${reviewDto.reviewContent}</textarea>
+				<textarea name = "reviewContent" class="input w-100 fix-size mt-10" rows="8" >${reviewVO.reviewContent}</textarea>
 			</div>
 			<div class = "row right">
 				<a href="/mypage/order_list" class="btn btn-neutral">취소</a>

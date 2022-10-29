@@ -55,9 +55,10 @@ $(function(){
 	<div class="container-800">
 		<form action = "write" method = "post" enctype = "multipart/form-data">
 			<%-- 리뷰 작성을 누를 때 등록 전 별점의 총점과 리뷰의 갯수를 구하기 위함 --%>
-			<input name = "productNo" value = "${reviewPaymentNoVO.paymentProductNo}" type = "hidden">
+			<input name = "paymentProductNo" value = "${reviewPaymentNoVO.paymentProductNo}" type = "hidden">
 			<%-- 리뷰 등록에 필요한 항목 --%>
-			<input name = "reviewPaymentNo" value = "${reviewPaymentNo}" type = "hidden">
+			<input name = "paymentNo" value = "${reviewPaymentNoVO.paymentNo}" type = "hidden">
+			
 			<div class = "row">	
 				<input class="input input-underline w-50" name = "reviewTitle" type = "text" placeholder="제목">
 			</div>
