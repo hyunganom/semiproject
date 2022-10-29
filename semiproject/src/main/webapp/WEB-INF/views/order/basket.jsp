@@ -151,21 +151,43 @@
 			$(".total-price").text(calcul()+deliveryFee());
 		}
 		
+		
+ 		function updateBasketCnt(basketNo, cnt){
+ 			$.ajax({
+ 				url:"http://localhost:8888/basket/update?basketNo="+basketNo+"&cnt="+cnt,
+ 				method:"get",
+ 				success:function(resp){
+ 					if(resp==="success"){
+ 						alert("성공!");
+ 					}else{
+ 						alert("실패!");
+ 					}
+ 					location.reload();
+ 				}
+ 			});
+
+		} 
+		//var n = parseInt($(".plus").index(this));
+		//var plus = $(".plus").get(n);
+		//var check = $("plus").prev();
+		
 		<!--수량 변경 버튼 이벤트 -->
-		//플러스 버튼을 누를 경우 수량증가
-		$(".plus").click(function(){
-			var plus = parseInt($(".cnt").val())+1;
-			$(".cnt").val(plus);
-			$(".minus").attr("disabled",false);
-		});
+		//플러스 버튼을 누를 경우 수량증가(배열이므로 형제를 찾아서 선택)
+  		$(".plus").click(function(){
+			var plus = parseInt($(this).prev().val())+1;
+			var basketNo = parseInt($(this).next().val());
+			updateBasketCnt(basketNo, plus);
+ 			//$(this).prev().val(plus);
+			//$(this).siblings(".minus").attr("disabled",false); 
+		}); 
 		
 		//마이너스 버튼을 누를 경우 수량감소(1개미만 비활성화 처리)
 		$(".minus").click(function(){
-			var minus = parseInt($(".cnt").val())-1;
-			$(".cnt").val(minus);
-			var judge = $(".cnt").val();
+			var minus = parseInt($(this).next().val())-1;
+			$(this).next().val(minus);
+			var judge = $(this).next().val();
 			if(judge==1){
-				$(".minus").attr("disabled", true);
+				$(this).attr("disabled", true);
 			}
 		});
 		
@@ -176,7 +198,6 @@
 				alert('1개 이상의 수량을 입력해주세요!');
 			}
 		});
-		
 		
 		<!--주문하기 버튼 이벤트 -->
 		//장바구니에 상품이 없을경우 버튼 클릭시 상품을 담아주세요 문구 출력
@@ -228,9 +249,10 @@
 		                        </td>
 		                        <td class="center">
 		                        	<div>
-			                        	<button class="btns-neutral count_controller minus" type="button" disabled>-</button>
+			                        	<button class="btns-neutral count_controller minus" type="button" disabled >-</button>
 			                        	<input class="cnt inputCnt w-33" type="text" value="${vo.basketCountNumber}">
-			                        	<button class="btns-neutral count_controller plus" type="button" >+</button>
+			                        	<button class="btns-neutral count_controller plus" type="button">+</button>
+			                        	<input type="hidden" value="${vo.basketNo}">
 		                        	</div>
 		                        
 		                        <td>
