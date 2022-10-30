@@ -246,6 +246,11 @@ public class ProductController {
 	      basketDto.setBasketProductNo(productNo);
 	      //상품 수량 세팅
 	      basketDto.setBasketCountNumber(productCount);
+	      //장바구니 번호 세팅
+	      int basketNo = basketDao.sequence();
+	      basketDto.setBasketNo(basketNo);
+	      // 바로구매 시 사용할 장바구니 번호 세션에 저장
+	      session.setAttribute("basketNo", basketNo);
 	      // 파라미터 옵션항목값 배열로 가져오기(옵션값)
 	      String[] arrayParam = request.getParameterValues("productOption");
 	      //동일한 상품이 있는지 확인 후 없으면 등록, 있으면 수량 증가
@@ -271,7 +276,6 @@ public class ProductController {
 	         // 수량 수정
 	         basketDao.changeCount(basketDto);
 	      }
-
 	      return "redirect:/basket/list";
 	   }
 	

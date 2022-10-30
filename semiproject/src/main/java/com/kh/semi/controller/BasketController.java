@@ -1,5 +1,6 @@
 package com.kh.semi.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -16,6 +17,7 @@ import com.kh.semi.constant.SessionConstant;
 import com.kh.semi.entity.BasketDto;
 import com.kh.semi.repository.AttachmentDao;
 import com.kh.semi.repository.BasketDao;
+import com.kh.semi.repository.ProductDao;
 import com.kh.semi.vo.BasketVO;
 
 @Controller
@@ -26,8 +28,44 @@ public class BasketController {
 	private BasketDao basketDao;
 	@Autowired
 	private AttachmentDao attachmentDao;
+	@Autowired
+	private ProductDao productDao;
 	
+	//장바구니 등록
+	@GetMapping("/insert")
+	public String insert(@RequestParam int productNo,
+			@RequestParam int productCount,
+			@RequestParam ArrayList<String> productOption,
+			HttpSession session, Model model) {
+		//세션 아이디 가져옴
+		String memberId = (String)session.getAttribute(SessionConstant.ID);
+		//세션 장바구니 번호 가져옴
+		int basketNo = (Integer)session.getAttribute("basketNo");
+		BasketDto vo = new BasketDto();
+		vo.setBasketId(memberId);
+		vo.setBasketNo(basketNo);
+		vo.setBasketProductNo(productNo);
+		vo.setBasketCountNumber(productCount);
+		
+		if(productOption==null) { //단일상품 및 옵션없음
+			vo.setBasketProductOption(""); //옵션에 빈값넣기
+            
+         }else { //구독상품 및 옵션있음
+            // 상품번호로 상품명 조회 후 가져오기(상품명만 나오게 toString 재정의)
+            String option = "";
+            for(int i=0; i<productOption.size(); i++) {
+               int no = Integer.parseInt(productOption.get(i));
+               option = option+productDao.selectName(no)+" / ";
+            }
+            //마지막 / 구분자 문자열 자르기
+            option= option.substring(0, option.length()-2);
+            vo.setBasketProductOption(option);
+            basketDao.insert(vo);
+         }
+		return "redirect:/order/order_ck";
+	}
 	
+
 	//장바구니 페이지로 이동
 	@GetMapping("/list")
 	public String basket(HttpSession session, Model model) {
@@ -37,9 +75,6 @@ public class BasketController {
 		List<BasketVO> list = basketDao.selectList(memberId);
 		// basketVO(장바구니와 상품테이블 이너조인) model로 출력준비
 		model.addAttribute("basketVO", list);
-		
-		//추가로 해야할 것!!!
-		//(+심화:체크된 것만 넘어오게 처리하기, js 체크박스 필요)
 		return "order/basket";
 	}
 

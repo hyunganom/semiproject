@@ -18,14 +18,21 @@ public class BasketDaoImpl implements BasketDao{
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
+	@Override
+	public int sequence() {
+		String sql ="select basket_seq.nextval from dual";
+		int basketNo = jdbcTemplate.queryForObject(sql, int.class);
+		return basketNo;
+	}
 	//장바구니 추가
 	@Override
 	public void insert(BasketDto basketDto) {
 		String sql = "insert into basket (basket_no, basket_id, "
 				+ "basket_product_no, basket_count_number, "
 				+ "basket_adddate, basket_product_option) "
-				+ "values(basket_seq.nextval,?, ?, ?, sysdate,?)";
-		Object[] param = {basketDto.getBasketId(),
+				+ "values(?,?, ?, ?, sysdate,?)";
+		Object[] param = {basketDto.getBasketNo(),
+				basketDto.getBasketId(),
 				basketDto.getBasketProductNo(),
 				basketDto.getBasketCountNumber(),
 				basketDto.getBasketProductOption()};
