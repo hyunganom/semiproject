@@ -41,6 +41,8 @@ public interface ReviewDao {
 	// 추상 메소드 오버라이딩 - 리뷰 번호로 리뷰 조회 (상품 후기에서 리뷰 수정 jsp와 연결하기 위해 반드시 필요함)
 	ReviewVO selectOneReview(int reviewNo);
 	
+	ReviewDto selectOneDtoReview(int reviewNo);
+	
 	//리뷰 작성 수정(UPDATE)
 	boolean updateReview(ReviewDto reviewDto);
 	

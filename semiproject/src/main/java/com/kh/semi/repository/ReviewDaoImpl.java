@@ -261,6 +261,13 @@ public class ReviewDaoImpl implements ReviewDao {
 		Object[] param = new Object[] {reviewListSearchVO.getKeyword()};
 		return jdbcTemplate.queryForObject(sql, int.class, param);
 	}
+
+	@Override
+	public ReviewDto selectOneDtoReview(int reviewNo) {
+		String sql = "select * from review where review_no = ?";
+		Object[] param = {reviewNo};
+		return jdbcTemplate.query(sql, extractor, param);
+	}
 	
 	
 

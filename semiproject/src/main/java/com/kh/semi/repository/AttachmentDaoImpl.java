@@ -156,6 +156,13 @@ public class AttachmentDaoImpl implements AttachmentDao{
 		jdbcTemplate.update(sql, param);
 		
 	}
-	
+
+
+	@Override
+	public List<AttachmentDto> selectReviewAttahmentList(int reviewAttachmentOriginno) {
+		String sql = "select A.* from review_attachment R inner join attachment A on r.review_attachment_no = A.attachment_no where r.review_attachment_origin_no= ?";
+		Object[] param = {reviewAttachmentOriginno};
+		return jdbcTemplate.query(sql, mapper, param);
+	}
 	
 }
