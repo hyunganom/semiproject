@@ -41,4 +41,7 @@ public interface ReviewDao {
 	
 	//리뷰 작성 수정(UPDATE)
 	boolean updateReview(ReviewDto reviewDto);
+	
+	//리뷰 작성 삭제
+	boolean delete(int reviewNo);
 }

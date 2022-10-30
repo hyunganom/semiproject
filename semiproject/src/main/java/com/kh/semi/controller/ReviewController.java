@@ -185,7 +185,8 @@ public class ReviewController {
 	
 	@GetMapping("/delete")
 	public String reviewDelete(@RequestParam int reviewNo) {
-		return "";
+		reviewDao.delete(reviewNo);
+		return "redirect:/mypage/review_list";
 	}
 	
 	// ** 특정 상품에 대해 작성된 전체 리뷰 목록은 ProductController를 통해 표시

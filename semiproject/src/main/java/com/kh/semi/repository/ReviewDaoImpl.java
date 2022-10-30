@@ -179,4 +179,11 @@ public class ReviewDaoImpl implements ReviewDao {
 		}
 		else return null;
 	};
+
+	@Override
+	public boolean delete(int reviewNo) {
+		String sql = "DELETE review where review_no=?";
+		Object[] param = {reviewNo};
+		return jdbcTemplate.update(sql, param) >0;
+	}
 }
