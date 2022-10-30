@@ -183,6 +183,7 @@ public class ReviewController {
 		return "redirect:/mypage/review_list";
 	}
 	
+	//리뷰 삭제기능
 	@GetMapping("/delete")
 	public String reviewDelete(@RequestParam int reviewNo) {
 		reviewDao.delete(reviewNo);

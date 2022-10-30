@@ -180,6 +180,7 @@ public class ReviewDaoImpl implements ReviewDao {
 		else return null;
 	};
 
+	//회원이 작성한 리뷰 삭제기능
 	@Override
 	public boolean delete(int reviewNo) {
 		String sql = "DELETE review where review_no=?";
