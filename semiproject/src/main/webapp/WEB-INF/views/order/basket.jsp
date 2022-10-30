@@ -69,6 +69,14 @@
 
 <script type="text/javascript">
 	$(function(){
+ 		<!-- model로 넘어온 basketVO의 상품가격, 수량 js에서도 사용가능하도록 처리 -->
+		var price = new Array();
+		var cnt = new Array();
+		<c:forEach items="${basketVO}" var="vo">
+			price.push("${vo.productPrice}");
+			cnt.push("${vo.basketCountNumber}");
+		</c:forEach> 
+		
 		<!-- 처음 들어왔을 때 전체선택 체크되게 하기 -->
 		var items = "${basketVO.size()==0}";
 		if(items=='false'){
@@ -103,26 +111,26 @@
     		}
     		total();
     	});
+
     	
-		<!-- 상품 금액(콜백함수) -->
-		function calcul(){
+    	<!-- 상품 금액(콜백함수) -->
+    	function calcul(){
 			var count = $(".checked").length;
 			var sum = 0;
-            for (var i = 0; i < count; i++) {
-                if ($(this).checked == true) {
-                	
-                	var cnt = parseInt($(".cnt").val());
-                	var price = parseInt($(".price").text());
-                    sum += (cnt*price);
-                }
-            }
+			$(".checked").each(function(){ // .checked만 반복
+				if($(this).prop("checked")){ // 체크가 되있는지 확인
+					var cnt = parseInt($(this).parent().siblings(".cnt-wrap").find(".cnt").val());
+                	var price = parseInt($(this).parent().siblings(".price-wrap").find(".price").text());
+					sum += (cnt*price);
+				}
+			});
             return sum;
 		}
-
+		
 		<!-- 배송비(콜백함수) -->
 		function deliveryFee(){
 			var itemsPrice = parseInt($(".total-items").text()); //상품금액
-			var delivery;
+			var delivery; //배송비
 			if(itemsPrice>=50000){
 				delivery=0;
 			}else{
@@ -143,7 +151,7 @@
 			$(".total-price").text(calcul()+deliveryFee());
 		}
 		
-		
+		//ajax 호출하기 위한 함수
  		function updateBasketCnt(basketNo, cnt){
  			$.ajax({
  				url:"http://localhost:8888/basket/update?basketNo="+basketNo+"&cnt="+cnt,
@@ -193,7 +201,7 @@
 			}
 		});
 		
-/* 		<!--선택 삭제 이벤트 함수 -->
+ 		<!--선택 삭제 이벤트 함수 -->
 		function selectDelete(basketNo){
 			$.ajax({
  				url:"http://localhost:8888/basket/delete_2?basketNo="+basketNo,
@@ -213,17 +221,12 @@
 		<!--선택 삭제 이벤트-->
  		$(".select-delete").click(function(){
  			var count = $(".checked").length;
-			for(var i=0; i<count; i++){
-				var judge = $(this).prop("checked");
-				if(judge==true){
-					var basketNo = $(this).val();
-					selectDelete(basketNo);
-				}
-			}
- 		}); */
-
- 		//선택삭제 버튼 눌러지고 삭제 db에 갔다와야함
- 		//금액 다시 출력해야함
+    		$(".checked").each(function(){
+    			if($(this).prop("checked")){
+    				selectDelete($(this).val());
+    			}
+    		});
+ 		});
  		
 		<!--주문하기 버튼 이벤트 -->
 		//장바구니에 상품이 없을경우 버튼 클릭시 상품을 담아주세요 문구 출력
@@ -273,15 +276,15 @@
 		                        	<span>${vo.productName}<br></span>
 		                        	<span>${vo.basketProductOption}</span>
 		                        </td>
-		                        <td class="center">
+		                        <td class="cnt-wrap">
 		                        	<div>
 			                        	<button class="btns-neutral count_controller minus" type="button">-</button>
 			                        	<input class="cnt inputCnt w-33" type="text" value="${vo.basketCountNumber}">
 			                        	<button class="btns-neutral count_controller plus" type="button">+</button>
 			                        	<input type="hidden" class="basketNo" value="${vo.basketNo}">
 		                        	</div>
-		                        
-		                        <td>
+		                        </td>
+		                        <td class="price-wrap">
 		                        	<span class="price">	${vo.productPrice}</span>
 		                        	<a href="delete?productNo=${vo.basketProductNo}">
 		                        		<i class="fa-solid fa-trash-can"></i>
