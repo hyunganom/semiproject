@@ -92,8 +92,8 @@
 				<td>${productList.productUpdatetime}</td>
 				<td>${productList.productInactive}</td>
 				<td><a href = "edit?productNo=${productList.productNo}">수정</a></td>
-				<td><a href = "delete?productNo=${productList.productNo}">삭제<br>(비활성화)</a></td>
-				<td><a href = "deleteAdmin?productNo=${productList.productNo}">삭제<br>(DELETE)</a></td>
+				<td><a href = "inactive?productNo=${productList.productNo}">삭제<br>(비활성화)</a></td>
+				<td><a href = "delete?productNo=${productList.productNo}">삭제<br>(DELETE)</a></td>
 			</tr>
 			</c:forEach>
 		</tbody>	
