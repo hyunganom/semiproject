@@ -1,9 +1,5 @@
 package com.kh.semi.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -15,20 +11,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.semi.constant.SessionConstant;
-import com.kh.semi.entity.AttachmentDto;
 import com.kh.semi.entity.BasketDto;
-import com.kh.semi.entity.ProductDto;
 import com.kh.semi.repository.AttachmentDao;
 import com.kh.semi.repository.BasketDao;
 import com.kh.semi.repository.ProductDao;
 import com.kh.semi.repository.ReviewDao;
-import com.kh.semi.vo.ProductCategoryListVO;
 import com.kh.semi.vo.ProductListSearchCategoryVO;
-import com.kh.semi.vo.ProductListSearchVO;
 
 @Controller
 @RequestMapping("/product")
@@ -100,46 +90,46 @@ public class ProductController {
 	}
 
 	//2) 장바구니로 이동
-  @PostMapping("/detail")
-  public String detail(@ModelAttribute BasketDto basketDto,
-        @RequestParam int productNo,
-        @RequestParam int productCount,
-        HttpServletRequest request, HttpSession session) {
-     // 세션아이디 꺼내와서 세팅
-     String memberId = (String)session.getAttribute(SessionConstant.ID);
-     basketDto.setBasketId(memberId);
-     //상품번호 세팅
-     basketDto.setBasketProductNo(productNo);
-     //상품 수량 세팅
-     basketDto.setBasketCountNumber(productCount);
-     //장바구니 번호 세팅
-     int basketNo = basketDao.sequence();
-     basketDto.setBasketNo(basketNo);
-     // 파라미터 옵션항목값 배열로 가져오기(옵션값)
-     String[] arrayParam = request.getParameterValues("productOption");
-     //동일한 상품이 있는지 확인 후 없으면 등록, 있으면 수량 증가
-     if(basketDao.sameItem(memberId, productNo)==null) {
-        if(arrayParam==null) { //단일상품 및 옵션없음
-           basketDto.setBasketProductOption(""); //옵션에 빈값넣기
-
-        }else { //구독상품 및 옵션있음
-           // 상품번호로 상품명 조회 후 가져오기(상품명만 나오게 toString 재정의)
-           String option = "";
-           for(int i=0; i<arrayParam.length; i++) {
-              int no = Integer.parseInt(arrayParam[i]);
-              option = option+productDao.selectName(no)+" / ";
-           }
-           //마지막 / 구분자 문자열 자르기
-           option= option.substring(0, option.length()-2);
-           //장바구니 옵션 컬럼에 들어갈 데이터 세팅
-           basketDto.setBasketProductOption(option);
-        }
-        // 등록
-        basketDao.insert(basketDto);
-     }else {
-        // 수량 수정
-        basketDao.changeCount(basketDto);
-     }
-     return "redirect:/basket/list";
-  }
+    @PostMapping("/detail")
+    public String detail(@ModelAttribute BasketDto basketDto,
+          @RequestParam int productNo,
+          @RequestParam int productCount,
+          HttpServletRequest request, HttpSession session) {
+       // 세션아이디 꺼내와서 세팅
+       String memberId = (String)session.getAttribute(SessionConstant.ID);
+       basketDto.setBasketId(memberId);
+       //상품번호 세팅
+       basketDto.setBasketProductNo(productNo);
+       //상품 수량 세팅
+       basketDto.setBasketCountNumber(productCount);
+       //장바구니 번호 세팅
+       int basketNo = basketDao.sequence();
+       basketDto.setBasketNo(basketNo);
+       // 파라미터 옵션항목값 배열로 가져오기(옵션값)
+       String[] arrayParam = request.getParameterValues("productOption");
+       //동일한 상품이 있는지 확인 후 없으면 등록, 있으면 수량 증가
+       if(basketDao.sameItem(memberId, productNo)==null) {
+          if(arrayParam==null) { //단일상품 및 옵션없음
+             basketDto.setBasketProductOption(""); //옵션에 빈값넣기
+             
+          }else { //구독상품 및 옵션있음
+             // 상품번호로 상품명 조회 후 가져오기(상품명만 나오게 toString 재정의)
+             String option = "";
+             for(int i=0; i<arrayParam.length; i++) {
+                int no = Integer.parseInt(arrayParam[i]);
+                option = option+productDao.selectName(no)+" / ";
+             }
+             //마지막 / 구분자 문자열 자르기
+             option= option.substring(0, option.length()-2);
+             //장바구니 옵션 컬럼에 들어갈 데이터 세팅
+             basketDto.setBasketProductOption(option);
+          }
+          // 등록
+          basketDao.insert(basketDto);
+       }else {
+          // 수량 수정
+          basketDao.changeCount(basketDto);
+       }
+       return "redirect:/basket/list";
+    }
 }
