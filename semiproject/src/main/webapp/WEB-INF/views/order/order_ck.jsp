@@ -90,7 +90,7 @@
 			var totalDelivery = parseInt($(".delivery-price").text());
 			var totalDiscount = parseInt($(".point-price").text());
 			//총금액(상품금액+배송비-할인금액)
-			var totalPrice = ((totalItemPrice+totalDelivery)-totalDiscount).toLocaleString();
+			var totalPrice = (totalItemPrice+totalDelivery)-totalDiscount;
 			return totalPrice;
 		}
 		
@@ -239,6 +239,14 @@
 		              	</td>
 	            	</tr>
 	            	</c:forEach>
+	            	<!-- payment에 넘어가야하는 정보(paymentDto형태로 들어가야함!) -->
+			        <c:forEach var="list" items="${basketList}" varStatus="status">
+			        	<input type="hidden" name="payment[${status.index}].basketNo" value="${list.basketNo}">
+						<input type="hidden" name="payment[${status.index}].paymentProductNo" value="${list.basketProductNo}">
+						<input type="hidden" name="payment[${status.index}].paymentCount" value="${list.basketCountNumber}">
+						<input type="hidden" name="payment[${status.index}].paymentPrice" value="${list.productPrice}">
+						<input type="hidden" name="payment[${status.index}].paymentOption" value="${list.basketProductOption}">
+					</c:forEach>
 	            </c:when>
 	            <c:otherwise>
 	            	<tr>
@@ -253,6 +261,12 @@
 		              	<div class="center items-price">${purchaseList.productPrice}</div>
 		              </td>
 	            	</tr>
+	            	<!-- payment에 넘어가야하는 정보(paymentDto형태로 들어가야함!) -->
+			        <input type="hidden" name="basketNo" value="${purchaseList.basketNo}">
+					<input type="hidden" name="paymentProductNo" value="${purchaseList.basketProductNo}">
+					<input type="hidden" name="paymentCount" value="${purchaseList.basketCountNumber}">
+					<input type="hidden" name="paymentPrice" value="${purchaseList.productPrice}">
+					<input type="hidden" name="paymentOption" value="${purchaseList.basketProductOption}">
 	            </c:otherwise>
             </c:choose>
             <tr>
@@ -426,14 +440,14 @@
         <input type="hidden" name="orderPayPrice" value="">
         <input type="hidden" name="orderPrice" value="">
         
-        <!-- payment에 넘어가야하는 정보(paymentDto형태로 들어가야함!) -->
+<%--         <!-- payment에 넘어가야하는 정보(paymentDto형태로 들어가야함!) -->
         <c:forEach var="list" items="${basketList}" varStatus="status">
         	<input type="hidden" name="payment[${status.index}].basketNo" value="${list.basketNo}">
 			<input type="hidden" name="payment[${status.index}].paymentProductNo" value="${list.basketProductNo}">
 			<input type="hidden" name="payment[${status.index}].paymentCount" value="${list.basketCountNumber}">
 			<input type="hidden" name="payment[${status.index}].paymentPrice" value="${list.productPrice}">
 			<input type="hidden" name="payment[${status.index}].paymentOption" value="${list.basketProductOption}">
-		</c:forEach>
+		</c:forEach> --%>
 
         <div class="row center">
           <button type="submit" class="btns btns-positive">결제하기</button>
