@@ -29,7 +29,7 @@ public class CouponUseDaoImpl implements CouponUseDao {
 	
 	//쿠폰 사용내역 추가
 	@Override
-	public void insert(int orderNo, int couponIssue) {
+	public void insert(int orderNo, Integer couponIssue) {
 		String sql = "insert into coupon_use(coupon_use_no, coupon_use_order_no, "
 								+ "coupon_issue_no) "
 							+ "values(coupon_use_seq.nextval, ?, ?)";

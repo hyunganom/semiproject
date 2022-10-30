@@ -39,8 +39,10 @@ public class BasketController {
 			HttpSession session, Model model) {
 		//세션 아이디 가져옴
 		String memberId = (String)session.getAttribute(SessionConstant.ID);
-		//세션 장바구니 번호 가져옴
-		int basketNo = (Integer)session.getAttribute("basketNo");
+		//장바구니 번호 생성
+		int basketNo = basketDao.sequence();
+		//바로구매 조회 시 필요한 장바구니 번호 세션에 저장
+		session.setAttribute("basketNo", basketNo);
 		BasketDto vo = new BasketDto();
 		vo.setBasketId(memberId);
 		vo.setBasketNo(basketNo);
