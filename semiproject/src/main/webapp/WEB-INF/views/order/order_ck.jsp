@@ -8,7 +8,6 @@
 </jsp:include>
 
 <style>
-
 	.sameinfo{
         font-size:12px;
         float:right;
@@ -45,7 +44,6 @@
 				$("input[name=orderTel]").val("");
 			}
 		});
-
 		
 		<!-- 최종 금액 산출 -->
 		<!-- model로 넘어온 basketList의 상품가격, 수량 js에서도 사용가능하도록 처리 -->
@@ -161,19 +159,15 @@
 	
     $(function(){
 		$("#select-categoryHigh").on("change", function(){
-
 			// 상위 카테고리 선택창의 값(value)을 변수로 설정
 			var categoryHighNo = $("#select-categoryHigh").val();
-
 			// 하위 카테고리에 해당하는 select 태그는 유지하며 내부의 선택 항목 삭제(초기화)
 			$("#select-categoryLow").empty();
-
 			$.ajax({
 				// 상위 카테고리 번호를 매개변수로 전체 조회 수행
 				url:"http://localhost:8888/rest/product/categoryLow?categoryHighNo="+categoryHighNo,
                 method:"get",
                 success:function(resp){
-
 					// 상위 카테고리에 연결된 하위 카테고리의 수만큼 option 태그 생성
 					for(var i = 0 ; i < resp.length ; i ++) {
 						// 하위 카테고리 option 태그 생성 template을 변수로 설정

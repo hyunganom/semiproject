@@ -51,20 +51,10 @@ public class CouponDaoImpl implements CouponDao{
 	
 	//쿠폰 옵션 수정
 	@Override
-	public boolean update(CouponDto couponDto) {
-		String sql = "update coupon set "
-					+ "coupon_issue=? "
-					+ "coupon_id =? "
-					+ "coupon_startdate=? "
-					+ "coupon_enddate=? "
-					+ "coupon_valid =? "					
-						+"where coupon_no=?";
-		Object[] param = {
-					couponDto.getCouponIssue(),
-					couponDto.getCouponId(),
-					couponDto.getCouponValid(),					
-					couponDto.getCouponNo()
-					};
+	public boolean update(int couponIssue) {
+		String sql = "update coupon set coupon_valid ='사용' "					
+						+"where coupon_issue=?";
+		Object[] param = {couponIssue};
 		return jdbcTemplate.update(sql, param) > 0;
 	}
 	
@@ -212,10 +202,10 @@ public class CouponDaoImpl implements CouponDao{
 	}
 	
 	
-	//만료가 되지 않은 사용가능한 쿠폰만 출력
+	//사용가능한(미사용) 쿠폰만 출력
 	@Override
 	public int selectUsable(String memberId) {
-		String sql ="select count(*) cnt from coupon where coupon_id=? and coupon_enddate > sysdate group by coupon_id";
+		String sql ="select count(*) cnt from coupon where coupon_id=? and coupon_valid='미사용' group by coupon_id";
 		Object[] param = {memberId};
 		return jdbcTemplate.queryForObject(sql, int.class, param);
 	}
