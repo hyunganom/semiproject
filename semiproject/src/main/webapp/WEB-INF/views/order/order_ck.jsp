@@ -329,12 +329,12 @@
         	
           	</div>
           <div>  
-             <input type="text" class="input w-50">
+             <input type="text" class="input w-50" disabled>
             <a href="#" class="btns btns-positive coupon-btn">쿠폰 적용</a>
           </div>
           <div class="row">
           	<p>적립금 (사용가능 적립금 : <span>${memberDto.memberPoint}</span>원)</p>
-			<input type="text" class="input w-50 point" name="orderUsePoint">
+			<input type="text" class="input w-50 point" name="orderUsePoint" value="0">
 			<span class="error-message">금액이 부족합니다!</span>
 			<a href="#" class="btns btns-positive point-btn">전액 사용</a>
           </div>

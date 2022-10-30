@@ -21,6 +21,7 @@ import com.kh.semi.entity.ReviewDto;
 import com.kh.semi.repository.AttachmentDao;
 import com.kh.semi.repository.ProductDao;
 import com.kh.semi.repository.ReviewDao;
+import com.kh.semi.vo.ReviewListSearchVO;
 import com.kh.semi.vo.ReviewPaymentNoVO;
 
 @Controller
@@ -188,6 +189,18 @@ public class ReviewController {
 	public String reviewDelete(@RequestParam int reviewNo) {
 		reviewDao.delete(reviewNo);
 		return "redirect:/mypage/review_list";
+	}
+	
+	//관리자 페이지에서 전체 리뷰 검색 조회
+	@GetMapping("/adminList")
+	public String adminReviewList(Model model, @ModelAttribute ReviewListSearchVO reviewListSearchVO) {
+		int countTotalReview = reviewDao.countTotalReview(reviewListSearchVO);
+		
+		reviewListSearchVO.setCountTotalReview(countTotalReview);
+		
+		model.addAttribute("reviewList",reviewDao.selectListReview(reviewListSearchVO));
+		
+		return "review/listAdmin";
 	}
 	
 	// ** 특정 상품에 대해 작성된 전체 리뷰 목록은 ProductController를 통해 표시

@@ -122,7 +122,7 @@ public class BasketDaoImpl implements BasketDao{
 		String sql = "select b.*, p.product_name, p.product_price, att.* from basket b "
 				+ "inner join product p on b.basket_product_no=p.product_no "
 				+ "inner join product_attachment att on p.product_no=att.product_origin_no "
-				+ "where basket_id=? order by basket_adddate desc";
+				+ "where basket_id=? order by basket_no desc";
 		Object[] param = {memberId};
 		return jdbcTemplate.query(sql, voMapper, param);
 	}
