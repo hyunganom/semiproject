@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kh.semi.constant.SessionConstant;
 import com.kh.semi.repository.BasketDao;
 import com.kh.semi.repository.CouponDao;
+import com.kh.semi.repository.CouponUseDao;
 import com.kh.semi.repository.MemberDao;
 import com.kh.semi.service.OrderService;
-import com.kh.semi.vo.CouponCountVO;
-import com.kh.semi.vo.CouponListVO;
 import com.kh.semi.vo.BasketVO;
+import com.kh.semi.vo.CouponCountVO;
 import com.kh.semi.vo.OrderVO;
 
 @Controller
@@ -66,13 +66,15 @@ public class OrdersController {
 	
 	@PostMapping("/order_ck")
 	public String order(@ModelAttribute OrderVO orderVO, 
-			HttpSession session, @RequestParam int couponIssue) {
+			HttpSession session, @RequestParam(required = false) Integer couponIssue, @RequestParam(required = false)  Integer couponNo, @RequestParam(required = false)  Integer couponUseNo ) {
 		String memberId = (String)session.getAttribute(SessionConstant.ID);
 		orderVO.setOrderId(memberId);
 		
 				
 		// 전체 변수 orderVO로 받아 등록처리 + couponIssue
 		orderService.buy(orderVO, couponIssue);
+		
+
 		return "redirect:_1";
 
 //		if(주문실패할 경우) { 
