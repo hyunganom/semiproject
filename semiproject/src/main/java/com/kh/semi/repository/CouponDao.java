@@ -14,7 +14,7 @@ public interface CouponDao {
 	void insert(CouponDto couponDto);
 	
 	//2. 보유쿠폰 수정(쿠폰번호로 수정)
-	boolean update(CouponDto couponDto);
+	boolean update(int couponIssue);
 	
 	//3-1. 사용한 쿠폰 조회(회원아이디로 조회)
 	List<CouponDto> usedCoupon(String memberId);
