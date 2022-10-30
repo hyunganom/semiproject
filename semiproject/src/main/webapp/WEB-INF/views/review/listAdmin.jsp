@@ -38,7 +38,7 @@
 			<tr>
 				<th>${reviewList.reviewNo}</th>
 				<th>${reviewList.reviewId}</th>
-				<th>${reviewList.reviewTitle}</th>
+				<th><a href = "detail?reviewNo=${reviewList.reviewNo}">${reviewList.reviewTitle}</a></th>
 				<th>${reviewList.reviewContent}</th>
 				<th>${reviewList.reviewWritetime}</th>
 				<th>${reviewList.reviewUpdatetime}</th>

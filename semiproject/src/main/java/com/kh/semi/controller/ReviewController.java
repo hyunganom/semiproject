@@ -203,6 +203,13 @@ public class ReviewController {
 		return "review/listAdmin";
 	}
 	
+	//관리자 페이지에서 리뷰 상세 조회
+	@GetMapping("/detail")
+	public String detail(@RequestParam int reviewNo, Model model) {
+		model.addAttribute("reviewDto", reviewDao.selectOneDtoReview(reviewNo));
+		model.addAttribute("reviewAttachmentList",attachmentDao.selectReviewAttahmentList(reviewNo));
+		return "review/detailAdmin";
+	}
 	// ** 특정 상품에 대해 작성된 전체 리뷰 목록은 ProductController를 통해 표시
 	
 	// ** 로그인 한 회원이 작성한 전체 리뷰 목록은 MypageController를 통해 표시 
