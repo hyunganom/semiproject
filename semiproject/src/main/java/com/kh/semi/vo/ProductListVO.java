@@ -13,6 +13,6 @@ public class ProductListVO {
 	private int productPrice; // 상품 가격
 	private int productGood; // 상품 별점
 	private boolean productInactive; // 상품 비활성화 상태
-	private int attachmentNo; // 첨부파일 번호
+	private int productAttachmentNo; // 첨부파일 번호
 	private boolean categoryHighSub; // 구독 카테고리 여부
 }

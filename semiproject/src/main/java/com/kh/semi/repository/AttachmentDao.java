@@ -35,4 +35,8 @@ public interface AttachmentDao {
 	
 	//리뷰첨부파일 연결테이블 삽입기능
 	void reviewConnectAttachment(int reviewAttachmentOriginNo, int attachmentNo);
+	
+	//리뷰 첨부파일 조회
+	public List<AttachmentDto> selectReviewAttahmentList(int reviewAttachmentOriginno);
+	
 }

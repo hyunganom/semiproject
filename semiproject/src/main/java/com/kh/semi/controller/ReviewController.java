@@ -21,6 +21,7 @@ import com.kh.semi.entity.ReviewDto;
 import com.kh.semi.repository.AttachmentDao;
 import com.kh.semi.repository.ProductDao;
 import com.kh.semi.repository.ReviewDao;
+import com.kh.semi.vo.ReviewListSearchVO;
 import com.kh.semi.vo.ReviewPaymentNoVO;
 
 @Controller
@@ -183,11 +184,32 @@ public class ReviewController {
 		return "redirect:/mypage/review_list";
 	}
 	
+	//리뷰 삭제기능
 	@GetMapping("/delete")
 	public String reviewDelete(@RequestParam int reviewNo) {
-		return "";
+		reviewDao.delete(reviewNo);
+		return "redirect:/mypage/review_list";
 	}
 	
+	//관리자 페이지에서 전체 리뷰 검색 조회
+	@GetMapping("/adminList")
+	public String adminReviewList(Model model, @ModelAttribute ReviewListSearchVO reviewListSearchVO) {
+		int countTotalReview = reviewDao.countTotalReview(reviewListSearchVO);
+		
+		reviewListSearchVO.setCountTotalReview(countTotalReview);
+		
+		model.addAttribute("reviewList",reviewDao.selectListReview(reviewListSearchVO));
+		
+		return "review/listAdmin";
+	}
+	
+	//관리자 페이지에서 리뷰 상세 조회
+	@GetMapping("/detail")
+	public String detail(@RequestParam int reviewNo, Model model) {
+		model.addAttribute("reviewDto", reviewDao.selectOneDtoReview(reviewNo));
+		model.addAttribute("reviewAttachmentList",attachmentDao.selectReviewAttahmentList(reviewNo));
+		return "review/detailAdmin";
+	}
 	// ** 특정 상품에 대해 작성된 전체 리뷰 목록은 ProductController를 통해 표시
 	
 	// ** 로그인 한 회원이 작성한 전체 리뷰 목록은 MypageController를 통해 표시 
