@@ -10,7 +10,9 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import com.kh.semi.entity.ProductDto;
 import com.kh.semi.entity.ReviewDto;
+import com.kh.semi.vo.ReviewListSearchVO;
 import com.kh.semi.vo.ReviewMypageVO;
 import com.kh.semi.vo.ReviewProductVO;
 import com.kh.semi.vo.ReviewVO;
@@ -187,4 +189,79 @@ public class ReviewDaoImpl implements ReviewDao {
 		Object[] param = {reviewNo};
 		return jdbcTemplate.update(sql, param) >0;
 	}
+
+	@Override
+	public List<ReviewDto> selectListReview(ReviewListSearchVO reviewListSearchVO) {
+		// 검색 조회인지 전체 조회인지 판정
+				if(reviewListSearchVO.isSearch()) { // 검색 조회라면
+					// 매개변수인 productListSearchVO의 type과 keyword를 반환하여 검색 조회 실행
+					return searchListReview(reviewListSearchVO);
+				}
+				else { // 전체 조회라면
+					// 전체 조회 실행
+					return allListReview(reviewListSearchVO);
+				}
+	}
+
+	@Override
+	public List<ReviewDto> allListReview(ReviewListSearchVO reviewListSearchVO) {
+		// Top N Query SQL문 - 전체 조회시 한 페이지에 조회될 레코드의 수를 제한
+		String sql = "select * from (select TMP.*, rownum rn from (select * from review order by review.review_no desc)TMP) where rn between ? and ?";
+		Object[] param = new Object[] {reviewListSearchVO.rownumStart(), reviewListSearchVO.rownumEnd()};
+		return jdbcTemplate.query(sql, mapper, param);
+	}
+
+	@Override
+	public List<ReviewDto> searchListReview(ReviewListSearchVO reviewListSearchVO) {
+		// Top N Query SQL문 - 전체 조회시 한 페이지에 조회될 레코드의 수를 제한
+		String sql = "select * from (select TMP.*, rownum rn from (select * from review where instr(#1, ?) > 0 order by review_no desc)TMP) where rn between ? and ?";
+		sql = sql.replace("#1", reviewListSearchVO.getType());
+		Object[] param = new Object[] {reviewListSearchVO.getKeyword(), reviewListSearchVO.rownumStart(), reviewListSearchVO.rownumEnd()};
+		return jdbcTemplate.query(sql, mapper, param);
+	}
+	
+	private RowMapper<ReviewDto> mapper = new RowMapper<>() {
+		@Override
+		public ReviewDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+			return ReviewDto.builder()
+					.reviewNo(rs.getInt("review_no"))
+					.reviewId(rs.getString("review_id"))
+					.reviewPaymentNo(rs.getInt("review_payment_no"))
+					.reviewTitle(rs.getString("review_title"))
+					.reviewContent(rs.getString("review_content"))
+					.reviewWritetime(rs.getDate("review_writetime"))
+					.reviewUpdatetime(rs.getDate("review_updatetime"))
+					.reviewGood(rs.getInt("review_good"))
+					.reviewInactive(rs.getString("review_inactive"))
+					.build();
+		}
+	};
+
+	@Override
+	public int countTotalReview(ReviewListSearchVO reviewListSearchVO) {
+		// 검색 조회인지 판정
+		if(reviewListSearchVO.isSearch()) { // 검색 조회라면
+			return countSearchReview(reviewListSearchVO);
+		}
+		else { // 검색 조회가 아니라면(전체 조회라면)
+			return countAllReview();
+		}
+	}
+
+	@Override
+	public int countAllReview() {
+		String sql = "select count(*) from review";
+		return jdbcTemplate.queryForObject(sql, int.class);
+	}
+
+	@Override
+	public int countSearchReview(ReviewListSearchVO reviewListSearchVO) {
+		String sql = "select count(*) from review where instr(#1, ?) > 0";
+		sql = sql.replace("#1", reviewListSearchVO.getType());
+		Object[] param = new Object[] {reviewListSearchVO.getKeyword()};
+		return jdbcTemplate.queryForObject(sql, int.class, param);
+	}
+	
+	
+
 }
