@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.semi.repository.BasketDao;
+import com.kh.semi.repository.CouponDao;
 import com.kh.semi.repository.CouponUseDao;
 import com.kh.semi.repository.MemberDao;
 import com.kh.semi.repository.OrdersDao;
@@ -24,9 +25,12 @@ public class OrderServiceImpl implements OrderService{
 	@Autowired
 	private BasketDao basketDao;
 	@Autowired
-	private MemberDao memberDao;
+	private MemberDao memberDao; 
 	@Autowired
 	private CouponUseDao couponUseDao;
+	@Autowired
+	private CouponDao couponDao;
+	
 
 	@Override
 	public void buy(OrderVO orderVO, Integer CouponIssue) {
@@ -63,11 +67,17 @@ public class OrderServiceImpl implements OrderService{
 				
 				// 결제금액만큼 보유 포인트 차감
 				memberDao.minusPayPrice(orderVO.getOrderId(), orderVO.getOrderPayPrice());
-
-				 //쿠폰사용했을 경우 쿠폰사용내역, 보유쿠폰 테이블 정보 변경
-				if(CouponIssue != null) {
+				
+				if(CouponIssue != null) {			
+					// 쿠폰사용했을 경우 쿠폰사용내역추가 보유쿠폰 테이블 정보 변경
 					couponUseDao.insert(orderNo, CouponIssue);
+					couponDao.update(CouponIssue);
+
+					// couponIssue를 가지고 쿠폰 사용 여부를 바꾸기
 				}
-		
+				else {
+					return;
+				}
+	
 	}
 }
