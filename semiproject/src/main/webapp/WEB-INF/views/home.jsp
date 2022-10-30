@@ -196,7 +196,7 @@
        		<button type="submit" class="btnclose">닫기</button>
     	</div> <!--popup-->
 	</div>  <!--popup-wrap-->
-
+	
 	
 <%-- footer.jsp 불러오기 --%>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
