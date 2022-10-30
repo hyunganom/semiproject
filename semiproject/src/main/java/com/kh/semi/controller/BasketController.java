@@ -1,6 +1,5 @@
 package com.kh.semi.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -11,9 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.semi.constant.SessionConstant;
-import com.kh.semi.entity.AttachmentDto;
+import com.kh.semi.entity.BasketDto;
 import com.kh.semi.repository.AttachmentDao;
 import com.kh.semi.repository.BasketDao;
 import com.kh.semi.vo.BasketVO;
@@ -49,5 +49,25 @@ public class BasketController {
 		basketDao.delete(productNo);
 		return "redirect:/basket/list";
 	}
+	
+	//선택상품 삭제
+	@GetMapping("/delete_2")
+	@ResponseBody
+	public String selectDelete(@RequestParam int basketNo) {
+		basketDao.clearbasket(basketNo);
+		return "success";
+	}
+	
+	@GetMapping("/update")
+	@ResponseBody
+	public String update(@RequestParam int basketNo,
+			@RequestParam int cnt) {
+		BasketDto dto = new BasketDto();
+		dto.setBasketNo(basketNo);
+		dto.setBasketCountNumber(cnt);
+		basketDao.changeCount(dto);
+		return "success";
+	}
+	
 
 }

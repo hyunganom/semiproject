@@ -69,15 +69,14 @@
 
 <script type="text/javascript">
 	$(function(){
-		<!-- model로 넘어온 basketVO의 상품가격, 수량 js에서도 사용가능하도록 처리 -->
-		var prices = new Array();
-		var cnts = new Array();
+ 		<!-- model로 넘어온 basketVO의 상품가격, 수량 js에서도 사용가능하도록 처리 -->
+		var price = new Array();
+		var cnt = new Array();
 		<c:forEach items="${basketVO}" var="vo">
-			prices.push("${vo.productPrice}");
-			cnts.push("${vo.basketCountNumber}");
-		</c:forEach>
-	
-
+			price.push("${vo.productPrice}");
+			cnt.push("${vo.basketCountNumber}");
+		</c:forEach> 
+		
 		<!-- 처음 들어왔을 때 전체선택 체크되게 하기 -->
 		var items = "${basketVO.size()==0}";
 		if(items=='false'){
@@ -112,25 +111,26 @@
     		}
     		total();
     	});
+
     	
-		<!-- 상품 금액(콜백함수) -->
-		function calcul(){
+    	<!-- 상품 금액(콜백함수) -->
+    	function calcul(){
 			var count = $(".checked").length;
 			var sum = 0;
-            for (var i = 0; i < count; i++) {
-                if ($(".checked")[i].checked == true) {
-                	var cnt = parseInt($(".cnt").val());
-                	var price = parseInt($(".price").text());
-                    sum += (cnt*price);
-                }
-            }
+			$(".checked").each(function(){ // .checked만 반복
+				if($(this).prop("checked")){ // 체크가 되있는지 확인
+					var cnt = parseInt($(this).parent().siblings(".cnt-wrap").find(".cnt").val());
+                	var price = parseInt($(this).parent().siblings(".price-wrap").find(".price").text());
+					sum += (cnt*price);
+				}
+			});
             return sum;
 		}
-
+		
 		<!-- 배송비(콜백함수) -->
 		function deliveryFee(){
 			var itemsPrice = parseInt($(".total-items").text()); //상품금액
-			var delivery;
+			var delivery; //배송비
 			if(itemsPrice>=50000){
 				delivery=0;
 			}else{
@@ -151,33 +151,83 @@
 			$(".total-price").text(calcul()+deliveryFee());
 		}
 		
-		<!--수량 변경 버튼 이벤트 -->
-		//플러스 버튼을 누를 경우 수량증가
-		$(".plus").click(function(){
-			var plus = parseInt($(".cnt").val())+1;
-			$(".cnt").val(plus);
-			$(".minus").attr("disabled",false);
-		});
+		//ajax 호출하기 위한 함수
+ 		function updateBasketCnt(basketNo, cnt){
+ 			$.ajax({
+ 				url:"http://localhost:8888/basket/update?basketNo="+basketNo+"&cnt="+cnt,
+ 				method:"get",
+ 				success:function(resp){
+ 					if(resp==="success"){
+ 						alert("수량이 변경되었습니다!");
+ 						location.reload();
+ 					}else{
+ 						alert("장바구니 수량이 변경되지 않았습니다!");
+ 					}	
+ 				}
+ 			});
+		} 
+
+		
+		<!--수량 변경 버튼 이벤트 -->		
+		//플러스 버튼을 누를 경우 수량증가(배열이므로 형제를 찾아서 선택)
+  		$(".plus").click(function(){
+			var plus = parseInt($(this).prev().val())+1;
+			var basketNo = parseInt($(this).next().val());
+			updateBasketCnt(basketNo, plus);
+			$(this).siblings(".minus").attr("disabled",false); 
+		}); 
 		
 		//마이너스 버튼을 누를 경우 수량감소(1개미만 비활성화 처리)
-		$(".minus").click(function(){
-			var minus = parseInt($(".cnt").val())-1;
-			$(".cnt").val(minus);
-			var judge = $(".cnt").val();
+ 		$(".minus").click(function(){
+			var minus = parseInt($(this).next().val())-1;
+			var basketNo = parseInt($(this).siblings(".basketNo").val());
+			updateBasketCnt(basketNo, minus);
+			var judge = $(this).next().val();
 			if(judge==1){
-				$(".minus").attr("disabled", true);
+				$(this).attr("disabled", true);
+			}else{
+				$(this).attr("disabled", false);
 			}
-		});
+		}); 
 		
 		//수량 직접 입력할 경우
 		$(".cnt").blur(function(){
-			var input = $(this).val();
+			var input = parseInt($(this).val());
+			var basketNo = parseInt($(this).siblings(".basketNo").val());
 			if(input<1){
 				alert('1개 이상의 수량을 입력해주세요!');
+			}else{
+				updateBasketCnt(basketNo, input);
 			}
 		});
 		
+ 		<!--선택 삭제 이벤트 함수 -->
+		function selectDelete(basketNo){
+			$.ajax({
+ 				url:"http://localhost:8888/basket/delete_2?basketNo="+basketNo,
+ 				method:"get",
+ 				success:function(resp){
+ 					if(resp==="success"){
+ 						alert("삭제가 완료되었습니다!");
+ 						location.reload();
+ 					}else{
+ 						alert("삭제실패!");
+ 					}	
+ 				}
+ 			});
+		}
 		
+		
+		<!--선택 삭제 이벤트-->
+ 		$(".select-delete").click(function(){
+ 			var count = $(".checked").length;
+    		$(".checked").each(function(){
+    			if($(this).prop("checked")){
+    				selectDelete($(this).val());
+    			}
+    		});
+ 		});
+ 		
 		<!--주문하기 버튼 이벤트 -->
 		//장바구니에 상품이 없을경우 버튼 클릭시 상품을 담아주세요 문구 출력
 		//상품이 있지만 선택하지 않고 버튼 클릭 시 주문할 상품을 선택해주세요 문구 출력
@@ -226,14 +276,15 @@
 		                        	<span>${vo.productName}<br></span>
 		                        	<span>${vo.basketProductOption}</span>
 		                        </td>
-		                        <td class="center">
+		                        <td class="cnt-wrap">
 		                        	<div>
-			                        	<button class="btns-neutral count_controller minus" type="button" disabled>-</button>
+			                        	<button class="btns-neutral count_controller minus" type="button">-</button>
 			                        	<input class="cnt inputCnt w-33" type="text" value="${vo.basketCountNumber}">
-			                        	<button class="btns-neutral count_controller plus" type="button" >+</button>
+			                        	<button class="btns-neutral count_controller plus" type="button">+</button>
+			                        	<input type="hidden" class="basketNo" value="${vo.basketNo}">
 		                        	</div>
-		                        
-		                        <td>
+		                        </td>
+		                        <td class="price-wrap">
 		                        	<span class="price">	${vo.productPrice}</span>
 		                        	<a href="delete?productNo=${vo.basketProductNo}">
 		                        		<i class="fa-solid fa-trash-can"></i>
@@ -250,7 +301,7 @@
                 <tfoot>
                     <tr>
                         <td colspan="6">
-                            <button class="btns-neutral">선택상품 삭제</button>
+                            <button class="btns-neutral select-delete" type="button">선택상품 삭제</button>
                         </td>
                     </tr>
                 </tfoot>
@@ -259,7 +310,7 @@
 			<table class="table table-slit mt-40">
 				<thead>
 					<tr class="left">
-						<th class="result-count">총 주문 상품 <span class="green">${basketVO.size()}</span>개</th>
+						<th class="result-count">총 주문 상품 <span class="green purchase-cnt">${basketVO.size()}</span>개</th>
 					</tr>
 				</thead>
 				<tbody>

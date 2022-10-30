@@ -10,7 +10,7 @@ public interface BasketDao {
 	//1. 상품 추가
 	void insert(BasketDto basketDto);
 	
-	//2. 상품수량 수정
+	//2-1. 상품수량 수정
 	boolean changeCount(BasketDto basketDto);
 	
 	//3-1 조회(회원아이디로 조회)
