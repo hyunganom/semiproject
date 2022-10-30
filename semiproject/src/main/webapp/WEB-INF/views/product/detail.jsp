@@ -7,7 +7,10 @@
 </jsp:include>
 <!-- 별 스코어 링크 -->
 <script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.min.js"></script> 
+
 <link rel = "stylesheet" type = "text/css" href = "/css/SANGMIN_detail.css">
+
+
 
 <!--본문 시작-->
 <section class="itemsection1">
@@ -81,10 +84,10 @@
 	<%-- 누르는 버튼에 따라 전송하는 Mapping이 다르도록 설정 --%>
 	$(function(){
 		// 만약 구매 버튼을 눌렀다면 
-	    $("#submit-purchase").click(function(){
+/* 	    $("#submit-purchase").click(function(){
 	        $("#product-data").attr("action", "/order/order_ck"); // 상품 구매 Mapping으로 전송
 	        $("#product-data").attr("method", "get"); // get 방식
-	    });
+	    }); */
 		
 		 // 만약 장바구니 버튼을 눌렀다면 /basket Mapping으로 form의 값을 전송
 	    $("#submit-basket").click(function(){

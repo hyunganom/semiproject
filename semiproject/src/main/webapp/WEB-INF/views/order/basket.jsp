@@ -69,14 +69,7 @@
 
 <script type="text/javascript">
 	$(function(){
- 		<!-- model로 넘어온 basketVO의 상품가격, 수량 js에서도 사용가능하도록 처리 -->
-		var price = new Array();
-		var cnt = new Array();
-		<c:forEach items="${basketVO}" var="vo">
-			price.push("${vo.productPrice}");
-			cnt.push("${vo.basketCountNumber}");
-		</c:forEach> 
-		
+
 		<!-- 처음 들어왔을 때 전체선택 체크되게 하기 -->
 		var items = "${basketVO.size()==0}";
 		if(items=='false'){

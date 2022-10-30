@@ -49,13 +49,18 @@ public class OrdersController {
 		
 		// basketNo로 넘어오는 값 처리
 		String[] arr = request.getParameterValues("basketNo");
-		List<BasketVO> orderList = new ArrayList<>();
-		for(int i=0; i<arr.length; i++) {
-			BasketVO vo = basketDao.orderList(Integer.parseInt(arr[i]));
-			orderList.add(vo);
+		if(arr!=null) {
+			List<BasketVO> orderList = new ArrayList<>();
+			for(int i=0; i<arr.length; i++) {
+				BasketVO vo = basketDao.orderList(Integer.parseInt(arr[i]));
+				orderList.add(vo);
+			}
+			// 넘어오는 상품만 model로 출력준비
+			model.addAttribute("basketList", orderList);
+		}else {
+			int basketNo = (Integer)session.getAttribute("basketNo");
+			model.addAttribute("purchaseList", basketDao.orderList(basketNo));
 		}
-		// 넘어오는 상품만 model로 출력준비
-		model.addAttribute("basketList", orderList);
 				
 		// 미사용 쿠폰 model로 출력준비
 		//model.addAttribute("unusedCoupon", couponDao.unUsedCoupon(memberId));		
@@ -63,10 +68,11 @@ public class OrdersController {
 		model.addAttribute("couponUse", couponDao.useCoupon(memberId));		
 		return "order/order_ck";
 	}
+
 	
 	@PostMapping("/order_ck")
 	public String order(@ModelAttribute OrderVO orderVO, 
-			HttpSession session, @RequestParam int couponIssue) {
+			HttpSession session, @RequestParam Integer couponIssue) {
 		String memberId = (String)session.getAttribute(SessionConstant.ID);
 		orderVO.setOrderId(memberId);
 		
@@ -95,7 +101,7 @@ public class OrdersController {
 		return "order/order_fail";
 	}
 	
-	//쿠폰 셀렉트박스 생성 Mapping
+	//쿠폰 셀렉트박스 생성 Mapping - 안쓰는중 나중에 삭제필요
 	@PostMapping("/coupon_select")
 	public String couponSelect(Model model,  HttpSession session) {
 		String memberId = (String)session.getAttribute("loginId");	

@@ -29,7 +29,7 @@ public class OrderServiceImpl implements OrderService{
 	private CouponUseDao couponUseDao;
 
 	@Override
-	public void buy(OrderVO orderVO, int CouponIssue) {
+	public void buy(OrderVO orderVO, Integer CouponIssue) {
 		// 주문번호 시퀀스로 미리 생성 후 세팅
 		int orderNo = ordersDao.sequence();
 		orderVO.setOrderNo(orderNo);
@@ -64,7 +64,12 @@ public class OrderServiceImpl implements OrderService{
 				memberDao.minusPayPrice(orderVO.getOrderId(), orderVO.getOrderPayPrice());
 
 				// 쿠폰사용했을 경우 쿠폰사용내역, 보유쿠폰 테이블 정보 변경
-				couponUseDao.insert(orderNo, CouponIssue);
+				if(CouponIssue != null) {
+					
+					couponUseDao.insert(orderNo, CouponIssue);
+				}
+	
+				
 				
 				
 				
