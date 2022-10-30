@@ -7,6 +7,9 @@ import com.kh.semi.vo.BasketVO;
 
 public interface BasketDao {
 	//장바구니
+	//현재 시퀀스 확인
+	int sequence();
+	
 	//1. 상품 추가
 	void insert(BasketDto basketDto);
 	

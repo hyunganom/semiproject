@@ -46,22 +46,29 @@
 		});
 		
 		<!-- 최종 금액 산출 -->
-		<!-- model로 넘어온 basketList의 상품가격, 수량 js에서도 사용가능하도록 처리 -->
-		<!-- 상품 금액(콜백함수) -->
-		function productPrice(){
-			var prices = new Array();
-			var cnts = new Array();
-			<c:forEach items="${basketList}" var="vo">
-				prices.push("${vo.productPrice}");
-				cnts.push("${vo.basketCountNumber}");
-			</c:forEach>
-			
-			var itemsPrice = 0;
-			for(var i=0; i<${basketList.size()}; i++){
-				itemsPrice += (parseInt(prices[i])*parseInt(cnts[i]));
-			}
-			return itemsPrice;
+    	<!-- 상품 금액(콜백함수) -->
+    	function productPrice(){
+    		var price;
+    		var cnt;
+    		var sum = 0;
+    		var judge = $(".items-count").length==1;
+    		// 바로구매 또는 장바구니 상품 1개만 넘어올 경우
+    		if(judge){
+    			price = parseInt($(".items-price").text());
+    			cnt = parseInt($(".items-count").text());
+    			sum = price*cnt;
+    		// 장바구니에서 여러 상품이 넘어올 경우
+    		}else{
+    			$(".items-count").each(function(){
+    				price = parseInt($(this).parent().next().children().text());
+    				cnt = parseInt($(this).text());
+    				sum += (price*cnt);
+    			});
+    		}
+    		return sum;
 		}
+		
+		
 		<!-- 배송비(콜백함수) -->
 		function deliveryFee(){
 			var itemsPrice = parseInt($(".before-price").text()); //상품금액
@@ -74,13 +81,14 @@
 			}
 			return delivery;
 		}
+		
 		<!-- 총 금액(콜백함수) -->
 		function totalPrice(totalItemPrice, totalDelivery, totalDiscount){
 			var totalItemPrice = parseInt($(".before-price").text());
 			var totalDelivery = parseInt($(".delivery-price").text());
 			var totalDiscount = parseInt($(".point-price").text());
 			//총금액(상품금액+배송비-할인금액)
-			var totalPrice = ((totalItemPrice+totalDelivery)-totalDiscount).toLocaleString();
+			var totalPrice = (totalItemPrice+totalDelivery)-totalDiscount;
 			return totalPrice;
 		}
 		
@@ -209,21 +217,52 @@
             </tr>
           </thead>
           <tbody>
-            <c:forEach var="list" items="${basketList}">
-            	<tr>
-	              <td>
-	              	<div>${list.productName}</div>
-	              	
-	              	<div class="mt-10">${list.basketProductOption}</div>
-	              </td>
-	              <td>
-	              	<div class="center items-count">${list.basketCountNumber}</div>
-	              </td>
-	              <td>
-	              	<div class="center items-price">${list.productPrice}</div>
-	              </td>
-            	</tr>
-            </c:forEach>
+          <c:choose>
+	          <c:when test="${basketList.size()==1}">
+	            <c:forEach var="list" items="${basketList}">
+	            	<tr>
+		              	<td>
+		              		<div>${list.productName}</div>
+		              		<div class="mt-10">${list.basketProductOption}</div>
+		              	</td>
+		              	<td>
+		              		<div class="center items-count">${list.basketCountNumber}</div>
+		              	</td>
+		              	<td>
+		              		<div class="center items-price">${list.productPrice}</div>
+		              	</td>
+	            	</tr>
+	            	</c:forEach>
+	            	<!-- payment에 넘어가야하는 정보(paymentDto형태로 들어가야함!) -->
+			        <c:forEach var="list" items="${basketList}" varStatus="status">
+			        	<input type="hidden" name="payment[${status.index}].basketNo" value="${list.basketNo}">
+						<input type="hidden" name="payment[${status.index}].paymentProductNo" value="${list.basketProductNo}">
+						<input type="hidden" name="payment[${status.index}].paymentCount" value="${list.basketCountNumber}">
+						<input type="hidden" name="payment[${status.index}].paymentPrice" value="${list.productPrice}">
+						<input type="hidden" name="payment[${status.index}].paymentOption" value="${list.basketProductOption}">
+					</c:forEach>
+	            </c:when>
+	            <c:otherwise>
+	            	<tr>
+		              <td>
+		              	<div>${purchaseList.productName}</div>
+		              	<div class="mt-10">${purchaseList.basketProductOption}</div>
+		              </td>
+		              <td>
+		              	<div class="center items-count">${purchaseList.basketCountNumber}</div>
+		              </td>
+		              <td>
+		              	<div class="center items-price">${purchaseList.productPrice}</div>
+		              </td>
+	            	</tr>
+	            	<!-- payment에 넘어가야하는 정보(paymentDto형태로 들어가야함!) -->
+			        <input type="hidden" name="basketNo" value="${purchaseList.basketNo}">
+					<input type="hidden" name="paymentProductNo" value="${purchaseList.basketProductNo}">
+					<input type="hidden" name="paymentCount" value="${purchaseList.basketCountNumber}">
+					<input type="hidden" name="paymentPrice" value="${purchaseList.productPrice}">
+					<input type="hidden" name="paymentOption" value="${purchaseList.basketProductOption}">
+	            </c:otherwise>
+            </c:choose>
             <tr>
               <td colspan="3">
                 <i class="fa-solid fa-angles-right"></i>
@@ -395,14 +434,14 @@
         <input type="hidden" name="orderPayPrice" value="">
         <input type="hidden" name="orderPrice" value="">
         
-        <!-- payment에 넘어가야하는 정보(paymentDto형태로 들어가야함!) -->
+<%--         <!-- payment에 넘어가야하는 정보(paymentDto형태로 들어가야함!) -->
         <c:forEach var="list" items="${basketList}" varStatus="status">
         	<input type="hidden" name="payment[${status.index}].basketNo" value="${list.basketNo}">
 			<input type="hidden" name="payment[${status.index}].paymentProductNo" value="${list.basketProductNo}">
 			<input type="hidden" name="payment[${status.index}].paymentCount" value="${list.basketCountNumber}">
 			<input type="hidden" name="payment[${status.index}].paymentPrice" value="${list.productPrice}">
 			<input type="hidden" name="payment[${status.index}].paymentOption" value="${list.basketProductOption}">
-		</c:forEach>
+		</c:forEach> --%>
 
         <div class="row center">
           <button type="submit" class="btns btns-positive">결제하기</button>

@@ -67,6 +67,11 @@ public class OrderServiceImpl implements OrderService{
 				// 결제금액만큼 보유 포인트 차감
 				memberDao.minusPayPrice(orderVO.getOrderId(), orderVO.getOrderPayPrice());
 
+				// 쿠폰사용했을 경우 쿠폰사용내역, 보유쿠폰 테이블 정보 변경
+				if(CouponIssue != null) {
+					couponUseDao.insert(orderNo, CouponIssue);
+				}
+
 				
 				
 				

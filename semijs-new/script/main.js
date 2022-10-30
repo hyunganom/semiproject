@@ -84,6 +84,44 @@ $(function(){
         });
     });
 
+    // 관리자 페이지 클릭시 드롭다운 메뉴
+    function myadmin(){
+        let click = document.getElementById("mydrop");
+        if(click.style.display === "none"){
+            click.style.display = "block";
+        }
+        else{
+            click.style.display = "none";
+        }
+    }
+    function myadmin2(){
+        let click = document.getElementById("mydrop2");
+        if(click.style.display === "none"){
+            click.style.display = "block";
+        }
+        else{
+            click.style.display = "none";
+        }
+    }
+    function myadmin3(){
+        let click = document.getElementById("mydrop3");
+        if(click.style.display === "none"){
+            click.style.display = "block";
+        }
+        else{
+            click.style.display = "none";
+        }
+    }
+    function myadmin4(){
+        let click = document.getElementById("mydrop4");
+        if(click.style.display === "none"){
+            click.style.display = "block";
+        }
+        else{
+            click.style.display = "none";
+        }
+    }
+
 
 
     // href 에 # 넣으면 기본기능 잠금
