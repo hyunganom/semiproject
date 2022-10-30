@@ -27,49 +27,58 @@
             <div class="adminheader">
                 <nav class="adminmenu">
                     <div class="admintitle">
-                        <h1>관리자 페이지
-                            <a href=""></a>
-                        </h1>
-                    </div>
-                </nav>
-            </div>
+                        <h1>관리자 페이지</h1>
+                        <div class="formdiv3">
+                            <h2 class="search">검색</h2>
+                            <form action="">
+                                <fieldset>
+                                    <legend>
+                                        <input type="submit" class="btnSearch3" value="검색">
+                                        <input type="text" class="textinput3" placeholder="검색어를 입력하시오.">
+                                    </legend>
+                                </fieldset>
+                            </form>
+                        </div> <!--//formdiv3-->                     
+                    </div> <!--//admintitle-->
+                </nav> <!--adminmenu-->
+            </div> <!--adminheader-->
             <div class="adminsidemenu">
                 <ul class="admindrop">
                     <li>        
                         <a href="">관리홈</a>
                     </li>
                     <li class="adminsidemenu1">
-                        <a href="">상품</a>
-                        <ul class="adminsidemenu2">
-                            <li><a href="">- 상품등록</a></li>
-                            <li><a href="">- 상품리스트</a></li>
-                            <li><a href=""></a></li>
-                        </ul>
+                        <button onclick="myadmin()" class="btndrop">상품</button>
+                        <div id="mydrop" style="display: none;">
+                            <a href="">- 상품등록</a>
+                            <a href="">- 상품리스트</a>
+                            <a href=""></a>
+                        </div>
                     </li>
                     <li class="adminsidemenu2">
-                        <a href="">게시판</a> 
-                        <ul class="adminsidemenu2">
-                            <li><a href="">- 1:1 문의</a></li>
-                            <li><a href="">- 리뷰</a></li>
-                            <li><a href="">- 공지사항</a></li>
-                        </ul>
+                        <button onclick="myadmin2()" class="btndrop">게시판</button> 
+                        <div id="mydrop2" style="display: none;">
+                            <a href="">- 1:1 문의</a>
+                            <a href="">- 리뷰</a>
+                            <a href="">- 공지사항</a>
+                        </div>
                     </li>
                     <li class="adminsidemenu3">
-                        <a href="">회원</a>  
-                        <ul class="adminsidemenu3">
-                            <li><a href="">- 회원정보</a></li>
-                        </ul>
+                        <button onclick="myadmin3()" class="btndrop">회원</button>  
+                        <div id="mydrop3" style="display: none;">
+                            <a href="">- 회원정보</a>
+                        </div>
                     </li>
                     <li class="adminsidemenu4">
-                        <a href="">주문</a>      
-                        <ul class="adminsidemenu4">
-                            <li><a href="">- 주문내역</a></li>
-                            <li><a href="">- 결제내역</a></li>
-                            <li><a href="">- 취소내역</a></li>
-                        </ul>
+                        <button onclick="myadmin4()" class="btndrop">주문</button>      
+                        <div id="mydrop4" style="display: none;">
+                            <a href="">- 주문내역</a>
+                            <a href="">- 결제내역</a>
+                            <a href="">- 취소내역</a>
+                        </div>
                     </li>
-                </ul>
-            </div>
+                </ul> <!--//admindrop-->
+            </div> <!--//adminsidemenu-->
                 
     
                 
