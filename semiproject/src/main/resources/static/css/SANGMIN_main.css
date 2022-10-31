@@ -121,19 +121,20 @@
 .scrollbanner ul{
     text-align: center;
     font-size: 35px;
+    margin-top: 30px;
     padding-bottom: 20px;
 }
 .scrolltop {
     position: absolute;
-    top: 60%;
-    left: 30%;
-    font-size: 40px;
+    top: 50%;
+    left: 35%;
+    font-size: 30px;
 }
 .scrolldown {
     position: absolute;
-    top: 80%;
-    left: 30%;
-    font-size: 40px;
+    top: 65%;
+    left: 35%;
+    font-size: 30px;
 }
 .popup-wrap .popup{
     position: absolute;

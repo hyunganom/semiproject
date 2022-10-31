@@ -4,21 +4,25 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<%-- 관리자 메뉴일 경우와 아닐 경우 다른 헤더를 설정 --%>
-<c:choose>
-	<c:when test="${mg == '관리자'}">
-		<jsp:include page="/WEB-INF/views/template/adminHeader.jsp">
-			<jsp:param value="${memberDto.memberId} 회원 상세 정보" name="title"/>
-		</jsp:include>
-	</c:when>
-	<c:otherwise>
-		<jsp:include page="/WEB-INF/views/template/header.jsp">
-			<jsp:param value="${memberDto.memberId} 회원 상세 정보" name="title"/>
-		</jsp:include>
-	</c:otherwise>
-</c:choose>
+<jsp:include page="/WEB-INF/views/template/header.jsp">
+	<jsp:param value="공지 게시판 글 수정 페이지" name="title"/>
+</jsp:include>
+
 
 <style>
+#td-top{
+	vertical-align : top;
+	margin-top: 20px;
+}
+
+#th-color{
+	background-color: #efefef;
+}
+
+#border tr, th{
+	border: 1px solid black;
+}
+
 /* 확장스타일 : 테두리가 있는 테이블 */
 	.table.table-border {
 		border:1px solid gray;
@@ -63,53 +67,37 @@
 		background: #efefef;
 	}
 </style>
-
-<div class="container-500 mt-40 mb-40">
-	<div class="row center">
-		<h1>공지 상세</h1>
-		<table class="table table-slit table-border mt-20" border="1" width="450">
+<div class = "container-1200">
+	<div class = "row center">
+	
+		<table class="table" id="border" >
 			<tbody>
 				<tr>
-					<th>공지 번호</th>
+					<th id="th-color">공지글 번호</th>
 					<td>${noticeDto.noticeNo}</td>
+					<th id="th-color">공지글 작성자</th>
+					<td align="center" width="35%">${noticeDto.noticeId}</td>
 				</tr>
 				<tr>
-					<th>작성자</th>
-					<td>${noticeDto.noticeId}</td>
+					<th height="60" id="th-color">공지글 제목</th>
+					<th colspan="3" >${noticeDto.noticeTitle}</th>
 				</tr>
 				<tr>
-					<th>제목</th>
-					<td>${noticeDto.noticeTitle}</td>
+					<th height="300" id="th-color">공지글 내용</th>
+					<td colspan="3" align="left" id="td-top">${noticeDto.noticeContent}</td>
 				</tr>
 				<tr>
-					<th>내용</th>
-					<td>${noticeDto.noticeContent}</td>
-				</tr>
-				<tr>
-					<th>작성일</th>
+					<th id="th-color">작성일</th>
 					<td>${noticeDto.noticeWritedate}</td>
-				</tr>
-				<tr>
-					<th>수정일</th>
+					<th id="th-color">수정일</th>
 					<td>${noticeDto.noticeUpdatedate}</td>
 				</tr>
-				<tr>
-					<td>조회수</td>
-					<td>${noticeDto.noticeRead}</td>
 				
-				</tr>
-				
-				<tr>
-					<td><a href = "editAdmin?noticeNo=${noticeDto.noticeNo}">수정</a></td>
-					<td><a href = "deleteAdmin?noticeNo=${noticeDto.noticeNo}">삭제</a></td>
-					<td><a href = "/notice/list">목록으로</a></td>
-				</tr>
 			</tbody>
 		</table>
-		
-
-	</div>
+		</div>
 </div>
+
 	
 <%-- footer.jsp 불러오기 --%>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

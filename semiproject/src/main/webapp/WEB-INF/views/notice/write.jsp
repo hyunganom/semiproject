@@ -9,28 +9,21 @@
 
 <div class = "container-1200">
 
+<form action = "write" method = "post">
 	<div class = "row">
-		<h1>공지 게시판 글 작성</h1>
-	</div>
-	
-	<form action = "write" method = "post" enctype = "multipart/form-data">
-	<div class = "row">
-		공지 제목 : <input name = "noticeTitle">
+	<input name = "noticeTitle" class="input input-underline w-50" placeholder="공지 제목">
 	</div>
 	
 	<div class = "row">
-		공지 내용 : <input name = "noticeContent">
+		<textarea name = "noticeContent" class="input w-100 fix-size mt-10" rows="8" placeholder="공지 내용을 입력해 주세요."></textarea>
 	</div>
 	
-	<div>
-		<button type = "submit">작성</button>
-	</div>
 	
-	<div>
-		<a href = "list">목록</a>
+	<div class = "row right">
+				<a href="list" class="btn btn-neutral">취소</a>
+				<button type = "submit" class="btn">작성</button>
 	</div>
-	</form>
-
+</form>
 </div>
 
 
