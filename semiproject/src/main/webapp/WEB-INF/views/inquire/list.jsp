@@ -148,14 +148,7 @@
 				<td><a href = "detail?inquireNo=${inquireList.inquireNo}">${inquireList.inquireTitle}</a></td>
 				<td>${inquireList.inquireWritetime}</td>
 				<td>${inquireList.inquireUpdatetime}</td>
-				<c:choose>
-					<c:when test="${inquireList.inquireHasReply}">
-					<td>답변확인</td>
-					</c:when>
-				<c:otherwise>
-					<td>확인중</td>
-				</c:otherwise>
-				</c:choose>
+				<td>${inquireList.inquireHasReply}</td>
 				<td><a href = "edit?inquireNo=${inquireList.inquireNo}">수정</a></td>
 				<td><a href = "delete?inquireNo=${inquireList.inquireNo}">삭제</a></td>
 			</tr>
