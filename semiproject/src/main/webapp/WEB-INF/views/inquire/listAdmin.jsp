@@ -120,7 +120,7 @@
 	<%-- 일단 상품명 조회만 추가했으며 차후 테이블 조인을 통해 카테고리 이름으로도 조회가 가능하도록 바꿀 예정 --%>
 	<select name = "type" style="height:56px;" >
 		<option value = "inquire_title"   <c:if test = "${inquireListSearchVO.type == 'inquire_title'}">selected</c:if>>제목</option>
-		<option value = "inquire_id"   <c:if test = "${inquireListSearchVO.type == 'inquire_id'}">selected</c:if>>아이디</option>
+		<option value = "inquire_id"   <c:if test = "${inquireListSearchVO.type == 'inquire_id'}"></c:if>>아이디</option>
 	</select>
 	<input class="input" name = "keyword" value = "${inquireListSearchVO.keyword}">
 	<button style="width:40px; height:56px;" type = "submit">검색</button>

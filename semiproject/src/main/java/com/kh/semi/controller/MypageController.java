@@ -145,8 +145,13 @@ public class MypageController {
 	@GetMapping("/review_list")
 	public String list(HttpSession session, Model model) {
 		
+		//1. 세션에 들어있는 아이디를 꺼낸다
 		// 현재 로그인 중인 회원 아이디 반환
 		String loginId = (String) session.getAttribute("loginId");
+		//2. 아이디를 이용하여 회원 정보를 불러온다
+		CouponCountVO couponMember = couponDao.selectOne(loginId);
+		//3. 불러온 회원 정보를 모델에 첨부한다
+		model.addAttribute("memberDto", couponMember);	
 		
 		// 반환한 회원 아이디로 작성한 리뷰 조회를 실행한 후 그 결과를 Model에 추가
 		model.addAttribute("reviewList", reviewDao.selectMypageAllReview(loginId));

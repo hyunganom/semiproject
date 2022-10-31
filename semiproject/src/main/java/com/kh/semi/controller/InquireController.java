@@ -273,6 +273,10 @@ public class InquireController {
 			inquireReplyDto.setInquireReplyId(memberId);
 			//댓글 파라미터에서 요청이 들어온 값을 DB에 집어넣는다.
 			inquireReplyDao.replyWrite(inquireReplyDto);
+			
+			//댓글작성시 문의글 답변완료으로 변경
+			inquireDao.updateHasReply(inquireReplyDto.getInquireOriginNo());
+			
 			//1:1문의 원본글 
 			attr.addAttribute("inquireNo",inquireReplyDto.getInquireOriginNo());
 			

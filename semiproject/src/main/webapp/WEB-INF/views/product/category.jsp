@@ -9,6 +9,22 @@
 <script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.min.js"></script> 
 <link rel = "stylesheet" type = "text/css" href = "/css/SANGMIN_category.css">
 
+<script type="text/javascript">
+
+	$(function(){
+	    $(".star-score").score({
+	    	starColor:"red", // 별 색상 (기본 : 금색)
+            integerOnly:false, // 반올림
+            display:{
+                showNumber:false, // 숫자 표시
+                placeLimit:1, // 소수점 자릿수
+                textColor:"red", // 숫자 색상 (기본 : 금색)
+            }
+	    });
+	});
+	
+</script>
+
 <div class="header5">
     <div class="inner">
         <div class="listselect">
@@ -242,7 +258,11 @@
 				<a href = "detail?productNo=${productList.productNo}&categoryHighSub=${productList.categoryHighSub}">${productList.productName}</a>
 			</td>
 			<td>${productList.productPrice}</td>
-			<td><fmt:formatNumber value="${productList.productGood}" type="number" pattern="0.0"/></td>
+			<td>
+				<%-- 카테고리에 대한 VO에서 별점에 관한 자료형을 double로 변경 --%>
+				<div class = "star-score" data-max="5" data-rate = "${productList.productGood}"></div>
+				<fmt:formatNumber value="${productList.productGood}" type="number" pattern="0.0"/>
+			</td>
 			<td>${productList.productInactive}</td>
 			<td><img width=50 height=50 src="/attachment/download/productTumbnail?attachmentNo=${productList.productAttachmentNo}"></td>
 		</tr>
