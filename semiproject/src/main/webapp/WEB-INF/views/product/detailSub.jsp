@@ -18,6 +18,40 @@
     	font-size : 10px;
     }
     
+    .table.table-border > thead > tr > th,
+.table.table-border > thead > tr > td,
+.table.table-border > tbody > tr > th,
+.table.table-border > tbody > tr > td,
+.table.table-border > tfoot > tr > th,
+.table.table-border > tfoot > tr > td {  
+    border: 1px solid #e5e7eb;
+}
+
+#td-top{
+	text-align: left;
+	vertical-align : top;
+	margin-top: 20px;
+}
+
+#td-font1{
+	 font-size: 20px;
+	 color : #848484;
+}
+
+#td-font2{
+	 font-size: 20px;
+	 color : #58FA82;
+}
+
+#td-font3{
+	 font-size: 20px;
+	 font-weight: bold;
+}    
+
+#td-font4{
+	 font-size: 20px;
+}    
+    
 </style>
 
 <script type="text/javascript">
@@ -170,27 +204,25 @@
       	</div> <!--//itemimage-->
   	</div> <!--//inner-->
 </section> <!--//itemsection2-->
-	
-<section class="itemsection3">
-   	<div class="review mt-10 mb-10">
-       	<img src="/image/itemreview.png" alt="구매후기/포토후기">
+
+<section >
+   	<div class=" mt-10 mb-10 center">
+       	<img src="/image/itemreview.png" width=500 height=150  alt="구매후기/포토후기">
    	</div>
 </section> <!--//itemsection3-->
-		
-<div class = "container-800">
+<div class = "container-1200 mt-50 center mb-50">
 	<c:forEach var = "productReviewList" items = "${productReviewList}">
-		<table class="table mt-10 mb-10">
+		<table class="table mt-10 mb-10 " >
 			 <tr>
 			 	<td class="img center" width="80">
-			 		리뷰 별점 : ${productReviewList.reviewGood} <br>
-			 		<img width=50 height=50 src="/attachment/download/reviewImg?attachmentNo=${productReviewList.reviewAttachmentNo}">
+			 		<img width=150 height=150 src="/attachment/download/reviewImg?attachmentNo=${productReviewList.reviewAttachmentNo}"><br>
+			 		리뷰 별점 : ${productReviewList.reviewGood} 
 			 	</td>
-			 	<td class="row left" width="400" height="30">
-				 	작성자 : ${productReviewList.reviewId} <br>
-				 	작성일 : ${productReviewList.reviewWritetime} <br><br>
-				 	제목 : ${productReviewList.reviewTitle}<br>
-				 	옵션 : ${productReviewList.paymentOption} <br>
-				 	내용 : ${productReviewList.reviewContent} <br>
+			 	<td id="td-top" width="400" height="30">
+				 <p id="td-font1">${productReviewList.reviewId} &nbsp  [ ${productReviewList.reviewWritetime} ]</p><br><br>
+				 <p id="td-font2">${productDto.productName}</p><br><br><br><br><br>
+				 <p id="td-font3">${productReviewList.reviewTitle}</p><br>
+				 <p id="td-font4">${productReviewList.reviewContent}</p> <br>
 			 	</td>
 			 </tr>
 		</table>
@@ -198,34 +230,6 @@
 	</c:forEach>
 </div>
 
-<div class = "container-1200 mt-50 center">
-	<c:forEach var = "productReviewList" items = "${productReviewList}">
-		<div class = "row w-100" style = "background-color : skyblue;">
-			<div class = "row">
-				리뷰 작성자 : ${productReviewList.reviewId}
-			</div>
-			<div class = "row">
-				리뷰 작성일 : ${productReviewList.reviewWritetime}
-			</div>
-			<div class = "row">
-				상품 옵션 : ${productReviewList.paymentOption}
-			</div>
-			<div class = "row">
-				리뷰 별점 : ${productReviewList.reviewGood}
-				<div class="item-score" data-max="5" data-rate="${productReviewList.reviewGood}"></div>
-			</div>
-			<div class = "row">
-				리뷰 제목 : ${productReviewList.reviewTitle}
-			</div>
-			<div class = "row">
-				리뷰 내용 : ${productReviewList.reviewContent}
-			</div>
-			<div class = "row">
-				리뷰 첨부파일 이미지 :<img width=50 height=50 src="/attachment/download/reviewImg?attachmentNo=${productReviewList.reviewAttachmentNo}">
-			</div>
-		</div>
-	</c:forEach>
-</div>
 
 <%-- 사용할 수 있는 값들
 ${productDto.productNo}
