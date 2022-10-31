@@ -167,7 +167,7 @@
  				method:"get",
  				success:function(resp){
  					if(resp==="success"){
- 						alert("수량이 변경되었습니다!");
+ 						//alert("수량이 변경되었습니다!");
  						location.reload();
  					}else{
  						alert("장바구니 수량이 변경되지 않았습니다!");
@@ -217,7 +217,7 @@
  				method:"get",
  				success:function(resp){
  					if(resp==="success"){
- 						alert("삭제가 완료되었습니다!");
+ 						//alert("삭제가 완료되었습니다!");
  						location.reload();
  					}else{
  						alert("삭제실패!");
