@@ -57,10 +57,6 @@
 		<h1>상품 목록</h1>
 	</div>
 		
-	<div class="row right">
-		<a href = "insert">등록</a>
-	</div>		
-		
 	<div class="row">
 	<table class="table table-slit table-hover table-border">
 		<thead>
@@ -91,19 +87,19 @@
 				<td>${productList.productPrice}</td>
 				<td>${productList.productInformation}</td>
 				<td>${productList.productInventory}</td>
-				<td>${productList.productGood}</td>
+				<td><fmt:formatNumber value="${productList.productGood}" type="number" pattern=".00"/></td>
 				<td>${productList.productRegisttime}</td>
 				<td>${productList.productUpdatetime}</td>
 				<td>${productList.productInactive}</td>
 				<td><a href = "edit?productNo=${productList.productNo}">수정</a></td>
-				<td><a href = "delete?productNo=${productList.productNo}">삭제<br>(비활성화)</a></td>
-				<td><a href = "deleteAdmin?productNo=${productList.productNo}">삭제<br>(DELETE)</a></td>
+				<td><a href = "inactive?productNo=${productList.productNo}">삭제<br>(비활성화)</a></td>
+				<td><a href = "delete?productNo=${productList.productNo}">삭제<br>(DELETE)</a></td>
 			</tr>
 			</c:forEach>
 		</tbody>	
 		<tfoot>
 			<tr align = "right">
-				<td colspan = "15"><a href = "insert">등록</a></td>
+				<td colspan = "15"><a href = "insert"><i class="fa-solid fa-plus"></i> 등록</a></td>
 			</tr>
 		</tfoot>
 	</table>

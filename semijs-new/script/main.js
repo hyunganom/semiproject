@@ -84,6 +84,23 @@ $(function(){
         });
     });
 
+    // 관리자 페이지 클릭시 드롭다운 메뉴
+    $(document).ready(function(){
+        $('button.btndrop').click(function(){
+            $('.btndropsub').slideToggle();
+        });
+        $('button.btndrop2').click(function(){
+            $('.btndropsub2').slideToggle();
+        });
+        $('button.btndrop3').click(function(){
+            $('.btndropsub3').slideToggle();
+        });
+        $('button.btndrop4').click(function(){
+            $('.btndropsub4').slideToggle();
+        });
+    });
+    
+
 
 
     // href 에 # 넣으면 기본기능 잠금
