@@ -12,10 +12,10 @@
 	.table> tbody> tr > td{
 		padding:32px 0px;
 	}
-	.table.table-slit > thead{
+	.table.table-slitt > thead{
 		border-bottom:1px solid #d8dbe0;
 	}
-	.table.table-slit > thead > tr > th{
+	.table.table-slitt > thead > tr > th{
 		padding:10px;
 	}
 	.total-items, .total-delivery, .total-price{
@@ -326,7 +326,7 @@
                 </tfoot>
             </table>
 			
-			<table class="table table-slit mt-40">
+			<table class="table table-slitt mt-40">
 				<thead>
 					<tr class="left">
 						<th class="result-count">총 주문 상품 <span class="green purchase-cnt">${basketVO.size()}</span>개</th>
