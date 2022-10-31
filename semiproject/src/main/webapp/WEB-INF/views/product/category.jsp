@@ -22,6 +22,10 @@
 		font-size: 15px;
 	}
 	
+	#product-good {
+		color : red;
+	}
+	
 </style>
 
 <script type="text/javascript"> /* 자바 스크립트 */
@@ -71,8 +75,8 @@
                 			${productList.productPrice}원
                 		</div>
                 		<div class = "row">
-                			<div class = "star-score" data-max="5" data-rate = "${productList.productGood}"></div>
-                			<span style="color: red;">${productList.productGood}</span>
+                			<div id = "product-good" class = "star-score" data-max="5" data-rate = "${productList.productGood}"></div>
+                			<span id = "product-good">${productList.productGood}</span>
                 		</div>
                 		
 					</div>
