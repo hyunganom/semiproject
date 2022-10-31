@@ -36,7 +36,7 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 		registry.addInterceptor(adminInterceptor)
 		.addPathPatterns(
 				"/member/list", //회원목록
-				"/member/detail", //회원상세
+//				"/member/detail", //회원상세
 				"/member/change"//회원수정
 				);
 		
