@@ -17,6 +17,7 @@ import com.kh.semi.entity.CouponDto;
 import com.kh.semi.entity.MemberDto;
 import com.kh.semi.repository.CouponDao;
 import com.kh.semi.repository.MemberDao;
+import com.kh.semi.vo.MemberSearchVO;
 
 @Controller
 @RequestMapping("/member")
@@ -47,7 +48,7 @@ public class MemberController {
 				.couponId(memberId)
 				.couponStartdate(couponDto.getCouponStartdate())
 				.couponEnddate(couponDto.getCouponEnddate())
-				.couponYn(couponDto.getCouponYn())			
+				.couponValid(couponDto.getCouponValid())			
 				.build()						
 				);
 		
@@ -60,20 +61,38 @@ public class MemberController {
 		return "member/joinFinish";
 	}
 	
-	//회원목록
+//	//회원목록
+//	@GetMapping("/list")
+//	public String list(Model model, 
+//			@RequestParam(required = false)	String type, 
+//			@RequestParam(required = false) String keyword) {
+//		boolean isSearch = type != null && keyword != null;
+//		if(isSearch) {
+//			model.addAttribute("list", memberDao.selectList(type, keyword));
+//		}
+//		else {
+//			model.addAttribute("list", memberDao.selectList());
+//		}
+//		return "member/list";
+//	}
+//	
+	
+	//목록(페이징처리)
+	
 	@GetMapping("/list")
-	public String list(Model model, 
-			@RequestParam(required = false)	String type, 
-			@RequestParam(required = false) String keyword) {
-		boolean isSearch = type != null && keyword != null;
-		if(isSearch) {
-			model.addAttribute("list", memberDao.selectList(type, keyword));
-		}
-		else {
-			model.addAttribute("list", memberDao.selectList());
-		}
-		return "member/list";
+	public String list(Model model,
+			@ModelAttribute(name="vo") MemberSearchVO vo) {
+	
+	int count = memberDao.count(vo);
+	vo.setCount(count);
+	
+	model.addAttribute("list",memberDao.selectList(vo));
+	model.addAttribute("param",vo);
+	return "member/list";
 	}
+	
+	
+	
 	
 	//회원상세
 	@GetMapping("/detail")

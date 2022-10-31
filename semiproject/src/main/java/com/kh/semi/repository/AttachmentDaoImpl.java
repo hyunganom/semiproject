@@ -1,7 +1,5 @@
 package com.kh.semi.repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +9,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.kh.semi.entity.AttachmentDto;
-import com.kh.semi.vo.ProductAttachmentVO;
 
 
 //첨부파일 조회 등록 기능
@@ -149,4 +146,23 @@ public class AttachmentDaoImpl implements AttachmentDao{
 		Object[] param = new Object[] {inquireAttachmentOriginNo};
 		return jdbcTemplate.query(sql, mapper, param);
 	}
+
+
+	//리뷰 이미지 업로드 등록
+	@Override
+	public void reviewConnectAttachment(int reviewAttachmentOriginNo, int attachmentNo) {
+		String sql = "insert into review_attachment values(?, ?)";
+		Object[] param = {reviewAttachmentOriginNo, attachmentNo};
+		jdbcTemplate.update(sql, param);
+		
+	}
+
+
+	@Override
+	public List<AttachmentDto> selectReviewAttahmentList(int reviewAttachmentOriginno) {
+		String sql = "select A.* from review_attachment R inner join attachment A on r.review_attachment_no = A.attachment_no where r.review_attachment_origin_no= ?";
+		Object[] param = {reviewAttachmentOriginno};
+		return jdbcTemplate.query(sql, mapper, param);
+	}
+	
 }

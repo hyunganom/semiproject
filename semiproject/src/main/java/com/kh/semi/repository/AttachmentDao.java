@@ -32,4 +32,11 @@ public interface AttachmentDao {
 	
 	// 추상 메소드 - 문의 게시판 첨부파일 업로드 기록 조회(SELECT)
 	public List<AttachmentDto> selectInquireAttachmentList(int inquireAttachmentOriginNo);
+	
+	//리뷰첨부파일 연결테이블 삽입기능
+	void reviewConnectAttachment(int reviewAttachmentOriginNo, int attachmentNo);
+	
+	//리뷰 첨부파일 조회
+	public List<AttachmentDto> selectReviewAttahmentList(int reviewAttachmentOriginno);
+	
 }
