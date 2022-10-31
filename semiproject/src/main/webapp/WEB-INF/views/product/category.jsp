@@ -6,15 +6,31 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp">
 	<jsp:param value="상품 목록 페이지" name="title"/>
 </jsp:include>
-<script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.min.js"></script> 
+
+<script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.js"></script>
+
 <link rel = "stylesheet" type = "text/css" href = "/css/SANGMIN_category.css">
 
-<script type="text/javascript">
+<style> /* 스타일 */
+
+	#img-inactive {
+		opacity : 0.5;
+	}
+	
+	#p-inf {
+		color : #900020;
+		font-size: 15px;
+	}
+	
+</style>
+
+<script type="text/javascript"> /* 자바 스크립트 */
 
 	$(function(){
 	    $(".star-score").score({
 	    	starColor:"red", // 별 색상 (기본 : 금색)
             integerOnly:false, // 반올림
+            
             display:{
                 showNumber:false, // 숫자 표시
                 placeLimit:1, // 소수점 자릿수
@@ -33,14 +49,32 @@
             <ul class="itemW">
                    	<c:forEach var = "productList" items = "${productList}">
                 <li>
-                	<div class="listimg1">
-						<p><a href= "detail?productNo=${productList.productNo}&categoryHighSub=${productList.categoryHighSub}"><img src="/attachment/download/productTumbnail?attachmentNo=${productList.productAttachmentNo}"></a></p>
-						<p>${productList.categoryHighSub}</p>
-						<p>${productList.productNo}</p>
-						<p><a href = "detail?productNo=${productList.productNo}&categoryHighSub=${productList.categoryHighSub}">${productList.productName}</a></p>
-						<p>${productList.productPrice}</p>
-						<p>${productList.productGood}</p>
-						<p>${productList.productInactive}</p>
+                	<div class="listimg1 center">
+                		<div class = "row">
+                			<a href= "detail?productNo=${productList.productNo}&categoryHighSub=${productList.categoryHighSub}">
+								<c:choose>
+									<c:when test = "${productList.productInactive}">
+										<img src="/attachment/download/productTumbnail?attachmentNo=${productList.productAttachmentNo}" id = "img-inactive">
+									</c:when>
+									<c:otherwise>
+										<img src="/attachment/download/productTumbnail?attachmentNo=${productList.productAttachmentNo}">
+									</c:otherwise>
+								</c:choose>
+							</a>
+                		</div>
+                		<div class = "row">
+                			<a href= "detail?productNo=${productList.productNo}&categoryHighSub=${productList.categoryHighSub}">
+								<span id = "p-inf">${productList.productName}</span>
+							</a>
+                		</div>
+                		<div class = "row">
+                			${productList.productPrice}원
+                		</div>
+                		<div class = "row">
+                			<div class = "star-score" data-max="5" data-rate = "${productList.productGood}"></div>
+                			<span style="color: red;">${productList.productGood}</span>
+                		</div>
+                		
 					</div>
                 </li>
 					</c:forEach>
@@ -85,40 +119,6 @@
 	<input name = "keyword" value = "${productListSearchCategoryVO.keyword}">
 	<button type = "submit">검색</button>
 </form>
-
-<div class = "container-1200">
-	
-	<div class = "row">
-		<a><img></a>
-	</div>
-
-</div>
-
-
-
-<table> <%-- 임시로 추가 --%>
-	<tbody>
-		<c:forEach var = "productList" items = "${productList}">
-		<tr>
-			<td>구독상품인가 : ${productList.categoryHighSub}</td>
-			<td>번호 : ${productList.productNo}</td>
-			<td>
-				<a href = "detail?productNo=${productList.productNo}&categoryHighSub=${productList.categoryHighSub}">${productList.productName}</a>
-			</td>
-			<td>${productList.productPrice}</td>
-			<td>
-				<%-- 카테고리에 대한 VO에서 별점에 관한 자료형을 double로 변경 --%>
-				<div class = "star-score" data-max="5" data-rate = "${productList.productGood}"></div>
-				<fmt:formatNumber value="${productList.productGood}" type="number" pattern="0.0"/>
-			</td>
-			<td>${productList.productInactive}</td>
-			<td><img width=50 height=50 src="/attachment/download/productTumbnail?attachmentNo=${productList.productAttachmentNo}"></td>
-		</tr>
-		</c:forEach>
-	</tbody>
-</table>
-		
-
 
 <%-- 페이지 이동 --%>
 <div class = "row">
