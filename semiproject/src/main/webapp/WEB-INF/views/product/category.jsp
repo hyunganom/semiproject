@@ -37,7 +37,7 @@
                 <li>
                    <c:forEach var = "productList" items = "${productList}">
 					<tr>
-						<td><p><a href= ""><img width=280px height=280px src="/attachment/download/productTumbnail?attachmentNo=${productList.attachmentNo}"></a></p></td>
+						<td><p><a href= ""><img width=280px height=280px src="/attachment/download/productTumbnail?attachmentNo=${productList.productAttachmentNo}"></a></p></td>
 						<td><p>${productList.categoryHighSub}</p></td>
 						<td><p>${productList.productNo}</p></td>
 						<td>
@@ -232,7 +232,8 @@
 
 
 
-		
+<table> <%-- 임시로 추가 --%>
+	<tbody>
 		<c:forEach var = "productList" items = "${productList}">
 		<tr>
 			<td>구독상품인가 : ${productList.categoryHighSub}</td>
@@ -241,11 +242,13 @@
 				<a href = "detail?productNo=${productList.productNo}&categoryHighSub=${productList.categoryHighSub}">${productList.productName}</a>
 			</td>
 			<td>${productList.productPrice}</td>
-			<td>${productList.productGood}</td>
+			<td><fmt:formatNumber value="${productList.productGood}" type="number" pattern="0.0"/></td>
 			<td>${productList.productInactive}</td>
-			<td><img width=50 height=50 src="/attachment/download/productTumbnail?attachmentNo=${productList.attachmentNo}"></td>
+			<td><img width=50 height=50 src="/attachment/download/productTumbnail?attachmentNo=${productList.productAttachmentNo}"></td>
 		</tr>
 		</c:forEach>
+	</tbody>
+</table>
 		
 
 

@@ -21,6 +21,7 @@ import com.kh.semi.entity.ReviewDto;
 import com.kh.semi.repository.AttachmentDao;
 import com.kh.semi.repository.ProductDao;
 import com.kh.semi.repository.ReviewDao;
+import com.kh.semi.vo.ReviewListSearchVO;
 import com.kh.semi.vo.ReviewPaymentNoVO;
 
 @Controller
@@ -35,9 +36,11 @@ public class ReviewController {
 	@Autowired
 	private ProductDao productDao;
 
+	//첨부파일
 	@Autowired
 	private AttachmentDao attachmentDao;
 	
+	//리뷰 첨부파일 업로드 경로
 	private final File reviewImg = new File("D:\\saluv\\reviewImg");
 	
 	// 1. 리뷰 작성
@@ -49,7 +52,7 @@ public class ReviewController {
 		model.addAttribute("productDto", productDao.selectOneProductUser(reviewPaymentNoVO.getPaymentProductNo()));
 		
 		// 전달받은 reviewPaymentNoVO를 model에 첨부
-		model.addAttribute("reviewPaymentNo", reviewPaymentNoVO.getPaymentNo());
+		model.addAttribute("reviewPaymentNoVO", reviewPaymentNoVO);
 		
 		// 리뷰 작성 페이지(wrtie.jsp)로 이동
 		return  "review/write";
@@ -57,7 +60,8 @@ public class ReviewController {
 	
 	// - DB 처리 및 강제 이동
 	@PostMapping("/write")
-	public String write(HttpSession session, @ModelAttribute ReviewDto reviewDto, @RequestParam int productNo,
+	public String write(HttpSession session, @ModelAttribute ReviewDto reviewDto, 
+			@ModelAttribute ReviewPaymentNoVO reviewPaymentNoVO,
 			@RequestParam List<MultipartFile> attachmentReviewImg//리뷰이미지 첨부파일에 관한 파라미터
 			) throws IllegalStateException, IOException {
 		
@@ -73,11 +77,23 @@ public class ReviewController {
 		// 반환한 시퀀스 번호를 리뷰 번호로 설정
 		reviewDto.setReviewNo(reviewNo);
 		
+		// 리뷰 작성 jsp에서 받아온 reviewPaymentNoVO의 paymentNo를 리뷰의 결제 번호(reviewPaymentNo)로 설정
+		reviewDto.setReviewPaymentNo(reviewPaymentNoVO.getPaymentNo());
+		
 		// 리뷰 작성 전 리뷰의 총 갯수 반환
-		int beforeCount = reviewDao.countBeforeWrite(productNo);
+		int beforeCount = reviewDao.countBeforeWrite(reviewPaymentNoVO.getPaymentProductNo());
 				
 		// 현재 해당 상품의 리뷰 갯수가 0인지에 따라 다른 처리릃 하도록 구현 (0 나누기 0을 하면 에러가 발생하기 때문)
 		if(beforeCount == 0) {
+			
+			// 작성자가 입력한 리뷰 점수 반환
+			int scoreNow = reviewDto.getReviewGood();
+			
+			// 1)과 2)를 사용하여 새로 평균낸 리뷰 평점 구하기
+			double insertScore = (scoreNow * 10) / 10.0;
+			
+			// 새로 평균낸 리뷰 평점을 해당 상품의 리뷰 평점으로 수정
+			reviewDao.updateProductGood(insertScore, reviewPaymentNoVO.getPaymentProductNo());
 			
 			// DB에 등록(INSERT) 처리
 			reviewDao.writeReview(reviewDto);
@@ -85,7 +101,7 @@ public class ReviewController {
 		else {
 			
 			// 리뷰 등록 전 리뷰 총점 반환
-			int scroeBefore = reviewDao.scoreBeforeWrite(productNo);
+			int scroeBefore = reviewDao.scoreBeforeWrite(reviewPaymentNoVO.getPaymentProductNo());
 			
 			// 작성자가 입력한 리뷰 점수 반환
 			int scoreNow = reviewDto.getReviewGood();
@@ -94,7 +110,7 @@ public class ReviewController {
 			int scoreSum = scroeBefore + scoreNow;
 			
 			// 리뷰 등록 전 리뷰의 총 갯수 반환
-			int countBefore = reviewDao.countBeforeWrite(productNo);
+			int countBefore = reviewDao.countBeforeWrite(reviewPaymentNoVO.getPaymentProductNo());
 			
 			// 2) 작성자가 등록하면서 리뷰의 수가 1만큼 증가하므로 이 때의 총 리뷰 수 반환
 			int countSum = countBefore + 1;
@@ -103,14 +119,18 @@ public class ReviewController {
 			double insertScore = (scoreSum * 10) / countSum / 10.0;
 			
 			// 새로 평균낸 리뷰 평점을 해당 상품의 리뷰 평점으로 수정
-			reviewDao.updateProductGood(insertScore, productNo);
+			reviewDao.updateProductGood(insertScore, reviewPaymentNoVO.getPaymentProductNo());
 			
 			// 리뷰를 DB에 등록(INSERT) 처리
 			reviewDao.writeReview(reviewDto);
 		}
 		
+		// 리뷰 등록 후 결제 테이블(payment)의 리뷰 등록 여부(payment_review)를 'Y'로 수정
+		reviewDao.updatePaymentReview(reviewPaymentNoVO.getPaymentNo());
+		
 		//리뷰 첨부파일 이미지 등록처리
 		//1. 시퀀스 발급
+			//첨부파일 시퀀스 발급
 		for(MultipartFile file : attachmentReviewImg) {
 			if(!file.isEmpty()) {
 			//첨부파일 시퀀스 발급
@@ -126,11 +146,72 @@ public class ReviewController {
 			//파일저장
 			File target = new File(reviewImg, String.valueOf(attachmentNo));
 			reviewImg.mkdirs();//폴더 생성 명령
-			file.transferTo(target);//해당폴더에 변환과정을 거쳐서 파일등록
-			//review_attachment 연결테이블 정보 저장
+			file.transferTo(target);
+			//reviewConnectAttachment 연결테이블 정보 저장
 			attachmentDao.reviewConnectAttachment(reviewNo, attachmentNo);
 			}
 		}
-		return "redirect:/";
+		
+		return "redirect:/mypage/order_list";
 	}
+	
+	// 2. 리뷰 수정
+	// 1) 리뷰 수정 페이지로 연결
+	@GetMapping ("/edit")
+	public String reviewEdit(Model model, @ModelAttribute ReviewPaymentNoVO reviewPaymentNoVO) {
+		
+		// 리뷰 번호 존재 여부 판정
+		// - 마이페이지의 결제 내역 jsp에서 연결된 것이라면 리뷰 번호는 없으며 결제 번호와 상품 번호 존재
+		if(reviewPaymentNoVO.getReviewNo() != null) { // 리뷰 번호(reviewNo)가 존재한다면 (마이페이지의 상품 후기 jsp에서 연결된 경우라면)
+		
+			// 리뷰 번호(reviewNo)로 단일 조회 실행 후 그 결과를 Model에 첨부
+			model.addAttribute("reviewVO", reviewDao.selectOneReview(reviewPaymentNoVO.getReviewNo()));
+		}
+		
+		else { // 리뷰 번호(reviewNo)가 존재하지 않는다면 (마이 페이지의 결제 내역 jsp에서 연결된 경우라면)
+			
+			// 결제 번호(paymentNo)로 단일 조회 실행 후 그 결과를 Model에 첨부
+			model.addAttribute("reviewVO", reviewDao.selectOneReviewMyPage(reviewPaymentNoVO.getPaymentNo()));
+		}
+		// 리뷰 수정 jsp로 연결
+		return "review/edit";
+	}
+	
+	// 2) 리뷰 수정 jsp에서 받은 값으로 DB 수정
+	@PostMapping("/edit")
+	public String reviewEdit(@ModelAttribute ReviewDto reviewDto) {
+		reviewDao.updateReview(reviewDto);
+		return "redirect:/mypage/review_list";
+	}
+	
+	//리뷰 삭제기능
+	@GetMapping("/delete")
+	public String reviewDelete(@RequestParam int reviewNo) {
+		reviewDao.delete(reviewNo);
+		return "redirect:/mypage/review_list";
+	}
+	
+	//관리자 페이지에서 전체 리뷰 검색 조회
+	@GetMapping("/adminList")
+	public String adminReviewList(Model model, @ModelAttribute ReviewListSearchVO reviewListSearchVO) {
+		int countTotalReview = reviewDao.countTotalReview(reviewListSearchVO);
+		
+		reviewListSearchVO.setCountTotalReview(countTotalReview);
+		
+		model.addAttribute("reviewList",reviewDao.selectListReview(reviewListSearchVO));
+		
+		return "review/listAdmin";
+	}
+	
+	//관리자 페이지에서 리뷰 상세 조회
+	@GetMapping("/detail")
+	public String detail(@RequestParam int reviewNo, Model model) {
+		model.addAttribute("reviewDto", reviewDao.selectOneDtoReview(reviewNo));
+		model.addAttribute("reviewAttachmentList",attachmentDao.selectReviewAttahmentList(reviewNo));
+		return "review/detailAdmin";
+	}
+	// ** 특정 상품에 대해 작성된 전체 리뷰 목록은 ProductController를 통해 표시
+	
+	// ** 로그인 한 회원이 작성한 전체 리뷰 목록은 MypageController를 통해 표시 
+	
 }
