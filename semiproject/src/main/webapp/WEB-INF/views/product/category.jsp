@@ -9,7 +9,47 @@
 <script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.min.js"></script> 
 <link rel = "stylesheet" type = "text/css" href = "/css/SANGMIN_category.css">
 
-<div class="header5">
+<script type="text/javascript">
+
+	$(function(){
+	    $(".star-score").score({
+	    	starColor:"red", // 별 색상 (기본 : 금색)
+            integerOnly:false, // 반올림
+            display:{
+                showNumber:false, // 숫자 표시
+                placeLimit:1, // 소수점 자릿수
+                textColor:"red", // 숫자 색상 (기본 : 금색)
+            }
+	    });
+	});
+	
+</script>
+
+
+<section class="listsection1">
+    <div class="inner">
+        <h2 class="listitemtitle">이거 유명한거 알지?</h2>
+        <div class="listitem1">
+            <ul class="itemW">
+                   	<c:forEach var = "productList" items = "${productList}">
+                <li>
+                	<div class="listimg1">
+						<p><a href= "detail?productNo=${productList.productNo}&categoryHighSub=${productList.categoryHighSub}"><img src="/attachment/download/productTumbnail?attachmentNo=${productList.productAttachmentNo}"></a></p>
+						<p>${productList.categoryHighSub}</p>
+						<p>${productList.productNo}</p>
+						<p><a href = "detail?productNo=${productList.productNo}&categoryHighSub=${productList.categoryHighSub}">${productList.productName}</a></p>
+						<p>${productList.productPrice}</p>
+						<p>${productList.productGood}</p>
+						<p>${productList.productInactive}</p>
+					</div>
+                </li>
+					</c:forEach>
+            </ul>
+        </div> <!--//listitem1-->
+    </div> <!--//listeitemtitle-->
+</section> <!--listsection1-->
+
+<div class="footer5">
     <div class="inner">
         <div class="listselect">
             <select name="listselect1" hidden>
@@ -28,185 +68,9 @@
             </form>
         </div> <!--//formdiv-->
     </div> <!--//inner-->
-</div> <!--//hearder5-->
-<section class="listsection1">
-    <div class="inner">
-        <h2 class="listitemtitle">이거 유명한거 알지?</h2>
-        <div class="listitem1">
-            <ul>
-                <li>
-                   <c:forEach var = "productList" items = "${productList}">
-					<tr>
-						<td><p><a href= ""><img width=280px height=280px src="/attachment/download/productTumbnail?attachmentNo=${productList.productAttachmentNo}"></a></p></td>
-						<td><p>${productList.categoryHighSub}</p></td>
-						<td><p>${productList.productNo}</p></td>
-						<td>
-							<p><a href = "detail?productNo=${productList.productNo}&categoryHighSub=${productList.categoryHighSub}">${productList.productName}</a></p>
-						</td>
-						<td><p>${productList.productPrice}</p></td>
-						<td><p>${productList.productGood}</p></td>
-						<td><p>${productList.productInactive}</p></td>
-					</tr>
-					</c:forEach>
-                </li>
-                
-            </ul>
-        </div> <!--//listitem1-->
-    </div> <!--//listeitemtitle-->
-</section> <!--listsection1-->
-<section class="listsection2">
-    <div class="inner">
-        <div class="listitem1">
-            <ul>
-                <li>
-                    <div class="listimg1">
-                        <a href=""><img src="image/salad1.jpg" width="280px" height="280px" alt="상품1"></a>
-                    </div>
-                    <p>제목</p>
-                    <p>별점</p>
-                    <p>가격</p>
-                    <p>상품번호</p>
-                    <p>구독여부</p>
-                    <p>비활성화여부</p>
-                </li>
-                <li>
-                    <div class="listimg1">
-                        <a href=""><img src="" alt="상품1"></a>
-                    </div>
-                    <p>제목</p>
-                    <p>별점</p>
-                    <p>가격</p>
-                    <p>상품번호</p>
-                    <p>구독여부</p>
-                    <p>비활성화여부</p>
-                </li>
-                <li>
-                    <div class="listimg1">
-                        <a href=""><img src="" alt="상품1"></a>
-                    </div>
-                    <p>제목</p>
-                    <p>별점</p>
-                    <p>가격</p>
-                    <p>상품번호</p>
-                    <p>구독여부</p>
-                    <p>비활성화여부</p>
-                </li>
-                <li>
-                    <div class="listimg1">
-                        <a href=""><img src="" alt="상품1"></a>
-                    </div>
-                    <p>제목</p>
-                    <p>별점</p>
-                    <p>가격</p>
-                    <p>상품번호</p>
-                    <p>구독여부</p>
-                    <p>비활성화여부</p>
-                </li>
-            </ul>
-        </div> <!--//listitem1-->
-</section> <!--//listsection2-->
-<section class="listsection3">
-    <div class="inner">
-        <div class="listitem1">
-            <ul>
-                <li>
-                    <div class="listimg1">
-                        <a href=""><img src="image/salad1.jpg" width="280px" height="280px" alt="상품1"></a>
-                    </div>
-                    <p>제목</p>
-                    <p>별점</p>
-                    <p>가격</p>
-                    <p>상품번호</p>
-                    <p>구독여부</p>
-                    <p>비활성화여부</p>
-                </li>
-                <li>
-                    <div class="listimg1">
-                        <a href=""><img src="" alt="상품1"></a>
-                    </div>
-                    <p>제목</p>
-                    <p>별점</p>
-                    <p>가격</p>
-                    <p>상품번호</p>
-                    <p>구독여부</p>
-                    <p>비활성화여부</p>
-                </li>
-                <li>
-                    <div class="listimg1">
-                        <a href=""><img src="" alt="상품1"></a>
-                    </div>
-                    <p>제목</p>
-                    <p>별점</p>
-                    <p>가격</p>
-                    <p>상품번호</p>
-                    <p>구독여부</p>
-                    <p>비활성화여부</p>
-                </li>
-                <li>
-                    <div class="listimg1">
-                        <a href=""><img src="" alt="상품1"></a>
-                    </div>
-                    <p>제목</p>
-                    <p>별점</p>
-                    <p>가격</p>
-                    <p>상품번호</p>
-                    <p>구독여부</p>
-                    <p>비활성화여부</p>
-                </li>
-            </ul>
-        </div> <!--//listitem1-->
-</section> <!--//listsection3-->
-<section class="listsection4">
-    <div class="inner">
-        <div class="listitem1">
-            <ul>
-                <li>
-                    <div class="listimg1">
-                        <a href=""><img src="image/salad1.jpg" width="280px" height="280px" alt="상품1"></a>
-                    </div>
-                    <p>제목</p>
-                    <p>별점</p>
-                    <p>가격</p>
-                    <p>상품번호</p>
-                    <p>구독여부</p>
-                    <p>비활성화여부</p>
-                </li>
-                <li>
-                    <div class="listimg1">
-                        <a href=""><img src="" alt="상품1"></a>
-                    </div>
-                    <p>제목</p>
-                    <p>별점</p>
-                    <p>가격</p>
-                    <p>상품번호</p>
-                    <p>구독여부</p>
-                    <p>비활성화여부</p>
-                </li>
-                <li>
-                    <div class="listimg1">
-                        <a href=""><img src="" alt="상품1"></a>
-                    </div>
-                    <p>제목</p>
-                    <p>별점</p>
-                    <p>가격</p>
-                    <p>상품번호</p>
-                    <p>구독여부</p>
-                    <p>비활성화여부</p>
-                </li>
-                <li>
-                    <div class="listimg1">
-                        <a href=""><img src="" alt="상품1"></a>
-                    </div>
-                    <p>제목</p>
-                    <p>별점</p>
-                    <p>가격</p>
-                    <p>상품번호</p>
-                    <p>구독여부</p>
-                    <p>비활성화여부</p>
-                </li>
-            </ul>
-        </div> <!--//listitem1-->
-</section> <!--//listsection4-->
+</div> <!--//footer5-->
+
+
 
 <div align = "center">
 
@@ -242,7 +106,11 @@
 				<a href = "detail?productNo=${productList.productNo}&categoryHighSub=${productList.categoryHighSub}">${productList.productName}</a>
 			</td>
 			<td>${productList.productPrice}</td>
-			<td><fmt:formatNumber value="${productList.productGood}" type="number" pattern="0.0"/></td>
+			<td>
+				<%-- 카테고리에 대한 VO에서 별점에 관한 자료형을 double로 변경 --%>
+				<div class = "star-score" data-max="5" data-rate = "${productList.productGood}"></div>
+				<fmt:formatNumber value="${productList.productGood}" type="number" pattern="0.0"/>
+			</td>
 			<td>${productList.productInactive}</td>
 			<td><img width=50 height=50 src="/attachment/download/productTumbnail?attachmentNo=${productList.productAttachmentNo}"></td>
 		</tr>

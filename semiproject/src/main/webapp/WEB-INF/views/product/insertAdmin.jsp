@@ -76,6 +76,12 @@
 	th, td {
     	vertical-align : middle;
     }
+    
+    .input{
+    	font-size: 14px
+    }
+    
+    
 </style>
 
 <div class = "container-800">
@@ -87,13 +93,13 @@
 		<div class="row">
 			<h2>카테고리 생성</h2>
 		</div>
-			<table class="table table-border table-slit">
+		<table class="table table-border table-slit">
 			<tbody>
 				<tr class="row">
 					<th>상위 카테고리</th>
 					<td>
 						상위 카테고리명 : <input name = "categoryHighName">
-            <input type = "checkbox" name = "categoryHighSub" value = "Y"> (정기배송인지)
+            			<input type = "checkbox" name = "categoryHighSub" value = "Y"> (정기배송인지)
 						<button type = "submit">생성</button>
 					</td>
 				</tr>
@@ -169,7 +175,7 @@
 			<tr>
 				<th>상품 정보</th>
 				<td>
-					<textarea class="input w-100 fix-size q1-input" name = "productInformation"></textarea>
+					<textarea class="input w-100 fix-size" rows="8" name = "productInformation"></textarea>
 				</td>
 			</tr>	
 			

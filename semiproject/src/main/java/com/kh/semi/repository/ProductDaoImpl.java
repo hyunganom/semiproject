@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.semi.entity.CategoryHighDto;
 import com.kh.semi.entity.CategoryLowDto;
 import com.kh.semi.entity.ProductDto;
-import com.kh.semi.vo.PaymentVO;
+import com.kh.semi.vo.OrderVO;
 import com.kh.semi.vo.ProductDetailVO;
 import com.kh.semi.vo.ProductListSearchCategoryVO;
 import com.kh.semi.vo.ProductListSearchVO;
@@ -38,7 +38,7 @@ public class ProductDaoImpl implements ProductDao {
 						.productNo(rs.getInt("product_no"))
 						.productName(rs.getString("product_name"))
 						.productPrice(rs.getInt("product_price"))
-						.productGood(rs.getInt("product_good"))
+						.productGood(rs.getDouble("product_good"))
 						.productInactive(rs.getString("product_inactive") != null)
 						.productAttachmentNo(rs.getInt("product_attachment_no"))
 						.categoryHighSub(rs.getNString("category_high_sub") != null)
@@ -112,7 +112,7 @@ public class ProductDaoImpl implements ProductDao {
 						.productPrice(rs.getInt("product_price"))
 						.productInformation(rs.getString("product_information"))
 						.productInventory(rs.getInt("product_inventory"))
-						.productGood(rs.getInt("product_good"))
+						.productGood(rs.getDouble("product_good"))
 						.productRegisttime(rs.getDate("product_registtime"))
 						.productUpdatetime(rs.getDate("product_updatetime"))
 						.productInactive(rs.getString("product_inactive") != null)
@@ -251,7 +251,7 @@ public class ProductDaoImpl implements ProductDao {
 						.productPrice(rs.getInt("product_price"))
 						.productInformation(rs.getString("product_information"))
 						.productInventory(rs.getInt("product_inventory"))
-						.productGood(rs.getInt("product_good"))
+						.productGood(rs.getDouble("product_good"))
 						.productRegisttime(rs.getDate("product_registtime"))
 						.productUpdatetime(rs.getDate("product_updatetime"))
 						.productInactive(rs.getString("product_inactive") != null)
@@ -312,7 +312,7 @@ public class ProductDaoImpl implements ProductDao {
 							.productNo(rs.getInt("product_no"))
 							.productName(rs.getString("product_name"))
 							.productPrice(rs.getInt("product_price"))
-							.productGood(rs.getInt("product_good"))
+							.productGood(rs.getDouble("product_good"))
 							.productInactive(rs.getString("product_inactive") != null)
 							.productAttachmentNo(rs.getInt("product_attachment_no"))
 						.build();
@@ -490,9 +490,25 @@ public class ProductDaoImpl implements ProductDao {
 
 	//상품재고 변경 구문
 	@Override
-	public boolean updateProductInventory(PaymentVO paymentVO) {
+	public boolean updateProductInventory(OrderVO orderVO) {
 		String sql = "update product set product_inventory = product_inventory - ? where product_no = ?";
-		Object[] param = {paymentVO.getPaymentCount(), paymentVO.getPaymentProductNo()};
+		Object[] param = {orderVO.getPaymentCount(), orderVO.getPaymentProductNo()};
 		return jdbcTemplate.update(sql,param)>0;
 	}
+	
+	//상품재고 변경구문(단일상품)
+//	@Override
+//	public boolean updateProductInventory1(PaymentVO paymentVO) {
+//		String sql = "update product set product_inventory = product_inventory - ? where product_no = ?";
+//		Object[] param = {paymentVO.getPaymentCount(), paymentVO.getPaymentProductNo()};
+//		return jdbcTemplate.update(sql,param)>0;
+//	}
+	//상품재고 변경구문(구독상품)
+//	@Override
+//	public boolean updateProductInventory2(PaymentVO paymentVO) {
+//		String sql = "update product set product_inventory = product_inventory - ? where product_no = ?";
+//		Object[] param = {orderVO.getPaymentCount(), orderVO.getPaymentProductNo()};
+//		return jdbcTemplate.update(sql,param)>0;
+//	}
+	
 }

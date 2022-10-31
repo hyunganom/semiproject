@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- <c:set var="login" value="${loginId != null}"></c:set>
-<c:set var="admin" value="${mg == '관리자'}"></c:set> --%>
+<c:set var="login" value="${loginId != null}"></c:set>
+<c:set var="admin" value="${mg == '관리자'}"></c:set> 
 
 <!DOCTYPE html>
 <html>
@@ -69,9 +69,9 @@
 				<c:when test="${loginId !=null}">
 					<li>${loginId} 님<li>
 					<!-- 관리자 기능 -->
-					<%-- <c:if test="${login && admin}">
+					<c:if test="${login && admin}">
 						<li><a href="/admin/home">관리자 페이지</a></li>
-					</c:if> --%>
+					</c:if>
 					
 					<li><a href="/member/logout" title="로그아웃">로그아웃</a><li>
 					<li><a href="#" title="고객센터">고객센터</a></li>				
@@ -119,7 +119,7 @@
                         </li>
                         <li><a href="/product/category?categoryHighNo=41">정기배송</a></li>
                         <li><a href="/product/category?categoryHighNo=42">샐러드</a></li>
-                        <li><a href="/product/category?categoryHighNo=43">닭,간,음</a></li>
+                        <li><a href="/product/category?categoryHighNo=43">간식</a></li>
                         <li><a href="#">이벤트</a></li>
                     </ul>
                     <div class="bottommenu">
@@ -138,15 +138,12 @@
                                         <li><a href="/product/category?categoryHighNo=42&categoryLowNo=50">데일리 샐러드</a></li>
                                         <li><a href="/product/category?categoryHighNo=42&categoryLowNo=51">테이스티 샐러드</a></li>
                                         <li><a href="/product/category?categoryHighNo=42&categoryLowNo=52">파우치 샐러드</a></li>
-                                        <li><a href="#">맛보기 세트</a></li>
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="/product/category?categoryHighNo=43">닭,간,음</a>
-                                    <ul>
-                                        <li><a href="#">닭가슴살</a></li>
-                                        <li><a href="/product/category?categoryHighNo=43&categoryLowNo=54">만두</a></li>
-                                        <li><a href="#">소시지</a></li>
+                                    <a href="/product/category?categoryHighNo=43">간식</a>
+                                    <ul>                                      
+                                        <li><a href="/product/category?categoryHighNo=43&categoryLowNo=54">만두</a></li>                   
                                         <li><a href="/product/category?categoryHighNo=43&categoryLowNo=53">간식</a></li>
                                     </ul>
                                 </li>
