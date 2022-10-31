@@ -7,34 +7,74 @@
 	<jsp:param value= "내가 작성한 상품 리뷰" name="title"/>
 </jsp:include>
 
-<div class = "container-800">
+<script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$(".star-score").score({
+			starColor:"red",//별 생상(기본 : 금색)
+			integerOnly:true,//true를 쓰면 소숫점이 반올림
+			display:{
+				showNumber:true,//숫자표시
+				placeLimit:2,//소수점 자리수
+				textColor:"red",//숫자 색상(기본 : 금색)
+			}
+		});
+	});
+</script>
 
-<c:forEach var = "reviewList" items = "${reviewList}">
+<style>
+	td{
+    	vertical-align : middle;
+    	line-height : 1.2em;
+    	font-size : 12px;
+    }
+    
+    .footer{
+		position:fixed;
+		bottom:0;
+		left:0;
+		width:100%;
+	}
+	
+	a{
+		margin-top: 5px;
+		margin-bottom: 10px;
+	}
+</style>
 
-	<div class = "row" style = "background-color:skyblue;">
-	리뷰 첨부 이미지 :<img width=50 height=50 src="/attachment/download/reviewImg?attachmentNo=${reviewList.reviewAttachmentNo}">
-	<br>
-	상품 주문번호 : ${reviewList.paymentOrderNo}
-	<br>
-	상품 이름 : ${reviewList.productName}
-	<br>
-	상품 갯수 : ${reviewList.paymentCount}
-	<br>
-	상품 옵션 : ${reviewList.paymentOption}
-	<br>
-	내가 입력한 별점 : ${reviewList.reviewGood}
-	<br>
-	리뷰 제목 : ${reviewList.reviewTitle}
-	<br>
-	리뷰 내용 : ${reviewList.reviewContent}
-	<br>
-	리뷰 작성일 : ${reviewList.reviewWritetime}
-	<br>
-	<a href="/review/edit?reviewNo=${reviewList.reviewNo}">리뷰수정하기</a>
-	<a href="/review/delete?reviewNo=${reviewList.reviewNo}">삭제하기</a>
-	</div>
-</c:forEach>
-
+<div class = "container-700">
+	<c:forEach var = "reviewList" items = "${reviewList}">
+		<div class="row center">
+			${reviewList.reviewWritetime} ${reviewList.productName}
+		</div>
+			<table class="table mt-10 mb-10">
+				<tr>
+					<td class="img center" width="100">
+						<img width=80 height=80 src="/attachment/download/reviewImg?attachmentNo=${reviewList.reviewAttachmentNo}"><br>
+					</td>
+					<td class="row left" width="300" height="30">
+						리뷰 제목 : ${reviewList.reviewTitle}
+						<br>
+						상품 옵션 : ${reviewList.paymentOption}
+						<br>
+						리뷰 내용 : ${reviewList.reviewContent}
+						<br>
+					</td>
+					<td class="row center" width="100">
+						상품 갯수 : ${reviewList.paymentCount}
+						<div class="row">
+							<div class="star-score" data-max="5" data-rate="${reviewList.reviewGood}"></div>
+						</div>
+					</td>
+					<td class="row center" width="130">
+						<a class="btn btn-neutral" style="padding:4px;" href="/review/edit?reviewNo=${reviewList.reviewNo}">수정</a>
+						<a class="btn btn-neutral" style="padding:4px;" href="/review/delete?reviewNo=${reviewList.reviewNo}">삭제</a>
+					</td>
+				</tr>
+			</table>
+			<hr>
+	</c:forEach>
 </div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
