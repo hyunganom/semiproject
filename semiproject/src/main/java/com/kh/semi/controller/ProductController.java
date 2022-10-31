@@ -62,7 +62,7 @@ public class ProductController {
 	// 회원용 상품 상세 Mapping
 	// 1) 상품 상세페이지로 이동
 	@GetMapping("/detail")
-	public String detail(Model model, @RequestParam int productNo, @RequestParam boolean categoryHighSub) {
+	public String detail(Model model, @RequestParam int productNo, @RequestParam(required = false) boolean categoryHighSub) {
 		
 		// 하이퍼링크로 받은 productNo로 상세 조회 실행 후 그 결과를 Model에 첨부
 		model.addAttribute("productDto", productDao.selectOneProduct(productNo));

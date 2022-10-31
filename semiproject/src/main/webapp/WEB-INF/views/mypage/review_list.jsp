@@ -67,6 +67,27 @@
 			</h3>
 			<br><br><br>
 		</div>
+    </header>
+    
+			<table class="table mt-10 mb-10">
+				<tr>
+					<td class="img center" width="100">
+						<img width=80 height=80 src="/attachment/download/reviewImg?attachmentNo=${reviewList.reviewAttachmentNo}" onclick="location.href='/product/detail?productNo=${reviewList.paymentProductNo}';" style="cursor: pointer;
+}"><br>
+					</td>
+					<td class="row left" width="300" height="30">
+						리뷰 제목 : ${reviewList.reviewTitle}
+						<br>
+						상품 옵션 : ${reviewList.paymentOption}
+						<br>
+						리뷰 내용 : ${reviewList.reviewContent}
+						<br>
+					</td>
+					<td class="row center" width="100">
+						상품 갯수 : ${reviewList.paymentCount}
+						<div class="row">
+							<div class="star-score" data-max="5" data-rate="${reviewList.reviewGood}"></div>
+
 	</header>
 	
 		<div class="float-container">
@@ -95,6 +116,7 @@
 					<c:forEach var = "reviewList" items = "${reviewList}">
 						<div class="row center">
 							${reviewList.reviewWritetime} ${reviewList.productName}
+
 						</div>
 							<table class="table mt-10 mb-10">
 								<tr>
