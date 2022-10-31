@@ -40,10 +40,7 @@ public class OrderServiceImpl implements OrderService{
 		orderVO.setOrderNo(orderNo);
 		// 주문테이블에 데이터 등록
 		ordersDao.insert(orderVO);
-	      
-	   // paymentNo 시퀀스 번호 미리 생성 후 세팅
-		
-	      
+	      	      
 		//결제테이블에 데이터 등록
 		if(orderVO.getPayment()==null) {
 			int paymentNo = paymentDao.sequence();
