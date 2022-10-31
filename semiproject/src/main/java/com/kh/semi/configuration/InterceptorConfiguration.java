@@ -33,12 +33,12 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 				);
 		
 		//관리자용
-//		registry.addInterceptor(adminInterceptor)
-//		.addPathPatterns(
-//				"/member/list", //회원목록
-//				"/member/detail", //회원상세
-//				"/member/change"//회원수정
-//				);
+		registry.addInterceptor(adminInterceptor)
+		.addPathPatterns(
+				"/member/list", //회원목록
+				"/member/detail", //회원상세
+				"/member/change"//회원수정
+				);
 		
 	}
 }
