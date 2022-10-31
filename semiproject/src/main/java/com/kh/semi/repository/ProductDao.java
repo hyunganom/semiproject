@@ -5,13 +5,13 @@ import java.util.List;
 import com.kh.semi.entity.CategoryHighDto;
 import com.kh.semi.entity.CategoryLowDto;
 import com.kh.semi.entity.ProductDto;
-import com.kh.semi.vo.PaymentVO;
+import com.kh.semi.vo.OrderVO;
+import com.kh.semi.vo.ProductDetailVO;
 import com.kh.semi.vo.ProductListSearchCategoryVO;
 import com.kh.semi.vo.ProductListSearchVO;
 import com.kh.semi.vo.ProductListVO;
 import com.kh.semi.vo.ProductNoNameVO;
 import com.kh.semi.vo.ProductSelectNameVO;
-import com.kh.semi.vo.ProductDetailVO;
 
 public interface ProductDao {
 	
@@ -110,5 +110,11 @@ public interface ProductDao {
 	ProductSelectNameVO selectName(int productNo);
 	
 	//상품 재고 수량변경 메소드
-	boolean updateProductInventory(PaymentVO paymentVO);
+	boolean updateProductInventory(OrderVO orderVO);
+	
+	//상품재고 변경구문(단일상품)
+	//boolean updateProductInventory1(PaymentDto paymentDto);
+	
+	//상품재고 변경구문(일반상품)
+	//boolean updateProductInventory2(PaymentVO paymentVO);
 }
