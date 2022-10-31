@@ -12,7 +12,7 @@
 	td{
     	vertical-align : middle;
     	line-height : 1.2em;
-    	font-size : 10px;
+    	font-size : 14px;
     }
 </style>
 <script type="text/javascript">
@@ -59,6 +59,22 @@
                 textColor:"red", // 숫자 색상 (기본 : 금색)
             }
 	    });
+	});
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$(".star-score").score({
+			starColor:"red",//별 생상(기본 : 금색)
+			integerOnly:true,//true를 쓰면 소숫점이 반올림
+			display:{
+				showNumber:true,//숫자표시
+				placeLimit:2,//소수점 자리수
+				textColor:"red",//숫자 색상(기본 : 금색)
+			}
+		});
 	});
 </script>
 
@@ -183,16 +199,22 @@
 			<c:forEach var = "productReviewList" items = "${productReviewList}">
 				<table class="table mt-10 mb-10">
 					 <tr>
-					 	<td class="img center" width="80">
-					 		리뷰 별점 : ${productReviewList.reviewGood} <br>
-					 		<img width=50 height=50 src="/attachment/download/reviewImg?attachmentNo=${productReviewList.reviewAttachmentNo}">
+					 	<td class="img center" width="100">
+					 		<img width=90 height=90 src="/attachment/download/reviewImg?attachmentNo=${productReviewList.reviewAttachmentNo}">
 					 	</td>
 					 	<td class="row left" width="400" height="30">
-						 	작성자 : ${productReviewList.reviewId} <br>
-						 	작성일 : ${productReviewList.reviewWritetime} <br><br>
-						 	제목 : ${productReviewList.reviewTitle}<br>
+					 		<div class="row" style="font-size: 16px; color: rgb(15, 199, 76);">
+						 		제목 : ${productReviewList.reviewTitle}
+							</div>
 						 	옵션 : ${productReviewList.paymentOption} <br>
 						 	내용 : ${productReviewList.reviewContent} <br>
+					 	</td>
+					 	<td class="row center" width="30">
+						 	${productReviewList.reviewWritetime} <br>
+						 	${productReviewList.reviewId} <br>
+						 	<div class="row">
+								<div class="star-score" data-max="5" data-rate="${productReviewList.reviewGood}"></div>
+							</div>
 					 	</td>
 					 </tr>
 				</table>
