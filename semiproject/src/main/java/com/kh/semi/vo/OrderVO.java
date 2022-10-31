@@ -25,6 +25,13 @@ public class OrderVO {
 	private String orderType;
 	private int orderUsePoint, orderPoint;
 	
+	private int basketNo;
+	private int paymentNo;
+	private int paymentOrderNo;
+	private int paymentProductNo;
+	private int paymentCount, paymentPrice;
+	private String paymentOption;
+	
 	private List<PaymentVO> payment;
 	
 	private List<BasketNoVO> basketNoVO;

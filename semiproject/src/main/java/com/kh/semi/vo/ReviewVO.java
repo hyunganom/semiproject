@@ -20,4 +20,5 @@ public class ReviewVO {
 	private String reviewTitle; // 리뷰 제목
 	private String reviewContent; // 리뷰 내용
 	private int reviewGood; // 리뷰 별점
+	private int paymentProductNo; // 결제 상품의 상품 번호
 }

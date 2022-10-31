@@ -105,7 +105,7 @@
            </section> <!--section4-->
            <section class="section5">
                <div class="inner">
-                   <h2 class="hotitem">헬창을 위한 닭가슴살</h2>
+                   <h2 class="hotitem">이거 보고 가세요!</h2>
                    <div class="item1">
                        <ul>
                            <li>
@@ -173,21 +173,17 @@
 <div class="scrollbanner">
         <ul class="scroll1">
             <li>
-                <a href="#"><i class="fa-regular fa-paste"></i></a>
-            </li>
-            
-            <li>
-                <a href="/basket/list"><i class="fa-solid fa-cart-shopping"></i></a>
+                <a href="/basket/list"><img src="./image/cart.jpg" alt="장바구니" width="50px" height="50px"></a>
             </li>
             <li>
-                <a href="/notice/list"><img src="./image/noice1.png" alt="공지사항" width="70px" height="70px" ></i></a>
+                <a href="/notice/list"><img src="/image/noice1.png" alt="공지사항" width="55px" height="55px" ></i></a>
             </li>
         </ul> <!--//scroll1-->
         <span class="scrolltop">
-            <a href="#"><i class="fa-solid fa-circle-up" style="color: #F57328;"></i></a>
+            <a href="#"><i class="fa-solid fa-circle-up" style="color:#569956;"></i></a>
         </span>
         <span class="scrolldown">
-            <a href="#"><i class="fa-solid fa-circle-down" style="color: #F57328;"></i></a>
+            <a href="#"><i class="fa-solid fa-circle-down" style="color:#569956;"></i></a>
         </span>
 		</div><!--scrollbanner-->
 		<div class="popup-wrap">
