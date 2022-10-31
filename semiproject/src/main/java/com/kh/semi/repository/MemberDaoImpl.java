@@ -204,56 +204,7 @@ public class MemberDaoImpl implements MemberDao{
 				.build();
 		}
 	};
-	
-	@Override
-	public List<MemberVO> selectList(MemberSearchVO vo) {
-		if(vo.isSearch()) {
-			return search(vo);
-		}
-		else {
-			return list(vo);
-		}
-	}
-	
-	@Override
-	public List<MemberVO> list(MemberSearchVO vo) {
-		String sql = "select * from ("
-					+ "select TMP.*, rownum rn from("
-						+ "select * from member order by member_join desc"
-					+ ")TMP"
-				+ ") where rn between ? and ?";
-		Object[] param = {vo.startRow(), vo.endRow()};
-		return jdbcTemplate.query(sql, listMapper, param);
-	}
-	
-	@Override
-	public List<MemberVO> search(MemberSearchVO vo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public int count(MemberSearchVO vo) {
-		if(vo.isSearch()) {
-			return searchCount(vo);
-		}
-		return listCount(vo);
-	}
-
-	@Override
-	public int searchCount(MemberSearchVO vo) {
-		String sql = "select count(*) from member where instr(#1, ?) > 0";
-		sql = sql.replace("#1", vo.getType());
-		Object[] param = {vo.getKeyword()};
-		return jdbcTemplate.queryForObject(sql, int.class, param);
-	}
-
-	@Override
-	public int listCount(MemberSearchVO vo) {
-		String sql = "select count(*) from member";
-		return jdbcTemplate.queryForObject(sql, int.class);
-	}
-	
 	//주문완료 후 포인트(적립금) 차감
 	@Override
 	public boolean minusUsedPoint(String memberId, int point) {
@@ -272,5 +223,62 @@ public class MemberDaoImpl implements MemberDao{
 		return jdbcTemplate.update(sql, param)>0;
 	}
 
+	@Override
+	public List<MemberDto> selectList(MemberSearchVO vo) {
+		if(vo.isSearch()) {
+			return search(vo);
+		}
+		else {
+			return list(vo);
+		}
+	}
 
+	@Override
+	public List<MemberDto> list(MemberSearchVO vo) {
+		String sql = "select * from ("
+				+ "select rownum rn, TMP.* from("
+					+ "select * from member order by member_id asc"
+				+ ")TMP"
+			+ ") where rn between ? and ?";
+		Object[] param = {vo.startRow(), vo.endRow()};
+		return jdbcTemplate.query(sql, mapper, param);
+	}
+
+	@Override
+	public List<MemberDto> search(MemberSearchVO vo) {
+		String sql = "select * from ("
+				+ "select rownum rn, TMP.* from ("
+					+ "select * from member where instr(#1,?) > 0 "
+					+ "order by member_id asc"
+				+ ")TMP"
+			+ ") where rn between ? and ?";
+		sql = sql.replace("#1", vo.getType());
+		Object[] param = {
+				vo.getKeyword(), vo.startRow(), vo.endRow()
+		};
+		return jdbcTemplate.query(sql, mapper, param);
+	}
+
+	@Override
+	public int count(MemberSearchVO vo) {
+		if(vo.isSearch()) { //검색이라면
+			return searchCount(vo);
+		}
+		else { //목록이라면
+			return listCount(vo);
+		}
+	}
+
+	@Override
+	public int searchCount(MemberSearchVO vo) {
+		String sql = "select count(*) from member where instr(#1, ?) > 0";
+		sql = sql.replace("#1", vo.getType());
+		Object[] param = {vo.getKeyword()};
+		return jdbcTemplate.queryForObject(sql, int.class, param);
+	}
+
+	@Override
+	public int listCount(MemberSearchVO vo) {
+		String sql = "select count(*) from member";
+		return jdbcTemplate.queryForObject(sql, int.class);	}
 }

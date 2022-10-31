@@ -19,6 +19,9 @@ public class CouponListVO {
 	private Date CouponEnddate;
 	private Date CouponUseDate;
 	private String CouponValid;
+
+	
+
 	
 
 }
