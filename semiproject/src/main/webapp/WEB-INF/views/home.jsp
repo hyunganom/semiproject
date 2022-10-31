@@ -173,11 +173,7 @@
 <div class="scrollbanner">
         <ul class="scroll1">
             <li>
-                <a href="#"><i class="fa-regular fa-paste"></i></a>
-            </li>
-            
-            <li>
-                <a href="/basket/list"><img src="/image/cart1.jfif" alt="장바구니" width="50px" height="50px"></a>
+                <a href="/basket/list"><img src="./image/cart.jpg" alt="장바구니" width="50px" height="50px"></a>
             </li>
             <li>
                 <a href="/notice/list"><img src="/image/noice1.png" alt="공지사항" width="55px" height="55px" ></i></a>
