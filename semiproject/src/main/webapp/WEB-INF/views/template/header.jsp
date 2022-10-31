@@ -74,7 +74,7 @@
 					<c:otherwise>
 						<li><a href="/member/login" title="로그인">로그인</a><li>				
 						<li><a href="/member/join" title="회원가입">회원가입</a><li>
-						<li><a href="#" title="고객센터">고객센터</a></li>
+						<li><a href="#" title="1:1문의사항">1:1문의사항</a></li>
 					</c:otherwise>
 				</c:choose>
 				
@@ -97,7 +97,6 @@
                 </div> <!--//formdiv-->
                 <div class="icon1">
                     <ul>
-                        <li><a href="#" title="배송지등록"><i class="fa-regular fa-paste"></i></a></li>
                         <li><a href="/mypage/order_list" title="마이페이지"><i class="fa-regular fa-user"></i></a></li>
                         <li><a href="/basket/list" title="장바구니"><i class="fa-solid fa-cart-shopping"></i></a></li>
                     </ul>
