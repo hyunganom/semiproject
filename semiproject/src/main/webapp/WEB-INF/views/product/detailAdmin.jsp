@@ -99,7 +99,16 @@
 				</tr>
 				<tr>
 					<th>상품 활성상태</th>
-					<td>${productDto.productInactive}</td>
+					<td>
+						<c:choose>
+							<c:when test = "${productDto.productInactive}">
+								판매 중단
+							</c:when>
+							<c:otherwise>
+								판매중
+							</c:otherwise>
+						</c:choose>
+					</td>
 				</tr>
 				<tr>
 					<th>상품이미지</th>
@@ -121,7 +130,7 @@
 				<tr>
 					<th colspan="2">
 						<a href = "/admin/product/edit?productDetailNo=${productDto.productNo}">수정</a> &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; 
-						<a href = "/admin/product/inactive?productNo=${productDto.productNo}">활성화</a> &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; 
+						<a href = "/admin/product/inactive?productDetailNo=${productDto.productNo}">활성화</a> &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; 
 						<a href = "/admin/product/delete?productDetailNo=${productDto.productNo}">삭제</a>
 					</th>
 				</tr>

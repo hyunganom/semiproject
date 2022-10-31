@@ -27,7 +27,7 @@
 	</div>
 	
 	<div class="row right mb-30">
-		<a href="mypage" class="btn btn-neutral">취소</a>
+		<a href="/member/detail?memberId=${memberDto.memberId}" class="btn btn-neutral">취소</a>
 		<button class="btn btn-negative" type="submit">탈퇴</button>
 	</div>
 </div>

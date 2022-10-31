@@ -46,12 +46,7 @@
 	a{
 		text-decoration: none;
 	}
-	.footer{
-		position:fixed;
-		bottom:0;
-		left:0;
-		width:100%;
-	}
+	
 	/* 테이블 텍스트 가운데 */
 	th, td {
     	vertical-align : middle;

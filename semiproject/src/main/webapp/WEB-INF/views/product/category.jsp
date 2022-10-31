@@ -34,7 +34,7 @@
                    	<c:forEach var = "productList" items = "${productList}">
                 <li>
                 	<div class="listimg1">
-						<p><a href= "detail?productNo=${productList.productNo}&categoryHighSub=${productList.categoryHighSub}"><img src="/attachment/download/productTumbnail?attachmentNo=${productList.attachmentNo}"></a></p>
+						<p><a href= "detail?productNo=${productList.productNo}&categoryHighSub=${productList.categoryHighSub}"><img src="/attachment/download/productTumbnail?attachmentNo=${productList.productAttachmentNo}"></a></p>
 						<p>${productList.categoryHighSub}</p>
 						<p>${productList.productNo}</p>
 						<p><a href = "detail?productNo=${productList.productNo}&categoryHighSub=${productList.categoryHighSub}">${productList.productName}</a></p>
