@@ -218,7 +218,7 @@
           </thead>
           <tbody>
           <c:choose>
-	          <c:when test="${basketList.size()==1}">
+	          <c:when test="${basketList.size()!=1}">
 	            <c:forEach var="list" items="${basketList}">
 	            	<tr>
 		              	<td>
