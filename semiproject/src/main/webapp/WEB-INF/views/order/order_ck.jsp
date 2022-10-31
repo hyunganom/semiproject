@@ -8,6 +8,7 @@
 </jsp:include>
 
 <style>
+
 	.sameinfo{
         font-size:12px;
         float:right;
@@ -26,6 +27,16 @@
      	color:#4CB756;
      	font-weight: bold;
      	font-size:23px;
+     }
+     .icon-left{
+     	float:left;
+     	color:#4CB756;
+     	font-size:20px;
+     }
+     .icon-equal{
+     	float:left;
+     	color:black;
+     	font-size:20px;
      }
 
 </style>
@@ -403,14 +414,30 @@
         </div>
 
         <div class="row center">
-          <table class="table table-border">
+          <table class="table table-slitt">
             <tbody>
               <tr>
                 <th>상품금액</th>
-                <th>배송비</th>
-                <th>적립금</th>
-                <th>쿠폰</th>
-                <th>총 금액</th>
+                <th>
+                	<span class="icon-left">
+                		<i class="fa-solid fa-circle-plus"></i>
+                	</span>배송비
+                </th>
+                <th>
+                	<span class="icon-left">
+                		<i class="fa-solid fa-circle-minus"></i>
+                	</span>적립금
+                </th>
+                <th>
+                	<span class="icon-left">
+                		<i class="fa-solid fa-circle-minus"></i>
+                	</span>쿠폰
+                </th>
+                <th>
+                	<span class="icon-equal">
+                		<i class="fa-solid fa-equals"></i>
+                	</span>총 금액
+                </th>
               </tr>
               <tr>
                 <td>
