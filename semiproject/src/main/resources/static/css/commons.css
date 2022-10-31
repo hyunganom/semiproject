@@ -608,3 +608,7 @@ ul.pagination.pagination-small {
     text-align: center;
     text-decoration: none;
 }
+.btns-neutral:hover {
+	background-color: #4CB756;
+    color: white;
+}
