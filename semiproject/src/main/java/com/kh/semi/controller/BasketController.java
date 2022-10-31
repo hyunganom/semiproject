@@ -85,8 +85,8 @@ public class BasketController {
 
 	//장바구니 상품 삭제
 	@GetMapping("/delete")
-	public String delete(@RequestParam int productNo) {
-		basketDao.delete(productNo);
+	public String delete(@RequestParam int basketNo) {
+		basketDao.clearbasket(basketNo);
 		return "redirect:/basket/list";
 	}
 	
