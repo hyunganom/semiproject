@@ -81,15 +81,7 @@ public class OrdersController {
     
 		// 전체 변수 orderVO로 받아 등록처리 + couponIssue
 		orderService.buy(orderVO, couponIssue);
-		
 		return "redirect:_1";
-
-//		if(주문실패할 경우) { 
-//			return "redirect:order/_2";
-//		}else { //주문성공할 경우
-//			return "redirect:order/_1";
-//		}
-		
 	}
 	
 	//주문성공

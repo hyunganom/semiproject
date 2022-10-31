@@ -108,13 +108,7 @@ public interface ProductDao {
 	
 	//승정 구독상품 상세옵션 상품조회
 	ProductSelectNameVO selectName(int productNo);
-	
+
 	//상품 재고 수량변경 메소드
-	boolean updateProductInventory(OrderVO orderVO);
-	
-	//상품재고 변경구문(단일상품)
-	//boolean updateProductInventory1(PaymentDto paymentDto);
-	
-	//상품재고 변경구문(일반상품)
-	//boolean updateProductInventory2(PaymentVO paymentVO);
+	boolean updateProductInventory(int paymentCount, int paymentProductNo);
 }
