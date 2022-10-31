@@ -87,6 +87,10 @@
 			var totalItemPrice = parseInt($(".before-price").text());
 			var totalDelivery = parseInt($(".delivery-price").text());
 			var totalDiscount = parseInt($(".point-price").text());
+
+			var totalCoupon = parseInt($(".coupon-price").text());
+			//var totalCoupon = parseInt($(".coupon-price").text());
+
 			
 			//총금액(상품금액+배송비-할인금액)
 			var totalPrice = (totalItemPrice+totalDelivery)-totalDiscount;
