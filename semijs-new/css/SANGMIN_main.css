@@ -278,13 +278,13 @@
 }
 .scrolltop {
     position: absolute;
-    top: 65%;
+    top: 50%;
     left: 35%;
     font-size: 30px;
 }
 .scrolldown {
     position: absolute;
-    top: 80%;
+    top: 65%;
     left: 35%;
     font-size: 30px;
 }
