@@ -62,6 +62,9 @@
                         <ul><p><button class="btndrop3">회원</button></p>
                         <div class="btndropsub3">
                             <li><a href="http://localhost:8888/member/list">- 회원정보</a></li>
+                            <li><a href="http://localhost:8888/notice/list">- 공지사항 목록</a></li>
+                            <li><a href="http://localhost:8888/notice/write">- 공지사항 쓰기</a></li>
+                            <li><a href="http://localhost:8888/inquire/listAdmin">- 1:1문의 목록</a></li>
                         </div>
                         </ul>
                     </li>
