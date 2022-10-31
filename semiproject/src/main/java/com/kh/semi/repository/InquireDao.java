@@ -53,4 +53,7 @@ public interface InquireDao {
 	
 	//검색조회시 문의글의 총 갯수
 	int countSearchInquire(InquireListSearchVO inquireListSearchVO);
+	
+	//답변작성시에 답변확인 완료 보이게
+	boolean updateHasReply(int inquireNo);
 }
