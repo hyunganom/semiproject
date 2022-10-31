@@ -219,20 +219,20 @@
           <tbody>
           <c:choose>
 	          <c:when test="${basketList.size()==1}">
-	            <c:forEach var="list" items="${basketList}">
-	            	<tr>
-		              	<td>
-		              		<div>${list.productName}</div>
-		              		<div class="mt-10">${list.basketProductOption}</div>
-		              	</td>
-		              	<td>
-		              		<div class="center items-count">${list.basketCountNumber}</div>
-		              	</td>
-		              	<td>
-		              		<div class="center items-price">${list.productPrice}</div>
-		              	</td>
-	            	</tr>
-	            	</c:forEach>
+		            <c:forEach var="list" items="${basketList}">
+		            	<tr>
+			              	<td>
+			              		<div>${list.productName}</div>
+			              		<div class="mt-10">${list.basketProductOption}</div>
+			              	</td>
+			              	<td>
+			              		<div class="center items-count">${list.basketCountNumber}</div>
+			              	</td>
+			              	<td>
+			              		<div class="center items-price">${list.productPrice}</div>
+			              	</td>
+		            	</tr>
+		            </c:forEach>
 	            	<!-- payment에 넘어가야하는 정보(paymentDto형태로 들어가야함!) -->
 			        <c:forEach var="list" items="${basketList}" varStatus="status">
 			        	<input type="hidden" name="payment[${status.index}].basketNo" value="${list.basketNo}">
