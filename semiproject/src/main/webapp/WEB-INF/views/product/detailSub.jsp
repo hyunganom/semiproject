@@ -198,8 +198,6 @@
 	</c:forEach>
 </div>
 
-<hr>	
-
 <div class = "container-1200 mt-50 center">
 	<c:forEach var = "productReviewList" items = "${productReviewList}">
 		<div class = "row w-100" style = "background-color : skyblue;">
@@ -229,5 +227,37 @@
 	</c:forEach>
 </div>
 
-</body>
-</html>
+<%-- 사용할 수 있는 값들
+${productDto.productNo}
+${productDto.categoryHighNo}
+${productDto.categoryLowNo}
+${productDto.productName}
+${productDto.productPrice}
+${productDto.productInformation}
+${productDto.productInventory}
+${productDto.productGood}
+${productDto.productRegisttime}
+${productDto.productUpdatetime}
+${productDto.productInactive}
+
+<c:forEach var="productTumbnailList" items="${productTumbnailList}">
+	<img width=50 height=50 src="/attachment/download/productTumbnail?attachmentNo=${productTumbnailList.attachmentNo}">
+</c:forEach>
+
+<c:forEach var="productDetailList" items="${productDetailList}">
+	<img width=50 height=50 src="/attachment/download/productDetail?attachmentNo=${productDetailList.attachmentNo}">
+</c:forEach>
+
+<c:forEach var = "productReviewList" items = "${productReviewList}">
+	${productReviewList.reviewId}
+	${productReviewList.reviewWritetime}
+	${productReviewList.paymentOption}
+	${productReviewList.reviewGood}
+	${productReviewList.reviewTitle}
+	${productReviewList.reviewContent}
+	<img width=50 height=50 src="/attachment/download/reviewImg?attachmentNo=${productReviewList.reviewAttachmentNo}">
+</c:forEach>
+--%>
+
+<%-- footer.jsp 불러오기 --%>
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
