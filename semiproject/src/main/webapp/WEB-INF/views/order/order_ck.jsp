@@ -27,6 +27,7 @@
      	font-weight: bold;
      	font-size:23px;
      }
+
 </style>
 
 <script type="text/javascript">
@@ -97,23 +98,23 @@
 		<!-- 적립금 전체 사용 버튼 이벤트 -->
 		$(".point-btn").click(function(e){
 			e.preventDefault(); //a 태그 전송 막기
+			var point = ${memberDto.memberPoint}; //보유 적립금
 			var itemsPrice = parseInt($(".before-price").text()); //상품 가격
 			var delivery = deliveryFee(); //배송비
-			var total = itemsPrice+deliveryFee() //상품가격+배송비
-			var point = ${memberDto.memberPoint}; //보유 적립금
+			var coupon = parseInt($(".coupon-price").text()); //쿠폰 할인금액
+			var total = itemsPrice+deliveryFee()-coupon; //상품가격+배송비-쿠폰
 			
 			// if문(true) : 총 상품금액(상품가격+배송비) < 적립금, 금액만큼 사용하도록 최대값 설정
 			if(total<point){
 				$("input[name=orderUsePoint]").val(total); //클릭하면 입력창에 전체적립금 표시
 				$(".point-price").text(total); //할인창에 할인금액표시
-				var discount = $(".point-price").text();
-				$(".after-price").text(totalPrice(itemsPrice,delivery,0));
+				$(".after-price").text(totalPrice(itemsPrice,delivery,total,coupon));
 			// if문(false) : 총 상품금액(상품가격+배송비-쿠폰) > 적립금	
 			}else{
 				$("input[name=orderUsePoint]").val(point);
 				$(".point-price").text(point);
 				var discount = $(".point-price").text();
-				$(".after-price").text(totalPrice(itemsPrice,delivery,discount));
+				$(".after-price").text(totalPrice(itemsPrice,delivery,discount,coupon));
 			}
 			var inputValue = parseInt($(".after-price").text());
 			$('input[name=orderPayPrice]').val(inputValue); //총 결제금액
@@ -162,10 +163,34 @@
 		$('input[name=orderPoint]+span').text(result); //화면에 표시
 		$('input[name=orderPoint]').val(result); //주문테이블 등록을 위한 hidden값 value처리
 		
-		
+		<!--쿠폰 -->
+		$(".coupon-btn").on("click", function(){
+			var condition = parseInt(30000); //쿠폰 사용 기준금액(3만원 이상)
+			var judge = productPrice()+deliveryFee(); //상품금액+배송비
+			
+			var itemsPrice = parseInt($(".before-price").text()); //상품 가격
+			var point = $(".point-price").text(); //포인트 할인가격
+			var total = itemsPrice+deliveryFee()-point; //상품가격+배송비-적립금
+			var coupon = $(".coupon-price").text();
+			
+			if(total==0){
+				alert('총 결제금액이 0원입니다!');
+			}else if(total<4000){
+				alert('총 결제금액보다 쿠폰 할인금액이 더 큽니다!');
+			}else{
+				if(judge>=condition){
+					$("[name=inputCoupon]").val(4000);
+					$(".coupon-price").text(4000);
+					$(".after-price").text(totalPrice(itemsPrice, deliveryFee(), point, coupon));
+				}else{
+					alert('주문금액이 3만원 이상일 경우 쿠폰적용이 가능합니다!');
+				}
+			}
+
+		});
+
 	});
 
-	
 	
     $(function(){
 		$("#select-categoryHigh").on("change", function(){
@@ -345,37 +370,32 @@
           </table>
         </div>
         
-        <div class="row mt-50">
+        <div class="row mt-50 mb-10">
           <h3>쿠폰 / 적립금</h3>
         </div>
 
         <div class="row">
           <div class="row">
             <p>쿠폰 (보유 : <span>${couponUsable}</span>개)                
-					<select name="couponIssue" id = "selectBox">
-                				<option value="">선택안함</option>	
-                				<c:forEach var="couponUse" items="${couponUse}">
-                				<option value="${couponUse.couponIssue}">${couponUse.couponName}</option>
-                				</c:forEach>
-					</select>     		            			              				  
+				<select name="couponIssue" id = "selectBox">
+                	<option value="">선택안함</option>	
+                	<c:forEach var="couponUse" items="${couponUse}">
+                		<option value="${couponUse.couponIssue}">${couponUse.couponName}</option>
+                	</c:forEach>
+				</select>     		            			              				  
         	</p> 
-       	
-        	
-        	
-          	</div>
-          <div>  
-
-             <input type="text" class="input w-50" name="inputCoupon" disabled>
-
-            <a href="#" class="btns btns-positive coupon-btn">쿠폰 적용</a>
-          </div>
-          <div class="row">
-          	<p>적립금 (사용가능 적립금 : <span>${memberDto.memberPoint}</span>원)</p>
-			<input type="text" class="input w-50 point" name="orderUsePoint" value="0">
-			<span class="error-message">금액이 부족합니다!</span>
-			<a href="#" class="btns btns-positive point-btn">전액 사용</a>
-          </div>
         </div>
+        <div>  
+            <input type="text" class="input w-50" name="inputCoupon" disabled>
+            <a href="#" class="btns btns-neutral coupon-btn">쿠폰 적용</a>
+        </div>
+        <div class="row mt-20">
+          	<p>적립금 (사용가능 적립금 : <span>${memberDto.memberPoint}</span>원)</p>
+			<input type="text" class="input w-50 point mt-10" name="orderUsePoint" value="0">
+			<span class="error-message">금액이 부족합니다!</span>
+			<a href="#" class="btns btns-neutral point-btn">전액 사용</a>
+        </div>
+    </div>
 
 
         <div class="row mt-50">
