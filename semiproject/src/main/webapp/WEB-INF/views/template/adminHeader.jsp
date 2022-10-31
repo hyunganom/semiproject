@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<c:set var="login" value="${loginId != null}"></c:set>
+<c:set var="admin" value="${mg == '관리자'}"></c:set> 
 
 <!DOCTYPE html>
 <html>
@@ -51,43 +52,42 @@
 	
 </head>
 
-
-
-
-		
-			
-		<%-- 		
-		
-		문의글 관련
-		<div class = "row mt-20 center">
-			<a href = "/inquire/list">문의글 목록(회원용 - 내가 쓴 문의글)</a>
-			<a href = "/inquire/listAdmin">문의글 목록(관리자용)</a>
-		</div>
-		
-		<div class = "row center mt-20">
-			<a href = "/product/list">전체 상품 목록(관리자용 - 상품의 모든 정보가 나옴)</a> 
-		</div>
-		
-		
-		
-		<div class = "row center mt-20">
-			<a href = "/mypage/order_list">마이페이지</a>
-		</div>
+<%-- 바디 --%>
+<body>
+<main>
+	<div class="wrapper">
+	    <header class="header">
+	        <div class="header1">
+	            <div class="inner">
+	                <ul class="log1">
+	                				
+	                <c:choose>
+					<c:when test="${loginId !=null}">
+						<li>${loginId} 님<li>
+						<!-- 관리자 기능 -->
+						<c:if test="${login && admin}">
+							<li><a href="/admin/home">관리자 페이지</a></li>
+						</c:if>
+						
+						<li><a href="/member/logout" title="로그아웃">로그아웃</a><li>
+						<li><a href="#" title="고객센터">고객센터</a></li>				
+					</c:when>
+					<c:otherwise>
+						<li><a href="/member/login" title="로그인">로그인</a><li>				
+						<li><a href="/member/join" title="회원가입">회원가입</a><li>
+						<li><a href="#" title="고객센터">고객센터</a></li>
+					</c:otherwise>
+				</c:choose>
+	                </ul> <!--//log1-->
+	            </div> <!--//inner-->
+	        </div> <!--//header1-->
+	        <div class="header2">
+            <div class="inner">
+                <h1><a href="/" class="logo"><img class="image" width="150px;" height="150px" src="/image/logotop.png" alt="로고"></a></h1>
+                <div class="row left w-100">
+                    <h1>관리자 모드</h1>
+                </div> <!--//formdiv-->
+            </div> <!--//inner-->
+        </div> <!--//header2-->
+		</header>
 	
-	</div> --%>
-	
-			<!-- 사이드바 + 컨텐츠 -->
-			
-				<!-- 관리자 메뉴 -->
-				<aside>
-					
-						<div class="row">
-							<h2>관리자 메뉴</h2>
-						</div>
-						<div class="row">
-							<a href="/member/list">회원목록</a>
-						</div>
-				</aside>
-		
-
- 

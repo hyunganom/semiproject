@@ -6,47 +6,27 @@
 </jsp:include>
 <link rel = "stylesheet" type = "text/css" href = "/css/SANGMIN_admin.css">
 
+<style>
+	.container-1500 {
+		width: 1500px;
+		margin: 0 auto;
+	}
+</style>
 
 
-	<h1>관리자 페이지</h1>
-
-
-
-<div class="wrapper">
-        <div class="adminheader">
-            <div class="inner">
-                <h1><a href="/" class="logo"><img class="image" width="150px;" height="150px" src="/image/logotop.png"></a></h1>
-            </div>
-            <div class="adminheader">
-                <nav class="adminmenu">
-                    <div class="admintitle">
-                        <h1>관리자 페이지</h1>
-                        <div class="formdiv3">
-                            <h2 class="search">검색</h2>
-                            <form action="">
-                                <fieldset>
-                                    <legend>
-                                        <input type="submit" class="btnSearch3" value="검색">
-                                        <input type="text" class="textinput3" placeholder="검색어를 입력하시오.">
-                                    </legend>
-                                </fieldset>
-                            </form>
-                        </div> <!--//formdiv3-->                     
-                    </div> <!--//admintitle-->
-                </nav> <!--adminmenu-->
-            </div> <!--adminheader-->
+	<div class="wrapper mt-30 mb-30">
+        <div class="adminheader container-1500">
             <div class="adminsidemenu">
                 <ul class="admindrop">
-                    <li>        
+                    <li class="row center">        
                         <a href="/admin/home">관리홈</a>
                     </li>
                     <li class="adminsidemenu1">
-                        <ul><p><button class="btndrop">상품</button></p>
-                        <div class="btndropsub">
+                        <a href="#">상품</a>
+                        <ul>
                             <li><a href="">- 상품등록</a></li>
                             <li><a href="">- 상품리스트</a></li>
                             <li><a href=""></a></li>
-                        </div>
                         </ul>
                     </li>
                     <li class="adminsidemenu2">
@@ -76,4 +56,6 @@
                     </li>
                 </ul> <!--//admindrop-->
             </div> <!--//adminsidemenu-->
-
+		</div> <!-- adminheader -->
+	</div> <!-- wrapper -->
+</main>
