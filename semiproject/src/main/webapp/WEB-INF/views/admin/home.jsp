@@ -6,11 +6,11 @@
 </jsp:include>
 <link rel = "stylesheet" type = "text/css" href = "/css/SANGMIN_admin.css">
 
-<div class = "container-1200" style = "height: 1500px">
+
 
 	<h1>관리자 페이지</h1>
 
-</div>
+
 
 <div class="wrapper">
         <div class="adminheader">

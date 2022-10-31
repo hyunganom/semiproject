@@ -60,11 +60,7 @@
         <div class="header1">
             <div class="inner">
                 <ul class="log1">
-                
-				<c:if test = "${mg == '관리자'}">
-					<li><a href = "/admin/home">관리자 페이지로 가기 // </a></li>
-				</c:if>
-				
+                				
                 <c:choose>
 				<c:when test="${loginId !=null}">
 					<li>${loginId} 님<li>
