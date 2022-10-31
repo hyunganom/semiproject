@@ -87,13 +87,14 @@
 			var totalItemPrice = parseInt($(".before-price").text());
 			var totalDelivery = parseInt($(".delivery-price").text());
 			var totalDiscount = parseInt($(".point-price").text());
+			
 			//총금액(상품금액+배송비-할인금액)
 			var totalPrice = (totalItemPrice+totalDelivery)-totalDiscount;
 			return totalPrice;
 		}
 		
 		<!-- 적립금 전체 사용 버튼 이벤트 -->
-		$(".point-btn").one("click",function(e){
+		$(".point-btn").click(function(e){
 			e.preventDefault(); //a 태그 전송 막기
 			var itemsPrice = parseInt($(".before-price").text()); //상품 가격
 			var delivery = deliveryFee(); //배송비
@@ -160,9 +161,7 @@
 		$('input[name=orderPoint]').val(result);
 		
 	});
-	
-	
-	
+
 	
 	
     $(function(){
@@ -218,7 +217,7 @@
           </thead>
           <tbody>
           <c:choose>
-	          <c:when test="${basketList.size()==1}">
+	          <c:when test="${basketList.size()>0}">
 		            <c:forEach var="list" items="${basketList}">
 		            	<tr>
 			              	<td>
@@ -362,7 +361,7 @@
         	
           	</div>
           <div>  
-             <input type="text" class="input w-50" disabled>
+             <input type="text" class="input w-50 coupon-input"disabled>
             <a href="#" class="btns btns-positive coupon-btn">쿠폰 적용</a>
           </div>
           <div class="row">

@@ -42,6 +42,7 @@ public class OrderServiceImpl implements OrderService{
 		ordersDao.insert(orderVO);
 	      	      
 		//결제테이블에 데이터 등록
+		System.out.println("ordervo.payment()="+orderVO.getPayment());
 		if(orderVO.getPayment()==null) {
 			int paymentNo = paymentDao.sequence();
 		   paymentDao.insert(PaymentDto.builder()
@@ -52,7 +53,6 @@ public class OrderServiceImpl implements OrderService{
 					.paymentPrice(orderVO.getPaymentPrice())
 					.paymentOption(orderVO.getPaymentOption())
 					.build());
-		   
 		   productDao.updateProductInventory(orderVO);
 		   basketDao.clearbasket(orderVO.getBasketNo());
 		}else {
@@ -67,14 +67,14 @@ public class OrderServiceImpl implements OrderService{
 						.paymentPrice(dto.getPaymentPrice())
 						.paymentOption(dto.getPaymentOption())
 						.build());
-				System.out.println(orderVO.getPayment());
-				
+
 				//결제테이블에 해당하는 결제상품 
 				productDao.updateProductInventory(orderVO);
 				
 				// 결제상품 장바구니에서 제거(장바구니 번호로 삭제)
 				basketDao.clearbasket(dto.getBasketNo());
 			}
+			System.out.println("orderVO.getPayment()="+orderVO.getPayment());
 		}
 		
 			// 적립금 사용분 회원테이블 적립금 마이너스
