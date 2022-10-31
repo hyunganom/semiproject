@@ -7,41 +7,98 @@
 	<jsp:param value="1:1 문의글 목록" name="title"/>
 </jsp:include>
 
+<style>
+	a:hover {
+	text-decoration: none;
+	color : #29995d;/* 마우스 올렸을 글자 색 */
+	}
+	
+	/* 확장 스타일 : 줄무늬 테이블*/
+    .table.table-slit > thead > tr,
+    .table.table-slit > tfoot > tr{
+    	background-color: #dfe6e9;
+    }
+    
+    /* 확장스타일 : 테두리가 있는 테이블 */
+    .table.table-border {
+    	border:1px solid gray;
+    }
+    .table.table-border > tbody > tr,
+    .table.table-border > tbody > tr{
+    	border: 1px solid gray;
+    }
+    
+    ul.pagination{
+    	font-size: 1.25em;
+    }
+    
+    .table {
+    	font-size: 14px;
+    }
+    
+    th, td {
+    	vertical-align : middle;
+    }
+    	}
+	.font-menu > h3:hover{
+		background-color: #ebf7f2;
+	}
+	.font-menu > h3{
+		margin-top: 30px;
+	}
+	.w-80 {
+		width:80%;
+	}
+	
+	.table > thead {
+    	font-size: 16px;
+    }
+    .table > tbody {
+    	font-size: 14px;
+    }
+	
+	/* 확장 스타일 : 옆트임 테이블*/
+    .table.table-slit > thead > tr,
+    .table.table-slit > thead > th{
+    	background-color: #efefef;
+    	border: 2px solid gray;
+    }
+    
+    /* 확장스타일 : 테두리가 있는 테이블 */
+    .table.table-border > thead > th,
+    .table.table-border > thead > td,
+    .table.table-border > tbody > tr,
+    .table.table-border > tbody > th,
+    .table.table-border > tbody > td{
+    	border: 1px solid gray;
+    }
+	
+	th, td, h3 {
+    	vertical-align : middle;
+    	line-height : 1.2em;
+    }
+	/* div {
+		border:1px dotted gray;
+	} */
+</style>
+
+
 <div class = "container-1200">
 
-<%-- 검색창 --%>
-<form action = "listAdmin" method = "get">
-	<%-- 일단 상품명 조회만 추가했으며 차후 테이블 조인을 통해 카테고리 이름으로도 조회가 가능하도록 바꿀 예정 --%>
-	<select name = "type">
-		<option value = "inquire_title" <c:if test = "${inquireListSearchVO.type == 'inquire_title'}">selected</c:if>>상품명</option>
-	</select>
-	<input name = "keyword" value = "${inquireListSearchVO.keyword}">
-	<button type = "submit">검색</button>
-</form>
-
 	<div class = "row">
-		<h1>1:1 문의글 목록</h1>
-	</div>
-	
-	${inquireListSearchVO}
-	
-	<div class = "row right">
-		<a href = "write">등록</a>
+		<h1>1:1 문의글</h1>
 	</div>
 	
 	<div class = "row">
-	<table border = "1" width = "1200">
+	<table border = "1" width = "1000" class="table table-slit table-hover table-border">
 		<tbody>
 			<tr>
 				<th>문의글 번호</th>
 				<th>문의글 작성자</th>
-				<th>문의글 제목</th>
-				<th>문의글 내용</th>
+				<th width="45%">문의글 제목</th>
 				<th>문의글 작성일</th>
 				<th>문의글 수정일</th>
 				<th>문의글 답변 상태</th>
-				<th>문의글 삭제 상태</th>
-				<th colspan = "3">기능(임시로 표시)</th>
 			</tr>
 			
 			<c:forEach var = "inquireList" items = "${inquireList}">
@@ -49,21 +106,29 @@
 				<th>${inquireList.inquireNo}</th>
 				<th>${inquireList.inquireId}</th>
 				<th><a href = "detail?inquireNo=${inquireList.inquireNo}">${inquireList.inquireTitle}</a></th>
-				<th>${inquireList.inquireContent}</th>
 				<th>${inquireList.inquireWritetime}</th>
 				<th>${inquireList.inquireUpdatetime}</th>
 				<th>${inquireList.inquireHasReply}</th>
-				<th>${inquireList.inquireInactive}</th>
-				<th><a href = "edit?inquireNo=${inquireList.inquireNo}">수정</a></th>
-				<th><a href = "delete?inquireNo=${inquireList.inquireNo}">삭제(UPDATE)</a></th>
-				<th><a href = "deleteAdmin?inquireNo=${inquireList.inquireNo}">삭제(DELETE)</a></th>
 			</tr>
 			</c:forEach>
 		</tbody>
 	</table>
 	
+	<%-- 검색창 --%>
+<div align="center" class= "row">
+<form action = "listAdmin" method = "get">
+	<%-- 일단 상품명 조회만 추가했으며 차후 테이블 조인을 통해 카테고리 이름으로도 조회가 가능하도록 바꿀 예정 --%>
+	<select name = "type" style="height:56px;" >
+		<option value = "inquire_title"   <c:if test = "${inquireListSearchVO.type == 'inquire_title'}">selected</c:if>>제목</option>
+		<option value = "inquire_id"   <c:if test = "${inquireListSearchVO.type == 'inquire_id'}">selected</c:if>>아이디</option>
+	</select>
+	<input class="input" name = "keyword" value = "${inquireListSearchVO.keyword}">
+	<button style="width:40px; height:56px;" type = "submit">검색</button>
+</form>
+</div>
+	
 <%-- 페이지 이동 --%>
-<div class = "row">
+<div class = "row center">
 	<%-- 첫 페이지인지 판정 --%>
 	<c:choose>
 		<c:when test = "${inquireListSearchVO.isFirst()}"> <%-- 첫 페이지라면 --%>
@@ -109,9 +174,7 @@
 		</c:otherwise>
 	</c:choose>
 </div>
-	<div class = "row right">
-		<a href = "write">등록</a>
-	</div>
+	
 	
 	</div>
 </div>
