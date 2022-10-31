@@ -1,6 +1,7 @@
 package com.kh.semi.vo;
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,4 +21,7 @@ public class BasketVO {
 	//이미지 추가
 	private int productOriginNo;
 	private int productAttachmentNo;
+	
+	//리스트 추가
+//	public List<BasketVO> orderList;
 }

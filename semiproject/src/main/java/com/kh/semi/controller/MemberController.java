@@ -17,6 +17,7 @@ import com.kh.semi.entity.CouponDto;
 import com.kh.semi.entity.MemberDto;
 import com.kh.semi.repository.CouponDao;
 import com.kh.semi.repository.MemberDao;
+import com.kh.semi.vo.MemberSearchVO;
 
 @Controller
 @RequestMapping("/member")
@@ -60,25 +61,45 @@ public class MemberController {
 		return "member/joinFinish";
 	}
 	
-	//회원목록
+//	//회원목록
+//	@GetMapping("/list")
+//	public String list(Model model, 
+//			@RequestParam(required = false)	String type, 
+//			@RequestParam(required = false) String keyword) {
+//		boolean isSearch = type != null && keyword != null;
+//		if(isSearch) {
+//			model.addAttribute("list", memberDao.selectList(type, keyword));
+//		}
+//		else {
+//			model.addAttribute("list", memberDao.selectList());
+//		}
+//		return "member/list";
+//	}
+//	
+	
+	//목록(페이징처리)
+	
 	@GetMapping("/list")
-	public String list(Model model, 
-			@RequestParam(required = false)	String type, 
-			@RequestParam(required = false) String keyword) {
-		boolean isSearch = type != null && keyword != null;
-		if(isSearch) {
-			model.addAttribute("list", memberDao.selectList(type, keyword));
-		}
-		else {
-			model.addAttribute("list", memberDao.selectList());
-		}
-		return "member/list";
+	public String list(Model model,
+			@ModelAttribute(name="vo") MemberSearchVO vo) {
+	
+	int count = memberDao.count(vo);
+	vo.setCount(count);
+	
+	model.addAttribute("list",memberDao.selectList(vo));
+	model.addAttribute("param",vo);
+	return "member/list";
 	}
 	
 	//회원상세
 	@GetMapping("/detail")
-	public String detail(Model model, @RequestParam String memberId) {
-		MemberDto memberDto = memberDao.selectOne(memberId);
+	public String detail(Model model, @RequestParam String memberId, HttpSession session) {
+		
+		// 세션에 들어있는 아이디를 꺼낸다
+		//(참고) 세션에 데이터는 Object 형태로 저장되므로 꺼내려면 다운캐스팅 필요
+		String loginId = (String) session.getAttribute("loginId");
+		
+		MemberDto memberDto = memberDao.selectOne(loginId);
 		model.addAttribute("memberDto", memberDto);
 		return "member/detail";
 	}
