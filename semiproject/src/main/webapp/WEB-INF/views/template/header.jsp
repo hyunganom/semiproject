@@ -60,8 +60,7 @@
         <div class="header1">
             <div class="inner">
                 <ul class="log1">
-                
-                <c:choose>
+         <c:choose>
 					<c:when test="${loginId !=null}">
 						<li>${loginId} 님<li>
 						<!-- 관리자 기능 -->
