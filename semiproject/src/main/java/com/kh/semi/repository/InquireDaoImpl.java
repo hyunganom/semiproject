@@ -194,4 +194,11 @@ public class InquireDaoImpl implements InquireDao {
 		Object[] param = {inquireListSearchVO.getKeyword()};
 		return jdbcTemplate.queryForObject(sql, int.class, param);
 	}
+
+	@Override
+	public boolean updateHasReply(int inquireNo) {
+		String sql ="UPDATE inquire SET inquire.inquire_inactive='Y' where inquire_no = ?";
+		Object[] param = {inquireNo};
+		return jdbcTemplate.update(sql, param)>0;
+	}
 }
