@@ -10,7 +10,33 @@
 
 <link rel = "stylesheet" type = "text/css" href = "/css/SANGMIN_detail.css">
 
+<script type="text/javascript">
 
+	$(function(){
+	    $(".item-score").score({
+	    	starColor:"red", // 별 색상 (기본 : 금색)
+            integerOnly:false, // 반올림
+            display:{
+                showNumber:true, // 숫자 표시
+                placeLimit:1, // 소수점 자릿수
+                textColor:"red", // 숫자 색상 (기본 : 금색)
+            }
+	    });
+	});
+	
+	$(function(){
+	    $(".review-score").score({
+	    	starColor:"red", // 별 색상 (기본 : 금색)
+            integerOnly:false, // 반올림
+            display:{
+                showNumber:true, // 숫자 표시
+                placeLimit:1, // 소수점 자릿수
+                textColor:"red", // 숫자 색상 (기본 : 금색)
+            }
+	    });
+	});
+	
+</script>
 
 <!--본문 시작-->
 <section class="itemsection1">
@@ -21,7 +47,7 @@
         <div class="itemtitle">
             <h3>${productDto.productName}</h3>
             <div class="itemstar">
-                <div class="itemstar-score" data-max="5" data-rate="${productDto.productGood}"></div>
+                <div class="item-score" data-max="5" data-rate="${productDto.productGood}"></div>
             </div> 
                 <div class="itemtitle1">
                 <span>${productDto.productPrice}</span>
@@ -84,10 +110,10 @@
 	<%-- 누르는 버튼에 따라 전송하는 Mapping이 다르도록 설정 --%>
 	$(function(){
 		// 만약 구매 버튼을 눌렀다면 
-/* 	    $("#submit-purchase").click(function(){
-	        $("#product-data").attr("action", "/order/order_ck"); // 상품 구매 Mapping으로 전송
+ 	    $("#submit-purchase").click(function(){
+	        $("#product-data").attr("action", "/basket/insert"); // 상품 구매 Mapping으로 전송
 	        $("#product-data").attr("method", "get"); // get 방식
-	    }); */
+	    }); 
 		
 		 // 만약 장바구니 버튼을 눌렀다면 /basket Mapping으로 form의 값을 전송
 	    $("#submit-basket").click(function(){
@@ -193,6 +219,7 @@
 			</div>
 			<div class = "row">
 				리뷰 별점 : ${productReviewList.reviewGood}
+				<div class="item-score" data-max="5" data-rate="${productReviewList.reviewGood}"></div>
 			</div>
 			<div class = "row">
 				리뷰 제목 : ${productReviewList.reviewTitle}
@@ -207,7 +234,6 @@
 	</c:forEach>
 </div>
 
-</div>
 
 <%-- footer.jsp 불러오기 --%>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

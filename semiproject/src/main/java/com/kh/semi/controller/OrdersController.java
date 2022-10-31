@@ -49,7 +49,7 @@ public class OrdersController {
 		
 		// basketNo로 넘어오는 값 처리
 		String[] arr = request.getParameterValues("basketNo");
-		if(arr!=null) {
+		if(arr!=null) { //장바구니에서 주문서로
 			List<BasketVO> orderList = new ArrayList<>();
 			for(int i=0; i<arr.length; i++) {
 				BasketVO vo = basketDao.orderList(Integer.parseInt(arr[i]));
@@ -57,7 +57,7 @@ public class OrdersController {
 			}
 			// 넘어오는 상품만 model로 출력준비
 			model.addAttribute("basketList", orderList);
-		}else {
+		}else { //상품상세에서 주문서로
 			int basketNo = (Integer)session.getAttribute("basketNo");
 			model.addAttribute("purchaseList", basketDao.orderList(basketNo));
 		}
@@ -81,15 +81,7 @@ public class OrdersController {
     
 		// 전체 변수 orderVO로 받아 등록처리 + couponIssue
 		orderService.buy(orderVO, couponIssue);
-		
 		return "redirect:_1";
-
-//		if(주문실패할 경우) { 
-//			return "redirect:order/_2";
-//		}else { //주문성공할 경우
-//			return "redirect:order/_1";
-//		}
-		
 	}
 	
 	//주문성공

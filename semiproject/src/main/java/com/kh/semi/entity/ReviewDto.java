@@ -23,7 +23,7 @@ public class ReviewDto {
 	private String reviewContent; // 리뷰 내용
 	private Date reviewWritetime; // 리뷰 작성 시간
 	private Date reviewUpdatetime; // 리뷰 수정 시간
-	private int reviewGood; // 리뷰 별점
+	private double reviewGood; // 리뷰 별점
 	
 	// 리뷰 비활성화를 위한 필드
 	// - getter 메소드가 isProductInactive() 형태
