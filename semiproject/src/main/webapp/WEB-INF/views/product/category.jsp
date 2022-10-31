@@ -9,6 +9,23 @@
 <script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.min.js"></script> 
 <link rel = "stylesheet" type = "text/css" href = "/css/SANGMIN_category.css">
 
+<script type="text/javascript">
+
+	$(function(){
+	    $(".star-score").score({
+	    	starColor:"red", // 별 색상 (기본 : 금색)
+            integerOnly:false, // 반올림
+            display:{
+                showNumber:false, // 숫자 표시
+                placeLimit:1, // 소수점 자릿수
+                textColor:"red", // 숫자 색상 (기본 : 금색)
+            }
+	    });
+	});
+	
+</script>
+
+
 <section class="listsection1">
     <div class="inner">
         <h2 class="listitemtitle">이거 유명한거 알지?</h2>
@@ -54,6 +71,7 @@
 </div> <!--//footer5-->
 
 
+
 <div align = "center">
 
 <%-- 검색창 --%>
@@ -78,7 +96,8 @@
 
 
 
-		
+<table> <%-- 임시로 추가 --%>
+	<tbody>
 		<c:forEach var = "productList" items = "${productList}">
 		<tr>
 			<td>구독상품인가 : ${productList.categoryHighSub}</td>
@@ -87,11 +106,17 @@
 				<a href = "detail?productNo=${productList.productNo}&categoryHighSub=${productList.categoryHighSub}">${productList.productName}</a>
 			</td>
 			<td>${productList.productPrice}</td>
-			<td>${productList.productGood}</td>
+			<td>
+				<%-- 카테고리에 대한 VO에서 별점에 관한 자료형을 double로 변경 --%>
+				<div class = "star-score" data-max="5" data-rate = "${productList.productGood}"></div>
+				<fmt:formatNumber value="${productList.productGood}" type="number" pattern="0.0"/>
+			</td>
 			<td>${productList.productInactive}</td>
-			<td><img width=50 height=50 src="/attachment/download/productTumbnail?attachmentNo=${productList.attachmentNo}"></td>
+			<td><img width=50 height=50 src="/attachment/download/productTumbnail?attachmentNo=${productList.productAttachmentNo}"></td>
 		</tr>
 		</c:forEach>
+	</tbody>
+</table>
 		
 
 
