@@ -28,7 +28,7 @@
                    </div> <!--//inner-->
                </div> <!--//btmfooter-->
            </footer> <!--//footer-->
-
+ 
 	<%-- 하단 정보 
 	<div align = "center">
 		<h2>Session에 대한 정보</h2>
