@@ -185,14 +185,22 @@ public class AdminController {
 	// 상품 수정 Mapping
 	// 1) 상품 수정 jsp로 연결
 	@GetMapping("/product/edit")
-	public String productEdit(Model model, @RequestParam int productNo) {
+	public String productEdit(Model model, @RequestParam(required = false) Integer productNo, @RequestParam(required = false) Integer productDetailNo) {
 		
-		// 하이퍼링크로 받은 productNo로 상세 조회 실행
-		ProductDto productDto = productDao.selectOneProduct(productNo);
-		
-		// 상세 조회 실행 후 그 결과를 Model에 첨부
-		model.addAttribute("productDto", productDto);
-		
+		if(productNo != null) {
+			// 하이퍼링크로 받은 productNo로 상세 조회 실행
+			ProductDto productDto = productDao.selectOneProduct(productNo);
+			
+			// 상세 조회 실행 후 그 결과를 Model에 첨부
+			model.addAttribute("productDto", productDto);
+		}
+		else {
+			// 하이퍼링크로 받은 productNo로 상세 조회 실행
+			ProductDto productDto = productDao.selectOneProduct(productDetailNo);
+			
+			// 상세 조회 실행 후 그 결과를 Model에 첨부
+			model.addAttribute("productDto", productDto);
+		}
 		// 상품 수정 페이지(edit.jsp)로 연결
 		return "product/editAdmin";	
 	}
