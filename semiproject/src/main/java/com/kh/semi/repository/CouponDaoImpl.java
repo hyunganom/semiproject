@@ -205,9 +205,14 @@ public class CouponDaoImpl implements CouponDao{
 	//사용가능한(미사용) 쿠폰만 출력
 	@Override
 	public int selectUsable(String memberId) {
-		String sql ="select count(*) cnt from coupon where coupon_id=? and coupon_valid='미사용' group by coupon_id";
-		Object[] param = {memberId};
-		return jdbcTemplate.queryForObject(sql, int.class, param);
+		try {
+			String sql ="select count(*) cnt from coupon where coupon_id=? and coupon_valid='미사용' group by coupon_id";
+			Object[] param = {memberId};
+			return jdbcTemplate.queryForObject(sql, int.class, param);
+		} catch (Exception e) {
+			return 0;
+		}
+		
 	}
 	
 	//주문페이지로 넘어갈 쿠폰 데이터 불러오기
