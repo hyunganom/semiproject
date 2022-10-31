@@ -60,11 +60,11 @@ public class InquireController {
 	// 1. 문의글 등록 Mapping
 	// 1) 문의글 등록 페이지(write.jsp)로 연결
 	@GetMapping("/write")
-	public String write(HttpSession session) {
+	public String write(HttpSession session, Model model) {
 		
 		// HttpSession에서 로그인 중인 회원 아이디 반환
 		String loginId = (String)session.getAttribute("loginId");
-		
+		model.addAttribute("memberDto", memberDao.selectOne(loginId));
 		// 로그인 상태에 따라 표시되는 페이지가 다르도록
 		if(loginId == null) { // 비로그인 상태라면
 			// 홈 화면으로 강제 이동(redirect)
@@ -144,7 +144,7 @@ public class InquireController {
 		String loginId = (String) session.getAttribute("loginId");
 		
 		// 회원 아이디 꺼내옴
-				// 주문자 정보 model로 출력준비
+		// 주문자 정보 model로 출력준비
 		model.addAttribute("memberDto", memberDao.selectOne(loginId));
 		
 		// 검색 분류(type)과 검색어(keyword) 값의 존재 여부에 따라 반환한 회원 아이디로 검색 조회/전체 조회 실행 후 그 결과를 Model에 첨부
