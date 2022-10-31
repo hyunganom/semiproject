@@ -204,12 +204,13 @@
       	</div> <!--//itemimage-->
   	</div> <!--//inner-->
 </section> <!--//itemsection2-->
+
 <section >
    	<div class=" mt-10 mb-10 center">
        	<img src="/image/itemreview.png" width=500 height=150  alt="구매후기/포토후기">
    	</div>
 </section> <!--//itemsection3-->
-  	<div class = "container-1200 mt-50 center mb-50">
+<div class = "container-1200 mt-50 center mb-50">
 	<c:forEach var = "productReviewList" items = "${productReviewList}">
 		<table class="table mt-10 mb-10 " >
 			 <tr>
