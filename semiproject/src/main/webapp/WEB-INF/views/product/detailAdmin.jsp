@@ -76,8 +76,8 @@
 <tfoot>
 	<tr>
 		<th><a href = "/admin/product/edit?productDetailNo=${productDto.productNo}">수정</a></th>
-		<th><a href = "/admin/product/delete?productDetailNo=${productDto.productNo}">삭제(DELETE)</a></th>
-		<th><a href = "/admin/product/inactive?productNo=${productDto.productNo}">삭제(UPDATE)</a></th>
+		<th><a href = "/admin/product/delete?productNo=${productDto.productNo}">삭제(DELETE)</a></th>
+		<th><a href = "/admin/product/inactive?productDetailNo=${productDto.productNo}">삭제(UPDATE)</a></th>
 		<th><a href = "/admin/product/list">목록</a></th>
 	</tr>
 </tfoot>
