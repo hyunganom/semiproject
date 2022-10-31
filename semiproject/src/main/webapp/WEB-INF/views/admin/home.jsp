@@ -11,7 +11,7 @@
 <div class="wrapper">
         <div class="adminheader">
             <div class="inner">
-                <h1><a href="#" class="logo"><img class="image" width="150px;" height="150px" src="./image/logotop.png"></a></h1>
+                <h1><a href="#" class="logo"><img class="image" width="150px;" height="150px" src="/image/logotop.png"></a></h1>
             </div>
             <div class="adminheader">
                 <nav class="adminmenu">
@@ -73,4 +73,3 @@
                 </ul> <!--//admindrop-->
             </div> <!--//adminsidemenu-->
 
-<jsp:include page="/WEB-INF/views/template/adminFooter.jsp"></jsp:include>

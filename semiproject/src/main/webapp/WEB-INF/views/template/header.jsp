@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- <c:set var="login" value="${loginId != null}"></c:set>
-<c:set var="admin" value="${mg == '관리자'}"></c:set> --%>
+<c:set var="login" value="${loginId != null}"></c:set>
+<c:set var="admin" value="${mg == '관리자'}"></c:set> 
 
 <!DOCTYPE html>
 <html>
@@ -64,9 +64,9 @@
 				<c:when test="${loginId !=null}">
 					<li>${loginId} 님<li>
 					<!-- 관리자 기능 -->
-					<%-- <c:if test="${login && admin}">
+					<c:if test="${login && admin}">
 						<li><a href="/admin/home">관리자 페이지</a></li>
-					</c:if> --%>
+					</c:if>
 					
 					<li><a href="/member/logout" title="로그아웃">로그아웃</a><li>
 					<li><a href="#" title="고객센터">고객센터</a></li>				
