@@ -85,42 +85,21 @@ $(function(){
     });
 
     // 관리자 페이지 클릭시 드롭다운 메뉴
-    function myadmin(){
-        let click = document.getElementById("mydrop");
-        if(click.style.display === "none"){
-            click.style.display = "block";
-        }
-        else{
-            click.style.display = "none";
-        }
-    }
-    function myadmin2(){
-        let click = document.getElementById("mydrop2");
-        if(click.style.display === "none"){
-            click.style.display = "block";
-        }
-        else{
-            click.style.display = "none";
-        }
-    }
-    function myadmin3(){
-        let click = document.getElementById("mydrop3");
-        if(click.style.display === "none"){
-            click.style.display = "block";
-        }
-        else{
-            click.style.display = "none";
-        }
-    }
-    function myadmin4(){
-        let click = document.getElementById("mydrop4");
-        if(click.style.display === "none"){
-            click.style.display = "block";
-        }
-        else{
-            click.style.display = "none";
-        }
-    }
+    $(document).ready(function(){
+        $('button.btndrop').click(function(){
+            $('.btndropsub').slideToggle();
+        });
+        $('button.btndrop2').click(function(){
+            $('.btndropsub2').slideToggle();
+        });
+        $('button.btndrop3').click(function(){
+            $('.btndropsub3').slideToggle();
+        });
+        $('button.btndrop4').click(function(){
+            $('.btndropsub4').slideToggle();
+        });
+    });
+    
 
 
 

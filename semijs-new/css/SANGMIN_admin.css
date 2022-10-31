@@ -39,7 +39,8 @@
     box-sizing: border-box;
 }
 .adminsidemenu{
-    position: relative; 
+    position: fixed;
+    left: 0; 
     border: 1px solid pink;
     width: 250px;
     height: 600px;
@@ -58,6 +59,39 @@
     font-size: 16px;
     border: none;
     cursor: pointer;
+}
+.btndrop2 {
+    color: black;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+.btndrop3 {
+    color: black;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+.btndrop4 {
+    color: black;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+.btndropsub{
+    display: none;
+}
+.btndropsub2{
+    display: none;
+}
+.btndropsub3{
+    display: none;
+}
+.btndropsub4{
+    display: none;
 }
 
 
