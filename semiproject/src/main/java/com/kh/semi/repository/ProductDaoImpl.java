@@ -495,4 +495,20 @@ public class ProductDaoImpl implements ProductDao {
 		Object[] param = {orderVO.getPaymentCount(), orderVO.getPaymentProductNo()};
 		return jdbcTemplate.update(sql,param)>0;
 	}
+	
+	//상품재고 변경구문(단일상품)
+//	@Override
+//	public boolean updateProductInventory1(PaymentVO paymentVO) {
+//		String sql = "update product set product_inventory = product_inventory - ? where product_no = ?";
+//		Object[] param = {paymentVO.getPaymentCount(), paymentVO.getPaymentProductNo()};
+//		return jdbcTemplate.update(sql,param)>0;
+//	}
+	//상품재고 변경구문(구독상품)
+//	@Override
+//	public boolean updateProductInventory2(PaymentVO paymentVO) {
+//		String sql = "update product set product_inventory = product_inventory - ? where product_no = ?";
+//		Object[] param = {orderVO.getPaymentCount(), orderVO.getPaymentProductNo()};
+//		return jdbcTemplate.update(sql,param)>0;
+//	}
+	
 }
