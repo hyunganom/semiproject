@@ -4,17 +4,18 @@
 <jsp:include page="/WEB-INF/views/template/adminHeader.jsp">
 	<jsp:param value="관리자 페이지" name="title"/>
 </jsp:include>
+<link rel = "stylesheet" type = "text/css" href = "/css/SANGMIN_admin.css">
 
-<div class = "container-1200" style = "height: 1500px">
+
 
 	<h1>관리자 페이지</h1>
 
-</div>
+
 
 <div class="wrapper">
         <div class="adminheader">
             <div class="inner">
-                <h1><a href="#" class="logo"><img class="image" width="150px;" height="150px" src="./image/logotop.png"></a></h1>
+                <h1><a href="/" class="logo"><img class="image" width="150px;" height="150px" src="/image/logotop.png"></a></h1>
             </div>
             <div class="adminheader">
                 <nav class="adminmenu">
@@ -37,7 +38,7 @@
             <div class="adminsidemenu">
                 <ul class="admindrop">
                     <li>        
-                        <a href="">관리홈</a>
+                        <a href="/admin/home">관리홈</a>
                     </li>
                     <li class="adminsidemenu1">
                         <ul><p><button class="btndrop">상품</button></p>
@@ -60,7 +61,7 @@
                     <li class="adminsidemenu3">
                         <ul><p><button class="btndrop3">회원</button></p>
                         <div class="btndropsub3">
-                            <li><a href="">- 회원정보</a></li>
+                            <li><a href="http://localhost:8888/member/list">- 회원정보</a></li>
                         </div>
                         </ul>
                     </li>
@@ -76,4 +77,3 @@
                 </ul> <!--//admindrop-->
             </div> <!--//adminsidemenu-->
 
-<jsp:include page="/WEB-INF/views/template/adminFooter.jsp"></jsp:include>

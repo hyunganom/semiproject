@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="login" value="${loginId != null}"></c:set>
-<c:set var="admin" value="${mg == '관리자'}"></c:set>
+
 
 <!DOCTYPE html>
 <html>
@@ -52,26 +51,43 @@
 	
 </head>
 
-<%-- 바디 --%>
-<body>
 
-	<!-- 사이드바 + 컨텐츠 -->
-	<div class="float-container">
-		<!-- 관리자 메뉴 -->
-		<aside>
-			<div class="container-150">
-				<div class="row">
-					<h2>관리자 메뉴</h2>
-				</div>
-				<div class="row">
-					<a href = "/">홈으로 돌아가기</a>
-				</div>
-				<div>
-					<a href="/member/list">회원 관리</a>
-				</div>
-				<div>
-					<a href="/admin/product/list">상품 관리</a>
-				</div>
-			</div>
-		</aside>
-	</div>
+
+
+		
+			
+		<%-- 		
+		
+		문의글 관련
+		<div class = "row mt-20 center">
+			<a href = "/inquire/list">문의글 목록(회원용 - 내가 쓴 문의글)</a>
+			<a href = "/inquire/listAdmin">문의글 목록(관리자용)</a>
+		</div>
+		
+		<div class = "row center mt-20">
+			<a href = "/product/list">전체 상품 목록(관리자용 - 상품의 모든 정보가 나옴)</a> 
+		</div>
+		
+		
+		
+		<div class = "row center mt-20">
+			<a href = "/mypage/order_list">마이페이지</a>
+		</div>
+	
+	</div> --%>
+	
+			<!-- 사이드바 + 컨텐츠 -->
+			
+				<!-- 관리자 메뉴 -->
+				<aside>
+					
+						<div class="row">
+							<h2>관리자 메뉴</h2>
+						</div>
+						<div class="row">
+							<a href="/member/list">회원목록</a>
+						</div>
+				</aside>
+		
+
+ 

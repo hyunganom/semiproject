@@ -90,6 +90,7 @@
 			var totalCoupon = parseInt($(".coupon-price").text());
 			//총금액(상품금액+배송비-적립금-쿠폰)
 			var totalPrice = (totalItemPrice+totalDelivery)-totalDiscount-totalCoupon;
+      
 			return totalPrice;
 		}
  		
