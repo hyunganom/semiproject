@@ -203,12 +203,12 @@
 </section> <!--//itemsection2-->
 
 <%-- 리뷰 관련 --%>
-<div class = "container-800">
+<div class = "container-800 mt-40" style="margin-bottom:100px">
 	<c:forEach var = "productReviewList" items = "${productReviewList}">
 		<table class="table mt-10 mb-10">
     		<tr>
 				<td class="row left" width="400" height="30">
-   					<div class="row" style="font-size: 16px; color: rgb(15, 199, 76);">
+   					<div class="row" style="font-size: 16px; font-weight: bold;">
 						제목 : ${productReviewList.reviewTitle}
 					</div>
 					옵션 : ${productReviewList.paymentOption} <br>
@@ -229,12 +229,13 @@
 					${productReviewList.reviewId} <br>
 					<div class="row">
   						<div id = "review-good" class="review-score" data-max="5" data-rate="${productReviewList.reviewGood}"></div>
-  						<span id = "review-good">${productReviewList.reviewGood}</span>
+  						<span id = "review-good" >${productReviewList.reviewGood}</span>
          			</div>
        			</td>
     		</tr>
 		</table>
 		<hr>
+		<br>
 	</c:forEach>
 </div>
 
@@ -271,4 +272,4 @@ ${productDto.productInactive}
 --%>
 
 <%-- footer.jsp 불러오기 --%>
-
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
