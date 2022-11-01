@@ -148,7 +148,7 @@ public class MemberController {
 		boolean result = memberDao.update(memberDto);
 		if(result) {
 			attr.addAttribute("memberId", memberDto.getMemberId());
-			return "redirect:detail";
+			return "redirect:list";
 		}
 		else {
 			return "redirect:change_fail";

@@ -38,6 +38,7 @@
 	    });
 	    
 	    <!-- 수량 버튼 이벤트 -->
+	    //마이너스버튼
 	    $(".btndown").click(function(){
 	    	var inputCount = parseInt($(this).next().val()); //input태그 값선택
 	    	$(".itemnumbercheck").val(inputCount-1); //input태그에 값 넣기
@@ -46,11 +47,22 @@
 	    	}
 	    });
 	    
+	    //플러스버튼
 	    $(".btnup").click(function(){
 	    	$(".btndown").attr("disabled",false); //마이너스 버튼 비활성화 해제
 	    	var inputCount = parseInt($(this).prev().val()); //input태그 값
 	    	$(".itemnumbercheck").val(inputCount+1);
 	    });
+	    
+	    //직접 입력
+/* 	    $(".itemnumbercheck").blur(function(){
+	    	var inputCount = parseInt($(this).prev().val());
+	    	if(inputCount<1){
+	    		alert('수량은 1개 이상 선택해주세요!');
+	    	}else{
+	    		$(".itemnumbercheck").val(1);
+	    	}
+	    }); */
 	    
 	});
 	
@@ -155,8 +167,7 @@
 	        		<div class="countcheck">
 		            	<span class="numbericon">
 		                	<button type="button" class="btndown" title="감소" value="dn^|^0" disabled>감소</button>
-		                		<!--<input type = "number" class="itemnumbercheck" name = "productCount" placeholder = "수량" min = "1" max = "10"> -->
-		                		<input type = "text" class="itemnumbercheck" name = "productCount" value="1">
+		                		<input type = "text" class="itemnumbercheck" name = "productCount" value="1" readonly>
 		                	<button type="button" class="btnup" title="증가" value="up^|^0">증가</button>
 		            	</span> <!--//numbericon-->
 					</div> <!--//countcheck-->
@@ -192,12 +203,12 @@
 </section> <!--//itemsection2-->
 
 <%-- 리뷰 관련 --%>
-<div class = "container-800">
+<div class = "container-800 mt-40" style="margin-bottom:100px">
 	<c:forEach var = "productReviewList" items = "${productReviewList}">
 		<table class="table mt-10 mb-10">
     		<tr>
 				<td class="row left" width="400" height="30">
-   					<div class="row" style="font-size: 16px; color: rgb(15, 199, 76);">
+   					<div class="row" style="font-size: 16px; font-weight: bold;">
 						제목 : ${productReviewList.reviewTitle}
 					</div>
 					옵션 : ${productReviewList.paymentOption} <br>
@@ -218,12 +229,13 @@
 					${productReviewList.reviewId} <br>
 					<div class="row">
   						<div id = "review-good" class="review-score" data-max="5" data-rate="${productReviewList.reviewGood}"></div>
-  						<span id = "review-good">${productReviewList.reviewGood}</span>
+  						<span id = "review-good" >${productReviewList.reviewGood}</span>
          			</div>
        			</td>
     		</tr>
 		</table>
 		<hr>
+		<br>
 	</c:forEach>
 </div>
 
@@ -260,4 +272,4 @@ ${productDto.productInactive}
 --%>
 
 <%-- footer.jsp 불러오기 --%>
-
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
