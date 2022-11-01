@@ -18,22 +18,26 @@
 	    	starColor:"red", // 별 색상 (기본 : 금색)
             integerOnly:false, // 반올림
             display:{
-                showNumber:true, // 숫자 표시
-                placeLimit:1, // 소수점 자릿수
-                textColor:"red", // 숫자 색상 (기본 : 금색)
-            }
-	    });
-	    
-	    $(".review-score").score({
-	    	starColor:"red", // 별 색상 (기본 : 금색)
-            integerOnly:false, // 반올림
-            display:{
-                showNumber:true, // 숫자 표시
+                showNumber:false, // 숫자 표시
                 placeLimit:1, // 소수점 자릿수
                 textColor:"red", // 숫자 색상 (기본 : 금색)
             }
 	    });
 	});
+	
+	$(function(){
+	   
+	    $(".review-score").score({
+	    	starColor:"red", // 별 색상 (기본 : 금색)
+            integerOnly:false, // 반올림
+            display:{
+                showNumber:false, // 숫자 표시
+                placeLimit:1, // 소수점 자릿수
+                textColor:"red", // 숫자 색상 (기본 : 금색)
+            }
+	    });
+	});
+	
 	
 	$(function(){
 	    
@@ -54,6 +58,11 @@
 </script>
 
 <style>
+
+  #product-good {
+		color : red;
+	}
+
 
 	td{
     	vertical-align : middle;
@@ -109,7 +118,8 @@
 		<div class="itemtitle">
     		<h3>${productDto.productName}</h3>
 		<div class="itemstar">
-    		<div class="item-score" data-max="5" data-rate="${productDto.productGood}"></div>
+    		<div id = "product-good" class="item-score" data-max="5" data-rate="${productDto.productGood}"></div>
+    		<span id = "product-good">${productDto.productGood}</span>
 		</div> 
 		<div class="itemtitle1">
     		<span>${productDto.productPrice}</span>
@@ -182,6 +192,35 @@
 				 <p id="td-font4">${productReviewList.reviewContent}</p> <br>
 			 	</td>
 			 </tr>
+		</table>
+		<hr>
+	</c:forEach>
+</div>
+
+<%-- 리뷰 관련 --%>
+<div class = "container-800">
+	<c:forEach var = "productReviewList" items = "${productReviewList}">
+		<table class="table mt-10 mb-10">
+    		<tr>
+       			<td class="img center" width="100">
+          			<img width=90 height=90 src="/attachment/download/reviewImg?attachmentNo=${productReviewList.reviewAttachmentNo}">
+				</td>
+				<td class="row left" width="400" height="30">
+   					<div class="row" style="font-size: 16px; color: rgb(15, 199, 76);">
+						제목 : ${productReviewList.reviewTitle}
+					</div>
+					옵션 : ${productReviewList.paymentOption} <br>
+					내용 : ${productReviewList.reviewContent} <br>
+				</td>
+				<td class="row center" width="30">
+   					${productReviewList.reviewWritetime} <br>
+					${productReviewList.reviewId} <br>
+					<div class="row">
+  						<div id = "review-good" class="review-score" data-max="5" data-rate="${productReviewList.reviewGood}"></div>
+  						<span id = "review-good" >${productReviewList.reviewGood}</span>
+         			</div>
+       			</td>
+    		</tr>
 		</table>
 		<hr>
 	</c:forEach>

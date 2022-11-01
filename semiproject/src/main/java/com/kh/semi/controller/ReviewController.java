@@ -178,40 +178,25 @@ public class ReviewController {
 	
 	// 2) 리뷰 수정 jsp에서 받은 값으로 DB 수정
 	@PostMapping("/edit")
-	public String reviewEdit(@ModelAttribute ReviewDto reviewDto, @RequestParam int paymentProductNo, @RequestParam double reviewGood) {
+	public String reviewEdit(@ModelAttribute ReviewDto reviewDto, @RequestParam int paymentProductNo, @RequestParam double reviewGood, @RequestParam double reviewGoodBefore) {
 		
-		// 리뷰 작성 전 리뷰의 총 갯수 반환
-		int beforeCount = reviewDao.countBeforeWrite(paymentProductNo);
+		// 1) 리뷰의 총 갯수 반환
+		int countNow = reviewDao.countBeforeWrite(paymentProductNo);
 		
 		// 작성자가 입력한 리뷰 점수 반환
-		int scoreNow = (int)reviewDto.getReviewGood();
-		
-		// 해당 상품의 리뷰 평점 업데이트값(insertScore) 구하기
-		double insertScore;
+		int reviewGoodNow = (int)reviewDto.getReviewGood();
 		
 		// 리뷰 등록 전 리뷰 총점 반환
 		int scroeBefore = reviewDao.scoreBeforeWrite(paymentProductNo);
 		
-		// 1) 기존의 리뷰 총점과 작성자가 입력한 리뷰 점수의 합을 double로 형 변환
-		int scoreSum = scroeBefore + scoreNow;
-		
-		// 리뷰 등록 전 리뷰의 총 갯수 반환
-		int countBefore = reviewDao.countBeforeWrite(paymentProductNo);
-		
-		// 2) 작성자가 등록하면서 리뷰의 수가 1만큼 증가하므로 이 때의 총 리뷰 수 반환
-		int countSum = countBefore + 1;
+		// 2) 새로운 총점 구하기
+		int scoreSum = scroeBefore - (int)reviewGoodBefore + reviewGoodNow;
 		
 		// 1)과 2)를 사용하여 새로 평균낸 리뷰 평점 구하기
-		insertScore = (scoreSum * 10) / countSum / 10.0;
+		double scoreInsert = (scoreSum * 10) / countNow / 10.0;
 		
 		// 새로 평균낸 리뷰 평점을 해당 상품의 리뷰 평점으로 수정
-		reviewDao.updateProductGood(insertScore, paymentProductNo);
-		
-		// double로 입력받은 리뷰 평점을 int로 변환(라이브러리에서 소수 형태로 입력되므로)
-		int reviewGoodInt = (int) reviewGood;
-		
-		// int로 변환된 값을 reviewDto의 reviewGood(리뷰 평점)으로 설정
-		reviewDto.setReviewGood(reviewGoodInt);
+		reviewDao.updateProductGood(scoreInsert, paymentProductNo);
 		
 		// 리뷰 DB 수정 처리
 		reviewDao.updateReview(reviewDto);
