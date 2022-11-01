@@ -94,7 +94,6 @@
 	});
 	
 	$(function(){
-		 
 	 	// 만약 구매 버튼을 눌렀다면 
 	    $("#submit-purchase").click(function(){
 	        $("#product-data").attr("action", "/basket/insert"); // 상품 구매 Mapping으로 전송
@@ -107,6 +106,28 @@
 	        $("#product-data").attr("method", "post"); // post 방식
 	    });
 	});
+	
+	<!-- 수량 버튼 이벤트 -->
+	$(function(){ 
+		//마이너스 버튼
+		$(".btndown").click(function(){
+	    	var inputCount = parseInt($(this).next().val()); //input태그 값선택
+	    	$(".itemnumbercheck").val(inputCount-1); //input태그에 값 넣기
+	    	if(inputCount==2){
+	    		$(this).attr("disabled",true); //마이너스 버튼 비활성화 설정
+	    	}
+	    });
+		//플러스 버튼
+	    $(".btnup").click(function(){
+	    	$(".btndown").attr("disabled",false); //마이너스 버튼 비활성화 해제
+	    	var inputCount = parseInt($(this).prev().val()); //input태그 값
+	    	$(".itemnumbercheck").val(inputCount+1);
+	    });
+	  
+	});
+	
+	
+	
 	
 </script>
 
@@ -138,10 +159,10 @@
                     <dd>
                         <div class="countcheck">
                             <span class="numbericon">
-                                <button type="button" class="btndown" title="감소" value="dn^|^0">감소</button>
+                                <button type="button" class="btndown" title="감소" value="dn^|^0" disabled>감소</button>
                                 	
-                                	<input type = "number" class="itemnumbercheck" name = "productCount" placeholder = "수량" min = "1" max = "10">
-                               <!--  <input type="text" class="itemnumbercheck" title="수량" value="1"> -->
+                               <!--	<input type = "number" class="itemnumbercheck" name = "productCount" placeholder = "수량" min = "1" max = "10"> -->
+                                <input type="text" class="itemnumbercheck" title="수량" value="1">
                                 
                                 <button type="button" class="btnup" title="증가" value="up^|^0">증가</button>
                             </span> <!--//numbericon-->
