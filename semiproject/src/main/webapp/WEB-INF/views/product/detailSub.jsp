@@ -113,14 +113,14 @@
 <!--본문 시작-->
 <form id = "product-data"> <%-- form 시작 --%>
 <section class="itemsection1">
+    <div class="inner">
 	<input type = "hidden" name = "productNo" value = "${productDto.productNo}"> <%-- 상품 번호 --%>
 	<input type = "hidden" name = "productName" value = "${productDto.productName}"> <%-- 상품 이름 --%>
-    <div class="inner">
     	<c:forEach var="productTumbnailList" items="${productTumbnailList}">
 			<img class="itemmain" src="/attachment/download/productTumbnail?attachmentNo=${productTumbnailList.attachmentNo}" alt="상품 메인">
 		</c:forEach>
         <div class="itemtitle">
-            <h3>${productDto.productName}</h3>
+            <p>${productDto.productName}<p>
             <div class="itemstar">
                 <div id = "product-good" class="item-score" data-max="5" data-rate="${productDto.productGood}"></div>
                 <span id = "product-good">${productDto.productGood}</span>
@@ -134,7 +134,7 @@
                     <li>배송방법(새벽/일반) 및 [수령일 지정]은 주문서/결제 단계에서 선택 가능합니다.</li>
                 </ul>
                 <dl class="itemcount">
-                    <dt>총 수량</dt>
+                    <dt id="itemcountall">총 수량</dt>
                     <dd>
                         <div class="countcheck">
                             <span class="numbericon">

@@ -68,4 +68,7 @@ public interface ReviewDao {
 	
 	// 3) 검색 조회시 리뷰의 총 갯수
 	int countSearchReview(ReviewListSearchVO reviewListSearchVO);
+	
+	// 추상 메소드 - 리뷰 번호로 회원 아이디 조회(인터셉터용)
+	String selectOrderId(int reviewNo);
 }
