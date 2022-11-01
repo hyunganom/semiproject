@@ -156,15 +156,15 @@
                            </li>
                            <li>
                                <div class="img1">
-                                   <a href="#"><img src="" width="200px" height="200px"></a>
+                                   <a href="http://localhost:8888/product/detail?productNo=1354&categoryHighSub=false"><img src="/image/snack1-3.png" alt="만두1-3" width="200px" height="200px"></a>
                                </div>
-                               <p>간식3</p>
+                               <p>닭가슴살 만두 3종</p>
                            </li>
                            <li>
                                <div class="img1">
-                                   <a href="#"><img src=""></a>
+                                   <a href="http://localhost:8888/product/detail?productNo=1353&categoryHighSub=false"><img src="/image/snack1-4.png" alt="만두1-4" width="200px" height="200px"></a>
                                </div>
-                               <p>간식4</p>
+                               <p>어맛 씨스루 만두(닭가슴살)</p>
                            </li>
                        </ul>
                    </div> <!--//item4-->
