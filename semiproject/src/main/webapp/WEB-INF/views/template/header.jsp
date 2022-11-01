@@ -115,7 +115,7 @@
                         <li><a href="/product/category?categoryHighNo=41">정기배송</a></li>
                         <li><a href="/product/category?categoryHighNo=42">샐러드</a></li>
                         <li><a href="/product/category?categoryHighNo=43">간식</a></li>
-                        <li><a href="#">이벤트</a></li>
+                        <li><a href="/event">이벤트</a></li>
                     </ul>
                     <div class="bottommenu">
                         <div class="inner">
