@@ -34,6 +34,7 @@ $(function(){
 	<div class="container-800">
 		<form action = "edit" method = "post" enctype = "multipart/form-data">
 			<input name = "reviewNo" value = "${reviewVO.reviewNo}" type = "hidden">
+			<input name = "reviewGoodBefore" value = "${reviewVO.reviewGood}" type = "hidden">
 			
 			<input name = "reviewPaymentNo" value = "${reviewVO.reviewPaymentNo}" type = "hidden">
 			<input name = "paymentProductNo" value = "${reviewVO.paymentProductNo}" type = "hidden">

@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp">
-	<jsp:param value="상품 목록 페이지" name="title"/>
+	<jsp:param value="전체 상품 목록" name="title"/>
 </jsp:include>
 
 <script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.js"></script>
@@ -44,7 +44,6 @@
 	});
 	
 </script>
-
 
 <section class="listsection1">
     <div class="inner">
@@ -89,12 +88,18 @@
 
 <div class="footer5">
     <div class="inner">
-        <div class="formdiv1">
+        <div class="listselect">
+            <select name="listselect1">
+                <option value="">상품명</option>
+            </select> 
+        </div> <!--//listselect-->
+        <div class="formdiv1">	<%-- 검색창 --%>
             <h1 class="search1">검색</h1>
-            <form action = "category" method = "get">
+            <form action="">
                 <fieldset>
                     <legend>
-                    	<input type = "hidden" name = "categoryHighNo" value = "${productListSearchCategoryVO.categoryHighNo}">
+                    	<%-- 카테고리 번호를 입력받아 조회해야하므로 검색을 위해 form에서 값을 보낼 때 하이퍼링크에서 입력받았던 카테고리 번호도 보내야 한다 --%>
+                        <input type = "hidden" name = "categoryHighNo" value = "${productListSearchCategoryVO.categoryHighNo}">
 						<input type = "hidden" name = "categoryLowNo" value = "${productListSearchCategoryVO.categoryLowNo}">
 						<input type = "hidden" name = "type" value = "product_name" >
                         <input type="text" class="textinput1" name = "keyword" placeholder="검색어를 입력하시오." value = "${productListSearchCategoryVO.keyword}">
@@ -115,44 +120,44 @@
 	<ul class = "pagination">
 		<%-- 첫 페이지인지 판정 --%>
 		<c:choose>
-			<c:when test = "${productListSearchCategoryVO.isFirst()}"> <%-- 첫 페이지라면 --%>
+			<c:when test = "${productListSearchAllVO.isFirst()}"> <%-- 첫 페이지라면 --%>
 				<li>
-					<a href = ""> <%-- 현재 주소 유지 --%>
+					<a href = "">
 						&laquo;
-					</a>
-				</li> 
+					</a>  <%-- 현재 주소 유지 --%>
+				</li>
 			</c:when>
 			<c:otherwise> <%-- 그렇지 않다면(첫 페이지가 아니라면) --%>
 				<li>
-					<a href = "category?pageNow=${productListSearchCategoryVO.blockFirst()}&${productListSearchCategoryVO.queryString()}">
+					<a href = "categoryAll?pageNow=${productListSearchAllVO.blockFirst()}&${productListSearchAllVO.queryString()}">
 						&laquo;
-					</a>
-				</li> <%-- 첫 페이지로 이동 --%>
+					</a> <%-- 첫 페이지로 이동 --%>
+				</li>
 			</c:otherwise>
 		</c:choose>
 		
 		<%-- 이전 페이지의 존재 여부 판정 --%>
 		<c:choose>
-			<c:when test = "${productListSearchCategoryVO.hasPrev()}"> <%-- 이전 페이지가 존재한다면 --%>
+			<c:when test = "${productListSearchAllVO.hasPrev()}"> <%-- 이전 페이지가 존재한다면 --%>
 				<li>
-					<a href = "category?pageNow=${productListSearchCategoryVO.blockPrev()}&${productListSearchCategoryVO.queryString()}"> <%-- 이전 페이지로 이동 --%>
+					<a href = "categoryAll?pageNow=${productListSearchAllVO.blockPrev()}&${productListSearchAllVO.queryString()}">
 						&lt;
-					</a> 
+					</a> <%-- 이전 페이지로 이동 --%>
 				</li>
 			</c:when>
 			<c:otherwise> <%-- 그렇지 않다면(이전 페이지가 존재하지 않는다면) --%>
 				<li>
-					<a href = "#">	<%-- 현재 주소 유지 --%>
+					<a href = "#">
 						&lt;
-					</a>
-				</li> 
+					</a> <%-- 현재 주소 유지 --%>
+				</li>
 			</c:otherwise>
 		</c:choose>
 		
 		<%-- 페이지 블럭 표시 --%>
-		<c:forEach var = "i" begin = "${productListSearchCategoryVO.blockStart()}" end = "${productListSearchCategoryVO.blockEnd()}" step = "1">
-			<li <c:if test = "${i==param.pageNow}">class="on"</c:if>>
-				<a href = "category?pageNow=${i}&${productListSearchCategoryVO.queryString()}">
+		<c:forEach var = "i" begin = "${productListSearchAllVO.blockStart()}" end = "${productListSearchAllVO.blockEnd()}" step = "1">
+			<li <c:if test = "${i == param.pageNow}">class="on"</c:if>>
+				<a href = "categoryAll?pageNow=${i}&${productListSearchAllVO.queryString()}">
 					${i}
 				</a>
 			</li>
@@ -160,34 +165,34 @@
 		
 		<%-- 다음 페이지의 존재 여부 판정 --%>
 		<c:choose>
-			<c:when test = "${productListSearchCategoryVO.hasNext()}"> <%-- 다음 페이지가 존재한다면 --%>
+			<c:when test = "${productListSearchAllVO.hasNext()}"> <%-- 다음 페이지가 존재한다면 --%>
 				<li>
-					<a href = "category?pageNow=${productListSearchCategoryVO.blockNext()}&${productListSearchCategoryVO.queryString()}">	<%-- 다음 페이지로 이동 --%>
+					<a href = "categoryAll?pageNow=${productListSearchAllVO.blockNext()}&${productListSearchAllVO.queryString()}">
 						&gt;
-					</a>
-				<li> 
+					</a> <%-- 다음 페이지로 이동 --%>
+				</li>
 			</c:when>
 			<c:otherwise> <%-- 그렇지 않다면(다음 페이지가 존재하지 않는다면) --%>
 				<li>
-					<a href = "">	<%-- 현재 주소 유지 --%>
+					<a href = "">
 						&gt;
-					</a> 
-				</li>
+					</a> <%-- 현재 주소 유지 --%>
+				</li>	
 			</c:otherwise>
 		</c:choose>
 		
 		<%-- 마지막 페이지인지 판정 --%>
 		<c:choose>
-			<c:when test = "${productListSearchCategoryVO.isLast()}"> <%-- 마지막 페이지라면 --%>
+			<c:when test = "${productListSearchAllVO.isLast()}"> <%-- 마지막 페이지라면 --%>
 				<li>
-					<a href = "#">	<%-- 현재 주소 유지 --%>
+					<a href = "#">
 						&raquo;
-					</a> 
+					</a> <%-- 현재 주소 유지 --%>
 				</li>
 			</c:when>
 			<c:otherwise>
 				<li>
-					<a href = "category?pageNow=${productListSearchCategoryVO.blockLast()}&${productListSearchCategoryVO.queryString()}">
+					<a href = "categoryAll?pageNow=${productListSearchAllVO.blockLast()}&${productListSearchAllVO.queryString()}">
 						&raquo;
 					</a>
 				</li>

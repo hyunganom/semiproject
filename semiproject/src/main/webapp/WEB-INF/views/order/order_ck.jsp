@@ -38,6 +38,7 @@
      	color:black;
      	font-size:20px;
      }
+
 </style>
 
 <script type="text/javascript">
@@ -119,12 +120,14 @@
 				$("input[name=orderUsePoint]").val(total); //클릭하면 입력창에 전체적립금 표시
 				$(".point-price").text(total); //할인창에 할인금액표시
 				$(".after-price").text(totalPrice(itemsPrice,delivery,total,coupon));
+				$("[name=orderType]").attr("disabled",true); //결제수단 라디오버튼 비활성화
 			// if문(false) : 총 상품금액(상품가격+배송비-쿠폰) > 적립금	
 			}else{
 				$("input[name=orderUsePoint]").val(point);
 				$(".point-price").text(point);
 				var discount = $(".point-price").text();
 				$(".after-price").text(totalPrice(itemsPrice,delivery,discount,coupon));
+				$("[name=orderType]").attr("disabled",false);
 			}
 			var inputValue = parseInt($(".after-price").text());
 			$('input[name=orderPayPrice]').val(inputValue); //총 결제금액
@@ -132,6 +135,7 @@
 		
 		<!-- 적립금 일부 사용 블러 이벤트 -->
 		$("input[name=orderUsePoint]").blur(function(){
+			$("[name=orderType]").attr("disabled",false);
 			var itemsPrice = parseInt($(".before-price").text()); //상품 가격
 			var delivery = deliveryFee(); //배송비
 			var total = itemsPrice+deliveryFee(); //상품가격+배송비	
@@ -143,7 +147,7 @@
 				$(this).addClass("error");
 				$(this).text(0);
 				$(".point-price").text(0);
-				$(".after-price").text(totalPrice(itemsPrice,delivery,0));				
+				$(".after-price").text(totalPrice(itemsPrice,delivery,0));
 			}else if(inputPoint==""){ //입력값이 없으면 할인 0 으로 출력
 				$(".point-price").text(0);
 				$(".after-price").text(totalPrice(itemsPrice,delivery,0));
@@ -155,6 +159,7 @@
 			var inputValue = parseInt($(".after-price").text());
 			$('input[name=orderPayPrice]').val(inputValue); //총 결제금액
 		});
+
 		
 		<!-- 하단 금액 부분 (고정값)출력 -->
 		$(".before-price").text(productPrice()); //상품금액
@@ -197,7 +202,17 @@
 			}
 
 		});
+		
+		<!-- 결제금액 0일 경우 라디오버튼 비활성화 -->
+		var zero = $(".after-price").text();
+		if(zero==0){
+			$("[name=orderType]").attr("disabled",true);
+		}else{
+			$("[name=orderType]").attr("disabled",false);
+		}
+
 	});
+
 	
     $(function(){
 		$("#select-categoryHigh").on("change", function(){
