@@ -7,10 +7,9 @@
     overflow: hidden;
     border: none;
 }
-.header5 > div {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.listsection1 > div{
+	position:realtive;
+	
 }
 .listselect{
     position: absolute;
