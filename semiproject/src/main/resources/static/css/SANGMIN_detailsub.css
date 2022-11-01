@@ -1,39 +1,37 @@
 /* 상품 상세페이지 start -- */
-.itemsection1{
+.itemsection1 > div{
     position: relative;
     padding: 50px 0;
-    border: 1px solid pink;
 }
 .itemmain{
     position: relative;
-    float: left;
+    float: right;
     margin-top: 20px;
-    margin-left: 50px;
-    width: 450px;
+    margin-right: 3%;
+    width: 500px;
     height: 500px;
-    border: 1px solid pink;
     box-sizing: border-box;
 }
 .itemtitle{
-    border: 1px solid pink;
     height: 1000px;
     display: flex;
     flex-direction: column;
+    margin-right: 49%;
     margin-bottom: 15%;
     align-items: center;
     font-size: 25px;
 }
-.itemtitle > h3{
+.itemtitle > p{
 	width:100%;
 }
 .itemstar{
     font-size: 20px;
-    margin-right: 60%;
-    margin-top: 10px;
+    margin-right: 77%;
+    margin-top: 5%;
 }
 .itemtitle1{
     margin-left: 100%;
-    margin-top: 10%;
+    margin-top: 5%;
 }
 .itemtitle1 > ul{
     margin-top: 20px;
@@ -45,8 +43,10 @@
 .itemcount{
     margin-top: 30px;
 }
+#itemcountall{
+	margin-bottom: 15px;
+}
 .btndown{
-    border: 1px solid pink;
     float: left;
     width: 30px;
     height: 30px;
@@ -55,13 +55,10 @@
     font-size: 0px;
 }
 .itemnumbercheck{
-    border: 1px solid pink;
     float: left;
     height: 28px !important;
-    border: 1px solid #e0e0e0;
     vertical-align: top;
     width: 49px !important;
-    border-radius: 0px !important;
     position: relative;
     top: 0;
     left: 0;
@@ -71,7 +68,6 @@
     font-size: 14px;
 }
 .btnup{
-    border: 1px solid pink;
     display: block;
     width: 30px;
     height: 30px;
@@ -105,7 +101,6 @@
     position: relative;
     text-align: center;
     margin-bottom: 15%;
-    border: 1px solid black;
 }
 .review > img{
     width: 8%;
