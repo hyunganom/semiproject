@@ -128,7 +128,7 @@ public class ProductController {
          basketDao.insert(basketDto);
       }else {
          // 수량 수정
-         basketDao.changeCount(basketDto);
+         basketDao.changeOneCount(productCount,productNo);
       }
       return "redirect:/basket/list";
    }
