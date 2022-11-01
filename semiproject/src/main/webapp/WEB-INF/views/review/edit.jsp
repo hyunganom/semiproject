@@ -34,15 +34,19 @@ $(function(){
 	<div class="container-800">
 		<form action = "edit" method = "post" enctype = "multipart/form-data">
 			<input name = "reviewNo" value = "${reviewVO.reviewNo}" type = "hidden">
+			<input name = "reviewGoodBefore" value = "${reviewVO.reviewGood}" type = "hidden">
 			
 			<input name = "reviewPaymentNo" value = "${reviewVO.reviewPaymentNo}" type = "hidden">
+			<input name = "paymentProductNo" value = "${reviewVO.paymentProductNo}" type = "hidden">
 			
 			<div class = "row">	
 				<input class="input input-underline w-50" name = "reviewTitle" type = "text" value="${reviewVO.reviewTitle}">
 			</div>
 			<div class = "row mt-20">
 				<label class="float-right">
-					<input class="input input-underline w-50" name = "reviewGood" type = "number" value="${reviewVO.reviewGood}">
+					<%-- 리뷰 별점 --%>
+					<div class = "star-score-edit" name = "reviewGood" data-max="5" data-rate = "${reviewVO.reviewGood}"></div>
+					<%-- <input class="input input-underline w-50" name = "reviewGood" type = "number" value="${reviewVO.reviewGood}"> --%>
 				</label>
 				<textarea name = "reviewContent" class="input w-100 fix-size mt-10" rows="8" >${reviewVO.reviewContent}</textarea>
 			</div>

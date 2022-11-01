@@ -5,13 +5,13 @@ import java.util.List;
 import com.kh.semi.entity.CategoryHighDto;
 import com.kh.semi.entity.CategoryLowDto;
 import com.kh.semi.entity.ProductDto;
-import com.kh.semi.vo.PaymentVO;
+import com.kh.semi.vo.ProductDetailVO;
+import com.kh.semi.vo.ProductListSearchAllVO;
 import com.kh.semi.vo.ProductListSearchCategoryVO;
 import com.kh.semi.vo.ProductListSearchVO;
 import com.kh.semi.vo.ProductListVO;
 import com.kh.semi.vo.ProductNoNameVO;
 import com.kh.semi.vo.ProductSelectNameVO;
-import com.kh.semi.vo.ProductDetailVO;
 
 public interface ProductDao {
 	
@@ -65,6 +65,13 @@ public interface ProductDao {
 	// 3) 카테고리 상품 검색 조회
 	List<ProductListVO> searchListCategory(ProductListSearchCategoryVO productListSearchCategoryVO);
 	
+	// 추상 메소드 - 회원이 header에 엤는 검색창으로 상품 조회
+	// - 검색 조회
+	List<ProductListVO> selectSearchListProduct(ProductListSearchAllVO productListSearchAllVO);
+	
+	// 추상 메소드 - 회원이 header에 엤는 검색창으로 상품 조회시 상품의 총 갯수
+	int countSelectSearchProduct(ProductListSearchAllVO productListSearchAllVO);
+	
 	// 추상 메소드 - 관리자 상품 상세(DETAIL)
 	ProductDto selectOneProduct(int productNo);
 	
@@ -108,7 +115,7 @@ public interface ProductDao {
 	
 	//승정 구독상품 상세옵션 상품조회
 	ProductSelectNameVO selectName(int productNo);
-	
+
 	//상품 재고 수량변경 메소드
-	boolean updateProductInventory(PaymentVO paymentVO);
+	boolean updateProductInventory(int paymentCount, int paymentProductNo);
 }

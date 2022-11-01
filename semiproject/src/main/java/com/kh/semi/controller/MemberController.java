@@ -77,8 +77,7 @@ public class MemberController {
 //	}
 //	
 	
-	//목록(페이징처리)
-	
+	//회원목록(페이징처리)
 	@GetMapping("/list")
 	public String list(Model model,
 			@ModelAttribute(name="vo") MemberSearchVO vo) {
@@ -91,13 +90,15 @@ public class MemberController {
 	return "member/list";
 	}
 	
-	
-	
-	
 	//회원상세
 	@GetMapping("/detail")
-	public String detail(Model model, @RequestParam String memberId) {
-		MemberDto memberDto = memberDao.selectOne(memberId);
+	public String detail(Model model, @RequestParam String memberId, HttpSession session) {
+		
+		// 세션에 들어있는 아이디를 꺼낸다
+		//(참고) 세션에 데이터는 Object 형태로 저장되므로 꺼내려면 다운캐스팅 필요
+		String loginId = (String) session.getAttribute("loginId");
+		
+		MemberDto memberDto = memberDao.selectOne(loginId);
 		model.addAttribute("memberDto", memberDto);
 		return "member/detail";
 	}
