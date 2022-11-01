@@ -132,6 +132,7 @@
 					<hr> 
 	
 	<div class = "row">
+	
 	<table border = "1" width = "1000" class="table table-slit table-hover table-border">
 		<tbody>
 			<tr>
@@ -142,19 +143,30 @@
 				
 				<th colspan = "2">문의글 관리</th>
 			</tr>
-			
 			<c:forEach var = "inquireList" items = "${inquireList}">
-			<tr align="center">
-				<td><a href = "detail?inquireNo=${inquireList.inquireNo}">${inquireList.inquireTitle}</a></td>
-				<td>${inquireList.inquireWritetime}</td>
-				<td>${inquireList.inquireUpdatetime}</td>
-				<td>${inquireList.inquireHasReply}</td>
-				<td><a href = "edit?inquireNo=${inquireList.inquireNo}">수정</a></td>
-				<td><a href = "delete?inquireNo=${inquireList.inquireNo}">삭제</a></td>
-			</tr>
+				<c:if test = "${!inquireList.inquireInactive}">
+					<tr align="center">
+						<td><a href = "detail?inquireNo=${inquireList.inquireNo}">${inquireList.inquireTitle}</a></td>
+						<td>${inquireList.inquireWritetime}</td>
+						<td>${inquireList.inquireUpdatetime}</td>
+						<td>
+							<c:choose>
+								<c:when test = "${inquireList.inquireHasReply}">
+									답변 완료
+								</c:when>
+								<c:otherwise>
+									대기중
+								</c:otherwise>
+							</c:choose>
+						</td>
+						<td><a href = "edit?inquireNo=${inquireList.inquireNo}">수정</a></td>
+						<td><a href = "delete?inquireNo=${inquireList.inquireNo}">삭제</a></td>
+					</tr>
+				</c:if>
 			</c:forEach>
 		</tbody>
 	</table>
+	
 		<div class = "row right">
 			<a href = "write">1:1문의하기</a>
 		</div>

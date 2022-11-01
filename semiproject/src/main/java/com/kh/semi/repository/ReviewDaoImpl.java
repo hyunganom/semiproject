@@ -270,7 +270,12 @@ public class ReviewDaoImpl implements ReviewDao {
 		Object[] param = {reviewNo};
 		return jdbcTemplate.query(sql, extractor, param);
 	}
-	
-	
 
+	// 추상 메소드 - 리뷰 번호로 회원 아이디 조회(인터셉터용)
+	@Override
+	public String selectOrderId(int reviewNo) {
+		String sql = "select order_id from orders where order_no = ?";
+		Object[] param = new Object[] {reviewNo};
+		return jdbcTemplate.queryForObject(sql, String.class, param);
+	}
 }
