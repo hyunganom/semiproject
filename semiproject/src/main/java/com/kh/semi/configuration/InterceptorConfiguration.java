@@ -10,21 +10,31 @@ import com.kh.semi.interceptor.InquirePermissionCheckInterceptor;
 import com.kh.semi.interceptor.MemberInterceptor;
 import com.kh.semi.interceptor.NoticePemissionCheckInterceptor;
 import com.kh.semi.interceptor.ReviewPermissionCheckInterceptor;
+import com.kh.semi.interceptor.ReviewWriteInterceptor;
 
 @Configuration
 public class InterceptorConfiguration implements WebMvcConfigurer{
 
+	// 의존성 주입
 	@Autowired
 	private MemberInterceptor memberInterceptor;
+	
 	@Autowired
 	private AdminInterceptor adminInterceptor;
+	
 	@Autowired
 	private NoticePemissionCheckInterceptor noticeCheckInterceptor;
+	
 	@Autowired
 	private ReviewPermissionCheckInterceptor reviewCheckInterceptor;
+	
 	@Autowired
 	private InquirePermissionCheckInterceptor inquireCheckInterceptor;
 	
+	@Autowired
+	private ReviewWriteInterceptor reviewWriteInterceptor;
+	
+	// 인터셉터 오버라이딩
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		//인터셉터 작동하도록 설정(회원)
@@ -45,9 +55,10 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 				"/member/endSuccess", //탈퇴완료
 				"/member/find_id*", //아이디 찾기
 				"/member/find_pw*",//비밀번호 찾기
-				"/product/category",
-				"/product/detail",
-				"/product/detailSub",
+				"/product/category**",
+				"/product/categoryAll**",
+				"/product/detail**",
+				"/product/detailSub**",
 				"/notice/list",
 				"/notice/detail",
 				"/basket/list"
@@ -71,14 +82,21 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 		registry.addInterceptor(noticeCheckInterceptor)
 		.addPathPatterns(//인터셉터 감시주소
 				"/notice/write",
-				"/notice/edit"
+				"/notice/editAdmin",
+				"/notice/deleteAdmin"
 				);
 		
 		//소유자가 리뷰 수정/삭제 또는 관리자가 삭제 가능하도록 검사하는 인터셉터
 		registry.addInterceptor(reviewCheckInterceptor)
 		.addPathPatterns(
-				"/review/write",
+				"/review/delete",
 				"/review/edit"
+				);
+		
+		// 로그인 중인 회원이 해당 주문 번호의 주문자 아이디일 경우 통과
+		registry.addInterceptor(reviewWriteInterceptor)
+		.addPathPatterns(
+				"/review/write"
 				);
 		
 		//소유자가 문의글 수정/삭제 또는 관리자가 삭제 가능하도록 검사하는 인터셉터
@@ -88,6 +106,5 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 				"/inquire/delete",
 				"/inquire/detail"
 				);
-		
 	}
 }

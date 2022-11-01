@@ -27,7 +27,6 @@
 	});
 	
 	$(function(){
-	   
 	    $(".review-score").score({
 	    	starColor:"red", // 별 색상 (기본 : 금색)
             integerOnly:false, // 반올림
@@ -37,6 +36,34 @@
                 textColor:"red", // 숫자 색상 (기본 : 금색)
             }
 	    });
+	    
+	    <!-- 수량 버튼 이벤트 -->
+	    //마이너스버튼
+	    $(".btndown").click(function(){
+	    	var inputCount = parseInt($(this).next().val()); //input태그 값선택
+	    	$(".itemnumbercheck").val(inputCount-1); //input태그에 값 넣기
+	    	if(inputCount==2){
+	    		$(this).attr("disabled",true); //마이너스 버튼 비활성화 설정
+	    	}
+	    });
+	    
+	    //플러스버튼
+	    $(".btnup").click(function(){
+	    	$(".btndown").attr("disabled",false); //마이너스 버튼 비활성화 해제
+	    	var inputCount = parseInt($(this).prev().val()); //input태그 값
+	    	$(".itemnumbercheck").val(inputCount+1);
+	    });
+	    
+	    //직접 입력
+/* 	    $(".itemnumbercheck").blur(function(){
+	    	var inputCount = parseInt($(this).prev().val());
+	    	if(inputCount<1){
+	    		alert('수량은 1개 이상 선택해주세요!');
+	    	}else{
+	    		$(".itemnumbercheck").val(1);
+	    	}
+	    }); */
+	    
 	});
 	
 	
@@ -113,14 +140,14 @@
 <!--본문 시작-->
 <form id = "product-data"> <%-- form 시작 --%>
 <section class="itemsection1">
+	<div class="inner">
 	<input type = "hidden" name = "productNo" value = "${productDto.productNo}"> <%-- 상품 번호 --%>
 	<input type = "hidden" name = "productName" value = "${productDto.productName}"> <%-- 상품 이름 --%>
-	<div class="inner">
 		<c:forEach var="productTumbnailList" items="${productTumbnailList}">
 			<img class="itemmain" src="/attachment/download/productTumbnail?attachmentNo=${productTumbnailList.attachmentNo}" alt="상품메인">
 		</c:forEach>
 		<div class="itemtitle">
-    		<h3>${productDto.productName}</h3>
+    		<p>${productDto.productName}<p>
 		<div class="itemstar">
     		<div id = "product-good" class="item-score" data-max="5" data-rate="${productDto.productGood}"></div>
     		<span id = "product-good">${productDto.productGood}</span>
@@ -135,18 +162,17 @@
 			</ul>
 			
 			<dl class="itemcount">
-	    		<dt>총 수량</dt>
+	    		<dt id="itemcountall">총 수량</dt>
 	    		<dd>
 	        		<div class="countcheck">
 		            	<span class="numbericon">
-		                	<button type="button" class="btndown" title="감소" value="dn^|^0">감소</button>
-		                		<input type = "number" class="itemnumbercheck" name = "productCount" placeholder = "수량" min = "1" max = "10">
+		                	<button type="button" class="btndown" title="감소" value="dn^|^0" disabled>감소</button>
+		                		<input type = "text" class="itemnumbercheck" name = "productCount" value="1" readonly>
 		                	<button type="button" class="btnup" title="증가" value="up^|^0">증가</button>
 		            	</span> <!--//numbericon-->
 					</div> <!--//countcheck-->
 	    		</dd> 
 			</dl> <!--//itemcount-->
-
 			<div class="itembox">
 	    		<div class="inner">
 	        		<%-- 누르는 버튼에 따라 전송하는 Mapping이 다르도록 하기 위해 하나의 폼에 버튼 2개 생성 --%>
@@ -159,9 +185,9 @@
 					</button>
 	            </div> <!--//inner-->
 			</div> <!--//itembox-->
-    
-			</div> <!--//itemtitle1-->
-		</div> <!--//itemtitle-->
+				
+				</div> <!-- //itemtitle1 -->
+			</div> <!-- //itemtitle -->
 	</div> <!--//inner-->
 </section> <!--//itemsection1-->
 </form> <%-- form 끝 --%>
