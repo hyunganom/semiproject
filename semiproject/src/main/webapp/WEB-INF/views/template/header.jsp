@@ -83,7 +83,7 @@
         </div> <!--//header1-->
         <div class="header2">
             <div class="inner">
-                <h1><a href="/" class="logo"><img class="image" width="150px;" height="150px" src="/image/logotop.png" alt="로고"></a></h1>
+                <h1><a href="/" class="logo"><img class="image" width="200px;" height="150px" src="/image/logotop.png" alt="로고"></a></h1>
                 <div class="formdiv">
                     <h2 class="search">검색</h2> <%-- 검색/전체 조회를 위한 검색창 --%>
                     <form action="/product/categoryAll" method = "get"> <%-- form 시작 --%>
