@@ -18,6 +18,7 @@ import com.kh.semi.repository.AttachmentDao;
 import com.kh.semi.repository.BasketDao;
 import com.kh.semi.repository.ProductDao;
 import com.kh.semi.repository.ReviewDao;
+import com.kh.semi.vo.ProductListSearchAllVO;
 import com.kh.semi.vo.ProductListSearchCategoryVO;
 
 @Controller
@@ -42,9 +43,9 @@ public class ProductController {
 		
 	// 회원용 상품 목록 Mapping
 	@GetMapping("/category")
-	public String selectList(Model model, @ModelAttribute ProductListSearchCategoryVO productListSearchCategoryVO) {
+	public String selectCategory(Model model, @ModelAttribute ProductListSearchCategoryVO productListSearchCategoryVO) {
 		
-		// View에서 입력받은 ProductListSearchVO를 매개변수로 조회 결과에 따른 상품의 총 수 반환
+		// View에서 입력받은 ProductListSearchCategoryVO를 매개변수로 조회 결과에 따른 상품의 총 수 반환
 		// - 검색 조회일 경우 검색 조회의 결과에 대한 count(*)의 값 반환
 		// - 전체 조회일 경우 전체 조회의 결과에 대한 count(*)의 값 반환
 		int countTotalCategory = productDao.countAllCategory(productListSearchCategoryVO);
@@ -55,8 +56,23 @@ public class ProductController {
 		// 설정된 ProductListSearchVO로 통합 조회를 실행한 후 그 결과를 Model에 첨부
 		model.addAttribute("productList", productDao.selectListCategory(productListSearchCategoryVO));
 		
-		// 상품 수정 페이지(list.jsp)로 연결
+		// 상품 목록 페이지(list.jsp)로 연결
 		return "product/category";
+	}
+	
+	// 회원용 검색창 조회 Mapping
+	@GetMapping("/categoryAll")
+	public String selectList(Model model, @ModelAttribute ProductListSearchAllVO productListSearchAllVO) {
+		
+		// View에서 입력받은 productListSearchAllVO를 매개변수로 조회 결과에 따른 상품의 총 수 반환하여 
+		// ProductListSearchVO의 등록된 상품의 총 수(countTotalProduct) 필드의 값으로 설정
+		productListSearchAllVO.setCountTotalProduct(productDao.countSelectSearchProduct(productListSearchAllVO));
+		
+		// 설정된 ProductListSearchVO로 조회를 실행한 후 그 결과를 Model에 첨부
+		model.addAttribute("productList", productDao.selectSearchListProduct(productListSearchAllVO));
+		
+		// 상품 전체 목록 페이지(categoryAll.jsp)로 연결
+		return "product/categoryAll";
 	}
 	
 	// 회원용 상품 상세 Mapping
