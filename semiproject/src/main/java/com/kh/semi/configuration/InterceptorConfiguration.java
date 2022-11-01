@@ -22,22 +22,38 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 		//인터셉터 작동하도록 설정(회원)
 		registry.addInterceptor(memberInterceptor)
 		.addPathPatterns(//인터셉터 감시주소
-				"/member/**"//회원전체
+				"/member/**",//회원전체
+				"/product/**", //상품전체
+				"/notice/**", //공지전체
+				"/mypage/**", //마이페이지 전체
+				"/order/**", //주문 전체
+				"/basket/**", //장바구니 전체
+				"/review/**" //후기전체
 				)
 		.excludePathPatterns(//감시 제외 주소
 				"/member/join*", //회원가입
 				"/member/login", //로그인
 				"/member/endSuccess", //탈퇴완료
 				"/member/find_id*", //아이디 찾기
-				"/member/find_pw*"//비밀번호 찾기
+				"/member/find_pw*",//비밀번호 찾기
+				"/product/category",
+				"/product/detail",
+				"/product/detailSub",
+				"/notice/list",
+				"/notice/detail",
+				"/basket/list"
 				);
 		
 		//관리자용
 		registry.addInterceptor(adminInterceptor)
-		.addPathPatterns(
+		.addPathPatterns(//인터셉터 감시주소
 				"/member/list", //회원목록
-//				"/member/detail", //회원상세
-				"/member/change"//회원수정
+				"/member/change",//회원수정
+				"/inquire/edit"
+				
+				)
+		.excludePathPatterns(
+				
 				);
 		
 	}
