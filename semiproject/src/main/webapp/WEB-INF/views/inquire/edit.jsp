@@ -10,25 +10,23 @@
 
 <div class = "container-900">
 
-	<div class = "row">
-		<h1>1:1 문의글 수정 페이지</h1>		
+	<div class = "row mt-40">
+		<h1>1:1 문의글 수정하기</h1>		
 	</div>
 	
-	<form action = "edit" method = "post">
-		<input type = "hidden" name = "inquireNo" value = "${inquireDto.inquireNo}">
-		<div class = "row">
-			<p>제목 : <input name = "inquireTitle" value = "${inquireDto.inquireTitle}"></p>
-		</div>
-		
-		<div class = "row">
-			<p>내용</p>
-			<textarea name = "inquireContent">${inquireDto.inquireContent}</textarea>
-		</div>
-		<div>
-			<button type = "submit">수정</button>
-		</div>
-	</form>
-
+	<hr>
+		<form action = "edit" method = "post">
+			<input type = "hidden" name = "inquireNo" value = "${inquireDto.inquireNo}">
+			<div class = "row">	
+				<input class="input input-underline w-50" name = "inquireTitle" value = "${inquireDto.inquireTitle}" type="text">
+			</div>
+			
+			<textarea name = "inquireContent" class="input w-100 fix-size mt-10" rows="8" >${inquireDto.inquireContent}</textarea>
+			
+			<div class = "row right">
+				<button type = "submit" class="btn">수정</button>
+			</div>
+		</form>
 </div>
 
 

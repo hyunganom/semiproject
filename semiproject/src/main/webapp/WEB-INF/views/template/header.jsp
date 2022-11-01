@@ -60,24 +60,24 @@
         <div class="header1">
             <div class="inner">
                 <ul class="log1">
-                				
-                <c:choose>
-				<c:when test="${loginId !=null}">
-					<li>${loginId} 님<li>
-					<!-- 관리자 기능 -->
-					<c:if test="${login && admin}">
-						<li><a href="/admin/home">관리자 페이지</a></li>
-					</c:if>
-					
-					<li><a href="/member/logout" title="로그아웃">로그아웃</a><li>
-					<li><a href="#" title="고객센터">고객센터</a></li>				
-				</c:when>
-				<c:otherwise>
-					<li><a href="/member/login" title="로그인">로그인</a><li>				
-					<li><a href="/member/join" title="회원가입">회원가입</a><li>
-					<li><a href="#" title="고객센터">고객센터</a></li>
-				</c:otherwise>
-			</c:choose>
+         <c:choose>
+					<c:when test="${loginId !=null}">
+						<li>${loginId} 님<li>
+						<!-- 관리자 기능 -->
+						<c:if test="${login && admin}">
+							<li><a href="/admin/home">관리자 페이지</a></li>
+						</c:if>
+						
+						<li><a href="/member/logout" title="로그아웃">로그아웃</a><li>
+						<li><a href="#" title="고객센터">고객센터</a></li>				
+					</c:when>
+					<c:otherwise>
+						<li><a href="/member/login" title="로그인">로그인</a><li>				
+						<li><a href="/member/join" title="회원가입">회원가입</a><li>
+						<li><a href="#" title="1:1문의사항">1:1문의사항</a></li>
+					</c:otherwise>
+				</c:choose>
+				
                 </ul> <!--//log1-->
             </div> <!--//inner-->
         </div> <!--//header1-->
@@ -97,7 +97,6 @@
                 </div> <!--//formdiv-->
                 <div class="icon1">
                     <ul>
-                        <li><a href="#" title="배송지등록"><i class="fa-regular fa-paste"></i></a></li>
                         <li><a href="/mypage/order_list" title="마이페이지"><i class="fa-regular fa-user"></i></a></li>
                         <li><a href="/basket/list" title="장바구니"><i class="fa-solid fa-cart-shopping"></i></a></li>
                     </ul>
