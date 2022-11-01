@@ -12,4 +12,8 @@ public class HomeController {
 		return "home";
 	}
 	
+	@RequestMapping("/event")
+	public String event() {
+		return "event";
+	}
 }

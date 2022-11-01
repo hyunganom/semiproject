@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%-- header.jsp 불러오기 --%>
 <jsp:include page="/WEB-INF/views/template/header.jsp">
@@ -176,7 +177,7 @@
                 <a href="/basket/list"><img src="./image/cart.jpg" alt="장바구니" width="50px" height="50px"></a>
             </li>
             <li>
-                <a href="/notice/list"><img src="/image/noice1.png" alt="공지사항" width="55px" height="55px" ></i></a>
+                <a href="/notice/list"><img src="/image/noice1.png" alt="공지사항" width="55px" height="55px" ></a>
             </li>
         </ul> <!--//scroll1-->
         <span class="scrolltop">
