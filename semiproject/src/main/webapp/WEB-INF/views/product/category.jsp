@@ -89,11 +89,6 @@
 
 <div class="footer5">
     <div class="inner">
-        <div class="listselect">
-            <select name="listselect1" hidden>
-                <option value="">상품명</option>
-            </select> 
-        </div> <!--//listselect-->
         <div class="formdiv1">
             <h1 class="search1">검색</h1>
             <form action = "category" method = "get">
@@ -117,50 +112,88 @@
 
 <%-- 페이지 이동 --%>
 <div class = "row">
-	<%-- 첫 페이지인지 판정 --%>
-	<c:choose>
-		<c:when test = "${productListSearchCategoryVO.isFirst()}"> <%-- 첫 페이지라면 --%>
-			<a href = "">&laquo;</a>  <%-- 현재 주소 유지 --%>
-		</c:when>
-		<c:otherwise> <%-- 그렇지 않다면(첫 페이지가 아니라면) --%>
-			<a href = "category?pageNow=${productListSearchCategoryVO.blockFirst()}&${productListSearchCategoryVO.queryString()}">&laquo;</a> <%-- 첫 페이지로 이동 --%>
-		</c:otherwise>
-	</c:choose>
-	
-	<%-- 이전 페이지의 존재 여부 판정 --%>
-	<c:choose>
-		<c:when test = "${productListSearchCategoryVO.hasPrev()}"> <%-- 이전 페이지가 존재한다면 --%>
-			<a href = "category?pageNow=${productListSearchCategoryVO.blockPrev()}&${productListSearchCategoryVO.queryString()}">&lt;</a> <%-- 이전 페이지로 이동 --%>
-		</c:when>
-		<c:otherwise> <%-- 그렇지 않다면(이전 페이지가 존재하지 않는다면) --%>
-			<a href = "#">&lt;</a> <%-- 현재 주소 유지 --%>
-		</c:otherwise>
-	</c:choose>
-	
-	<%-- 페이지 블럭 표시 --%>
-	<c:forEach var = "i" begin = "${productListSearchCategoryVO.blockStart()}" end = "${productListSearchCategoryVO.blockEnd()}" step = "1">
-		<a href = "category?pageNow=${i}&${productListSearchCategoryVO.queryString()}">${i}</a>
-	</c:forEach>
-	
-	<%-- 다음 페이지의 존재 여부 판정 --%>
-	<c:choose>
-		<c:when test = "${productListSearchCategoryVO.hasNext()}"> <%-- 다음 페이지가 존재한다면 --%>
-			<a href = "category?pageNow=${productListSearchCategoryVO.blockNext()}&${productListSearchCategoryVO.queryString()}">&gt;</a> <%-- 다음 페이지로 이동 --%>
-		</c:when>
-		<c:otherwise> <%-- 그렇지 않다면(다음 페이지가 존재하지 않는다면) --%>
-			<a href = "">&gt;</a> <%-- 현재 주소 유지 --%>
-		</c:otherwise>
-	</c:choose>
-	
-	<%-- 마지막 페이지인지 판정 --%>
-	<c:choose>
-		<c:when test = "${productListSearchCategoryVO.isLast()}"> <%-- 마지막 페이지라면 --%>
-			<a href = "#">&raquo;</a> <%-- 현재 주소 유지 --%>
-		</c:when>
-		<c:otherwise>
-			<a href = "category?pageNow=${productListSearchCategoryVO.blockLast()}&${productListSearchCategoryVO.queryString()}">&raquo;</a>
-		</c:otherwise>
-	</c:choose>
+	<ul class = "pagination">
+		<%-- 첫 페이지인지 판정 --%>
+		<c:choose>
+			<c:when test = "${productListSearchCategoryVO.isFirst()}"> <%-- 첫 페이지라면 --%>
+				<li>
+					<a href = ""> <%-- 현재 주소 유지 --%>
+						&laquo;
+					</a>
+				</li> 
+			</c:when>
+			<c:otherwise> <%-- 그렇지 않다면(첫 페이지가 아니라면) --%>
+				<li>
+					<a href = "category?pageNow=${productListSearchCategoryVO.blockFirst()}&${productListSearchCategoryVO.queryString()}">
+						&laquo;
+					</a>
+				</li> <%-- 첫 페이지로 이동 --%>
+			</c:otherwise>
+		</c:choose>
+		
+		<%-- 이전 페이지의 존재 여부 판정 --%>
+		<c:choose>
+			<c:when test = "${productListSearchCategoryVO.hasPrev()}"> <%-- 이전 페이지가 존재한다면 --%>
+				<li>
+					<a href = "category?pageNow=${productListSearchCategoryVO.blockPrev()}&${productListSearchCategoryVO.queryString()}"> <%-- 이전 페이지로 이동 --%>
+						&lt;
+					</a> 
+				</li>
+			</c:when>
+			<c:otherwise> <%-- 그렇지 않다면(이전 페이지가 존재하지 않는다면) --%>
+				<li>
+					<a href = "#">	<%-- 현재 주소 유지 --%>
+						&lt;
+					</a>
+				</li> 
+			</c:otherwise>
+		</c:choose>
+		
+		<%-- 페이지 블럭 표시 --%>
+		<c:forEach var = "i" begin = "${productListSearchCategoryVO.blockStart()}" end = "${productListSearchCategoryVO.blockEnd()}" step = "1">
+			<li <c:if test = "${i==param.pageNow}">class="on"</c:if>>
+				<a href = "category?pageNow=${i}&${productListSearchCategoryVO.queryString()}">
+					${i}
+				</a>
+			</li>
+		</c:forEach>
+		
+		<%-- 다음 페이지의 존재 여부 판정 --%>
+		<c:choose>
+			<c:when test = "${productListSearchCategoryVO.hasNext()}"> <%-- 다음 페이지가 존재한다면 --%>
+				<li>
+					<a href = "category?pageNow=${productListSearchCategoryVO.blockNext()}&${productListSearchCategoryVO.queryString()}">	<%-- 다음 페이지로 이동 --%>
+						&gt;
+					</a>
+				<li> 
+			</c:when>
+			<c:otherwise> <%-- 그렇지 않다면(다음 페이지가 존재하지 않는다면) --%>
+				<li>
+					<a href = "">	<%-- 현재 주소 유지 --%>
+						&gt;
+					</a> 
+				</li>
+			</c:otherwise>
+		</c:choose>
+		
+		<%-- 마지막 페이지인지 판정 --%>
+		<c:choose>
+			<c:when test = "${productListSearchCategoryVO.isLast()}"> <%-- 마지막 페이지라면 --%>
+				<li>
+					<a href = "#">	<%-- 현재 주소 유지 --%>
+						&raquo;
+					</a> 
+				</li>
+			</c:when>
+			<c:otherwise>
+				<li>
+					<a href = "category?pageNow=${productListSearchCategoryVO.blockLast()}&${productListSearchCategoryVO.queryString()}">
+						&raquo;
+					</a>
+				</li>
+			</c:otherwise>
+		</c:choose>
+	</ul>
 </div>
 
 </div>

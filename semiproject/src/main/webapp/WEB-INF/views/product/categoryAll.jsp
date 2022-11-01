@@ -89,7 +89,7 @@
 <div class="footer5">
     <div class="inner">
         <div class="listselect">
-            <select name="listselect1" hidden>
+            <select name="listselect1">
                 <option value="">상품명</option>
             </select> 
         </div> <!--//listselect-->
@@ -117,50 +117,88 @@
 
 <%-- 페이지 이동 --%>
 <div class = "row">
-	<%-- 첫 페이지인지 판정 --%>
-	<c:choose>
-		<c:when test = "${productListSearchAllVO.isFirst()}"> <%-- 첫 페이지라면 --%>
-			<a href = "">&laquo;</a>  <%-- 현재 주소 유지 --%>
-		</c:when>
-		<c:otherwise> <%-- 그렇지 않다면(첫 페이지가 아니라면) --%>
-			<a href = "categoryAll?pageNow=${productListSearchAllVO.blockFirst()}&${productListSearchAllVO.queryString()}">&laquo;</a> <%-- 첫 페이지로 이동 --%>
-		</c:otherwise>
-	</c:choose>
-	
-	<%-- 이전 페이지의 존재 여부 판정 --%>
-	<c:choose>
-		<c:when test = "${productListSearchAllVO.hasPrev()}"> <%-- 이전 페이지가 존재한다면 --%>
-			<a href = "categoryAll?pageNow=${productListSearchAllVO.blockPrev()}&${productListSearchAllVO.queryString()}">&lt;</a> <%-- 이전 페이지로 이동 --%>
-		</c:when>
-		<c:otherwise> <%-- 그렇지 않다면(이전 페이지가 존재하지 않는다면) --%>
-			<a href = "#">&lt;</a> <%-- 현재 주소 유지 --%>
-		</c:otherwise>
-	</c:choose>
-	
-	<%-- 페이지 블럭 표시 --%>
-	<c:forEach var = "i" begin = "${productListSearchAllVO.blockStart()}" end = "${productListSearchAllVO.blockEnd()}" step = "1">
-		<a href = "categoryAll?pageNow=${i}&${productListSearchAllVO.queryString()}">${i}</a>
-	</c:forEach>
-	
-	<%-- 다음 페이지의 존재 여부 판정 --%>
-	<c:choose>
-		<c:when test = "${productListSearchAllVO.hasNext()}"> <%-- 다음 페이지가 존재한다면 --%>
-			<a href = "categoryAll?pageNow=${productListSearchAllVO.blockNext()}&${productListSearchAllVO.queryString()}">&gt;</a> <%-- 다음 페이지로 이동 --%>
-		</c:when>
-		<c:otherwise> <%-- 그렇지 않다면(다음 페이지가 존재하지 않는다면) --%>
-			<a href = "">&gt;</a> <%-- 현재 주소 유지 --%>
-		</c:otherwise>
-	</c:choose>
-	
-	<%-- 마지막 페이지인지 판정 --%>
-	<c:choose>
-		<c:when test = "${productListSearchAllVO.isLast()}"> <%-- 마지막 페이지라면 --%>
-			<a href = "#">&raquo;</a> <%-- 현재 주소 유지 --%>
-		</c:when>
-		<c:otherwise>
-			<a href = "categoryAll?pageNow=${productListSearchAllVO.blockLast()}&${productListSearchAllVO.queryString()}">&raquo;</a>
-		</c:otherwise>
-	</c:choose>
+	<ul class = "pagination">
+		<%-- 첫 페이지인지 판정 --%>
+		<c:choose>
+			<c:when test = "${productListSearchAllVO.isFirst()}"> <%-- 첫 페이지라면 --%>
+				<li>
+					<a href = "">
+						&laquo;
+					</a>  <%-- 현재 주소 유지 --%>
+				</li>
+			</c:when>
+			<c:otherwise> <%-- 그렇지 않다면(첫 페이지가 아니라면) --%>
+				<li>
+					<a href = "categoryAll?pageNow=${productListSearchAllVO.blockFirst()}&${productListSearchAllVO.queryString()}">
+						&laquo;
+					</a> <%-- 첫 페이지로 이동 --%>
+				</li>
+			</c:otherwise>
+		</c:choose>
+		
+		<%-- 이전 페이지의 존재 여부 판정 --%>
+		<c:choose>
+			<c:when test = "${productListSearchAllVO.hasPrev()}"> <%-- 이전 페이지가 존재한다면 --%>
+				<li>
+					<a href = "categoryAll?pageNow=${productListSearchAllVO.blockPrev()}&${productListSearchAllVO.queryString()}">
+						&lt;
+					</a> <%-- 이전 페이지로 이동 --%>
+				</li>
+			</c:when>
+			<c:otherwise> <%-- 그렇지 않다면(이전 페이지가 존재하지 않는다면) --%>
+				<li>
+					<a href = "#">
+						&lt;
+					</a> <%-- 현재 주소 유지 --%>
+				</li>
+			</c:otherwise>
+		</c:choose>
+		
+		<%-- 페이지 블럭 표시 --%>
+		<c:forEach var = "i" begin = "${productListSearchAllVO.blockStart()}" end = "${productListSearchAllVO.blockEnd()}" step = "1">
+			<li <c:if test = "${i == param.pageNow}">class="on"</c:if>>
+				<a href = "categoryAll?pageNow=${i}&${productListSearchAllVO.queryString()}">
+					${i}
+				</a>
+			</li>
+		</c:forEach>
+		
+		<%-- 다음 페이지의 존재 여부 판정 --%>
+		<c:choose>
+			<c:when test = "${productListSearchAllVO.hasNext()}"> <%-- 다음 페이지가 존재한다면 --%>
+				<li>
+					<a href = "categoryAll?pageNow=${productListSearchAllVO.blockNext()}&${productListSearchAllVO.queryString()}">
+						&gt;
+					</a> <%-- 다음 페이지로 이동 --%>
+				</li>
+			</c:when>
+			<c:otherwise> <%-- 그렇지 않다면(다음 페이지가 존재하지 않는다면) --%>
+				<li>
+					<a href = "">
+						&gt;
+					</a> <%-- 현재 주소 유지 --%>
+				</li>	
+			</c:otherwise>
+		</c:choose>
+		
+		<%-- 마지막 페이지인지 판정 --%>
+		<c:choose>
+			<c:when test = "${productListSearchAllVO.isLast()}"> <%-- 마지막 페이지라면 --%>
+				<li>
+					<a href = "#">
+						&raquo;
+					</a> <%-- 현재 주소 유지 --%>
+				</li>
+			</c:when>
+			<c:otherwise>
+				<li>
+					<a href = "categoryAll?pageNow=${productListSearchAllVO.blockLast()}&${productListSearchAllVO.queryString()}">
+						&raquo;
+					</a>
+				</li>
+			</c:otherwise>
+		</c:choose>
+	</ul>
 </div>
 
 </div>
