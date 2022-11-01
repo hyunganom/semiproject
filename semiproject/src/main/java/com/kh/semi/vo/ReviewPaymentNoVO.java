@@ -8,6 +8,7 @@ import lombok.Data;
 public class ReviewPaymentNoVO {
 
 	// 필드
+	private Integer orderNo; // 주문 번호
 	private Integer reviewNo; // 리뷰 번호
 	
 	private Integer paymentNo; // 결제 번호

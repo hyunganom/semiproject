@@ -7,10 +7,10 @@
 	<jsp:param value="1:1 문의글 목록" name="title"/>
 </jsp:include>
 
- <!-- 글꼴 바꿈 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+<!-- 글꼴 바꿈 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 
 <style>
 	a:hover {
@@ -87,10 +87,8 @@
 	} */
 </style>
 
-
-
 <div class="container-1100 mt-40 mb-40">
-<header>
+	<header>
 		<div class="row center">
 			<h3>${memberDto.memberName}님 환영합니다</h3>
 		</div>
@@ -102,80 +100,78 @@
 		</div>
 	</header>
 	
-<div class="float-container">
-			<aside>
-				<div class="float-left">
-					<div class="row center">
-						<div class="row mb-30">
-							<h2>마이샐러브</h2>
-						</div>
-						<hr>
-						<div class="font-menu">
-							<h3><a href="/mypage/order_list">주문내역</a></h3>
-							<h3><a href="/mypage/delivery_list">배송지관리</a></h3>
-							<h3><a href="/mypage/review_list">상품후기</a></h3>
-							<h3><a href="/mypage/point" >적립금</a></h3>
-							<h3><a href="/mypage/coupon">쿠폰</a></h3>
-							<h3><a href="/member/detail?memberId=${memberDto.memberId}">내정보수정</a></h3>
-							<h3>도움이 필요하신가요?<br><a href="/inquire/list">1:1문의하기</a></h3>
-						</div>	
-					</div>	
-				</div>
-			</aside>
-			
-			<section>
-				<div class="float-right w-80">
-					<div class = "row">
-						<h1 class="mb-30">1:1 문의글 목록</h1>
+	<div class="float-container">
+		<aside>
+			<div class="float-left">
+				<div class="row center">
+					<div class="row mb-30">
+						<h2>마이샐러브</h2>
 					</div>
-					
-					<hr> 
-	
-	<div class = "row">
-	
-	<table border = "1" width = "1000" class="table table-slit table-hover table-border">
-		<tbody>
-			<tr>
-				<th width="45%">문의글 제목</th>
-				<th>문의글 작성일</th>
-				<th>문의글 수정일</th>
-				<th>답변 상태</th>
+					<hr>
+					<div class="font-menu">
+						<h3><a href="/mypage/order_list">주문내역</a></h3>
+						<h3><a href="/review/list">상품후기</a></h3>
+						<h3><a href="/mypage/coupon">쿠폰</a></h3>
+						<h3><a href="/member/detail?memberId=${memberDto.memberId}">내정보수정</a></h3>
+						<h3>도움이 필요하신가요?<br><a href="/inquire/list">1:1문의하기</a></h3>
+					</div>	
+				</div>	
+			</div>
+		</aside>
+			
+		<section>
+			<div class="float-right w-80">
+				<div class = "row">
+					<h1 class="mb-30">1:1 문의글 목록</h1>
+				</div>
 				
-				<th colspan = "2">문의글 관리</th>
-			</tr>
-			<c:forEach var = "inquireList" items = "${inquireList}">
-				<c:if test = "${!inquireList.inquireInactive}">
-					<tr align="center">
-						<td><a href = "detail?inquireNo=${inquireList.inquireNo}">${inquireList.inquireTitle}</a></td>
-						<td>${inquireList.inquireWritetime}</td>
-						<td>${inquireList.inquireUpdatetime}</td>
-						<td>
-							<c:choose>
-								<c:when test = "${inquireList.inquireHasReply}">
-									답변 완료
-								</c:when>
-								<c:otherwise>
-									대기중
-								</c:otherwise>
-							</c:choose>
-						</td>
-						<td><a href = "edit?inquireNo=${inquireList.inquireNo}">수정</a></td>
-						<td><a href = "delete?inquireNo=${inquireList.inquireNo}">삭제</a></td>
-					</tr>
-				</c:if>
-			</c:forEach>
-		</tbody>
-	</table>
+				<hr> 
 	
-		<div class = "row right">
-			<a href = "write">1:1문의하기</a>
-		</div>
-	</div>
+				<div class = "row">
 	
-	</div>
-
-
-</section>
+					<table border = "1" width = "1000" class="table table-slit table-hover table-border">
+						<tbody>
+							<tr>
+								<th width="45%">문의글 제목</th>
+								<th>문의글 작성일</th>
+								<th>문의글 수정일</th>
+								<th>답변 상태</th>
+								
+								<th colspan = "2">문의글 관리</th>
+							</tr>
+							<c:forEach var = "inquireList" items = "${inquireList}">
+								<c:if test = "${!inquireList.inquireInactive}">
+									<tr align="center">
+										<td><a href = "detail?inquireNo=${inquireList.inquireNo}">${inquireList.inquireTitle}</a></td>
+										<td>${inquireList.inquireWritetime}</td>
+										<td>${inquireList.inquireUpdatetime}</td>
+										<td>
+											<c:choose>
+												<c:when test = "${inquireList.inquireHasReply}">
+													답변 완료
+												</c:when>
+												<c:otherwise>
+													대기중
+												</c:otherwise>
+											</c:choose>
+										</td>
+										<td><a href = "edit?inquireNo=${inquireList.inquireNo}">수정</a></td>
+										<td><a href = "delete?inquireNo=${inquireList.inquireNo}">삭제</a></td>
+									</tr>
+								</c:if>
+							</c:forEach>
+						</tbody>
+					</table>
+	
+					<div class = "row right">
+						<a href = "write">1:1문의하기</a>
+					</div>
+				</div>
+	
+			</div>
+		</section>
 	</div>
 </div>
+
+
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
