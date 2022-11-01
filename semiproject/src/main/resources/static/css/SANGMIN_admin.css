@@ -52,7 +52,7 @@
 
 .admindrop > li{/* 관리자 사이드 메뉴 회색박스 */
     width: 200px;
-    height: 90px;
+    height: 100px;
     background: #eee; 
     text-align: center;
 }
