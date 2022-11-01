@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp">
 	<jsp:param value="${productDto.productName}" name="title"/>
@@ -59,50 +60,53 @@
 
 <style>
 
-  #product-good {
+	#product-good {
 		color : red;
 	}
-
+	
+	#review-good {
+		color : red;
+	}
 
 	td{
     	vertical-align : middle;
     	line-height : 1.2em;
-    	font-size : 10px;
+    	font-size : 14px;
     }
     
     .table.table-border > thead > tr > th,
-.table.table-border > thead > tr > td,
-.table.table-border > tbody > tr > th,
-.table.table-border > tbody > tr > td,
-.table.table-border > tfoot > tr > th,
-.table.table-border > tfoot > tr > td {  
-    border: 1px solid #e5e7eb;
-}
-
-#td-top{
-	text-align: left;
-	vertical-align : top;
-	margin-top: 20px;
-}
-
-#td-font1{
-	 font-size: 20px;
-	 color : #848484;
-}
-
-#td-font2{
-	 font-size: 20px;
-	 color : #58FA82;
-}
-
-#td-font3{
-	 font-size: 20px;
-	 font-weight: bold;
-}    
-
-#td-font4{
-	 font-size: 20px;
-}    
+	.table.table-border > thead > tr > td,
+	.table.table-border > tbody > tr > th,
+	.table.table-border > tbody > tr > td,
+	.table.table-border > tfoot > tr > th,
+	.table.table-border > tfoot > tr > td {  
+	    border: 1px solid #e5e7eb;
+	}
+	
+	#td-top{
+		text-align: left;
+		vertical-align : top;
+		margin-top: 20px;
+	}
+	
+	#td-font1{
+		 font-size: 20px;
+		 color : #848484;
+	}
+	
+	#td-font2{
+		 font-size: 20px;
+		 color : #58FA82;
+	}
+	
+	#td-font3{
+		 font-size: 20px;
+		 font-weight: bold;
+	}    
+	
+	#td-font4{
+		 font-size: 20px;
+	}
     
 </style>
 
@@ -172,39 +176,11 @@
 	</div> <!--//inner-->
 </section> <!--//itemsection2-->
 
-<section >
-   	<div class=" mt-10 mb-10 center">
-       	<img src="/image/itemreview.png" width=500 height=150  alt="구매후기/포토후기">
-   	</div>
-</section> <!--//itemsection3-->
-<div class = "container-1200 mt-50 center mb-50">
-	<c:forEach var = "productReviewList" items = "${productReviewList}">
-		<table class="table mt-10 mb-10 " >
-			 <tr>
-			 	<td class="img center" width="80">
-			 		<img width=150 height=150 src="/attachment/download/reviewImg?attachmentNo=${productReviewList.reviewAttachmentNo}"><br>
-			 		리뷰 별점 : ${productReviewList.reviewGood} 
-			 	</td>
-			 	<td id="td-top" width="400" height="30">
-				 <p id="td-font1">${productReviewList.reviewId} &nbsp  [ ${productReviewList.reviewWritetime} ]</p><br><br>
-				 <p id="td-font2">${productDto.productName}</p><br><br><br><br><br>
-				 <p id="td-font3">${productReviewList.reviewTitle}</p><br>
-				 <p id="td-font4">${productReviewList.reviewContent}</p> <br>
-			 	</td>
-			 </tr>
-		</table>
-		<hr>
-	</c:forEach>
-</div>
-
 <%-- 리뷰 관련 --%>
 <div class = "container-800">
 	<c:forEach var = "productReviewList" items = "${productReviewList}">
 		<table class="table mt-10 mb-10">
     		<tr>
-       			<td class="img center" width="100">
-          			<img width=90 height=90 src="/attachment/download/reviewImg?attachmentNo=${productReviewList.reviewAttachmentNo}">
-				</td>
 				<td class="row left" width="400" height="30">
    					<div class="row" style="font-size: 16px; color: rgb(15, 199, 76);">
 						제목 : ${productReviewList.reviewTitle}
@@ -212,12 +188,22 @@
 					옵션 : ${productReviewList.paymentOption} <br>
 					내용 : ${productReviewList.reviewContent} <br>
 				</td>
+       			<td class="img center" width="100">
+       				<c:choose>
+       					<c:when test = "${productReviewList.reviewAttachmentNo != ''}">
+       						<img width=90 height=90 src="/attachment/download/reviewImg?attachmentNo=${productReviewList.reviewAttachmentNo}">
+       					</c:when>
+       					<c:otherwise>
+       						<div style = "background-color : white; width : 90px; height : 90px;"></div>
+       					</c:otherwise>
+       				</c:choose>
+				</td>
 				<td class="row center" width="30">
    					${productReviewList.reviewWritetime} <br>
 					${productReviewList.reviewId} <br>
 					<div class="row">
   						<div id = "review-good" class="review-score" data-max="5" data-rate="${productReviewList.reviewGood}"></div>
-  						<span id = "review-good" >${productReviewList.reviewGood}</span>
+  						<span id = "review-good">${productReviewList.reviewGood}</span>
          			</div>
        			</td>
     		</tr>
@@ -259,4 +245,4 @@ ${productDto.productInactive}
 --%>
 
 <%-- footer.jsp 불러오기 --%>
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
+
