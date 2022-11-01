@@ -6,16 +6,24 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.kh.semi.interceptor.AdminInterceptor;
+import com.kh.semi.interceptor.InquirePermissionCheckInterceptor;
 import com.kh.semi.interceptor.MemberInterceptor;
+import com.kh.semi.interceptor.NoticePemissionCheckInterceptor;
+import com.kh.semi.interceptor.ReviewPermissionCheckInterceptor;
 
 @Configuration
 public class InterceptorConfiguration implements WebMvcConfigurer{
 
 	@Autowired
 	private MemberInterceptor memberInterceptor;
-	
 	@Autowired
 	private AdminInterceptor adminInterceptor;
+	@Autowired
+	private NoticePemissionCheckInterceptor noticeCheckInterceptor;
+	@Autowired
+	private ReviewPermissionCheckInterceptor reviewCheckInterceptor;
+	@Autowired
+	private InquirePermissionCheckInterceptor inquireCheckInterceptor;
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
@@ -28,7 +36,8 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 				"/mypage/**", //마이페이지 전체
 				"/order/**", //주문 전체
 				"/basket/**", //장바구니 전체
-				"/review/**" //후기전체
+				"/review/**", //후기전체
+				"/inquire/**" //문의글 전체
 				)
 		.excludePathPatterns(//감시 제외 주소
 				"/member/join*", //회원가입
@@ -49,11 +58,35 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 		.addPathPatterns(//인터셉터 감시주소
 				"/member/list", //회원목록
 				"/member/change",//회원수정
-				"/inquire/edit"
-				
+				"/admin/**", //관리자페이지 전체
+				"/notice/**", //공지사항 전체
+				"/inquire/edit" //댓글작성
 				)
 		.excludePathPatterns(
-				
+				"/notice/list",
+				"/notice/detail"
+				);
+		
+		//관리자만 공지사항을 등록할 수 있도록 검사하는 인터셉터
+		registry.addInterceptor(noticeCheckInterceptor)
+		.addPathPatterns(//인터셉터 감시주소
+				"/notice/write",
+				"/notice/edit"
+				);
+		
+		//소유자가 리뷰 수정/삭제 또는 관리자가 삭제 가능하도록 검사하는 인터셉터
+		registry.addInterceptor(reviewCheckInterceptor)
+		.addPathPatterns(
+				"/review/write",
+				"/review/edit"
+				);
+		
+		//소유자가 문의글 수정/삭제 또는 관리자가 삭제 가능하도록 검사하는 인터셉터
+		registry.addInterceptor(inquireCheckInterceptor)
+		.addPathPatterns(
+				"/inquire/edit",
+				"/inquire/delete",
+				"/inquire/detail"
 				);
 		
 	}
