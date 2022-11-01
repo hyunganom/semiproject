@@ -51,12 +51,12 @@
     width: 30px;
     height: 30px;
     background: url("../image/minus.png");
-    margin: 0 -3px 0 0;
     font-size: 0px;
+    border: 1px solid #B2B2B2;
 }
 .itemnumbercheck{
     float: left;
-    height: 28px !important;
+    height: 29px !important;
     vertical-align: top;
     width: 49px !important;
     position: relative;
@@ -66,20 +66,27 @@
     visibility: visible;
     text-align: center;
     font-size: 14px;
+    border: 1px solid #B2B2B2;
 }
 .btnup{
     display: block;
     width: 30px;
     height: 30px;
     background: url(../image/plus.png);
-    margin: 0 0 0 -1px;
     font-size: 0px;
+    border: 1px solid #B2B2B2;
 }
 .itembox{
     margin-top: 5%;
 }
+#submit-purchase{
+	border: none;
+}
 .addcart{
     float: left;
+}
+#submit-basket{
+	border: none;
 }
 .itemsection2{
     position: relative;
