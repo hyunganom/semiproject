@@ -18,37 +18,38 @@
                            <div class="visual3 swiper-slide"></div>
                            <div class="visual4 swiper-slide"></div>
                            <div class="visual5 swiper-slide"></div>
+                           <div class="visual6 swiper-slide"></div>
                        </div> <!--//swiper-wrapper-->
                    </div> <!--//swiper-container-->
            </section> <!--//section1-->
            <section class="section2">
                <div class="inner">
-                   <h2 class="hotitem">이달의 핫한 상품</h2>
+                   <h2 class="hotitem">이달의 구독과 좋아요 상품!</h2>
                    <div class="item1">
                        <ul>
                            <li>
                                <div class="img1">
-                                   <a href="#"><image src="./image/hotitem1.jpg" width="200px" height="200px"></image></a>
+                                   <a href="http://localhost:8888/product/detail?productNo=1325&categoryHighSub=false"><img src="/image/main2-1.jpg" alt="정기2주-1" width="200px" height="200px"></a>
                                </div>
-                               <p>아이템1</p>
+                               <p>샐러드 + 간편식 콤보</p>
                            </li>
                            <li>
                                <div class="img1">
-                                   <a href="#"><image src="./image/hotitem2.jpg" width="200px" height="200px"></image></a>
+                                   <a href="http://localhost:8888/product/detail?productNo=1322&categoryHighSub=false"><img src="/image/main2=2.jpg" alt="정기2주-2" width="200px" height="200px"></a>
                                </div>
-                               <p>아이템2</p>
+                               <p>트리플 콤보!!!</p>
                            </li>
                            <li>        
                                <div class="img1">
-                                   <a href="#"><image src="./image/hotitem3.jpg" width="200px" height="200px"></image></a>
+                                   <a href="http://localhost:8888/product/detail?productNo=1317&categoryHighSub=false"><img src="/image/main4-1.jpg" alt="정기4주-1" width="200px" height="200px"></a>
                                </div>
-                               <p>아이템3</p>
+                               <p>한끼 샐러드</p>
                            </li>
                            <li>
                                <div class="img1">
-                                   <a href="#"></a>
+                                   <a href="http://localhost:8888/product/detail?productNo=1320&categoryHighSub=false"><img src="/image/main4-2.jpg" alt="정기4주-2" width="200px" height="200px"></a>
                                </div>
-                               <p>아이템4</p>
+                               <p>하루 두번 샐러드</p>
                            </li>
                        </ul>
                    </div> <!--//item1-->
@@ -61,27 +62,26 @@
                        <ul>
                            <li>
                                <div class="img1">
-                                   <a href="#"><image src="./image/salad1.jpg" width="200px" height="200px"></image></a>
+                                   <a href="http://localhost:8888/product/detail?productNo=1308&categoryHighSub=true"><img src="/image/mainsalad1.jpg" alt="샐러드1" width="200px" height="200px"></a>
                                </div>
-                               <p>샐러드1</p>
+                               <p>레드칠리 로스트</p>
                            </li>
                            <li>       
                                <div class="img1">
-                                   <a href="#"><image src="./image/salad2.jpg" width="200px" height="200px"></image></a>
+                                   <a href="http://localhost:8888/product/detail?productNo=1309&categoryHighSub=true"><img src="/image/mainsalad2.jpg" alt="샐러드2" width="200px" height="200px"></a>
                                </div>
-                               <p>샐러드2</p>
+                               <p>멕시칸 타코</p>
                            </li>
                            <li>
                                <div class="img1">
-                                   <a href="#"><image src="./image/salad3.jpg" width="200px" height="200px"></image></a>
+                                   <a href="http://localhost:8888/product/detail?productNo=1312&categoryHighSub=true"><img src="/image/mainsalad3.jpg" alt="샐러드3" width="200px" height="200px"></a>
                                </div>
-                               <p>샐러드3</p>
+                               <p>깻잎 닭가슴살볼</p>
                            </li>
                            <li>                
                                <div class="img1">
-                                   <a href="#"><image src="./image/salad4.jpg" width="200px" height="200px"></image></a>
-                               </div>
-                               <p>샐러드4</p>
+                                   <a href="http://localhost:8888/product/detail?productNo=1313&categoryHighSub=true"><img src="./image/mainsalad4.jpg" alt="샐러드4" width="200px" height="200px"></a>                              </div>
+                               <p>파스타 파스타!</p>
                            </li>
                        </ul>
                    </div> <!--//item2-->
@@ -92,12 +92,12 @@
                    <ul class="banner">
                        <li>
                            <a href="#">
-                               <img class="bannerimg" src="./image/semi-banner1.png">
+                               <img class="bannerimg" src="/image/semi-banner1.png">
                            </a>
                        </li>
                        <li>
                            <a href="#">
-                               <img class="bannerimg" src="./image/semi-banner2.png">
+                               <img class="bannerimg" src="/image/semi-banner2.png">
                            </a>
                        </li>
                    </ul> <!--banner-->
@@ -105,32 +105,32 @@
            </section> <!--section4-->
            <section class="section5">
                <div class="inner">
-                   <h2 class="hotitem">이거 보고 가세요!</h2>
+                   <h2 class="hotitem">한번만 먹어 본 사람 없지?</h2>
                    <div class="item1">
                        <ul>
                            <li>
                                <div class="img1">
-                                   <a href="#"><img src="./image/chicken1.jpg" width="200px" height="200px"></a>
+                                   <a href="http://localhost:8888/product/detail?productNo=1333&categoryHighSub=false"><img src="/image/snack1.jpg" alt="스낵1" width="200px" height="200px"></a>
                                </div>
-                               <p>닭1</p>
+                               <p>리얼 요거트</p>
                            </li>
                            <li>
                                <div class="img1">
-                                   <a href="#"><img src="./image/chicken2.jpg" width="200px" height="200px"></a>
+                                   <a href="http://localhost:8888/product/detail?productNo=1334&categoryHighSub=false"><img src="/image/snack2.jpg" alt="스낵2" width="200px" height="200px"></a>
                                </div>
-                               <p>닭2</p>
+                               <p>아이스 홍시</p>
                            </li>
                            <li>
                                <div class="img1">
-                                   <a href="#"><img src="./image/chicken3.jpg" width="200px" height="200px"></a>
+                                   <a href="http://localhost:8888/product/detail?productNo=1331&categoryHighSub=false"><img src="/image/snack3.jpg" alt="스낵3" width="200px" height="200px"></a>
                                </div>
-                               <p>닭3</p>
+                               <p>오리지널 닭가슴살 소시지</p>
                            </li>
                            <li>
                                <div class="img1">
-                                   <a href="#"><img src=""></a>
+                                   <a href="http://localhost:8888/product/detail?productNo=1330&categoryHighSub=false"><img src="/image/snack4.jpg" alt="스낵4" width="200px" height="200px"></a>
                                </div>
-                               <p>닭4</p>
+                               <p>갈릭 닭가슴살 소시지</p>
                            </li>
                        </ul>
                    </div> <!--//item3-->
@@ -138,24 +138,24 @@
            </section> <!--//section5-->
            <section class="section6">
                <div class="inner">
-                   <h2 class="hotitem">간식도 건강하게!</h2>
+                   <h2 class="hotitem">만두~ 만두만두만두</h2>
                    <div class="item1">
                        <ul>
                            <li>
                                <div class="img1">
-                                   <a href="#"><img src="./image/snack1.jpg" width="200px" height="200px"></a>
+                                   <a href="http://localhost:8888/product/detail?productNo=1337&categoryHighSub=false"><img src="/image/snack1-1.jpg" alt="만두1-1" width="200px" height="200px"></a>
                                </div>
-                               <p>간식1</p>
+                               <p>오리지널 닭가슴살 만두</p>
                            </li>
                            <li>
                                <div class="img1">
-                                   <a href="#"><img src="./image/snack2.jpg" width="200px" height="200px"></a>
+                                   <a href="http://localhost:8888/product/detail?productNo=1336&categoryHighSub=false"><img src="/image/snack1-2.jpg" alt="만두1-2" width="200px" height="200px"></a>
                                </div>
-                               <p>간식2</p>
+                               <p>반반 닭가슴살 만두</p>
                            </li>
                            <li>
                                <div class="img1">
-                                   <a href="#"><img src="./image/snack3.jpg" width="200px" height="200px"></a>
+                                   <a href="#"><img src="" width="200px" height="200px"></a>
                                </div>
                                <p>간식3</p>
                            </li>
