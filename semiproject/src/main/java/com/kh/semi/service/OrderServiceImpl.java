@@ -42,9 +42,9 @@ public class OrderServiceImpl implements OrderService{
 		ordersDao.insert(orderVO);
 	      	      
 		//결제테이블에 데이터 등록
-		if(orderVO.getPayment()==null) {
+		if(orderVO.getPayment()==null) { //단일상품일 경우
 			int paymentNo = paymentDao.sequence();
-		   paymentDao.insert(PaymentDto.builder()
+		   paymentDao.insert(PaymentVO.builder()
 					.paymentNo(paymentNo)
 					.paymentOrderNo(orderNo)
 					.paymentProductNo(orderVO.getPaymentProductNo())
@@ -52,10 +52,10 @@ public class OrderServiceImpl implements OrderService{
 					.paymentPrice(orderVO.getPaymentPrice())
 					.paymentOption(orderVO.getPaymentOption())
 					.build());
-		   
-		   productDao.updateProductInventory(orderVO);
+		   //productDao.updateProductInventory(orderVO);
+		   productDao.updateProductInventory(orderVO.getPaymentCount(), orderVO.getPaymentProductNo());
 		   basketDao.clearbasket(orderVO.getBasketNo());
-		}else {
+		}else { //구독상품일 경우
 			for(PaymentVO dto : orderVO.getPayment()) {
 				// 결제번호 시퀀스 생성
 				int paymentNo = paymentDao.sequence();
@@ -67,28 +67,26 @@ public class OrderServiceImpl implements OrderService{
 						.paymentPrice(dto.getPaymentPrice())
 						.paymentOption(dto.getPaymentOption())
 						.build());
-				System.out.println(orderVO.getPayment());
-				
+
 				//결제테이블에 해당하는 결제상품 
-				productDao.updateProductInventory(orderVO);
-				
+				//productDao.updateProductInventory(orderVO);
+				productDao.updateProductInventory(dto.getPaymentCount(), dto.getPaymentProductNo());
 				// 결제상품 장바구니에서 제거(장바구니 번호로 삭제)
 				basketDao.clearbasket(dto.getBasketNo());
 			}
+			System.out.println("orderVO.getPayment()="+orderVO.getPayment());
 		}
 		
 			// 적립금 사용분 회원테이블 적립금 마이너스
 			memberDao.minusUsedPoint(orderVO.getOrderId(), orderVO.getOrderUsePoint());
-			
 			// 결제금액만큼 보유 포인트 차감
 			memberDao.minusPayPrice(orderVO.getOrderId(), orderVO.getOrderPayPrice());
 			
 			if(CouponIssue != null) {			
 				// 쿠폰사용했을 경우 쿠폰사용내역추가 보유쿠폰 테이블 정보 변경
 				couponUseDao.insert(orderNo, CouponIssue);
-				couponDao.update(CouponIssue);
-
 				// couponIssue를 가지고 쿠폰 사용 여부를 바꾸기
+				couponDao.update(CouponIssue);
 			}
 			else {
 				return;

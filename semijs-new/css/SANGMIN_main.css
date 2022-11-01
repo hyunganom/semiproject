@@ -37,13 +37,12 @@
     line-height: 40px;
     top: 0;
     left: 80%;
-    background-color: #009539;
+    background-color: #569956;
     color: azure;
 }
 .header2 .formdiv .textinput{
     width: 400px;
     height: 40px;
-    border: 1px solid black;
     padding-left: 10px;
     box-sizing: border-box;
 }
@@ -62,7 +61,7 @@
 }
 
 .menu{
-    border-bottom: 2px solid bla;
+    
     background-color: white;
 }
 .menu > div{
@@ -89,7 +88,6 @@
     width: 100%;
     padding: 30px;
     box-sizing: border-box;
-    border: 1px solid #ccc;
     background-color: white;
 }
 .bottommenu > div.inner {
@@ -107,7 +105,6 @@
     padding-bottom: 10px;
     margin-bottom: 30px;
     box-sizing: border-box;
-    border-bottom: 1px solid #ccc;
 }
 .bottommenu > div > ul > li {
     width: 30%;
@@ -132,7 +129,6 @@
     max-width: none;
     width: 100%;
     height: 650px;
-    border: 1px solid pink;
     background-image: url("../image/testpic2.png");
     background-repeat: no-repeat;
     background-size: 1200px;
@@ -143,7 +139,6 @@
     max-width: none;
     width: 100%;
     height: 650px;
-    border: 1px solid pink;
     background-image: url("../image/testpic3.png"); 
     background-repeat: no-repeat;
     background-size: 1200px;
@@ -154,7 +149,6 @@
     max-width: none;
     width: 100%;
     height: 650px;
-    border: 1px solid pink;
     background-image: url("../image/testpic4.png"); 
     background-repeat: no-repeat;
     background-size: 1200px;
@@ -165,7 +159,6 @@
     max-width: none;
     width: 100%;
     height: 650px;
-    border: 1px solid pink;
     background-image: url("../image/testpic.jpg"); 
     background-repeat: no-repeat;
     background-size: 1200px;
@@ -176,7 +169,6 @@
     max-width: none;
     width: 100%;
     height: 650px;
-    border: 1px solid pink;
     background-image: url("../image/testpic6.png");
     background-repeat: no-repeat;
     background-size: 1200px;
@@ -204,7 +196,6 @@
 .img1 {
     width: 200px;
     height: 200px;
-    border: 1px solid black;
 }
 
 .section4 {
@@ -216,7 +207,6 @@
     display: inline-block;
     width: 50%;
     height: 200px;
-    border: 1px solid #000;
     box-sizing: border-box;
     text-align: center;
     line-height: 100px;   
@@ -239,7 +229,6 @@
 
 /* footer start*/
 .footer .topfooter{
-    border: 1px solid black;
     background-color: #FAF7F0;
 }
 
@@ -273,7 +262,6 @@
 
 /* popup */
 .scrollbanner{
-    border: 1px solid black;
     border-radius: 15px;
     position: absolute;
     width: 100px;
@@ -283,22 +271,22 @@
     background: white;
 }
 .scrollbanner ul{
-    border: 1px solid pink;
     text-align: center;
     font-size: 35px;
+    margin-top: 30px;
     padding-bottom: 20px;
 }
 .scrolltop {
     position: absolute;
-    top: 60%;
-    left: 30%;
-    font-size: 40px;
+    top: 50%;
+    left: 35%;
+    font-size: 30px;
 }
 .scrolldown {
     position: absolute;
-    top: 80%;
-    left: 30%;
-    font-size: 40px;
+    top: 65%;
+    left: 35%;
+    font-size: 30px;
 }
 .popup-wrap .popup{
     position: absolute;

@@ -12,10 +12,10 @@
 	.table> tbody> tr > td{
 		padding:32px 0px;
 	}
-	.table.table-slit > thead{
+	.table.table-slitt > thead{
 		border-bottom:1px solid #d8dbe0;
 	}
-	.table.table-slit > thead > tr > th{
+	.table.table-slitt > thead > tr > th{
 		padding:10px;
 	}
 	.total-items, .total-delivery, .total-price{
@@ -69,13 +69,25 @@
 
 <script type="text/javascript">
 	$(function(){
-
+		<!-- 체크박스 개수 확인 -->
+		function checkedCount(){
+			var checkedCount = 0;
+				$(".checked").each(function(){
+		   			if($(this).prop("checked")){
+		   				checkedCount++;
+		   			}
+		   		});
+				return checkedCount;
+		}
+		
+	
 		<!-- 처음 들어왔을 때 전체선택 체크되게 하기 -->
 		var items = "${basketVO.size()==0}";
 		if(items=='false'){
 			$(".checkedAll").prop("checked", true);
 			$(".checked").prop("checked", true);
-			total();			
+			total();
+			$(".purchase-cnt").text($(".checked").length);
 		}
 		
 		<!-- 체크박스 선택/해제 -->
@@ -83,8 +95,10 @@
     		var judge = $(this).prop("checked");
     		if(judge==false){
     			$(".checked").prop("checked", false);
+    			$(".purchase-cnt").text(0);
     		}else{
     			$(".checked").prop("checked", true);
+    			$(".purchase-cnt").text($(".checked").length);
     		}
     		total();
     	});
@@ -99,8 +113,10 @@
     		var judge = $(".checked").length == cnt;
     		if(judge){
     			$(".checkedAll").prop("checked", true);
+    			$(".purchase-cnt").text($(".checked").length);
     		}else{
     			$(".checkedAll").prop("checked", false);
+    			$(".purchase-cnt").text(checkedCount());
     		}
     		total();
     	});
@@ -151,7 +167,7 @@
  				method:"get",
  				success:function(resp){
  					if(resp==="success"){
- 						alert("수량이 변경되었습니다!");
+ 						//alert("수량이 변경되었습니다!");
  						location.reload();
  					}else{
  						alert("장바구니 수량이 변경되지 않았습니다!");
@@ -201,7 +217,7 @@
  				method:"get",
  				success:function(resp){
  					if(resp==="success"){
- 						alert("삭제가 완료되었습니다!");
+ 						//alert("삭제가 완료되었습니다!");
  						location.reload();
  					}else{
  						alert("삭제실패!");
@@ -221,10 +237,20 @@
     		});
  		});
  		
-		<!--주문하기 버튼 이벤트 -->
-		//장바구니에 상품이 없을경우 버튼 클릭시 상품을 담아주세요 문구 출력
-		//상품이 있지만 선택하지 않고 버튼 클릭 시 주문할 상품을 선택해주세요 문구 출력
-		//수량이 0인 경우 수량을 다시 선택해주세요 문구 출력
+ 		<!--주문하기 버튼(폼) 이벤트 -->
+		$(".form-btn").click(function(e){
+			var checkedCnt = checkedCount(); //체크된 수
+			var itemCnt = $(".price").length; //아이템 수(가격 태그 재사용해서 상품이 들어있는지 확인)
+			
+			if(itemCnt==0){
+				alert('주문 상품을 담아주세요!');
+				e.preventDefault();
+			}else if(itemCnt!=0&&checkedCnt==0){
+				alert('주문할 상품을 선택해주세요!');
+				e.preventDefault();
+			}
+		});
+
 
 	});
 </script>
@@ -252,7 +278,7 @@
                 	<c:when test="${basketVO.size()==0}">
                 		<tr class="center">
                 			<td class="w-5"><input type="checkbox" class="checked"></td>
-                			<td colspan="4">장바구니 담긴 내역이 없습니다!</td>
+                			<td colspan="5">장바구니 담긴 내역이 없습니다!</td>
                 		</tr>
                 	</c:when>
                 	<c:otherwise>
@@ -279,7 +305,7 @@
 		                        </td>
 		                        <td class="price-wrap">
 		                        	<span class="price">	${vo.productPrice}</span>
-		                        	<a href="delete?productNo=${vo.basketProductNo}">
+		                        	<a href="delete?basketNo=${vo.basketNo}">
 		                        		<i class="fa-solid fa-trash-can"></i>
 		                        	</a>
 		                        </td>
@@ -300,7 +326,7 @@
                 </tfoot>
             </table>
 			
-			<table class="table table-slit mt-40">
+			<table class="table table-slitt mt-40">
 				<thead>
 					<tr class="left">
 						<th class="result-count">총 주문 상품 <span class="green purchase-cnt">${basketVO.size()}</span>개</th>

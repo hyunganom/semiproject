@@ -30,7 +30,7 @@
     	border: 2px solid gray;
     }
 </style>
-
+<c:set var="admin" value="${mg == '관리자'}"></c:set>
 <div class = "container-1100 mt-40 mb-40">
 	<div class = "row center">
 		<h1>NOTICE</h1>
@@ -45,7 +45,9 @@
 					<th>작성자</th>
 					<th>작성일</th>
 					<th>조회수</th>
+					<c:if test="${admin}">
 					<th>메뉴</th>
+					</c:if>
 				</tr>
 			</thead>
 			<tbody align="center">
@@ -56,13 +58,16 @@
 					<td>${list.noticeId}</td>
 					<td>${list.noticeWritedate}</td>
 					<td>${list.noticeRead}</td>
+					<c:if test="${admin}">
 					<td>
 						<a class="btn btn-neutral" style="padding:4px;" href = "editAdmin?noticeNo=${list.noticeNo}">수정</a>
 						<a class="btn btn-neutral" style="padding:4px;" href = "deleteAdmin?noticeNo=${list.noticeNo}">삭제</a>
 					</td>
+					</c:if>
 				</tr>
 				</c:forEach>
 			</tbody>
+			<c:if test="${admin}">
 			<tfoot>
 				<tr>
 					<td colspan="8" align="right">
@@ -70,6 +75,7 @@
 					</td>
 				</tr>
 			</tfoot>
+			</c:if>
 		</table>
 		</div>
 	<!-- 검색창 -->

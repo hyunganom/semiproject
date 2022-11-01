@@ -8,6 +8,7 @@
 </jsp:include>
 
 <style>
+
 	.sameinfo{
         font-size:12px;
         float:right;
@@ -194,6 +195,7 @@
 					alert('주문금액이 3만원 이상일 경우 쿠폰적용이 가능합니다!');
 				}
 			}
+
 		});
 	});
 	
