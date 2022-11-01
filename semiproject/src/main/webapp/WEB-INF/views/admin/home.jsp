@@ -22,11 +22,12 @@
                         <a href="/admin/home">관리홈</a>
                     </li>
                     <li class="adminsidemenu1">
-                        <a href="#">상품</a>
-                        <ul>
+                       <ul><p><button class="btndrop">상품</button></p>
+                        <div class="btndropsub">
                             <li><a href="">- 상품등록</a></li>
                             <li><a href="">- 상품리스트</a></li>
                             <li><a href=""></a></li>
+                        </div>
                         </ul>
                     </li>
                     <li class="adminsidemenu2">
