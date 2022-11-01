@@ -12,16 +12,50 @@
 
 <style>
 
-   td{
-       vertical-align : middle;
-       line-height : 1.2em;
-       font-size : 14px;
-    }
+ td{
+     vertical-align : middle;
+     line-height : 1.2em;
+     font-size : 14px;
+  }
     
-    #product-good {
+  #product-good {
 		color : red;
 	}
-    
+  
+    .table.table-border > thead > tr > th,
+.table.table-border > thead > tr > td,
+.table.table-border > tbody > tr > th,
+.table.table-border > tbody > tr > td,
+.table.table-border > tfoot > tr > th,
+.table.table-border > tfoot > tr > td {  
+    border: 1px solid #e5e7eb;
+}
+
+#td-top{
+	text-align: left;
+	vertical-align : top;
+	margin-top: 20px;
+}
+
+#td-font1{
+	 font-size: 20px;
+	 color : #848484;
+}
+
+#td-font2{
+	 font-size: 20px;
+	 color : #58FA82;
+}
+
+#td-font3{
+	 font-size: 20px;
+	 font-weight: bold;
+}    
+
+#td-font4{
+	 font-size: 20px;
+}    
+
 </style>
 
 <script type="text/javascript">
@@ -188,12 +222,13 @@
       	</div> <!--//itemimage-->
   	</div> <!--//inner-->
 </section> <!--//itemsection2-->
-	
-<section class="itemsection3">
-   	<div class="review mt-10 mb-10">
-       	<img src="/image/itemreview.png" alt="구매후기/포토후기">
+
+<section >
+   	<div class=" mt-10 mb-10 center">
+       	<img src="/image/itemreview.png" width=500 height=150  alt="구매후기/포토후기">
    	</div>
 </section> <!--//itemsection3-->
+
 		
 <%-- 리뷰 관련 --%>
 <div class = "container-800">

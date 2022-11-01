@@ -14,7 +14,8 @@
 }
 
 .adminheader{
-    position: relative;   
+    position: relative;
+    width: 1200px;
 }
 .adminheader .formdiv3{
     position: relative;
@@ -38,18 +39,20 @@
     padding-left: 10px;
     box-sizing: border-box;
 }
-.adminsidemenu{
+.adminsidemenu{/* 관리자메뉴 테두리 */
     position: fixed;
-    left: 0; 
-    border: 1px solid pink;
+    left: 20%;
+    border: 1px solid pink;/* 관리자 메뉴 테두리 */
     width: 250px;
     height: 600px;
 }
 .adminsidemenu > ul{
     margin-bottom: 30%;
 }
-.admindrop > li{
-    width: 150px; 
+
+.admindrop > li{/* 관리자 사이드 메뉴 회색박스 */
+    width: 200px;
+    height: 100px;
     background: #eee; 
     text-align: center;
 }

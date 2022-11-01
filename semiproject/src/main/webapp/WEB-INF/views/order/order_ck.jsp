@@ -8,6 +8,7 @@
 </jsp:include>
 
 <style>
+
 	.sameinfo{
         font-size:12px;
         float:right;
@@ -26,6 +27,16 @@
      	color:#4CB756;
      	font-weight: bold;
      	font-size:23px;
+     }
+     .icon-left{
+     	float:left;
+     	color:#4CB756;
+     	font-size:20px;
+     }
+     .icon-equal{
+     	float:left;
+     	color:black;
+     	font-size:20px;
      }
 </style>
 
@@ -72,7 +83,6 @@
 		<!-- 배송비(콜백함수) -->
 		function deliveryFee(){
 			var itemsPrice = parseInt($(".before-price").text()); //상품금액
-			
 			var delivery;
 			if(itemsPrice>=50000){
 				delivery=0;
@@ -83,7 +93,7 @@
 		}
 		
 		<!-- 총 금액(콜백함수) -->
-		function totalPrice(totalItemPrice, totalDelivery, totalDiscount,totalCoupon){
+		function totalPrice(totalItemPrice, totalDelivery, totalDiscount){
 			var totalItemPrice = parseInt($(".before-price").text());
 			var totalDelivery = parseInt($(".delivery-price").text());
 			var totalDiscount = parseInt($(".point-price").text());
@@ -95,50 +105,20 @@
 		}
  		
 		
-		<!-- 쿠폰 이벤트 -->
-		//적립금, 쿠폰 적용 전 상품합산금액이 3만원이 넘을경우 -> 쿠폰 적용가능 /아니면 쿠폰 적용 불가능 (alert띄우고 3만원이상 적용가능하다고 알려주기)
-		$(".coupon-btn").click(function(){
-			/* 			var condition = parseInt(30000);
-			//쿠폰, 적립금 적용전 상품합산 금액
-			var beforeCoupon = parseInt($(".before-price").text());
-			//parseInt로  text값 숫자로 변환해주기 */
-			if(beforeCoupon >= condition) {
-				var coupon =  $("select[name=couponDiscount]").val();		
-				$("input[name=inputCoupon]").val(coupon);
-				var check = $("input[name=inputCoupon]").val();
-				$(".coupon-price").text(check);
-				totalPrice(totalItemPrice, totalDelivery, totalDiscount,totalCoupon);
-			}
-			else {
-				alert("주문금액이 3만원 이상일 경우 쿠폰적용이 가능합니다.");				
-			}	
-			
-			var itemsPrice = parseInt($(".before-price").text()); //상품 가격
-			var delivery = deliveryFee(); //배송비
-			var coupon = parseInt($("input[name=inputCoupon]").val()); //쿠폰
-			var total = itemsPrice+deliveryFee()-coupon //상품가격+배송비-쿠폰
-			var point = ${memberDto.memberPoint}; //보유 적립금
-			var condition = parseInt(30000); //쿠폰 사용 최소 금액
-
-				
-							
-		});		
-		
 		<!-- 적립금 전체 사용 버튼 이벤트 -->
 		$(".point-btn").click(function(e){
 			e.preventDefault(); //a 태그 전송 막기
+			var point = ${memberDto.memberPoint}; //보유 적립금
 			var itemsPrice = parseInt($(".before-price").text()); //상품 가격
 			var delivery = deliveryFee(); //배송비
-			var coupon = parseInt($("input[name=inputCoupon]").val()); //쿠폰
-			var total = itemsPrice+deliveryFee()-coupon //상품가격+배송비-쿠폰
-			var point = ${memberDto.memberPoint}; //보유 적립금
+			var coupon = parseInt($(".coupon-price").text()); //쿠폰 할인금액
+			var total = itemsPrice+deliveryFee()-coupon; //상품가격+배송비-쿠폰
 			
-			// if문(true) : 총 상품금액(상품가격+배송비-쿠폰) < 적립금, 금액만큼 사용하도록 최대값 설정
+			// if문(true) : 총 상품금액(상품가격+배송비) < 적립금, 금액만큼 사용하도록 최대값 설정
 			if(total<point){
 				$("input[name=orderUsePoint]").val(total); //클릭하면 입력창에 전체적립금 표시
 				$(".point-price").text(total); //할인창에 할인금액표시
-				var discount = $(".point-price").text();
-				$(".after-price").text(totalPrice(itemsPrice,delivery,0,coupon));
+				$(".after-price").text(totalPrice(itemsPrice,delivery,total,coupon));
 			// if문(false) : 총 상품금액(상품가격+배송비-쿠폰) > 적립금	
 			}else{
 				$("input[name=orderUsePoint]").val(point);
@@ -154,8 +134,7 @@
 		$("input[name=orderUsePoint]").blur(function(){
 			var itemsPrice = parseInt($(".before-price").text()); //상품 가격
 			var delivery = deliveryFee(); //배송비
-			var coupon = parseInt($("input[name=inputCoupon]").val()); //쿠폰
-			var total = itemsPrice+deliveryFee()-coupon; //상품가격+배송비-쿠폰		
+			var total = itemsPrice+deliveryFee(); //상품가격+배송비	
 			var point = ${memberDto.memberPoint}; //보유 적립금
 			var inputPoint = $(this).val();	//입력값
 			
@@ -164,20 +143,18 @@
 				$(this).addClass("error");
 				$(this).text(0);
 				$(".point-price").text(0);
-				$(".after-price").text(totalPrice(itemsPrice,delivery,0,coupon));				
+				$(".after-price").text(totalPrice(itemsPrice,delivery,0));				
 			}else if(inputPoint==""){ //입력값이 없으면 할인 0 으로 출력
 				$(".point-price").text(0);
-				$(".after-price").text(totalPrice(itemsPrice,delivery,0,coupon));
+				$(".after-price").text(totalPrice(itemsPrice,delivery,0));
 			}else{ //상품가격보다 적게 입력하면 입력값으로 할인금액 표시
 				$(".point-price").text(inputPoint); //할인금액 출력
 				var discount = $(".point-price").text();
-				$(".after-price").text(totalPrice(itemsPrice,delivery,discount,coupon));
+				$(".after-price").text(totalPrice(itemsPrice,delivery,discount));
 			}
 			var inputValue = parseInt($(".after-price").text());
 			$('input[name=orderPayPrice]').val(inputValue); //총 결제금액
 		});
-		
-
 		
 		<!-- 하단 금액 부분 (고정값)출력 -->
 		$(".before-price").text(productPrice()); //상품금액
@@ -186,20 +163,41 @@
 		$('input[name=orderPrice]').val(totalItemPrice); //할인전 금액(총상품가격) value값 넣기
 		var totalDelivery = $(".delivery-price").text();
 		var totalDiscount = $(".point-price").text();
-		//var totalCoupon = $(".coupon-price").text();
-		$(".after-price").text(totalPrice(totalItemPrice, totalDelivery,totalDiscount)); //총 금액
+		$(".after-price").text(totalPrice(totalItemPrice, totalDelivery)); //총 금액
 		var inputValue = parseInt($(".after-price").text());
 		$('input[name=orderPayPrice]').val(inputValue); //총 결제금액 value값 넣기
 		
 		<!-- 적립예상금액 계산 후 value값 넣기 -->
 		var result = ($(".before-price").text())*0.01;
-		$('input[name=orderPoint]+span').text(result);
-		$('input[name=orderPoint]').val(result);
+		$('input[name=orderPoint]+span').text(result); //화면에 표시
+		$('input[name=orderPoint]').val(result); //주문테이블 등록을 위한 hidden값 value처리
 		
-		
-	});
+		<!--쿠폰 -->
+		$(".coupon-btn").on("click", function(){
+			var condition = parseInt(30000); //쿠폰 사용 기준금액(3만원 이상)
+			var judge = productPrice()+deliveryFee(); //상품금액+배송비
+			
+			var itemsPrice = parseInt($(".before-price").text()); //상품 가격
+			var point = $(".point-price").text(); //포인트 할인가격
+			var total = itemsPrice+deliveryFee()-point; //상품가격+배송비-적립금
+			var coupon = $(".coupon-price").text();
+			
+			if(total==0){
+				alert('총 결제금액이 0원입니다!');
+			}else if(total<4000){
+				alert('총 결제금액보다 쿠폰 할인금액이 더 큽니다!');
+			}else{
+				if(judge>=condition){
+					$("[name=inputCoupon]").val(4000);
+					$(".coupon-price").text(4000);
+					$(".after-price").text(totalPrice(itemsPrice, deliveryFee(), point, coupon));
+				}else{
+					alert('주문금액이 3만원 이상일 경우 쿠폰적용이 가능합니다!');
+				}
+			}
 
-	
+		});
+	});
 	
     $(function(){
 		$("#select-categoryHigh").on("change", function(){
@@ -379,37 +377,32 @@
           </table>
         </div>
         
-        <div class="row mt-50">
+        <div class="row mt-50 mb-10">
           <h3>쿠폰 / 적립금</h3>
         </div>
 
         <div class="row">
           <div class="row">
             <p>쿠폰 (보유 : <span>${couponUsable}</span>개)                
-					<select name="couponDiscount" id = "selectBox">
-                				<option value="">선택안함</option>	
-                				<c:forEach var="couponUse" items="${couponUse}">
-                				<option value="${couponUse.couponDiscount}">${couponUse.couponName}</option>
-                				</c:forEach>
-					</select>     		            			              				  
+				<select name="couponIssue" id = "selectBox">
+                	<option value="">선택안함</option>	
+                	<c:forEach var="couponUse" items="${couponUse}">
+                		<option value="${couponUse.couponIssue}">${couponUse.couponName}</option>
+                	</c:forEach>
+				</select>     		            			              				  
         	</p> 
-       	
-        	
-        	
-          	</div>
-          <div>  
-
-             <input type="text" class="input w-50" name="inputCoupon" disabled>
-
-            <a href="#" class="btns btns-positive coupon-btn">쿠폰 적용</a>
-          </div>
-          <div class="row">
-          	<p>적립금 (사용가능 적립금 : <span>${memberDto.memberPoint}</span>원)</p>
-			<input type="text" class="input w-50 point" name="orderUsePoint" value="0">
-			<span class="error-message">금액이 부족합니다!</span>
-			<a href="#" class="btns btns-positive point-btn">전액 사용</a>
-          </div>
         </div>
+        <div>  
+            <input type="text" class="input w-50" name="inputCoupon" disabled>
+            <a href="#" class="btns btns-neutral coupon-btn">쿠폰 적용</a>
+        </div>
+        <div class="row mt-20">
+          	<p>적립금 (사용가능 적립금 : <span>${memberDto.memberPoint}</span>원)</p>
+			<input type="text" class="input w-50 point mt-10" name="orderUsePoint" value="0">
+			<span class="error-message">금액이 부족합니다!</span>
+			<a href="#" class="btns btns-neutral point-btn">전액 사용</a>
+        </div>
+    </div>
 
 
         <div class="row mt-50">
@@ -417,14 +410,30 @@
         </div>
 
         <div class="row center">
-          <table class="table table-border">
+          <table class="table table-slitt">
             <tbody>
               <tr>
                 <th>상품금액</th>
-                <th>배송비</th>
-                <th>적립금</th>
-                <th>쿠폰</th>
-                <th>총 금액</th>
+                <th>
+                	<span class="icon-left">
+                		<i class="fa-solid fa-circle-plus"></i>
+                	</span>배송비
+                </th>
+                <th>
+                	<span class="icon-left">
+                		<i class="fa-solid fa-circle-minus"></i>
+                	</span>적립금
+                </th>
+                <th>
+                	<span class="icon-left">
+                		<i class="fa-solid fa-circle-minus"></i>
+                	</span>쿠폰
+                </th>
+                <th>
+                	<span class="icon-equal">
+                		<i class="fa-solid fa-equals"></i>
+                	</span>총 금액
+                </th>
               </tr>
               <tr>
                 <td>
@@ -473,7 +482,7 @@
         <input type="hidden" name="orderPrice" value="">
         
         <div class="row center">
-          <a href="#" type="submit" class="btns btns-positive purchase-btn">결제하기</a>
+          <button type="submit" class="btns btns-positive purchase-btn">결제하기</button>
         </div>
 	</form>
 
