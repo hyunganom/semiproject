@@ -77,8 +77,7 @@ public class MemberController {
 //	}
 //	
 	
-	//목록(페이징처리)
-	
+	//회원목록(페이징처리)
 	@GetMapping("/list")
 	public String list(Model model,
 			@ModelAttribute(name="vo") MemberSearchVO vo) {
