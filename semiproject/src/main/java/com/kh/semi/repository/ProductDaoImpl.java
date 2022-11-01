@@ -14,8 +14,9 @@ import org.springframework.stereotype.Repository;
 import com.kh.semi.entity.CategoryHighDto;
 import com.kh.semi.entity.CategoryLowDto;
 import com.kh.semi.entity.ProductDto;
-import com.kh.semi.vo.PaymentVO;
+import com.kh.semi.vo.OrderVO;
 import com.kh.semi.vo.ProductDetailVO;
+import com.kh.semi.vo.ProductListSearchAllVO;
 import com.kh.semi.vo.ProductListSearchCategoryVO;
 import com.kh.semi.vo.ProductListSearchVO;
 import com.kh.semi.vo.ProductListVO;
@@ -38,7 +39,7 @@ public class ProductDaoImpl implements ProductDao {
 						.productNo(rs.getInt("product_no"))
 						.productName(rs.getString("product_name"))
 						.productPrice(rs.getInt("product_price"))
-						.productGood(rs.getInt("product_good"))
+						.productGood(rs.getDouble("product_good"))
 						.productInactive(rs.getString("product_inactive") != null)
 						.productAttachmentNo(rs.getInt("product_attachment_no"))
 						.categoryHighSub(rs.getNString("category_high_sub") != null)
@@ -99,6 +100,22 @@ public class ProductDaoImpl implements ProductDao {
 		}
 	}
 	
+	// 추상 메소드 - 회원이 header에 엤는 검색창으로 상품 조회
+	@Override
+	public List<ProductListVO> selectSearchListProduct(ProductListSearchAllVO productListSearchAllVO) {
+		String sql = "select * from (select TMP.*, rownum rn from (select phl.category_high_sub, phl.product_no, phl.product_name, phl.product_price, phl.product_good, phl.product_inactive, pa.product_attachment_no from product_attachment pa right outer join (select * from product p inner join (select * from category_high H inner join category_low L on H.category_high_no = L.category_high_no) hl on p.category_low_no = hl.category_low_no where instr(p.product_name, ?) > 0) phl on pa.product_origin_no = phl.product_no)TMP) where rn between ? and ? order by product_name asc";
+		Object[] param = new Object[] {productListSearchAllVO.getKeyword(), productListSearchAllVO.rownumStart(), productListSearchAllVO.rownumEnd()};
+		return jdbcTemplate.query(sql, mapperCategory, param);
+	}
+	
+	// 추상 메소드 - 회원이 header에 엤는 검색창으로 상품 조회시 상품의 총 갯수
+	@Override
+	public int countSelectSearchProduct(ProductListSearchAllVO productListSearchAllVO) {
+		String sql = "select count(*) from product where instr(product_name, ?) > 0";
+		Object[] param = new Object[] {productListSearchAllVO.getKeyword()};
+		return jdbcTemplate.queryForObject(sql, int.class, param);
+	}
+	
 	// ProductDto에 대한 ResultSetExtractor (product_inactive 추가)
 	private ResultSetExtractor<ProductDto> extractor = new ResultSetExtractor<>() {
 		@Override
@@ -112,7 +129,7 @@ public class ProductDaoImpl implements ProductDao {
 						.productPrice(rs.getInt("product_price"))
 						.productInformation(rs.getString("product_information"))
 						.productInventory(rs.getInt("product_inventory"))
-						.productGood(rs.getInt("product_good"))
+						.productGood(rs.getDouble("product_good"))
 						.productRegisttime(rs.getDate("product_registtime"))
 						.productUpdatetime(rs.getDate("product_updatetime"))
 						.productInactive(rs.getString("product_inactive") != null)
@@ -251,7 +268,7 @@ public class ProductDaoImpl implements ProductDao {
 						.productPrice(rs.getInt("product_price"))
 						.productInformation(rs.getString("product_information"))
 						.productInventory(rs.getInt("product_inventory"))
-						.productGood(rs.getInt("product_good"))
+						.productGood(rs.getDouble("product_good"))
 						.productRegisttime(rs.getDate("product_registtime"))
 						.productUpdatetime(rs.getDate("product_updatetime"))
 						.productInactive(rs.getString("product_inactive") != null)
@@ -293,7 +310,6 @@ public class ProductDaoImpl implements ProductDao {
 		return jdbcTemplate.query(sql, mapper, param);
 	}
 	
-	
 	// 추상 메소드 오버라이딩 - 관리자 상품 상세(DETAIL)
 	@Override
 	public ProductDto selectOneProduct(int productNo) {
@@ -312,7 +328,7 @@ public class ProductDaoImpl implements ProductDao {
 							.productNo(rs.getInt("product_no"))
 							.productName(rs.getString("product_name"))
 							.productPrice(rs.getInt("product_price"))
-							.productGood(rs.getInt("product_good"))
+							.productGood(rs.getDouble("product_good"))
 							.productInactive(rs.getString("product_inactive") != null)
 							.productAttachmentNo(rs.getInt("product_attachment_no"))
 						.build();
@@ -469,7 +485,6 @@ public class ProductDaoImpl implements ProductDao {
 	}
 
 	//상품이름 조회 테스트
-	
 	private ResultSetExtractor<ProductSelectNameVO> nameExtractor =(rs)->{
 		if(rs.next()) {
 			ProductSelectNameVO vo = new ProductSelectNameVO();
@@ -480,19 +495,18 @@ public class ProductDaoImpl implements ProductDao {
 		}
 	};
 	
-	
 	@Override
 	public ProductSelectNameVO selectName(int productNo) {
 		String sql = "select product_name from product where product_no=?";
 		Object[] param= {productNo};
 		return jdbcTemplate.query(sql, nameExtractor, param);
 	}
-
+	
 	//상품재고 변경 구문
 	@Override
-	public boolean updateProductInventory(PaymentVO paymentVO) {
+	public boolean updateProductInventory(int paymentCount, int paymentProductNo) {
 		String sql = "update product set product_inventory = product_inventory - ? where product_no = ?";
-		Object[] param = {paymentVO.getPaymentCount(), paymentVO.getPaymentProductNo()};
+		Object[] param = {paymentCount, paymentProductNo};
 		return jdbcTemplate.update(sql,param)>0;
-	}
+	}	
 }

@@ -7,53 +7,175 @@
 	<jsp:param value="1:1 문의글 목록" name="title"/>
 </jsp:include>
 
-<div class = "container-1200">
+ <!-- 글꼴 바꿈 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 
-	<div class = "row">
-		<h1>1:1 문의글 목록</h1>
-	</div>
+<style>
+	a:hover {
+	text-decoration: none;
+	color : #29995d;/* 마우스 올렸을 글자 색 */
+	}
 	
-	<div class = "row right">
-		<a href = "write">등록</a>
-	</div>
+	/* 확장 스타일 : 줄무늬 테이블*/
+    .table.table-slit > thead > tr,
+    .table.table-slit > tfoot > tr{
+    	background-color: #dfe6e9;
+    }
+    
+    /* 확장스타일 : 테두리가 있는 테이블 */
+    .table.table-border {
+    	border:1px solid gray;
+    }
+    .table.table-border > tbody > tr,
+    .table.table-border > tbody > tr{
+    	border: 1px solid gray;
+    }
+    
+    ul.pagination{
+    	font-size: 1.25em;
+    }
+    
+    .table {
+    	font-size: 14px;
+    }
+    
+    th, td {
+    	vertical-align : middle;
+    }
+    	}
+	.font-menu > h3:hover{
+		background-color: #ebf7f2;
+	}
+	.font-menu > h3{
+		margin-top: 30px;
+	}
+	.w-80 {
+		width:80%;
+	}
+	
+	.table > thead {
+    	font-size: 16px;
+    }
+    .table > tbody {
+    	font-size: 14px;
+    }
+	
+	/* 확장 스타일 : 옆트임 테이블*/
+    .table.table-slit > thead > tr,
+    .table.table-slit > thead > th{
+    	background-color: #efefef;
+    	border: 2px solid gray;
+    }
+    
+    /* 확장스타일 : 테두리가 있는 테이블 */
+    .table.table-border > thead > th,
+    .table.table-border > thead > td,
+    .table.table-border > tbody > tr,
+    .table.table-border > tbody > th,
+    .table.table-border > tbody > td{
+    	border: 1px solid gray;
+    }
+	
+	th, td, h3 {
+    	vertical-align : middle;
+    	line-height : 1.2em;
+    }
+	/* div {
+		border:1px dotted gray;
+	} */
+</style>
+
+
+
+<div class="container-1100 mt-40 mb-40">
+<header>
+		<div class="row center">
+			<h3>${memberDto.memberName}님 환영합니다</h3>
+		</div>
+		<div class="row center">
+			<h3>
+				등급 : ${memberDto.memberGrade}  / 적립금 : ${memberDto.memberPoint}원 / 쿠폰 :${couponUsable}개
+			</h3>
+			<br><br><br>
+		</div>
+	</header>
+	
+<div class="float-container">
+			<aside>
+				<div class="float-left">
+					<div class="row center">
+						<div class="row mb-30">
+							<h2>마이샐러브</h2>
+						</div>
+						<hr>
+						<div class="font-menu">
+							<h3><a href="/mypage/order_list">주문내역</a></h3>
+							<h3><a href="/mypage/delivery_list">배송지관리</a></h3>
+							<h3><a href="/mypage/review_list">상품후기</a></h3>
+							<h3><a href="/mypage/point" >적립금</a></h3>
+							<h3><a href="/mypage/coupon">쿠폰</a></h3>
+							<h3><a href="/member/detail?memberId=${memberDto.memberId}">내정보수정</a></h3>
+							<h3>도움이 필요하신가요?<br><a href="/inquire/list">1:1문의하기</a></h3>
+						</div>	
+					</div>	
+				</div>
+			</aside>
+			
+			<section>
+				<div class="float-right w-80">
+					<div class = "row">
+						<h1 class="mb-30">1:1 문의글 목록</h1>
+					</div>
+					
+					<hr> 
 	
 	<div class = "row">
-	<table border = "1" width = "1200">
+	
+	<table border = "1" width = "1000" class="table table-slit table-hover table-border">
 		<tbody>
 			<tr>
-				<th>문의글 번호</th>
-				<th>문의글 작성자</th>
-				<th>문의글 제목</th>
-				<th>문의글 내용</th>
+				<th width="45%">문의글 제목</th>
 				<th>문의글 작성일</th>
 				<th>문의글 수정일</th>
-				<th>문의글 답변 상태</th>
-				<th>문의글 삭제 상태</th>
-				<th colspan = "3">기능(임시로 표시)</th>
+				<th>답변 상태</th>
+				
+				<th colspan = "2">문의글 관리</th>
 			</tr>
-			
 			<c:forEach var = "inquireList" items = "${inquireList}">
-			<tr>
-				<th>${inquireList.inquireNo}</th>
-				<th>${inquireList.inquireId}</th>
-				<th><a href = "detail?inquireNo=${inquireList.inquireNo}">${inquireList.inquireTitle}</a></th>
-				<th>${inquireList.inquireContent}</th>
-				<th>${inquireList.inquireWritetime}</th>
-				<th>${inquireList.inquireUpdatetime}</th>
-				<th>${inquireList.inquireHasReply}</th>
-				<th>${inquireList.inquireInactive}</th>
-				<th><a href = "edit?inquireNo=${inquireList.inquireNo}">수정</a></th>
-				<th><a href = "delete?inquireNo=${inquireList.inquireNo}">삭제(UPDATE)</a></th>
-				<th><a href = "deleteAdmin?inquireNo=${inquireList.inquireNo}">삭제(DELETE)</a></th>
-			</tr>
+				<c:if test = "${!inquireList.inquireInactive}">
+					<tr align="center">
+						<td><a href = "detail?inquireNo=${inquireList.inquireNo}">${inquireList.inquireTitle}</a></td>
+						<td>${inquireList.inquireWritetime}</td>
+						<td>${inquireList.inquireUpdatetime}</td>
+						<td>
+							<c:choose>
+								<c:when test = "${inquireList.inquireHasReply}">
+									답변 완료
+								</c:when>
+								<c:otherwise>
+									대기중
+								</c:otherwise>
+							</c:choose>
+						</td>
+						<td><a href = "edit?inquireNo=${inquireList.inquireNo}">수정</a></td>
+						<td><a href = "delete?inquireNo=${inquireList.inquireNo}">삭제</a></td>
+					</tr>
+				</c:if>
 			</c:forEach>
 		</tbody>
 	</table>
-	<div class = "row right">
-		<a href = "write">등록</a>
+	
+		<div class = "row right">
+			<a href = "write">1:1문의하기</a>
+		</div>
 	</div>
+	
 	</div>
 
+
+</section>
+	</div>
 </div>
-
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

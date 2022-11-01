@@ -8,9 +8,9 @@
                <div class="topfooter">
                    <div class="inner">
                        <ul class="sns1">
-                           <li><a href="#" title="페이스북"><img src="/image/facebook.icon.png" alt="페이스복"  width="30px" height="30px" alt="페이스북"></a></li>
-                           <li><a href="#" title="인스타그램"><img src="/image/insta.icon.png" alt="인스타그램" width="30px" height="30px" alt="인스타그램"></a></li>
-                           <li><a href="#" title="카카오톡"><img src="/image/kakao.icon.png" alt="카카오톡" width="30px" height="30px" alt="카카오톡"></a></li>
+                           <li><a href="https://m.facebook.com/login/?locale=ko_KR" title="페이스북"><img src="/image/facebook.icon.png" alt="페이스복"  width="30px" height="30px" alt="페이스북"></a></li>
+                           <li><a href="https://www.instagram.com/_a_tiiiiiii/" title="인스타그램"><img src="/image/insta.icon.png" alt="인스타그램" width="30px" height="30px" alt="인스타그램"></a></li>
+                           <li><a href="https://open.kakao.com/o/gBPt13Ke" title="카카오톡"><img src="/image/kakao.icon.png" alt="카카오톡" width="30px" height="30px" alt="카카오톡"></a></li>
                            <li><a href="/notice/list" title="공지사항"><h3>공지사항</h3></a></li>
                        </ul> <!--//sns1-->
                    </div> <!--//inner-->
@@ -24,11 +24,11 @@
                            <li> Copyrightⓒ suLuv.co.kr All rights reserved.</li>
                        </ul>
                        <div id="bottom"></div> <!--리모컨 bottom 버튼 위치 설정완료-->
-                       <span class="footerlog"><img class="image" width="150px;" height="150px" src="/image/logo.png"></span>
+                       <span class="footerlog"><img class="image" width="200px;" height="150px" src="/image/logo.png"></span>
                    </div> <!--//inner-->
                </div> <!--//btmfooter-->
            </footer> <!--//footer-->
-
+ 
 	<%-- 하단 정보 
 	<div align = "center">
 		<h2>Session에 대한 정보</h2>

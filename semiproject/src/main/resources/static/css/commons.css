@@ -608,3 +608,20 @@ ul.pagination.pagination-small {
     text-align: center;
     text-decoration: none;
 }
+.btns-neutral:hover {
+	background-color: #4CB756;
+    color: white;
+}
+
+.table.table-slitt {
+    border: 1px solid black;
+    border-left: none;
+    border-right: none;
+    padding:20px;
+    padding:20px;
+}
+.table.table-slitt>tbody>tr>th,
+.table.table-slitt>tbody>tr>td{
+	padding:16px;
+}
+

@@ -77,8 +77,7 @@ public class MemberController {
 //	}
 //	
 	
-	//목록(페이징처리)
-	
+	//회원목록(페이징처리)
 	@GetMapping("/list")
 	public String list(Model model,
 			@ModelAttribute(name="vo") MemberSearchVO vo) {
@@ -91,13 +90,15 @@ public class MemberController {
 	return "member/list";
 	}
 	
-	
-	
-	
 	//회원상세
 	@GetMapping("/detail")
-	public String detail(Model model, @RequestParam String memberId) {
-		MemberDto memberDto = memberDao.selectOne(memberId);
+	public String detail(Model model, @RequestParam String memberId, HttpSession session) {
+		
+		// 세션에 들어있는 아이디를 꺼낸다
+		//(참고) 세션에 데이터는 Object 형태로 저장되므로 꺼내려면 다운캐스팅 필요
+		String loginId = (String) session.getAttribute("loginId");
+		
+		MemberDto memberDto = memberDao.selectOne(loginId);
 		model.addAttribute("memberDto", memberDto);
 		return "member/detail";
 	}
@@ -147,7 +148,7 @@ public class MemberController {
 		boolean result = memberDao.update(memberDto);
 		if(result) {
 			attr.addAttribute("memberId", memberDto.getMemberId());
-			return "redirect:detail";
+			return "redirect:list";
 		}
 		else {
 			return "redirect:change_fail";
@@ -232,7 +233,7 @@ public class MemberController {
 	
 	//개인정보변경 처리
 	@PostMapping("/information")
-	public String information(HttpSession session, @ModelAttribute MemberDto inputDto) {
+	public String information(HttpSession session, @ModelAttribute MemberDto inputDto, RedirectAttributes attr) {
 		String memberId = (String)session.getAttribute(SessionConstant.ID);
 		inputDto.setMemberId(memberId);
 		
@@ -242,7 +243,9 @@ public class MemberController {
 		if(passwordMatch) {
 			//정보변경처리
 			memberDao.changeInformation(inputDto);
-			return "redirect:mypage";
+			
+			attr.addAttribute("memberId", memberId);
+			return "redirect:detail";
 		}
 		else {
 			return "redirect:information?error";

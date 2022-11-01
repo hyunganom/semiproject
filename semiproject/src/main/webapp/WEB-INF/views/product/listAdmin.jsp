@@ -71,7 +71,7 @@
 				<th>상품 <br> 별점</th>
 				<th>상품 등록일</th>
 				<th>상품 수정일</th>
-				<th>상품 <br> 상태</th>
+				<th>상품 상태</th>
 				<th colspan = "3">관리자 명령</th>
 			</tr>
 		</thead>
@@ -87,13 +87,22 @@
 				<td>${productList.productPrice}</td>
 				<td>${productList.productInformation}</td>
 				<td>${productList.productInventory}</td>
-				<td><fmt:formatNumber value="${productList.productGood}" type="number" pattern=".00"/></td>
+				<td><fmt:formatNumber value="${productList.productGood}" type="number" pattern="0.0"/></td>
 				<td>${productList.productRegisttime}</td>
 				<td>${productList.productUpdatetime}</td>
-				<td>${productList.productInactive}</td>
+				<td>
+					<c:choose>
+						<c:when test = "${productList.productInactive}">
+							판매 중단
+						</c:when>
+						<c:otherwise>
+							판매중
+						</c:otherwise>
+					</c:choose>
+				</td>
 				<td><a href = "edit?productNo=${productList.productNo}">수정</a></td>
-				<td><a href = "inactive?productNo=${productList.productNo}">삭제<br>(비활성화)</a></td>
-				<td><a href = "delete?productNo=${productList.productNo}">삭제<br>(DELETE)</a></td>
+				<td><a href = "inactive?productNo=${productList.productNo}">활성화</a></td>
+				<td><a href = "delete?productNo=${productList.productNo}">삭제</a></td>
 			</tr>
 			</c:forEach>
 		</tbody>	

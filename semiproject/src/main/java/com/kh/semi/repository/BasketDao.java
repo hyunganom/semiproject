@@ -13,8 +13,10 @@ public interface BasketDao {
 	//1. 상품 추가
 	void insert(BasketDto basketDto);
 	
-	//2-1. 상품수량 수정
+	//2-1. 상품수량 수정(장바구니 내 수량버튼으로 수정하는 경우)
 	boolean changeCount(BasketDto basketDto);
+	//2-2. 상품수량 수정(장바구니 동일상품 확인 후 1씩 증가하는 경우)
+	boolean changeOneCount(int productCount, int productNo);
 	
 	//3-1 조회(회원아이디로 조회)
 	List<BasketDto> selectDtoList(String memberId);
