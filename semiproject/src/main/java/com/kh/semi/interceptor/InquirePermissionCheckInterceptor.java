@@ -34,13 +34,15 @@ public class InquirePermissionCheckInterceptor implements HandlerInterceptor{
 		InquireDto inquireDto = inquireDao.selectOneInquire(inquireNo);
 		String inquireId = inquireDto.getInquireId();
 		
-		if(memberId.equals(inquireId)) {
+		// 관리자 등급 반환
+		String grade = (String)session.getAttribute(SessionConstant.GRADE);
+		boolean isAdmin = grade.equals("관리자");
+		
+		if(memberId.equals(inquireId) || isAdmin) {
 			return true;
 		}
 		
 		//2.
-		String grade = (String)session.getAttribute(SessionConstant.GRADE);
-		boolean isAdmin = grade.equals("관리자");
 		boolean isDelete = request.getRequestURI().equals("/inquire/delete");
 		if(isAdmin && isDelete) { //관리자이면서 경로 delete가 있을 경우
 			return true;
