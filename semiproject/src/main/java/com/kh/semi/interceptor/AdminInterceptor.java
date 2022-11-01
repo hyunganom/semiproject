@@ -23,7 +23,7 @@ public class AdminInterceptor implements HandlerInterceptor{
 			return true;
 		}
 		else {//관리자아니면 차단
-			response.sendRedirect("/");
+			response.sendError(403);
 			return false;
 		}
 	}
