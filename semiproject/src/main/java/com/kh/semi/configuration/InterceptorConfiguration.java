@@ -86,17 +86,17 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 				"/notice/deleteAdmin"
 				);
 		
-		//소유자가 리뷰 수정/삭제 또는 관리자가 삭제 가능하도록 검사하는 인터셉터
-		registry.addInterceptor(reviewCheckInterceptor)
-		.addPathPatterns(
-				"/review/delete",
-				"/review/edit"
-				);
-		
 		// 로그인 중인 회원이 해당 주문 번호의 주문자 아이디일 경우 통과
 		registry.addInterceptor(reviewWriteInterceptor)
 		.addPathPatterns(
-				"/review/write"
+				"/review/write",
+				"/review/edit"
+				);
+		
+		//소유자가 리뷰 수정/삭제 또는 관리자가 삭제 가능하도록 검사하는 인터셉터
+		registry.addInterceptor(reviewCheckInterceptor)
+		.addPathPatterns(
+				"/review/delete"
 				);
 		
 		//소유자가 문의글 수정/삭제 또는 관리자가 삭제 가능하도록 검사하는 인터셉터

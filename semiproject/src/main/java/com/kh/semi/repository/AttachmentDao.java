@@ -15,8 +15,6 @@ public interface AttachmentDao {
 	List<AttachmentDto> selectList(); 
 	//첨부파일 하나만
 	AttachmentDto selectOne(int attachmentNo); 
-	// 첨부파일 삭제
-	boolean delete(int attachmentNo); 
 	
 	//상품썸네일이미지 삽입 기능
 	void productConnectAttachment(int productNo, int attachmentNo);

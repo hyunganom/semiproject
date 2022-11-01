@@ -32,13 +32,6 @@ public class MypageController {
 	@Autowired
 	private MypageDao mypageDao;
 	
-//	@Autowired
-//	private CouponDao couponDao;
-	
-	// ReviewDao 의존성 주입
-	@Autowired
-	private ReviewDao reviewDao;
-	
 	//마이페이지
 	@GetMapping("/order_list")
 	public String orderList(HttpSession session, Model model) {
@@ -92,13 +85,6 @@ public class MypageController {
 		return "mypage/delivery_list";			
 	}
 	
-	//마이페이지 내 주문상세
-	@GetMapping("/detail")
-	public String detail(HttpSession session, Model model) {
-		
-		return "mypage/detail";			
-	}
-	
 	//마이페이지 내 쿠폰 보기
 	@GetMapping("/coupon")
 	public String coupon(Model model,  HttpSession session) {
@@ -115,49 +101,7 @@ public class MypageController {
 		
 		//쿠폰 페이지로(coupon.jsp) 연결
 		return "mypage/coupon";	
-		}
-	
+	}
 
-	
-	//마이페이지 내 주문취소
-	@GetMapping("/cancle")
-	public String cancel() {
-		
-		return "mypage/cancel";			
-	}
-	
-	//마이페이지 내 교환
-	@GetMapping("/exchange")
-	public String exchange() {
-		
-		return "mypage/exchange";			
-	}
-	
-	//마이페이지 내 반품
-	@GetMapping("/returns")
-	public String returns() {
-		
-		return "mypage/returns";			
-	}
-		
-
-	// 2. 작성자가 적성한 리뷰 조회
-	@GetMapping("/review_list")
-	public String list(HttpSession session, Model model) {
-		
-		//1. 세션에 들어있는 아이디를 꺼낸다
-		// 현재 로그인 중인 회원 아이디 반환
-		String loginId = (String) session.getAttribute("loginId");
-		//2. 아이디를 이용하여 회원 정보를 불러온다
-		CouponCountVO couponMember = couponDao.selectOne(loginId);
-		//3. 불러온 회원 정보를 모델에 첨부한다
-		model.addAttribute("memberDto", couponMember);	
-		
-		// 반환한 회원 아이디로 작성한 리뷰 조회를 실행한 후 그 결과를 Model에 추가
-		model.addAttribute("reviewList", reviewDao.selectMypageAllReview(loginId));
-		
-		// 마이 페이지에 있는 상품 후기로 연결
-		return "mypage/review_list";
-	}
 }
 

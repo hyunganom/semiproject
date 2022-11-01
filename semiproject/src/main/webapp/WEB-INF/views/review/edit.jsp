@@ -33,6 +33,8 @@ $(function(){
 <div>
 	<div class="container-800">
 		<form action = "edit" method = "post" enctype = "multipart/form-data">
+			<%-- 인터셉터 통과를 위해 주문번호 포함 --%>
+			<input name = "orderNo" value = "${reviewPaymentNoVO.orderNo}" type = "hidden">
 			<input name = "reviewNo" value = "${reviewVO.reviewNo}" type = "hidden">
 			<input name = "reviewGoodBefore" value = "${reviewVO.reviewGood}" type = "hidden">
 			
