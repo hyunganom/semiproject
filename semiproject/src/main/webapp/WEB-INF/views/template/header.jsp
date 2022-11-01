@@ -74,7 +74,7 @@
 					<c:otherwise>
 						<li><a href="/member/login" title="로그인">로그인</a><li>				
 						<li><a href="/member/join" title="회원가입">회원가입</a><li>
-						<li><a href="#" title="1:1문의사항">1:1문의사항</a></li>
+						<li><a href="http://localhost:8888/inquire/listAdmin" title="1:1문의사항">1:1문의사항</a></li>
 					</c:otherwise>
 				</c:choose>
 				
@@ -83,17 +83,17 @@
         </div> <!--//header1-->
         <div class="header2">
             <div class="inner">
-                <h1><a href="/" class="logo"><img class="image" width="150px;" height="150px" src="/image/logotop.png" alt="로고"></a></h1>
+                <h1><a href="/" class="logo"><img class="image" width="200px;" height="150px" src="/image/logotop.png" alt="로고"></a></h1>
                 <div class="formdiv">
-                    <h2 class="search">검색</h2>
-                    <form action="">
-                        <fieldset>
+                    <h2 class="search">검색</h2> <%-- 검색/전체 조회를 위한 검색창 --%>
+                    <form action="/product/categoryAll" method = "get"> <%-- form 시작 --%>
+                        <fieldset> 
                             <legend>
-                                <input type="submit" class="btnSearch" value="검색">
-                                <input type="text" class="textinput" placeholder="검색어를 입력하시오.">
+                               	<input type = "text" class = "textinput" name = "keyword" placeholder = "검색어를 입력하시오.">
+                               	<button type = "submit" class = "btnSearch">검색</button>
                             </legend>
                         </fieldset>
-                    </form>
+                    </form> <%-- form 시작 --%>
                 </div> <!--//formdiv-->
                 <div class="icon1">
                     <ul>
@@ -115,7 +115,7 @@
                         <li><a href="/product/category?categoryHighNo=41">정기배송</a></li>
                         <li><a href="/product/category?categoryHighNo=42">샐러드</a></li>
                         <li><a href="/product/category?categoryHighNo=43">간식</a></li>
-                        <li><a href="#">이벤트</a></li>
+                        <li><a href="/event">이벤트</a></li>
                     </ul>
                     <div class="bottommenu">
                         <div class="inner">

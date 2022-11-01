@@ -24,7 +24,7 @@
                            <li> Copyrightⓒ suLuv.co.kr All rights reserved.</li>
                        </ul>
                        <div id="bottom"></div> <!--리모컨 bottom 버튼 위치 설정완료-->
-                       <span class="footerlog"><img class="image" width="150px;" height="150px" src="/image/logo.png"></span>
+                       <span class="footerlog"><img class="image" width="200px;" height="150px" src="/image/logo.png"></span>
                    </div> <!--//inner-->
                </div> <!--//btmfooter-->
            </footer> <!--//footer-->
