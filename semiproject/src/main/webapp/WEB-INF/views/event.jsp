@@ -1,0 +1,28 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<%-- header.jsp 불러오기 --%>
+<jsp:include page="/WEB-INF/views/template/header.jsp">
+	<jsp:param value="메인페이지" name="title"/>
+</jsp:include>
+<link rel = "stylesheet" type = "text/css" href = "/css/SANGMIN_event.css">
+
+<section class="eventtitle">
+    <div class="inner">
+        <p>SALUV에 오신 여러분 환영합니다.<p>
+        <div class="eventtitle1">
+            <ul class="eventtitlesub">
+                <li><img src="/image/semi-banner1.png" alt="메인 홈 이벤트 배너"></li>
+                <li><img src="/image/semi-banner2.png" alt="메인 홈 이벤트 배너2"></li>
+                <li><img src="/image/coupon.png" alt="쿠폰" width="600px" heigth="300px"></li>
+                <li><a><h2 id="eventcoupon">>>쿠폰 발급 받으러 가기!!<<<h2></a></li>
+            </ul> <!--//eventtitlesub-->
+        </div> <!--//eventtilte1-->
+    </div> <!--//inner-->
+</section> <!--//eventtitle-->
+    
+
+<%-- footer.jsp 불러오기 --%>
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

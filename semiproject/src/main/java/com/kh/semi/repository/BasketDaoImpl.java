@@ -50,6 +50,17 @@ public class BasketDaoImpl implements BasketDao{
 				basketDto.getBasketNo()};
 		return jdbcTemplate.update(sql, param)>0;
 	}
+	
+	//장바구니 수량수정
+		@Override
+		public boolean changeOneCount(int productCount, int productNo) {
+			String sql = "update basket set "
+					+ "basket_count_number=basket_count_number+?, "
+					+ "basket_adddate=sysdate "
+					+ "where basket_product_no=?";
+			Object[] param = {	productCount,productNo};
+			return jdbcTemplate.update(sql, param)>0;
+		}
 
 	//BasketDto Mapper
 	private RowMapper<BasketDto> mapper =(rs, idx)->{

@@ -87,7 +87,7 @@
 							<h3><a href="/mypage/review_list">상품후기</a></h3>
 							<h3><a href="/mypage/point" >적립금</a></h3>
 							<h3><a href="/mypage/coupon">쿠폰</a></h3>
-							<h3><a href="/member/change">내정보수정</a></h3>
+							<h3><a href="/member/detail?memberId=${memberDto.memberId}">내정보수정</a></h3>
 							<h3>도움이 필요하신가요?<br><a href="/inquire/list">1:1문의하기</a></h3>
 						</div>	
 					</div>	
@@ -118,7 +118,7 @@
 												    		<button type = "submit" class="row w-80" onclick = "location.href='/review/edit?paymentNo=${paymentListVO.paymentNo}&paymentProductNo=${paymentListVO.productOriginNo}';">리뷰수정</button>
 												    	</c:when>
 												    	<c:otherwise>
-												    		<button type = "submit" class="row w-80" onclick = "location.href='/review/write?paymentNo=${paymentListVO.paymentNo}&paymentProductNo=${paymentListVO.productOriginNo}';">리뷰작성</button>
+												    		<button type = "submit" class="row w-80" onclick = "location.href='/review/write?paymentNo=${paymentListVO.paymentNo}&paymentProductNo=${paymentListVO.productOriginNo}&orderNo=${paymentListVO.paymentOrderNo}';">리뷰작성</button>
 												    	</c:otherwise>
 											    	</c:choose>
 											    </td>

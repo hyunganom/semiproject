@@ -102,6 +102,7 @@ public class ReviewDaoImpl implements ReviewDao {
 		public ReviewMypageVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 			return ReviewMypageVO.builder()
 						.reviewNo(rs.getInt("review_no"))
+						.paymentProductNo(rs.getInt("payment_product_no"))
 						.paymentOrderNo(rs.getInt("payment_order_no"))
 						.productName(rs.getNString("product_name"))
 						.paymentCount(rs.getInt("payment_count"))
@@ -119,7 +120,7 @@ public class ReviewDaoImpl implements ReviewDao {
 	// 추상 메소드 오버라이딩 - 내가 작성한 리뷰 목록 : 리뷰 번호(수정, 삭제를 위해), 주문 번호, 상품명, 수량, 옵션, 별점, 리뷰 첨부파일 번호, 제목, 내용, 작성일, 리뷰 작성 여부
 	@Override
 	public List<ReviewMypageVO> selectMypageAllReview(String reviewId) {
-		String sql = "select rra.review_no, ppa.payment_order_no, ppa.product_name, ppa.payment_count, ppa.payment_option, rra.review_good, rra.review_attachment_no, rra.review_title, rra.review_content, rra.review_writetime, ppa.payment_review from (select * from review r left outer join review_attachment ra on r.review_no = ra.review_attachment_origin_no) rra inner join (select * from product p inner join payment pa on p.product_no = pa.payment_product_no) ppa on rra.review_payment_no = ppa.payment_no where rra.review_id = ? order by ppa.payment_order_no desc, ppa.payment_no asc";
+		String sql = "select rra.review_no, ppa.payment_product_no, ppa.payment_order_no, ppa.product_name, ppa.payment_count, ppa.payment_option, rra.review_good, rra.review_attachment_no, rra.review_title, rra.review_content, rra.review_writetime, ppa.payment_review from (select * from review r left outer join review_attachment ra on r.review_no = ra.review_attachment_origin_no) rra inner join (select * from product p inner join payment pa on p.product_no = pa.payment_product_no) ppa on rra.review_payment_no = ppa.payment_no where rra.review_id = ? order by ppa.payment_order_no desc, ppa.payment_no asc";
 		Object[] param = new Object[] {reviewId};
 		return jdbcTemplate.query(sql, mapperReviewMypage, param);
 	}
@@ -134,6 +135,7 @@ public class ReviewDaoImpl implements ReviewDao {
 					.reviewTitle(rs.getString("review_title"))
 					.reviewContent(rs.getString("review_content"))
 					.reviewGood(rs.getInt("review_good"))
+					.paymentProductNo(rs.getInt("payment_product_no"))
 					.build();
 		}
 		else {
@@ -144,7 +146,7 @@ public class ReviewDaoImpl implements ReviewDao {
 	// 추상 메소드 오버라이딩 - 결제 번호를 매개변수로 하여 해당 결제에 대한 리뷰 정보 조회(마이페이지의 결제 내역에서 리뷰 수정 jsp과 연결하기 위해 반드시 필요함)
 	@Override
 	public ReviewVO selectOneReviewMyPage(int paymentNo) {
-		String sql = "select r.review_id, r.review_no, r.review_payment_no, r.review_title, r.review_content, r.review_good from payment p inner join review r on p.payment_no = r.review_payment_no where p.payment_no = ?";
+		String sql = "select r.review_id, r.review_no, r.review_payment_no, r.review_title, r.review_content, r.review_good, p.payment_product_no from payment p inner join review r on p.payment_no = r.review_payment_no where p.payment_no = ?";
 		Object[] param = new Object[] {paymentNo};
 		return jdbcTemplate.query(sql, extractorMyreview, param);
 	}
@@ -152,7 +154,7 @@ public class ReviewDaoImpl implements ReviewDao {
 	// 추상 메소드 오버라이딩 - 리뷰 번호로 리뷰 조회 (상품 후기에서 리뷰 수정 jsp와 연결하기 위해 반드시 필요함)
 	@Override
 	public ReviewVO selectOneReview(int reviewNo) {
-		String sql ="select r.review_id, r.review_no, r.review_payment_no, r.review_title, r.review_content, r.review_good from payment p inner join review r on p.payment_no = r.review_payment_no where r.review_no = ?";
+		String sql ="select r.review_id, r.review_no, r.review_payment_no, r.review_title, r.review_content, r.review_good, p.payment_product_no from payment p inner join review r on p.payment_no = r.review_payment_no where r.review_no = ?";
 		Object[] param = {reviewNo};
 		return jdbcTemplate.query(sql, extractorMyreview, param);
 	}
@@ -268,7 +270,12 @@ public class ReviewDaoImpl implements ReviewDao {
 		Object[] param = {reviewNo};
 		return jdbcTemplate.query(sql, extractor, param);
 	}
-	
-	
 
+	// 추상 메소드 - 리뷰 번호로 회원 아이디 조회(인터셉터용)
+	@Override
+	public String selectOrderId(int reviewNo) {
+		String sql = "select order_id from orders where order_no = ?";
+		Object[] param = new Object[] {reviewNo};
+		return jdbcTemplate.queryForObject(sql, String.class, param);
+	}
 }
