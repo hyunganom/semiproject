@@ -239,25 +239,25 @@
 </section> <!--//itemsection1-->
 </form> <%-- form 긑 --%>	
 	
-<section class="itemsection2">
-	<div class="inner">
-		<div class="itemimage">
-			<c:forEach var="productDetailList" items="${productDetailList}">
-				<img src="/attachment/download/productDetail?attachmentNo=${productDetailList.attachmentNo}" alt="상품 설명">
-			</c:forEach> 
-      	</div> <!--//itemimage-->
-  	</div> <!--//inner-->
-</section> <!--//itemsection2-->
-
-<section >
-   	<div class=" mt-10 mb-10 center">
-       	<img src="/image/itemreview.png" width=500 height=150  alt="구매후기/포토후기">
-   	</div>
-</section> <!--//itemsection3-->
+	<section class="itemsection2">
+		<div class="inner">
+			<div class="itemimage">
+				<c:forEach var="productDetailList" items="${productDetailList}">
+					<img src="/attachment/download/productDetail?attachmentNo=${productDetailList.attachmentNo}" alt="상품 설명">
+				</c:forEach> 
+	      	</div> <!--//itemimage-->
+	  	</div> <!--//inner-->
+	</section> <!--//itemsection2-->
+	
+	<section class="itemsection3">
+	   	<div class=" mt-10 mb-10 center">
+	       	<img src="/image/itemreview.png" width=500 height=150  alt="구매후기/포토후기">
+	   	</div>
+	</section> <!--//itemsection3-->
 
 		
 <%-- 리뷰 관련 --%>
-<div class = "container-800">
+<div class = "container-800 mt-40" style="margin-bottom:100px">
 	<c:forEach var = "productReviewList" items = "${productReviewList}">
 		<table class="table mt-10 mb-10">
     		<tr>
@@ -289,6 +289,7 @@
     		</tr>
 		</table>
 		<hr>
+		<br>
 	</c:forEach>
 </div>
 

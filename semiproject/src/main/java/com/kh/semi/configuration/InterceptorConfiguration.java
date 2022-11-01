@@ -55,9 +55,10 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 				"/member/endSuccess", //탈퇴완료
 				"/member/find_id*", //아이디 찾기
 				"/member/find_pw*",//비밀번호 찾기
-				"/product/category",
-				"/product/detail",
-				"/product/detailSub",
+				"/product/category**",
+				"/product/categoryAll**",
+				"/product/detail**",
+				"/product/detailSub**",
 				"/notice/list",
 				"/notice/detail",
 				"/basket/list"
