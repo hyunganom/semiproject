@@ -46,18 +46,23 @@
 	a{
 		text-decoration: none;
 	}
-	.footer{
-		position:fixed;
-		bottom:0;
-		left:0;
-		width:100%;
+	
+	/* 테이블 텍스트 가운데 */
+	th, td {
+    	vertical-align : middle;
+    }
+    /* 확장 스타일 : 줄무늬 테이블*/
+	.table > tbody > tr > th
+	{
+		background-color: #dfe6e9;
+		background: #efefef;
 	}
 </style>
 
 <div class="container-500 mt-40 mb-40">
 	<div class="row center">
 		<h1>${memberDto.memberId} 회원 상세정보</h1>
-		<table class="table table-slit table-border" border="1" width="450">
+		<table class="table table-slit table-border mt-20" border="1" width="450">
 			<tbody>
 				<tr>
 					<th width="25%">아이디</th>
@@ -122,9 +127,9 @@
 			<c:when test="${mg == '관리자'}">
 			<!-- 관리자 -->
 				<div class="row mt-20">
-					<h2><a href="list">목록 보기</a></h2> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-					<h2><a href="change?memberId=${memberDto.memberId}">회원정보 변경</a></h2> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-					<h2><a href="cut?memberId=${memberDto.memberId}">회원삭제 처리</a></h2>
+					<a href="list">목록 보기</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+					<a href="change?memberId=${memberDto.memberId}">회원정보 변경</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+					<a href="cut?memberId=${memberDto.memberId}">회원삭제 처리</a>
 				</div>
 			</c:when>
 			<c:otherwise>

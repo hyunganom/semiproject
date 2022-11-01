@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- <c:set var="login" value="${loginId != null}"></c:set>
-<c:set var="admin" value="${mg == '관리자'}"></c:set> --%>
+<c:set var="login" value="${loginId != null}"></c:set>
+<c:set var="admin" value="${mg == '관리자'}"></c:set> 
 
 <!DOCTYPE html>
 <html>
@@ -60,28 +60,24 @@
         <div class="header1">
             <div class="inner">
                 <ul class="log1">
-                
-				<c:if test = "${mg == '관리자'}">
-					<li><a href = "/admin/home">관리자 페이지로 가기 // </a></li>
-				</c:if>
+         <c:choose>
+					<c:when test="${loginId !=null}">
+						<li>${loginId} 님<li>
+						<!-- 관리자 기능 -->
+						<c:if test="${login && admin}">
+							<li><a href="/admin/home">관리자 페이지</a></li>
+						</c:if>
+						
+						<li><a href="/member/logout" title="로그아웃">로그아웃</a><li>
+						<li><a href="#" title="고객센터">고객센터</a></li>				
+					</c:when>
+					<c:otherwise>
+						<li><a href="/member/login" title="로그인">로그인</a><li>				
+						<li><a href="/member/join" title="회원가입">회원가입</a><li>
+						<li><a href="http://localhost:8888/inquire/listAdmin" title="1:1문의사항">1:1문의사항</a></li>
+					</c:otherwise>
+				</c:choose>
 				
-                <c:choose>
-				<c:when test="${loginId !=null}">
-					<li>${loginId} 님<li>
-					<!-- 관리자 기능 -->
-					<%-- <c:if test="${login && admin}">
-						<li><a href="/admin/home">관리자 페이지</a></li>
-					</c:if> --%>
-					
-					<li><a href="/member/logout" title="로그아웃">로그아웃</a><li>
-					<li><a href="#" title="고객센터">고객센터</a></li>				
-				</c:when>
-				<c:otherwise>
-					<li><a href="/member/login" title="로그인">로그인</a><li>				
-					<li><a href="/member/join" title="회원가입">회원가입</a><li>
-					<li><a href="#" title="고객센터">고객센터</a></li>
-				</c:otherwise>
-			</c:choose>
                 </ul> <!--//log1-->
             </div> <!--//inner-->
         </div> <!--//header1-->
@@ -89,19 +85,18 @@
             <div class="inner">
                 <h1><a href="/" class="logo"><img class="image" width="150px;" height="150px" src="/image/logotop.png" alt="로고"></a></h1>
                 <div class="formdiv">
-                    <h2 class="search">검색</h2>
-                    <form action="">
-                        <fieldset>
+                    <h2 class="search">검색</h2> <%-- 검색/전체 조회를 위한 검색창 --%>
+                    <form action="/product/categoryAll" method = "get"> <%-- form 시작 --%>
+                        <fieldset> 
                             <legend>
-                                <input type="submit" class="btnSearch" value="검색">
-                                <input type="text" class="textinput" placeholder="검색어를 입력하시오.">
+                               	<input type = "text" class = "textinput" name = "keyword" placeholder = "검색어를 입력하시오.">
+                               	<button type = "submit" class = "btnSearch">검색</button>
                             </legend>
                         </fieldset>
-                    </form>
+                    </form> <%-- form 시작 --%>
                 </div> <!--//formdiv-->
                 <div class="icon1">
                     <ul>
-                        <li><a href="#" title="배송지등록"><i class="fa-regular fa-paste"></i></a></li>
                         <li><a href="/mypage/order_list" title="마이페이지"><i class="fa-regular fa-user"></i></a></li>
                         <li><a href="/basket/list" title="장바구니"><i class="fa-solid fa-cart-shopping"></i></a></li>
                     </ul>
@@ -119,7 +114,7 @@
                         </li>
                         <li><a href="/product/category?categoryHighNo=41">정기배송</a></li>
                         <li><a href="/product/category?categoryHighNo=42">샐러드</a></li>
-                        <li><a href="/product/category?categoryHighNo=43">닭,간,음</a></li>
+                        <li><a href="/product/category?categoryHighNo=43">간식</a></li>
                         <li><a href="#">이벤트</a></li>
                     </ul>
                     <div class="bottommenu">
@@ -138,15 +133,12 @@
                                         <li><a href="/product/category?categoryHighNo=42&categoryLowNo=50">데일리 샐러드</a></li>
                                         <li><a href="/product/category?categoryHighNo=42&categoryLowNo=51">테이스티 샐러드</a></li>
                                         <li><a href="/product/category?categoryHighNo=42&categoryLowNo=52">파우치 샐러드</a></li>
-                                        <li><a href="#">맛보기 세트</a></li>
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="/product/category?categoryHighNo=43">닭,간,음</a>
-                                    <ul>
-                                        <li><a href="#">닭가슴살</a></li>
-                                        <li><a href="/product/category?categoryHighNo=43&categoryLowNo=54">만두</a></li>
-                                        <li><a href="#">소시지</a></li>
+                                    <a href="/product/category?categoryHighNo=43">간식</a>
+                                    <ul>                                      
+                                        <li><a href="/product/category?categoryHighNo=43&categoryLowNo=54">만두</a></li>                   
                                         <li><a href="/product/category?categoryHighNo=43&categoryLowNo=53">간식</a></li>
                                     </ul>
                                 </li>

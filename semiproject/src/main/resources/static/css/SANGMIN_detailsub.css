@@ -24,11 +24,11 @@
     font-size: 25px;
 }
 .itemtitle > h3{
-    margin-right: 20%;
+	width:100%;
 }
 .itemstar{
     font-size: 20px;
-    margin-right: 50%;
+    margin-right: 60%;
     margin-top: 10px;
 }
 .itemtitle1{
@@ -108,8 +108,8 @@
     border: 1px solid black;
 }
 .review > img{
-    width: 4%;
-    height: 4%;
+    width: 8%;
+    height: 8%;
     display: block;
     margin-left: 20%;
 }
