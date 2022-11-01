@@ -58,6 +58,20 @@
 	/* div {
 		border:1px dotted gray;
 	} */
+	
+	#reviewred{
+		background-color: #EF5B0C;
+		color: white;
+		height: 30px
+	}
+	#reviewblue{
+		background-color: #569956;
+		color: white;
+		height: 30px
+	}
+	button{
+		border:none;
+	}
 </style>
 
 <div class="container-1100 mt-40 mb-40">
@@ -115,10 +129,10 @@
 											    	<img width=100 height=100 src="/attachment/download/productTumbnail?attachmentNo=${paymentListVO.productAttachmentNo}">
 											    	<c:choose>
 												    	<c:when test = "${paymentListVO.paymentReview}">
-												    		<button type = "submit" class="row w-80" onclick = "location.href='/review/edit?paymentNo=${paymentListVO.paymentNo}&paymentProductNo=${paymentListVO.productOriginNo}';">리뷰수정</button>
+												    		<button type = "submit" class="row w-80" id="reviewred" onclick = "location.href='/review/edit?paymentNo=${paymentListVO.paymentNo}&paymentProductNo=${paymentListVO.productOriginNo}';">리뷰수정</button>
 												    	</c:when>
 												    	<c:otherwise>
-												    		<button type = "submit" class="row w-80" onclick = "location.href='/review/write?paymentNo=${paymentListVO.paymentNo}&paymentProductNo=${paymentListVO.productOriginNo}&orderNo=${paymentListVO.paymentOrderNo}';">리뷰작성</button>
+												    		<button type = "submit" class="row w-80" id="reviewblue" onclick = "location.href='/review/write?paymentNo=${paymentListVO.paymentNo}&paymentProductNo=${paymentListVO.productOriginNo}&orderNo=${paymentListVO.paymentOrderNo}';">리뷰작성</button>
 												    	</c:otherwise>
 											    	</c:choose>
 											    </td>
