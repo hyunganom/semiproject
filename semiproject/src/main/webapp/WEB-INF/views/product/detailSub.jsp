@@ -123,6 +123,15 @@
 	    	var inputCount = parseInt($(this).prev().val()); //input태그 값
 	    	$(".itemnumbercheck").val(inputCount+1);
 	    });
+		
+		//직접 입력
+/* 	    $(".itemnumbercheck").blur(function(){
+	    	var inputCount = parseInt($(this).prev().val());
+	    	if(inputCount<1){
+	    		alert('수량은 1개 이상 선택해주세요!');
+	    	}
+	    	$(".itemnumbercheck").val(1);
+	    }); */
 	  
 	});
 	
@@ -160,10 +169,7 @@
                         <div class="countcheck">
                             <span class="numbericon">
                                 <button type="button" class="btndown" title="감소" value="dn^|^0" disabled>감소</button>
-                                	
-                               <!--	<input type = "number" class="itemnumbercheck" name = "productCount" placeholder = "수량" min = "1" max = "10"> -->
-                                <input type="text" class="itemnumbercheck" title="수량" value="1">
-                                
+                                	<input type="text" class="itemnumbercheck" title="수량" value="1" name = "productCount" readonly>
                                 <button type="button" class="btnup" title="증가" value="up^|^0">증가</button>
                             </span> <!--//numbericon-->
                         </div> <!--//countcheck-->
