@@ -74,7 +74,7 @@
 					<c:otherwise>
 						<li><a href="/member/login" title="로그인">로그인</a><li>				
 						<li><a href="/member/join" title="회원가입">회원가입</a><li>
-						<li><a href="#" title="1:1문의사항">1:1문의사항</a></li>
+						<li><a href="http://localhost:8888/inquire/listAdmin" title="1:1문의사항">1:1문의사항</a></li>
 					</c:otherwise>
 				</c:choose>
 				
