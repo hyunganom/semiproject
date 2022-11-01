@@ -233,7 +233,7 @@ public class MemberController {
 	
 	//개인정보변경 처리
 	@PostMapping("/information")
-	public String information(HttpSession session, @ModelAttribute MemberDto inputDto) {
+	public String information(HttpSession session, @ModelAttribute MemberDto inputDto, RedirectAttributes attr) {
 		String memberId = (String)session.getAttribute(SessionConstant.ID);
 		inputDto.setMemberId(memberId);
 		
@@ -243,7 +243,9 @@ public class MemberController {
 		if(passwordMatch) {
 			//정보변경처리
 			memberDao.changeInformation(inputDto);
-			return "redirect:mypage";
+			
+			attr.addAttribute("memberId", memberId);
+			return "redirect:detail";
 		}
 		else {
 			return "redirect:information?error";

@@ -7,9 +7,11 @@
     overflow: hidden;
     border: none;
 }
-.listsection1 > div{
+.wrapper{
+	overflow:hidden;
+}
+.listsection1{
 	position:realtive;
-	
 }
 .listselect{
     position: absolute;
@@ -27,7 +29,6 @@
     text-align: center;
     font-size: 25px;
 }
-
 ul.itemW{
 	display: flex;
 	flex-wrap:wrap;
@@ -69,7 +70,6 @@ ul.itemW > li:nth-child(n+5){
 .footer5 .formdiv1 .textinput1{
     width: 250px;
     height: 26px;
-    border: 1px solid black;
     padding-left: 10px;
     box-sizing: border-box;
     

@@ -178,7 +178,7 @@ $(document).ready(function(){
                     <li class="adminsidemenu3">
                         <ul><p><button class="btndrop3">회원</button></p>
                         <div class="btndropsub3">
-                            <li><a href="http://localhost:8888/member/list">- 회원정보</a></li>
+                            <li><a href="http://localhost:8888/member/list">- 회원목록</a></li>
                         </div>
                         </ul>
                     </li>

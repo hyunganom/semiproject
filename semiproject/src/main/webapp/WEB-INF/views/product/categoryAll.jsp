@@ -47,7 +47,7 @@
 
 <section class="listsection1">
     <div class="inner">
-        <h2 class="listitemtitle">이거 유명한거 알지?</h2>
+        <h2 class="listitemtitle">상품 검색 결과</h2>
         <div class="listitem1">
             <ul class="itemW">
                    	<c:forEach var = "productList" items = "${productList}">
@@ -88,11 +88,6 @@
 
 <div class="footer5">
     <div class="inner">
-        <div class="listselect">
-            <select name="listselect1">
-                <option value="">상품명</option>
-            </select> 
-        </div> <!--//listselect-->
         <div class="formdiv1">	<%-- 검색창 --%>
             <h1 class="search1">검색</h1>
             <form action="">
