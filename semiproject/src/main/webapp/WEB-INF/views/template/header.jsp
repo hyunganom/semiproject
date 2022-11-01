@@ -69,7 +69,7 @@
 						</c:if>
 						
 						<li><a href="/member/logout" title="로그아웃">로그아웃</a><li>
-						<li><a href="#" title="고객센터">고객센터</a></li>				
+						<li><a href="http://localhost:8888/inquire/listAdmin" title="1:1문의사항">1:1문의사항</a></li>				
 					</c:when>
 					<c:otherwise>
 						<li><a href="/member/login" title="로그인">로그인</a><li>				
