@@ -38,7 +38,6 @@
      	color:black;
      	font-size:20px;
      }
-
 </style>
 
 <script type="text/javascript">
@@ -156,7 +155,6 @@
 			var inputValue = parseInt($(".after-price").text());
 			$('input[name=orderPayPrice]').val(inputValue); //총 결제금액
 		});
-
 		
 		<!-- 하단 금액 부분 (고정값)출력 -->
 		$(".before-price").text(productPrice()); //상품금액
@@ -199,9 +197,7 @@
 			}
 
 		});
-
 	});
-
 	
     $(function(){
 		$("#select-categoryHigh").on("change", function(){
