@@ -120,14 +120,14 @@
 /* header end */
 
 /* 상품 상세페이지 start -- */
-.itemsection1{
+.itemsection1 > div{
     position: relative;
     padding: 50px 0;
     border: 1px solid pink;
 }
 .itemmain{
     position: relative;
-    float: left;
+    float: right;
     margin-top: 20px;
     margin-left: 50px;
     width: 450px;
@@ -139,12 +139,13 @@
     border: 1px solid pink;
     display: flex;
     flex-direction: column;
+    margin-right: 50%;
     margin-bottom: 15%;
     align-items: center;
     font-size: 25px;
 }
-.itemtitle > h3{
-    margin-right: 20%;
+.itemtitle > p{
+    width: 100%;
 }
 .itemstar{
     font-size: 20px;

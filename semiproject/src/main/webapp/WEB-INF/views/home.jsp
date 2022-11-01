@@ -92,12 +92,12 @@
                <div class="inner">
                    <ul class="banner">
                        <li>
-                           <a href="#">
+                           <a href="/event">
                                <img class="bannerimg" src="/image/semi-banner1.png">
                            </a>
                        </li>
                        <li>
-                           <a href="#">
+                           <a href="/event">
                                <img class="bannerimg" src="/image/semi-banner2.png">
                            </a>
                        </li>
