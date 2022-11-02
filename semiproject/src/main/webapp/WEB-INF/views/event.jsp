@@ -10,21 +10,12 @@
 
 <script type="text/javascript">
 	
-	/* $(function(){
-
-		// 만약 장바구니 버튼을 눌렀다면 
-	    $("#coupon-issue").click(function(){
-	        $(this).attr("action", "/coupon/open"); // 장바구니 등록 Mapping으로 전송
-	        $(this).attr("method", "post"); // post 방식
-	    });
-	}); */
-	
-	$(function(){
+ 	$(function(){
 		
 		$("#coupon-issue").click(function(e){
 			
 			// 하이퍼링크를 누를 때 선택창의 선택값를 타겟으로 지정
-			var isIssue = alter("쿠폰을 발급받으시겠습니까?");
+			var isIssue = confirm("쿠폰을 발급받으시겠습니까?");
 			
 			// 선택값에 따라 이벤트 발생 또는 차단
 			if(isIssue) { // 선택값이 true라면
@@ -34,7 +25,7 @@
 				return false; // 차단
 			}
 		});
-	});
+	}); 
 	
 </script>
 
