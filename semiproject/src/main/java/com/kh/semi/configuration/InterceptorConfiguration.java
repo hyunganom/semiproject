@@ -69,8 +69,8 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 				"/member/list", //회원목록
 				"/member/change",//회원수정
 				"/admin/**", //관리자페이지 전체
-				"/notice/**", //공지사항 전체
-				"/inquire/edit" //댓글작성
+				"/notice/**"//공지사항 전체
+				
 				)
 		.excludePathPatterns(
 				"/notice/list",
