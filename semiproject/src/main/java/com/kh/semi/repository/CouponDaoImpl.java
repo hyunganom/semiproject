@@ -52,7 +52,8 @@ public class CouponDaoImpl implements CouponDao{
 	//** 추상 메소드 오버라이딩 - 오픈기념쿠폰 발급
 	@Override
 	public void insert(String couponId) {
-		String sql = "insert into coupon (coupon_issue, coupon_no, coupon_id, coupon_startdate, coupon_enddate) values (coupon_issue_seq.nextval, 25, ?, sysdate, sysdate+30)";
+		String sql = "insert into coupon (coupon_issue, coupon_no, coupon_id, coupon_startdate, coupon_enddate) "
+				+ "values (coupon_issue_seq.nextval, 25, ?, sysdate, sysdate+30)";
 		Object[] param = new Object[] {couponId};
 		jdbcTemplate.update(sql, param);
 	}

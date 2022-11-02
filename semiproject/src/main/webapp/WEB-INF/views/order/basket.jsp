@@ -101,6 +101,7 @@
     			$(".purchase-cnt").text($(".checked").length);
     		}
     		total();
+    		$(".delivery").text(deliveryFee());
     	});
     	
     	$(".checked").on("input", function(){
@@ -141,7 +142,7 @@
 		function deliveryFee(){
 			var itemsPrice = parseInt($(".total-items").text()); //상품금액
 			var delivery; //배송비
-			if(itemsPrice>=50000){
+			if(itemsPrice>=50000||itemsPrice==0){
 				delivery=0;
 			}else{
 				delivery=3000;
