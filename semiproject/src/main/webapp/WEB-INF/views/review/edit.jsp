@@ -26,13 +26,15 @@ $(function(){
 
 <div class = "container-900 mt-40 mb-40 center">
 	<div class="row left">
-		<h1>리뷰후기 수정</h1>
+		<h1>리뷰 수정</h1>
 	</div>
 	<hr>
 </div>
 <div>
 	<div class="container-800">
 		<form action = "edit" method = "post" enctype = "multipart/form-data">
+			<%-- 인터셉터 통과를 위해 주문번호 포함 --%>
+			<input name = "orderNo" value = "${reviewPaymentNoVO.orderNo}" type = "hidden">
 			<input name = "reviewNo" value = "${reviewVO.reviewNo}" type = "hidden">
 			<input name = "reviewGoodBefore" value = "${reviewVO.reviewGood}" type = "hidden">
 			

@@ -33,7 +33,7 @@
 
 <div class = "container-900 mt-40 mb-40 center">
 	<div class="row left">
-		<h1>구매후기 작성</h1>
+		<h1>리뷰 작성</h1>
 	</div>
 	
 	<hr>
@@ -60,7 +60,9 @@
 </div>
 <div>
 	<div class="container-800">
-		<form action = "#" method = "post" enctype = "multipart/form-data">
+		<form action = "write" method = "post" enctype = "multipart/form-data">
+			<%-- 인터셉터 통과를 위해 주문번호 포함 --%>
+			<input name = "orderNo" value = "${reviewPaymentNoVO.orderNo}" type = "hidden">
 			<%-- 리뷰 작성을 누를 때 등록 전 별점의 총점과 리뷰의 갯수를 구하기 위함 --%>
 			<input name = "paymentProductNo" value = "${reviewPaymentNoVO.paymentProductNo}" type = "hidden">
 			<%-- 리뷰 등록에 필요한 항목 --%>

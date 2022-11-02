@@ -3,8 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     
-<jsp:include page="/WEB-INF/views/template/header.jsp">
-	<jsp:param value="상품 등록 페이지" name="title"/>
+<jsp:include page="/WEB-INF/views/template/adminHeader.jsp">
+	<jsp:param value="상품 관리" name="title"/>
 </jsp:include>
 
 <!-- 자바 스크립트 코드 -->
@@ -84,128 +84,134 @@
     
 </style>
 
-<div class = "container-800">
-	<div class="row center mb-40">
+<div class = "container-800 mt-40 mb-40">
+	<div class="row center mb-20">
 		<h1>상품 등록</h1>
 	</div>
 	
-	<form action = "createCategoryHigh" method = "post">
+	<div class = "row center mb-40">
+		
 		<div class="row">
-			<h2>카테고리 생성</h2>
+			<h3>상위 카테고리 생성</h3>
 		</div>
-		<table class="table table-border table-slit">
-			<tbody>
-				<tr class="row">
-					<th>상위 카테고리</th>
-					<td>
-						상위 카테고리명 : <input name = "categoryHighName">
-            			<input type = "checkbox" name = "categoryHighSub" value = "Y"> (정기배송인지)
-						<button type = "submit">생성</button>
-					</td>
-				</tr>
-	</form>
-			
-	<form action = "createCategoryLow" method = "post">
-				<tr class = "row">
-					<th>하위 카테고리</th>
-					<td>
-						상위 카테고리명 :
-						<select name = "categoryHighNo">
-							<option value = "">선택</option>
-						<c:forEach var = "categoryHighList" items = "${categoryHighList}">
-							<option value = "${categoryHighList.categoryHighNo}">${categoryHighList.categoryHighName}</option>
-						</c:forEach>
-						</select>
-					
-						<br>
-						
-						하위 카테고리명 : <input name = "categoryLowName">
-						<button type = "submit">생성</button>
-					</td>
-				</tr>
-			</tbody>
+		<form action = "createCategoryHigh" method = "post">
+			<table class="table table-border table-slit">
+				<tbody>
+					<tr class="row left">
+						<th>상위 카테고리</th>
+						<td>
+							상위 카테고리명 : <input name = "categoryHighName">
+	            			<input type = "checkbox" name = "categoryHighSub" value = "Y"> (정기배송인지)
+							<button type = "submit">생성</button>
+						</td>
+					</tr>
+				</tbody>
 			</table>
+		</form>	
+	</div>
+			
+	<div class = "row center mb-40">		
+		<div class = "row">
+			<h3>하위 카테고리 생성</h3>
 		</div>
-	</form>
+		<form action = "createCategoryLow" method = "post">
+			<table class="table table-border table-slit">
+				<tbody>
+					<tr class = "row left">
+						<th>하위 카테고리</th>
+						<td>
+							상위 카테고리명 :
+							<select name = "categoryHighNo">
+								<option value = "">선택</option>
+								<c:forEach var = "categoryHighList" items = "${categoryHighList}">
+									<option value = "${categoryHighList.categoryHighNo}">${categoryHighList.categoryHighName}</option>
+								</c:forEach>
+							</select>
+							<br>
+							하위 카테고리명 : <input name = "categoryLowName">
+							<button type = "submit">생성</button>					
+						</td>
+					</tr>	
+				</tbody>
+			</table>
+		</form>	
+	</div>
 </div>
 	
 <div class = "container-800 mt-40 mb-30">
-	<div class="row">
-		<h2>등록 상품 정보</h2>
+	<div class="row center">
+		<h3>등록 상품 정보</h3>
 	</div>
-	
 	<form action = "insert" method = "post" enctype = "multipart/form-data">
-	<table class="table table-border table-slit">
-		<tbody>
-			<tr>
-				<th>상위 카테고리 번호</th>
-				<td>
-					<select name = "categoryHighNo" id = "select-categoryHigh">
-						<option value = "">선택</option>
-						<c:forEach var = "categoryHighList" items = "${categoryHighList}">
-							<option value = "${categoryHighList.categoryHighNo}">${categoryHighList.categoryHighName}</option>
-						</c:forEach>
-					</select>
-				</td>
-			</tr>
-		
-			<tr>
-				<th>하위 카테고리 번호</th>
-				<td>
-					<select name = "categoryLowNo" id = "select-categoryLow">
-						<option>선택</option>
-					</select>
-				</td>
-			</tr>
+		<table class="table table-border table-slit">
+			<tbody>
+				<tr>
+					<th>상위 카테고리 번호</th>
+					<td>
+						<select name = "categoryHighNo" id = "select-categoryHigh">
+							<option value = "">선택</option>
+							<c:forEach var = "categoryHighList" items = "${categoryHighList}">
+								<option value = "${categoryHighList.categoryHighNo}">${categoryHighList.categoryHighName}</option>
+							</c:forEach>
+						</select>
+					</td>
+				</tr>
 			
-			<tr>
-				<th>상품 이름</th>
-				<td>
-					<input type = "text" name = "productName">
-				</td>
-			</tr>
+				<tr>
+					<th>하위 카테고리 번호</th>
+					<td>
+						<select name = "categoryLowNo" id = "select-categoryLow">
+							<option>선택</option>
+						</select>
+					</td>
+				</tr>
 				
-			<tr>
-				<th>상품 가격</th>
-				<td>
-					<input type = "number" name = "productPrice">
-				</td>
-			</tr>
-			
-			<tr>
-				<th>상품 정보</th>
-				<td>
-					<textarea class="input w-100 fix-size" rows="8" name = "productInformation"></textarea>
-				</td>
-			</tr>	
-			
-			<tr>
-				<th>상품 재고</th>
-				<td>
-					<input type = "number" name = "productInventory">
-				</td>
-			</tr>
-			
-			<tr>
-				<th>상품 이미지</th>
-				<td>
-					<input type = "file" name = "attachmentMainImg" accept = ".png, .jpg" > 
-				</td>
-			</tr>
-			
-			<tr>
-				<th>상품 상세이미지</th>
-				<td>
-					<input type = "file" name = "attachmentSubImg" accept = ".png, .jpg" multiple > 
-				</td>
-			</tr>
-		</tbody>
-	</table>
-			<div class = "row right">
-				<button type = "submit">등록</button>
-			</div>
+				<tr>
+					<th>상품 이름</th>
+					<td>
+						<input type = "text" name = "productName">
+					</td>
+				</tr>
+					
+				<tr>
+					<th>상품 가격</th>
+					<td>
+						<input type = "number" name = "productPrice">
+					</td>
+				</tr>
+				
+				<tr>
+					<th>상품 정보</th>
+					<td>
+						<textarea class="input w-100 fix-size" rows="8" name = "productInformation"></textarea>
+					</td>
+				</tr>	
+				
+				<tr>
+					<th>상품 재고</th>
+					<td>
+						<input type = "number" name = "productInventory">
+					</td>
+				</tr>
+				
+				<tr>
+					<th>상품 이미지</th>
+					<td>
+						<input type = "file" name = "attachmentMainImg" accept = ".png, .jpg" > 
+					</td>
+				</tr>
+				
+				<tr>
+					<th>상품 상세이미지</th>
+					<td>
+						<input type = "file" name = "attachmentSubImg" accept = ".png, .jpg" multiple > 
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class = "row right">
+			<button type = "submit">등록</button>
+		</div>
 	</form>
-	
 </div>
 
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

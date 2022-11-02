@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<jsp:include page="/WEB-INF/views/template/header.jsp">
-	<jsp:param value="상품 수정 페이지" name="title"/>
+<jsp:include page="/WEB-INF/views/template/adminHeader.jsp">
+	<jsp:param value="상품 관리" name="title"/>
 </jsp:include>
 
 <style>
@@ -49,6 +49,9 @@
 		<form action = "edit" method = "post">
 			<%-- 상품 정보 수정을 위한 상품 번호(값을 유지한 채로 다시 form에 전송하기 위해 hidden으로 설정) --%>
 			<input type = "hidden" name = "productNo" value = "${productDto.productNo}">
+			<div class = "row mb-20 center">
+				<h1>상품 수정</h1>
+			</div>
 				<table class="table table-border table-slit">
 					<tr>
 						<th>상위 카테고리</th>
@@ -100,4 +103,3 @@
 	</div>
 </div>
 
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
