@@ -10,8 +10,11 @@ import com.kh.semi.vo.CouponUseVO;
 public interface CouponDao {
 	//회원 개인이 보유하는 쿠폰
 	
-	//1. 보유쿠폰 추가
+	//1. 보유쿠폰 추가 (신규 가입 쿠폰)
 	void insert(CouponDto couponDto);
+	
+	//** 추상 메소드 - 오픈기념쿠폰 발급
+	void insert(String couponId);
 	
 	//2. 보유쿠폰 수정(쿠폰번호로 수정)
 	boolean update(int couponIssue);

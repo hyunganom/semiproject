@@ -54,40 +54,66 @@
 
 <%-- 바디 --%>
 <body>
-<main>
-	<div class="wrapper">
-	    <header class="header">
-	        <div class="header1">
-	            <div class="inner">
-	                <ul class="log1">
-	                				
-	                <c:choose>
-					<c:when test="${loginId !=null}">
-						<li>${loginId} 님<li>
-						<!-- 관리자 기능 -->
-						<c:if test="${login && admin}">
-							<li><a href="/admin/home">관리자 페이지</a></li>
-						</c:if>
-						
-						<li><a href="/member/logout" title="로그아웃">로그아웃</a><li>
-						<li><a href="#" title="고객센터">고객센터</a></li>				
-					</c:when>
-					<c:otherwise>
-						<li><a href="/member/login" title="로그인">로그인</a><li>				
-						<li><a href="/member/join" title="회원가입">회원가입</a><li>
-						<li><a href="#" title="고객센터">고객센터</a></li>
-					</c:otherwise>
-				</c:choose>
-	                </ul> <!--//log1-->
-	            </div> <!--//inner-->
-	        </div> <!--//header1-->
-	        <div class="header2">
+
+<div class="wrapper">
+    <header class="header">
+        <div class="header1">
             <div class="inner">
-                <h1><a href="/" class="logo"><img class="image" width="150px;" height="150px" src="/image/logotop.png" alt="로고"></a></h1>
-                <div class="row left w-100">
-                    <h1>관리자 모드</h1>
+                <ul class="log1">
+					<li>${loginId} 님<li>	
+					<li><a href="/member/logout" title="로그아웃">로그아웃</a><li>
+                </ul> <!--//log1-->
+            </div> <!--//inner-->
+        </div> <!--//header1-->
+        <div class="header2">
+            <div class="inner">
+                <h1><a href="/admin/home" class="logo"><img class="image" width="200px;" height="150px" src="/image/logotop.png" alt="로고"></a></h1>
+                <div>
+                    <h2 class ="center"><a href="/admin/home" title="관리자 홈">관리자 모드</a></h2>
                 </div> <!--//formdiv-->
+                <!-- <div class="icon1">
+                    <ul>
+                        <li><a href="/mypage/order_list" title="마이페이지"><i class="fa-regular fa-user"></i></a></li>
+                        <li><a href="/basket/list" title="장바구니"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                    </ul>
+                </div> //icon1 -->
             </div> <!--//inner-->
         </div> <!--//header2-->
-		</header>
+        <nav class="menu">
+            <div class="inner">
+                    <ul>
+                        <li class="menubtn">
+                            <a href="/admin/home">
+                            	관리자 홈
+                            </a>
+                        </li>
+                        <li>
+                        	<a href="/admin/product/list">
+                        		상품 관리
+                        	</a>
+                        </li>
+                        <li>
+                        	<a href="/member/list">
+                        		회원 관리
+                        	</a>
+                       	</li>
+                        <li>
+                        	<a href="/review/adminList">
+                        		리뷰 관리
+                        	</a>
+                       	</li>
+                        <li>
+	                        <a href="/inquire/listAdmin">
+	                        	문의 관리
+	                        </a>
+                        </li>
+                        <li>
+                        	<a href="/notice/list">
+                        		공지 관리
+                        	</a>
+                        </li>
+                    </ul>
+                 </div> <!--//inner-->
+        </nav> <!--//nav-->
+        </header> <!--//header-->
 	

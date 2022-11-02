@@ -3,8 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%-- header.jsp 불러오기 --%>
-<jsp:include page="/WEB-INF/views/template/header.jsp">
-	<jsp:param value="회원 목록" name="title"/>
+<jsp:include page="/WEB-INF/views/template/adminHeader.jsp">
+	<jsp:param value="회원 관리" name="title"/>
 </jsp:include>
 
 <style>
@@ -20,7 +20,7 @@
 </style>
 
 	<div class="container-1100 mt-40 mb-40">
-		<div class="row center">
+		<div class="row center mt-40 mb-40">
 			<h1>회원 조회</h1>
 		</div>
 		
@@ -172,11 +172,4 @@
 			</ul>
         </div>
 		
-		<div class="row right">
-			<a href="/">메인 페이지</a>
-		</div>
-		
 	</div>
-
-<%-- footer.jsp 불러오기 --%>
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

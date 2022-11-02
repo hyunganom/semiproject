@@ -83,13 +83,6 @@ public class AttachmentDaoImpl implements AttachmentDao{
 		Object[] param = {attachmentNo};
 		return jdbcTemplate.query(sql, extractor, param);
 	}
-	
-	//첨부파일 삭제기능
-	@Override
-	public boolean delete(int attachmentNo) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	//상품 첨부파일(product_attachment) 삽입기능
 	@Override

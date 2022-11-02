@@ -19,8 +19,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.semi.entity.AttachmentDto;
 import com.kh.semi.entity.ReviewDto;
 import com.kh.semi.repository.AttachmentDao;
+import com.kh.semi.repository.CouponDao;
 import com.kh.semi.repository.ProductDao;
 import com.kh.semi.repository.ReviewDao;
+import com.kh.semi.vo.CouponCountVO;
 import com.kh.semi.vo.ReviewListSearchVO;
 import com.kh.semi.vo.ReviewPaymentNoVO;
 
@@ -39,6 +41,10 @@ public class ReviewController {
 	//첨부파일
 	@Autowired
 	private AttachmentDao attachmentDao;
+	
+	// 의존성 주입
+	@Autowired
+	private CouponDao couponDao;
 	
 	//리뷰 첨부파일 업로드 경로
 	private final File reviewImg = new File("D:\\saluv\\reviewImg");
@@ -151,13 +157,16 @@ public class ReviewController {
 			}
 		}
 		
-		return "redirect:/mypage/order_list";
+		return "redirect:list";
 	}
 	
 	// 2. 리뷰 수정
 	// 1) 리뷰 수정 페이지로 연결
 	@GetMapping ("/edit")
 	public String reviewEdit(Model model, @ModelAttribute ReviewPaymentNoVO reviewPaymentNoVO) {
+		
+		// 전달받은 reviewPaymentNoVO를 model에 첨부
+		model.addAttribute("reviewPaymentNoVO", reviewPaymentNoVO);
 		
 		// 리뷰 번호 존재 여부 판정
 		// - 마이페이지의 결제 내역 jsp에서 연결된 것이라면 리뷰 번호는 없으며 결제 번호와 상품 번호 존재
@@ -200,14 +209,14 @@ public class ReviewController {
 		
 		// 리뷰 DB 수정 처리
 		reviewDao.updateReview(reviewDto);
-		return "redirect:/mypage/review_list";
+		return "redirect:list";
 	}
 	
 	//리뷰 삭제기능
 	@GetMapping("/delete")
 	public String reviewDelete(@RequestParam int reviewNo) {
 		reviewDao.delete(reviewNo);
-		return "redirect:/mypage/review_list";
+		return "redirect:list";
 	}
 	
 	//관리자 페이지에서 전체 리뷰 검색 조회
@@ -231,6 +240,22 @@ public class ReviewController {
 	}
 	// ** 특정 상품에 대해 작성된 전체 리뷰 목록은 ProductController를 통해 표시
 	
-	// ** 로그인 한 회원이 작성한 전체 리뷰 목록은 MypageController를 통해 표시 
-	
+	// 2. 로그인 한 회원이 작성한 전체 리뷰 목록 
+	@GetMapping("/list")
+	public String list(HttpSession session, Model model) {
+		
+		//1. 세션에 들어있는 아이디를 꺼낸다
+		// 현재 로그인 중인 회원 아이디 반환
+		String loginId = (String) session.getAttribute("loginId");
+		//2. 아이디를 이용하여 회원 정보를 불러온다
+		CouponCountVO couponMember = couponDao.selectOne(loginId);
+		//3. 불러온 회원 정보를 모델에 첨부한다
+		model.addAttribute("memberDto", couponMember);	
+		
+		// 반환한 회원 아이디로 작성한 리뷰 조회를 실행한 후 그 결과를 Model에 추가
+		model.addAttribute("reviewList", reviewDao.selectMypageAllReview(loginId));
+		
+		// 마이 페이지에 있는 상품 후기로 연결
+		return "review/list";
+	}
 }

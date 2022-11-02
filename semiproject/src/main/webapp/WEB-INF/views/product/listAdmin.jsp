@@ -3,21 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<jsp:include page="/WEB-INF/views/template/header.jsp">
-	<jsp:param value="상품 목록 페이지" name="title"/>
+<jsp:include page="/WEB-INF/views/template/adminHeader.jsp">
+	<jsp:param value="상품 관리" name="title"/>
 </jsp:include>
-	<!DOCTYPE html>
-	<html lang="ko">
-	<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Table design</title>
-    
-    <!-- 글꼴 바꿈 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 
 <style>
 	a{
@@ -182,4 +170,3 @@
 
 </div>
 
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
