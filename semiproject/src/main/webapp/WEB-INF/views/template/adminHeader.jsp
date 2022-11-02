@@ -28,7 +28,7 @@
 	<link rel = "stylesheet" type = "text/css" href = "/css/reset.css">
     <link rel = "stylesheet" type = "text/css" href = "/css/commons.css">
     <link rel = "stylesheet" type = "text/css" href = "/css/SANGMIN_commons.css">
-    <link rel = "stylesheet" type = "text/css" href = "/css/SANGMIN_header.css">
+    <link rel = "stylesheet" type = "text/css" href = "/css/SANGMIN_admin.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
     
     <%-- Font Awesome CDN --%>
@@ -56,37 +56,24 @@
 <body>
 
 <div class="wrapper">
-    <header class="header">
-        <div class="header1">
+    <header class="adminheader">
             <div class="inner">
-                <ul class="log1">
+                <ul class="log2">
 					<li>${loginId} 님<li>	
 					<li><a href="/member/logout" title="로그아웃">로그아웃</a><li>
                 </ul> <!--//log1-->
             </div> <!--//inner-->
-        </div> <!--//header1-->
-        <div class="header2">
+        <div class="adminheader2">
             <div class="inner">
-                <h1><a href="/admin/home" class="logo"><img class="image" width="200px;" height="150px" src="/image/logotop.png" alt="로고"></a></h1>
-                <div>
-                    <h2 class ="center"><a href="/admin/home" title="관리자 홈">관리자 모드</a></h2>
-                </div> <!--//formdiv-->
-                <!-- <div class="icon1">
-                    <ul>
-                        <li><a href="/mypage/order_list" title="마이페이지"><i class="fa-regular fa-user"></i></a></li>
-                        <li><a href="/basket/list" title="장바구니"><i class="fa-solid fa-cart-shopping"></i></a></li>
-                    </ul>
-                </div> //icon1 -->
+                <h1><a href="/admin/home" class="logo"><img class="image" width="200px;" height="150px" src="/image/adminlogo.png" alt="로고"></a></h1>
+                <div class="admintitle">
+                    <a href="/admin/home" title="관리자 홈">관리자 모드</a>
+                </div> <!-- //admintitle -->
             </div> <!--//inner-->
-        </div> <!--//header2-->
+        </div> <!--//adminheader2-->
         <nav class="menu">
             <div class="inner">
-                    <ul>
-                        <li class="menubtn">
-                            <a href="/admin/home">
-                            	관리자 홈
-                            </a>
-                        </li>
+                    <ul>                    
                         <li>
                         	<a href="/admin/product/list">
                         		상품 관리
@@ -108,12 +95,12 @@
 	                        </a>
                         </li>
                         <li>
-                        	<a href="/notice/list">
+                        	<a href="/admin/notice/adminlist">
                         		공지 관리
                         	</a>
                         </li>
                     </ul>
                  </div> <!--//inner-->
         </nav> <!--//nav-->
-        </header> <!--//header-->
+        </header> <!--//adminheader-->
 	
