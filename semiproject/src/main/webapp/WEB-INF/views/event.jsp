@@ -24,7 +24,7 @@
 		$("#coupon-issue").click(function(e){
 			
 			// 하이퍼링크를 누를 때 선택창의 선택값를 타겟으로 지정
-			var isIssue = alter("쿠폰을 발급받으시겠습니까?");
+			var isIssue = confirm("쿠폰을 발급받으시겠습니까?");
 			
 			// 선택값에 따라 이벤트 발생 또는 차단
 			if(isIssue) { // 선택값이 true라면
@@ -55,7 +55,8 @@
                 	<img src="/image/semi-banner2.png" alt="메인 홈 이벤트 배너2">
                 </li>
                 <li>
-                	<a href = "/coupon/open?couponId=${couponId}" id = "coupon-issue">
+                	<%-- <a href = "/coupon/open?couponId=${couponId}" id = "coupon-issue"> --%>
+                	<a href = " " id = "coupon-issue">
                 		<img src="/image/coupon.png" alt="쿠폰" width="600px" heigth="300px">
                 	</a>
                 </li>
