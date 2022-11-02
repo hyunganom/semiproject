@@ -119,6 +119,7 @@
     			$(".purchase-cnt").text(checkedCount());
     		}
     		total();
+    		$(".delivery").text(deliveryFee());
     	});
 
     	
