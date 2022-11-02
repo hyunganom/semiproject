@@ -127,7 +127,7 @@
 									    	<img width=100 height=100 src="/attachment/download/productTumbnail?attachmentNo=${paymentListVO.productAttachmentNo}">
 									    	<c:choose>
 										    	<c:when test = "${paymentListVO.paymentReview}">
-										    		<button type = "submit" class="row w-80" onclick = "location.href='/review/edit?paymentNo=${paymentListVO.paymentNo}&paymentProductNo=${paymentListVO.productOriginNo}&orderNo=${paymentListVO.paymentOrderNo}';">리뷰수정</button>
+										    		<button type = "submit" class="row w-80" id = "reviewred" onclick = "location.href='/review/edit?paymentNo=${paymentListVO.paymentNo}&paymentProductNo=${paymentListVO.productOriginNo}&orderNo=${paymentListVO.paymentOrderNo}';">리뷰수정</button>
 										    	</c:when>
 										    	<c:otherwise>
 										    		<button type = "submit" class="row w-80" id="reviewblue" onclick = "location.href='/review/write?paymentNo=${paymentListVO.paymentNo}&paymentProductNo=${paymentListVO.productOriginNo}&orderNo=${paymentListVO.paymentOrderNo}';">리뷰작성</button>

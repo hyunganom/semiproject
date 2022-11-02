@@ -33,7 +33,7 @@
 
 <div class = "container-900 mt-40 mb-40 center">
 	<div class="row left">
-		<h1>구매후기 작성</h1>
+		<h1>리뷰 작성</h1>
 	</div>
 	
 	<hr>

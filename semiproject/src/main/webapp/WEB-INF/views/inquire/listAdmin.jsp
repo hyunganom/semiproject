@@ -3,8 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     
-<jsp:include page="/WEB-INF/views/template/header.jsp">
-	<jsp:param value="1:1 문의글 목록" name="title"/>
+<jsp:include page="/WEB-INF/views/template/adminHeader.jsp">
+	<jsp:param value="문의 관리" name="title"/>
 </jsp:include>
 
 <style>
@@ -178,5 +178,3 @@
 	
 	</div>
 </div>
-
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

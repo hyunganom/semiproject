@@ -3,6 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<jsp:include page="/WEB-INF/views/template/adminHeader.jsp">
+	<jsp:param value="리뷰 관리" name="title"/>
+</jsp:include>
 
 <%-- static의 CSS 적용 --%>
 <link rel = "stylesheet" type = "text/css" href = "/css/reset.css">
@@ -33,9 +36,9 @@
 
 
 
-<div class = "container-1200">
-	<div class = "row center">
-	<h1>리뷰 상세 페이지</h1>
+<div class = "container-900 mt-40 mb-40" style="height: 1000px">
+	<div class = "row center mt-40 mb-40">
+		<h1>리뷰 상세 페이지</h1>
 	</div>
 	
 	<table class="table" id="border" >
