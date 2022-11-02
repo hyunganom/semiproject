@@ -18,7 +18,7 @@ $(document).ready(function(){
 	
 });
 </script>
-
+<!-- 
 <style>
 	.container-1500 {
 		width: 1500px;
@@ -118,4 +118,4 @@ $(document).ready(function(){
 	</div>
 </div>
 		
-</main>
+</main> -->

@@ -36,7 +36,7 @@ public class CouponDaoImpl implements CouponDao{
 		}
 	};
 	
-	//쿠폰 추가
+	//쿠폰 추가 (신규 가입 쿠폰)
 	@Override
 	public void insert(CouponDto couponDto) {
 		String sql = "insert into coupon "
@@ -47,6 +47,14 @@ public class CouponDaoImpl implements CouponDao{
 					couponDto.getCouponId(),
 		};
 		jdbcTemplate.update(sql, param);		
+	}
+	
+	//** 추상 메소드 오버라이딩 - 오픈기념쿠폰 발급
+	@Override
+	public void insert(String couponId) {
+		String sql = "insert into coupon (coupon_issue, coupon_no, coupon_id, coupon_startdate, coupon_enddate) values (coupon_issue_seq.nextval, 25, ?, sysdate, sysdate+30)";
+		Object[] param = new Object[] {couponId};
+		jdbcTemplate.update(sql, param);
 	}
 	
 	//쿠폰 옵션 수정
@@ -232,6 +240,5 @@ public class CouponDaoImpl implements CouponDao{
 		String sql =  "select CL.coupon_name, CL.coupon_discount, CL.coupon_Info, C.coupon_issue, C.coupon_enddate from coupon_list CL inner join coupon C on CL.coupon_list_no = C.coupon_no where coupon_id=? and coupon_valid='미사용'";
 		Object[] param = new Object[] {couponId};
 		return jdbcTemplate.query(sql, couponUseMapper, param);
-	}
-	
+	}	
 }

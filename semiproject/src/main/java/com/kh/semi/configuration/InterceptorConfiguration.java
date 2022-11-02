@@ -47,7 +47,7 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 				"/order/**", //주문 전체
 				"/basket/**", //장바구니 전체
 				"/review/**", //후기전체
-				"/inquire/**" //문의글 전체
+				"/inquire/**" //문의글 전체"
 				)
 		.excludePathPatterns(//감시 제외 주소
 				"/member/join*", //회원가입
@@ -60,8 +60,7 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 				"/product/detail**",
 				"/product/detailSub**",
 				"/notice/list",
-				"/notice/detail",
-				"/basket/list"
+				"/notice/detail"
 				);
 		
 		//관리자용
