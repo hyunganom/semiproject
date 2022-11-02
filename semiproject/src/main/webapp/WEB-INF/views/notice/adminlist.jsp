@@ -71,7 +71,7 @@
 			<tfoot>
 				<tr>
 					<td colspan="8" align="right">
-						<a href = "write"><i class="fa-solid fa-plus"></i> 등록</a>
+						<a href = "/notice/write"><i class="fa-solid fa-plus"></i> 등록</a>
 					</td>
 				</tr>
 			</tfoot>
