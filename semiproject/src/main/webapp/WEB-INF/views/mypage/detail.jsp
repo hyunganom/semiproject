@@ -16,7 +16,7 @@
     상품구매갯수 : ${paymentListVO.paymentCount}<br>
     상품결제가격 : ${paymentListVO.paymentPrice}<br>
     주문일자 : ${paymentListVO.orderDate}<br>
-    상품이미지 : <img width=50 height=50 src="/attachment/download/productTumbnail?attachmentNo=${paymentListVO.productAttachmentNo}">
+    상품이미지 : <img width=50 height=50 src="${pageContext.request.contextPath}/attachment/download/productTumbnail?attachmentNo=${paymentListVO.productAttachmentNo}">
     <hr>
     </c:forEach>
     

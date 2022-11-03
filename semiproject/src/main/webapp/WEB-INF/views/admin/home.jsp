@@ -4,7 +4,7 @@
 <jsp:include page="/WEB-INF/views/template/adminHeader.jsp">
 	<jsp:param value="관리자 페이지" name="title"/>
 </jsp:include>
-<link rel = "stylesheet" type = "text/css" href = "/css/SANGMIN_admin.css">
+<link rel = "stylesheet" type = "text/css" href = "${pageContext.request.contextPath}/css/SANGMIN_admin.css">
 
 <script type="text/javascript">
 $(document).ready(function(){
