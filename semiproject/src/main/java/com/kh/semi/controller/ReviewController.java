@@ -47,7 +47,7 @@ public class ReviewController {
 	private CouponDao couponDao;
 	
 	//리뷰 첨부파일 업로드 경로
-	private final File reviewImg = new File("D:\\saluv\\reviewImg");
+	private final File reviewImg = new File("D:\\KH10A\\saluv\\reviewImg");
 	
 	// 1. 리뷰 작성
 	// - 리뷰 작성 Mapping

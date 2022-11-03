@@ -88,8 +88,7 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 		// 로그인 중인 회원이 해당 주문 번호의 주문자 아이디일 경우 통과
 		registry.addInterceptor(reviewWriteInterceptor)
 		.addPathPatterns(
-				"/review/write",
-				"/review/edit"
+				"/review/write"
 				);
 		
 		//소유자가 리뷰 수정/삭제 또는 관리자가 삭제 가능하도록 검사하는 인터셉터

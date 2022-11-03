@@ -105,7 +105,7 @@
 			<tr>
 				<th>${inquireList.inquireNo}</th>
 				<th>${inquireList.inquireId}</th>
-				<th><a href = "detail?inquireNo=${inquireList.inquireNo}">${inquireList.inquireTitle}</a></th>
+				<th><a href = "${pageContext.request.contextPath}/detail?inquireNo=${inquireList.inquireNo}">${inquireList.inquireTitle}</a></th>
 				<th>${inquireList.inquireWritetime}</th>
 				<th>${inquireList.inquireUpdatetime}</th>
 				<th>${inquireList.inquireHasReply}</th>
@@ -135,14 +135,14 @@
 			<a href = "">&laquo;</a>  <%-- 현재 주소 유지 --%>
 		</c:when>
 		<c:otherwise> <%-- 그렇지 않다면(첫 페이지가 아니라면) --%>
-			<a href = "listAdmin?pageNow=${inquireListSearchVO.blockFirst()}">&laquo;</a> <%-- 첫 페이지로 이동 --%>
+			<a href = "${pageContext.request.contextPath}/listAdmin?pageNow=${inquireListSearchVO.blockFirst()}">&laquo;</a> <%-- 첫 페이지로 이동 --%>
 		</c:otherwise>
 	</c:choose>
 	
 	<%-- 이전 페이지의 존재 여부 판정 --%>
 	<c:choose>
 		<c:when test = "${inquireListSearchVO.hasPrev()}"> <%-- 이전 페이지가 존재한다면 --%>
-			<a href = "listAdmin?pageNow=${inquireListSearchVO.blockPrev()}&${inquireListSearchVO.queryString()}">&lt;</a> <%-- 이전 페이지로 이동 --%>
+			<a href = "${pageContext.request.contextPath}/listAdmin?pageNow=${inquireListSearchVO.blockPrev()}&${inquireListSearchVO.queryString()}">&lt;</a> <%-- 이전 페이지로 이동 --%>
 		</c:when>
 		<c:otherwise> <%-- 그렇지 않다면(이전 페이지가 존재하지 않는다면) --%>
 			<a href = "#">&lt;</a> <%-- 현재 주소 유지 --%>
@@ -151,13 +151,13 @@
 	
 	<%-- 페이지 블럭 표시 --%>
 	<c:forEach var = "i" begin = "${inquireListSearchVO.blockStart()}" end = "${inquireListSearchVO.blockEnd()}" step = "1">
-		<a href = "listAdmin?pageNow=${i}&${inquireListSearchVO.queryString()}">${i}</a>
+		<a href = "${pageContext.request.contextPath}/listAdmin?pageNow=${i}&${inquireListSearchVO.queryString()}">${i}</a>
 	</c:forEach>
 	
 	<%-- 다음 페이지의 존재 여부 판정 --%>
 	<c:choose>
 		<c:when test = "${inquireListSearchVO.hasNext()}"> <%-- 다음 페이지가 존재한다면 --%>
-			<a href = "listAdmin?pageNow=${inquireListSearchVO.blockNext()}&${inquireListSearchVO.queryString()}">&gt;</a> <%-- 다음 페이지로 이동 --%>
+			<a href = "${pageContext.request.contextPath}/listAdmin?pageNow=${inquireListSearchVO.blockNext()}&${inquireListSearchVO.queryString()}">&gt;</a> <%-- 다음 페이지로 이동 --%>
 		</c:when>
 		<c:otherwise> <%-- 그렇지 않다면(다음 페이지가 존재하지 않는다면) --%>
 			<a href = "">&gt;</a> <%-- 현재 주소 유지 --%>
@@ -170,7 +170,7 @@
 			<a href = "#">&raquo;</a> <%-- 현재 주소 유지 --%>
 		</c:when>
 		<c:otherwise>
-			<a href = "listAdmin?pageNow=${inquireListSearchVO.blockLast()}&${inquireListSearchVO.queryString()}">&raquo;</a>
+			<a href = "${pageContext.request.contextPath}/listAdmin?pageNow=${inquireListSearchVO.blockLast()}&${inquireListSearchVO.queryString()}">&raquo;</a>
 		</c:otherwise>
 	</c:choose>
 </div>

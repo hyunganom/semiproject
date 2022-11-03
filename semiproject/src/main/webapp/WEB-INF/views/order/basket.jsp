@@ -165,7 +165,7 @@
 		//ajax 호출하기 위한 함수
  		function updateBasketCnt(basketNo, cnt){
  			$.ajax({
- 				url:"http://localhost:8888/basket/update?basketNo="+basketNo+"&cnt="+cnt,
+ 				url:"${pageContext.request.contextPath}/basket/update?basketNo="+basketNo+"&cnt="+cnt,
  				method:"get",
  				success:function(resp){
  					if(resp==="success"){
@@ -215,7 +215,7 @@
  		<!--선택 삭제 이벤트 함수 -->
 		function selectDelete(basketNo){
 			$.ajax({
- 				url:"http://localhost:8888/basket/delete_2?basketNo="+basketNo,
+ 				url:"${pageContext.request.contextPath}/basket/delete_2?basketNo="+basketNo,
  				method:"get",
  				success:function(resp){
  					if(resp==="success"){

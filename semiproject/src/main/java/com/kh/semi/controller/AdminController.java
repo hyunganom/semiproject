@@ -48,8 +48,8 @@ public class AdminController {
 	private NoticeDao noticeDao;	
 	
 	//첨부파일 업로드 경로
-	private final File tumbnailDirectory = new File("D:\\saluv\\productTumbnail");
-	private final File detailDirectory = new File("D:\\saluv\\productDeatail");
+	private final File tumbnailDirectory = new File("D:\\kh10A\\saluv\\productTumbnail");
+	private final File detailDirectory = new File("D:\\kh10A\\productDeatail");
 	
 	// 상위 카테고리 생셩 Mapping
 	@PostMapping("/product/createCategoryHigh")
@@ -77,8 +77,6 @@ public class AdminController {
 		
 		// 하위 카테고리 등록을 위한 다음 시퀀스 번호 반환
 		int categoryLowNo = productDao.sequencecategoryLow();
-		
-		System.out.println(productCategoryListVO.getCategoryHighNo());
 		
 		// 하위 카테고리 등록
 		productDao.createCategoryLow(productCategoryListVO.getCategoryHighNo(), categoryLowNo, productCategoryListVO.getCategoryLowName());

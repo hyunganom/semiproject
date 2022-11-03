@@ -71,7 +71,7 @@ public class AttachmentController {
 			return ResponseEntity.notFound().build();//404 error 전송
 		}
 		//[2]파일 불러오기
-		File directory = new File("D:\\saluv\\productDeatail");
+		File directory = new File("D:\\kh10A\\saluv\\productDeatail");
 		File target = new File(directory, String.valueOf(attachmentNo));
 		directory.mkdir();//폴더 생성 명령
 		byte[] data = FileUtils.readFileToByteArray(target);

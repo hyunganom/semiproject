@@ -60,8 +60,8 @@
 					<td>${list.noticeRead}</td>
 					<c:if test="${admin}">
 					<td>
-						<a class="btn btn-neutral" style="padding:4px;" href = "/notice/editAdmin?noticeNo=${list.noticeNo}">수정</a>
-						<a class="btn btn-neutral" style="padding:4px;" href = "/notice/deleteAdmin?noticeNo=${list.noticeNo}">삭제</a>
+						<a class="btn btn-neutral" style="padding:4px;" href = "${pageContext.request.contextPath}/notice/editAdmin?noticeNo=${list.noticeNo}">수정</a>
+						<a class="btn btn-neutral" style="padding:4px;" href = "${pageContext.request.contextPath}/notice/deleteAdmin?noticeNo=${list.noticeNo}">삭제</a>
 					</td>
 					</c:if>
 				</tr>
@@ -71,7 +71,7 @@
 			<tfoot>
 				<tr>
 					<td colspan="8" align="right">
-						<a href = "/notice/write"><i class="fa-solid fa-plus"></i> 등록</a>
+						<a href = "${pageContext.request.contextPath}/notice/write"><i class="fa-solid fa-plus"></i> 등록</a>
 					</td>
 				</tr>
 			</tfoot>
