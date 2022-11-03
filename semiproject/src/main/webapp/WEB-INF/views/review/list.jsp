@@ -78,10 +78,10 @@
 						</div>
 						<hr>
 						<div class="font-menu">
-							<h3><a href="/mypage/order_list">주문내역</a></h3>
-							<h3><a href="/review/list">상품후기</a></h3>
-							<h3><a href="/mypage/coupon">쿠폰</a></h3>
-							<h3><a href="/member/detail?memberId=${memberDto.memberId}">내정보수정</a></h3>
+							<h3><a href="${pageContext.request.contextPath}/mypage/order_list">주문내역</a></h3>
+							<h3><a href="${pageContext.request.contextPath}/review/list">상품후기</a></h3>
+							<h3><a href="${pageContext.request.contextPath}/mypage/coupon">쿠폰</a></h3>
+							<h3><a href="${pageContext.request.contextPath}/member/detail?memberId=${memberDto.memberId}">내정보수정</a></h3>
 							<h3>도움이 필요하신가요?<br><a href="/inquire/list">1:1문의하기</a></h3>
 						</div>	
 					</div>	
@@ -98,7 +98,7 @@
 							<table class="table mt-20 mb-20">
 								<tr>
 									<td class="img center" width="100">
-										<img width=80 height=80 src="/attachment/download/reviewImg?attachmentNo=${reviewList.reviewAttachmentNo}"><br>
+										<img width=80 height=80 src="${pageContext.request.contextPath}/attachment/download/reviewImg?attachmentNo=${reviewList.reviewAttachmentNo}"><br>
 									</td>
 									<td class="row left" width="300" height="30">
 										리뷰 제목 : ${reviewList.reviewTitle}
@@ -115,8 +115,8 @@
 										</div>
 									</td>
 									<td class="row center" width="100">
-										<a class="btn btn-neutral" style="padding:4px;" href="/review/edit?reviewNo=${reviewList.reviewNo}">수정</a>
-										<a class="btn btn-neutral" style="padding:4px;" href="/review/delete?reviewNo=${reviewList.reviewNo}">삭제</a>
+										<a class="btn btn-neutral" style="padding:4px;" href="${pageContext.request.contextPath}/review/edit?reviewNo=${reviewList.reviewNo}">수정</a>
+										<a class="btn btn-neutral" style="padding:4px;" href="${pageContext.request.contextPath}/review/delete?reviewNo=${reviewList.reviewNo}">삭제</a>
 									</td>
 								</tr>
 							</table>
