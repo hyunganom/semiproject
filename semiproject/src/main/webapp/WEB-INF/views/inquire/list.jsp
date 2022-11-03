@@ -109,10 +109,10 @@
 					</div>
 					<hr>
 					<div class="font-menu">
-						<h3><a href="/mypage/order_list">주문내역</a></h3>
-						<h3><a href="/review/list">상품후기</a></h3>
-						<h3><a href="/mypage/coupon">쿠폰</a></h3>
-						<h3><a href="/member/detail?memberId=${memberDto.memberId}">내정보수정</a></h3>
+						<h3><a href="${pageContext.request.contextPath}/mypage/order_list">주문내역</a></h3>
+						<h3><a href="${pageContext.request.contextPath}/review/list">상품후기</a></h3>
+						<h3><a href="${pageContext.request.contextPath}/mypage/coupon">쿠폰</a></h3>
+						<h3><a href="${pageContext.request.contextPath}/member/detail?memberId=${memberDto.memberId}">내정보수정</a></h3>
 						<h3>도움이 필요하신가요?<br><a href="/inquire/list">1:1문의하기</a></h3>
 					</div>	
 				</div>	
@@ -142,7 +142,7 @@
 							<c:forEach var = "inquireList" items = "${inquireList}">
 								<c:if test = "${!inquireList.inquireInactive}">
 									<tr align="center">
-										<td><a href = "detail?inquireNo=${inquireList.inquireNo}">${inquireList.inquireTitle}</a></td>
+										<td><a href = "${pageContext.request.contextPath}/detail?inquireNo=${inquireList.inquireNo}">${inquireList.inquireTitle}</a></td>
 										<td>${inquireList.inquireWritetime}</td>
 										<td>${inquireList.inquireUpdatetime}</td>
 										<td>
@@ -155,8 +155,8 @@
 												</c:otherwise>
 											</c:choose>
 										</td>
-										<td><a href = "edit?inquireNo=${inquireList.inquireNo}">수정</a></td>
-										<td><a href = "delete?inquireNo=${inquireList.inquireNo}">삭제</a></td>
+										<td><a href = "${pageContext.request.contextPath}/edit?inquireNo=${inquireList.inquireNo}">수정</a></td>
+										<td><a href = "${pageContext.request.contextPath}/delete?inquireNo=${inquireList.inquireNo}">삭제</a></td>
 									</tr>
 								</c:if>
 							</c:forEach>

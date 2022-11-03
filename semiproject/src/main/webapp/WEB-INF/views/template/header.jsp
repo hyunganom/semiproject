@@ -25,10 +25,10 @@
 	</title>
 	
 	<%-- static의 CSS 적용 --%>
-	<link rel = "stylesheet" type = "text/css" href = "/css/reset.css">
-    <link rel = "stylesheet" type = "text/css" href = "/css/commons.css">
-    <link rel = "stylesheet" type = "text/css" href = "/css/SANGMIN_commons.css">
-    <link rel = "stylesheet" type = "text/css" href = "/css/SANGMIN_header.css">
+	<link rel = "stylesheet" type = "text/css" href = "${pageContext.request.contextPath}/css/reset.css">
+    <link rel = "stylesheet" type = "text/css" href = "${pageContext.request.contextPath}/css/commons.css">
+    <link rel = "stylesheet" type = "text/css" href = "${pageContext.request.contextPath}/css/SANGMIN_commons.css">
+    <link rel = "stylesheet" type = "text/css" href = "${pageContext.request.contextPath}/css/SANGMIN_header.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
     
     <%-- Font Awesome CDN --%>
@@ -48,7 +48,7 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
     
     <%--script 링크 --%>
-    <script src="/script/main.js"></script>
+    <script src="${pageContext.request.contextPath}/script/main.js"></script>
 	
 </head>
 
@@ -65,16 +65,16 @@
 						<li>${loginId} 님<li>
 						<!-- 관리자 기능 -->
 						<c:if test="${login && admin}">
-							<li><a href="/admin/home">관리자 페이지</a></li>
+							<li><a href="${pageContext.request.contextPath}/admin/home">관리자 페이지</a></li>
 						</c:if>
 						
-						<li><a href="/member/logout" title="로그아웃">로그아웃</a><li>
-						<li><a href="/inquire/list" title="1:1문의사항">1:1문의사항</a></li>				
+						<li><a href="${pageContext.request.contextPath}/member/logout" title="로그아웃">로그아웃</a><li>
+						<li><a href="${pageContext.request.contextPath}/inquire/list" title="1:1문의사항">1:1문의사항</a></li>				
 					</c:when>
 					<c:otherwise>
-						<li><a href="/member/login" title="로그인">로그인</a><li>				
-						<li><a href="/member/join" title="회원가입">회원가입</a><li>
-						<li><a href="/inquire/list" title="1:1문의사항">1:1문의사항</a></li>
+						<li><a href="${pageContext.request.contextPath}/member/login" title="로그인">로그인</a><li>				
+						<li><a href="${pageContext.request.contextPath}/member/join" title="회원가입">회원가입</a><li>
+						<li><a href="${pageContext.request.contextPath}/inquire/list" title="1:1문의사항">1:1문의사항</a></li>
 					</c:otherwise>
 				</c:choose>
 				
@@ -83,10 +83,10 @@
         </div> <!--//header1-->
         <div class="header2">
             <div class="inner">
-                <h1><a href="/" class="logo"><img class="image" width="200px;" height="150px" src="/image/logotop.png" alt="로고"></a></h1>
+                <h1><a href="${pageContext.request.contextPath}/" class="logo"><img class="image" width="200px;" height="150px" src="${pageContext.request.contextPath}/image/logotop.png" alt="로고"></a></h1>
                 <div class="formdiv">
                     <h2 class="search">검색</h2> <%-- 검색/전체 조회를 위한 검색창 --%>
-                    <form action="/product/categoryAll" method = "get"> <%-- form 시작 --%>
+                    <form action="${pageContext.request.contextPath}/product/categoryAll" method = "get"> <%-- form 시작 --%>
                         <fieldset> 
                             <legend>
                                	<input type = "text" class = "textinput" name = "keyword" placeholder = "검색어를 입력하시오.">
@@ -97,8 +97,8 @@
                 </div> <!--//formdiv-->
                 <div class="icon1">
                     <ul>
-                        <li><a href="/mypage/order_list" title="마이페이지"><i class="fa-regular fa-user"></i></a></li>
-                        <li><a href="/basket/list" title="장바구니"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                        <li><a href="${pageContext.request.contextPath}/mypage/order_list" title="마이페이지"><i class="fa-regular fa-user"></i></a></li>
+                        <li><a href="${pageContext.request.contextPath}/basket/list" title="장바구니"><i class="fa-solid fa-cart-shopping"></i></a></li>
                     </ul>
                 </div> <!--//icon1-->
             </div> <!--//inner-->
@@ -112,34 +112,34 @@
                                 </i>전체 카테고리
                             </a>
                         </li>
-                        <li><a href="/product/category?categoryHighNo=41">정기배송</a></li>
-                        <li><a href="/product/category?categoryHighNo=42">샐러드</a></li>
-                        <li><a href="/product/category?categoryHighNo=43">간식</a></li>
-                        <li><a href="/event">이벤트</a></li>
+                        <li><a href="${pageContext.request.contextPath}/product/category?categoryHighNo=41">정기배송</a></li>
+                        <li><a href="${pageContext.request.contextPath}/product/category?categoryHighNo=42">샐러드</a></li>
+                        <li><a href="${pageContext.request.contextPath}/product/category?categoryHighNo=43">간식</a></li>
+                        <li><a href="${pageContext.request.contextPath}/event">이벤트</a></li>
                     </ul>
                     <div class="bottommenu">
                         <div class="inner">
                             <ul>
                                 <li>
-                                    <a href="/product/category?categoryHighNo=41">정기배송</a>
+                                    <a href="${pageContext.request.contextPath}/product/category?categoryHighNo=41">정기배송</a>
                                     <ul>
-                                        <li><a href="/product/category?categoryHighNo=41&categoryLowNo=21">2주 식단</a></li>
-                                        <li><a href="/product/category?categoryHighNo=41&categoryLowNo=49">4주 식단</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/product/category?categoryHighNo=41&categoryLowNo=21">2주 식단</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/product/category?categoryHighNo=41&categoryLowNo=49">4주 식단</a></li>
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="/product/category?categoryHighNo=42">샐러드</a>
+                                    <a href="${pageContext.request.contextPath}/product/category?categoryHighNo=42">샐러드</a>
                                     <ul>
-                                        <li><a href="/product/category?categoryHighNo=42&categoryLowNo=50">데일리 샐러드</a></li>
-                                        <li><a href="/product/category?categoryHighNo=42&categoryLowNo=51">테이스티 샐러드</a></li>
-                                        <li><a href="/product/category?categoryHighNo=42&categoryLowNo=52">파우치 샐러드</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/product/category?categoryHighNo=42&categoryLowNo=50">데일리 샐러드</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/product/category?categoryHighNo=42&categoryLowNo=51">테이스티 샐러드</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/product/category?categoryHighNo=42&categoryLowNo=52">파우치 샐러드</a></li>
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="/product/category?categoryHighNo=43">간식</a>
+                                    <a href="${pageContext.request.contextPath}/product/category?categoryHighNo=43">간식</a>
                                     <ul>                                      
-                                        <li><a href="/product/category?categoryHighNo=43&categoryLowNo=54">만두</a></li>                   
-                                        <li><a href="/product/category?categoryHighNo=43&categoryLowNo=53">간식</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/product/category?categoryHighNo=43&categoryLowNo=54">만두</a></li>                   
+                                        <li><a href="${pageContext.request.contextPath}/product/category?categoryHighNo=43&categoryLowNo=53">간식</a></li>
                                     </ul>
                                 </li>
                             </ul>

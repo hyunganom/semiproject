@@ -8,10 +8,10 @@
 </jsp:include>
 
 <%-- static의 CSS 적용 --%>
-<link rel = "stylesheet" type = "text/css" href = "/css/reset.css">
-<link rel = "stylesheet" type = "text/css" href = "/css/commons.css">
-<link rel = "stylesheet" type = "text/css" href = "/css/SANGMIN_commons.css">
-<link rel = "stylesheet" type = "text/css" href = "/css/SANGMIN_admin.css">
+<link rel = "stylesheet" type = "text/css" href = "${pageContext.request.contextPath}/css/reset.css">
+<link rel = "stylesheet" type = "text/css" href = "${pageContext.request.contextPath}/css/commons.css">
+<link rel = "stylesheet" type = "text/css" href = "${pageContext.request.contextPath}/css/SANGMIN_commons.css">
+<link rel = "stylesheet" type = "text/css" href = "${pageContext.request.contextPath}/css/SANGMIN_admin.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
 
 <!-- 글꼴 바꿈 -->
