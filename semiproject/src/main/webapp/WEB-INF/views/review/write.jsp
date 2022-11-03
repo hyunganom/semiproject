@@ -41,7 +41,7 @@
 		<div class = "container-800">
 		<br>
 			<div class = "float-left mt-10">
-				<img src="/attachment/download/productTumbnail?attachmentNo=${productDto.productAttachmentNo}" width=100 height=100>
+				<img src="${pageContext.request.contextPath}/attachment/download/productTumbnail?attachmentNo=${productDto.productAttachmentNo}" width=100 height=100>
 			</div>
 			
 			<div class = "container-550">
@@ -84,7 +84,7 @@
 				<i class="fa-solid fa-camera"></i>
 				<input class="row" name = "attachmentReviewImg" type="file" accept = ".png, .jpg" >
 			<div class = "row right">
-				<a href="/mypage/order_list" class="btn btn-neutral">취소</a>
+				<a href="${pageContext.request.contextPath}/mypage/order_list" class="btn btn-neutral">취소</a>
 				<button type = "submit" class="btn">작성</button>
 			</div>
 		</form>

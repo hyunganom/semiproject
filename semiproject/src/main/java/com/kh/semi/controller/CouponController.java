@@ -23,7 +23,6 @@ public class CouponController {
 	public String open(HttpSession session, @RequestParam String couponId) {
 		
 		String memberId = (String)session.getAttribute("loginId");
-		System.out.println("memberId = "+memberId);
 		
 		// 해당 회원에게 신규 오픈 기념 쿠폰 발급
 		couponDao.insert(memberId);

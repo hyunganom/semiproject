@@ -74,7 +74,6 @@ public class OrderServiceImpl implements OrderService{
 				// 결제상품 장바구니에서 제거(장바구니 번호로 삭제)
 				basketDao.clearbasket(dto.getBasketNo());
 			}
-			System.out.println("orderVO.getPayment()="+orderVO.getPayment());
 		}
 		
 			// 적립금 사용분 회원테이블 적립금 마이너스
