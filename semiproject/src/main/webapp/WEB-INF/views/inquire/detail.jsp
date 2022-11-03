@@ -77,7 +77,7 @@
 					<th id="th-color">문의글 첨부파일</th>
 					<td>
 						<c:forEach var = "inquireAttachmentList" items = "${inquireAttachmentList}">
-							<img width = "50px" height = "50px" src = "/attachment/download/inquireImg?attachmentNo=${inquireAttachmentList.attachmentNo}">
+							<img width = "50px" height = "50px" src = "${pageContext.request.contextPath}/attachment/download/inquireImg?attachmentNo=${inquireAttachmentList.attachmentNo}">
 						</c:forEach>
 					</td>
 				</tr>
@@ -107,7 +107,7 @@
 						</td>
 						<!-- 댓글 삭제 -->
 						<td>
-							<a href="inquireReply/delete?inquireReplyNo=${inquireReplyList.inquireReplyNo}&inquireOriginNo=${inquireDto.inquireNo}">삭제</a>
+							<a href="${pageContext.request.contextPath}/inquireReply/delete?inquireReplyNo=${inquireReplyList.inquireReplyNo}&inquireOriginNo=${inquireDto.inquireNo}">삭제</a>
 						</td>
 						</c:if>
 					</tr>
