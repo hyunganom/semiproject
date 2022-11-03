@@ -21,7 +21,7 @@
 			<textarea name = "noticeContent" class="input w-100 fix-size mt-10" rows="8" >${noticeDto.noticeContent}</textarea>
 			
 			<div class = "row right">
-				<a href="/mypage/order_list" class="btn btn-neutral">취소</a>
+				<a href="${pageContext.request.contextPath}/mypage/order_list" class="btn btn-neutral">취소</a>
 				<button type = "submit" class="btn">작성</button>
 			</div>
 		</form>
