@@ -16,7 +16,7 @@
         </div>
 
         <div class="row center">
-            <a href="/" class="btns btns-positive">메인페이지로 이동</a>
+            <a href="${pageContext.request.contextPath}/" class="btns btns-positive">메인페이지로 이동</a>
             <a href="basket" class="btns btns-positive">장바구니로 이동</a>
         </div>
 
