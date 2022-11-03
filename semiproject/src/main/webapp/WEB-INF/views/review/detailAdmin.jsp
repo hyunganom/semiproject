@@ -8,10 +8,10 @@
 </jsp:include>
 
 <%-- static의 CSS 적용 --%>
-<link rel = "stylesheet" type = "text/css" href = "/css/reset.css">
-<link rel = "stylesheet" type = "text/css" href = "/css/commons.css">
-<link rel = "stylesheet" type = "text/css" href = "/css/SANGMIN_commons.css">
-<link rel = "stylesheet" type = "text/css" href = "/css/SANGMIN_header.css">
+<link rel = "stylesheet" type = "text/css" href = "${pageContext.request.contextPath}/css/reset.css">
+<link rel = "stylesheet" type = "text/css" href = "${pageContext.request.contextPath}/css/commons.css">
+<link rel = "stylesheet" type = "text/css" href = "${pageContext.request.contextPath}/css/SANGMIN_commons.css">
+<link rel = "stylesheet" type = "text/css" href = "${pageContext.request.contextPath}/css/SANGMIN_header.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
 
 <!-- 글꼴 바꿈 -->
@@ -67,7 +67,7 @@
 					<th id="th-color">리뷰 첨부파일</th>
 					<td>
 						<c:forEach var = "reviewAttachmentList" items = "${reviewAttachmentList}">
-							<img width = "50px" height = "50px" src = "/attachment/download/inquireImg?attachmentNo=${reviewAttachmentList.attachmentNo}">
+							<img width = "50px" height = "50px" src = "${pageContext.request.contextPath}/attachment/download/inquireImg?attachmentNo=${reviewAttachmentList.attachmentNo}">
 						</c:forEach>
 					</td>
 				</tr>
