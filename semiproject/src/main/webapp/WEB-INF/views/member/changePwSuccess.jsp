@@ -26,10 +26,10 @@
 	
 	<div class="row center mb-30">
 		<h2>
-			<a href="/">
+			<a href="${pageContext.request.contextPath}/">
 				<i class="fa-solid fa-house"></i> 홈
 			</a>&nbsp;&nbsp;&nbsp;&nbsp;
-			<a href="/mypage/order_list">
+			<a href="${pageContext.request.contextPath}/mypage/order_list">
 				<i class="fa-regular fa-user"></i> 마이페이지
 			</a>
 		</h2>
