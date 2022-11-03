@@ -78,8 +78,6 @@ public class AdminController {
 		// 하위 카테고리 등록을 위한 다음 시퀀스 번호 반환
 		int categoryLowNo = productDao.sequencecategoryLow();
 		
-		System.out.println(productCategoryListVO.getCategoryHighNo());
-		
 		// 하위 카테고리 등록
 		productDao.createCategoryLow(productCategoryListVO.getCategoryHighNo(), categoryLowNo, productCategoryListVO.getCategoryLowName());
 		

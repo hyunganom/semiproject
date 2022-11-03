@@ -51,7 +51,6 @@ public class BasketController {
 		vo.setBasketCountNumber(productCount);
 		
 		String[] arrayParam = request.getParameterValues("productOption");
-		System.out.println("arrayParam"+arrayParam);
 		if(arrayParam==null) { //단일상품 및 옵션없음
 			vo.setBasketProductOption(""); //옵션에 빈값넣기  
          }else { //구독상품 및 옵션있음
