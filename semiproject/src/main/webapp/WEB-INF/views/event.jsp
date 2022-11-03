@@ -31,7 +31,7 @@
 
 <script src = "https://code.jquery.com/jquery-3.6.1.js"></script>
 
-<link rel = "stylesheet" type = "text/css" href = "/css/SANGMIN_event.css">
+<link rel = "stylesheet" type = "text/css" href = "${pageContext.request.contextPath}/css/SANGMIN_event.css">
 
 <section class="eventtitle">
     <div class="inner">
@@ -40,14 +40,14 @@
         <div class="eventtitle1">
             <ul class="eventtitlesub">
                 <li>
-                	<img src="/image/semi-banner1.png" alt="메인 홈 이벤트 배너">
+                	<img src="${pageContext.request.contextPath}/image/semi-banner1.png" alt="메인 홈 이벤트 배너">
                 </li>
                 <li>
-                	<img src="/image/semi-banner2.png" alt="메인 홈 이벤트 배너2">
+                	<img src="${pageContext.request.contextPath}/image/semi-banner2.png" alt="메인 홈 이벤트 배너2">
                 </li>
                 <li>
-                	<a href = "/coupon/open?couponId=${couponId}" id = "coupon-issue">
-                		<img src="/image/coupon.png" alt="쿠폰" width="600px" heigth="300px">
+                	<a href = "${pageContext.request.contextPath}/coupon/open?couponId=${couponId}" id = "coupon-issue">
+                		<img src="${pageContext.request.contextPath}/image/coupon.png" alt="쿠폰" width="600px" heigth="300px">
                 	</a>
                 </li>
             </ul> <!--//eventtitlesub-->
