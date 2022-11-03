@@ -114,14 +114,14 @@
 					<th>상품이미지</th>
 					<td>
 						<c:forEach var="productTumbnailList" items="${productTumbnailList}">
-							<img width=50 height=50 src="/attachment/download/productTumbnail?attachmentNo=${productTumbnailList.attachmentNo}">
+							<img width=50 height=50 src="${pageContext.request.contextPath}/attachment/download/productTumbnail?attachmentNo=${productTumbnailList.attachmentNo}">
 						</c:forEach>
 					</td>
 				<tr>
 					<th>상품상세이미지</th>
 					<td>
 						<c:forEach var="productDetailList" items="${productDetailList}">
-							<img width=50 height=50 src="/attachment/download/productDetail?attachmentNo=${productDetailList.attachmentNo}">
+							<img width=50 height=50 src="${pageContext.request.contextPath}/attachment/download/productDetail?attachmentNo=${productDetailList.attachmentNo}">
 						</c:forEach>
 					</td>
 				</tr>
@@ -129,16 +129,16 @@
 			<tfoot>
 				<tr>
 					<th colspan="2">
-						<a href = "/admin/product/edit?productDetailNo=${productDto.productNo}">수정</a> &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; 
-						<a href = "/admin/product/inactive?productDetailNo=${productDto.productNo}">활성화</a> &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; 
-						<a href = "/admin/product/delete?productDetailNo=${productDto.productNo}">삭제</a>
+						<a href = "${pageContext.request.contextPath}/admin/product/edit?productDetailNo=${productDto.productNo}">수정</a> &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; 
+						<a href = "${pageContext.request.contextPath}/admin/product/inactive?productDetailNo=${productDto.productNo}">활성화</a> &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; 
+						<a href = "${pageContext.request.contextPath}/admin/product/delete?productDetailNo=${productDto.productNo}">삭제</a>
 					</th>
 				</tr>
 			</tfoot>
 		</table>
 		
 		<div class="row right mt-10">
-			<a href = "/admin/product/list">목록</a>
+			<a href = "${pageContext.request.contextPath}/admin/product/list">목록</a>
 		</div>
 	</div>
 </div>
