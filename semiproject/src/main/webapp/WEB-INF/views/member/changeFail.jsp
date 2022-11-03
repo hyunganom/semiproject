@@ -27,7 +27,7 @@
 	
 	<div class="row center mb-30">
 		<h2>
-			<a href="/">
+			<a href="${pageContext.request.contextPath}/">
 				<i class="fa-solid fa-house"></i> 홈
 			</a>&nbsp;&nbsp;&nbsp;&nbsp;
 			<a href="list">

@@ -35,7 +35,7 @@
 			<a href="login">
 				<i class="fa-solid fa-seedling"></i> 로그인
 			</a>&nbsp;&nbsp;&nbsp;&nbsp;
-			<a href="/">
+			<a href="${pageContext.request.contextPath}/">
 				<i class="fa-solid fa-house"></i> 홈
 			</a>
 		</h2>
