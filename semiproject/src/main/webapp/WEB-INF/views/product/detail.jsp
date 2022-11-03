@@ -10,7 +10,7 @@
 <!-- 별 스코어 링크 -->
 <script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.js"></script>
 
-<link rel = "stylesheet" type = "text/css" href = "/css/SANGMIN_detail.css">
+<link rel = "stylesheet" type = "text/css" href = "${pageContext.request.contextPath}/css/SANGMIN_detail.css">
 
 <script type="text/javascript">
 
@@ -72,7 +72,7 @@
 	    <%-- 누르는 버튼에 따라 전송하는 Mapping이 다르도록 설정 --%>
 		// 만약 구매 버튼을 눌렀다면 
  	    $("#submit-purchase").click(function(){
-	        $("#product-data").attr("action", "/basket/insert"); // 상품 구매 Mapping으로 전송
+	        $("#product-data").attr("action", "${pageContext.request.contextPath}/basket/insert"); // 상품 구매 Mapping으로 전송
 	        $("#product-data").attr("method", "get"); // get 방식
 	    }); 
 		
@@ -144,7 +144,7 @@
 	<input type = "hidden" name = "productNo" value = "${productDto.productNo}"> <%-- 상품 번호 --%>
 	<input type = "hidden" name = "productName" value = "${productDto.productName}"> <%-- 상품 이름 --%>
 		<c:forEach var="productTumbnailList" items="${productTumbnailList}">
-			<img class="itemmain" src="/attachment/download/productTumbnail?attachmentNo=${productTumbnailList.attachmentNo}" alt="상품메인">
+			<img class="itemmain" src="${pageContext.request.contextPath}/attachment/download/productTumbnail?attachmentNo=${productTumbnailList.attachmentNo}" alt="상품메인">
 		</c:forEach>
 		<div class="itemtitle">
     		<p>${productDto.productName}<p>
@@ -177,11 +177,11 @@
 	    		<div class="inner">
 	        		<%-- 누르는 버튼에 따라 전송하는 Mapping이 다르도록 하기 위해 하나의 폼에 버튼 2개 생성 --%>
 					<button type = "submit" id = "submit-purchase">
-						<img src="/image/buyitem.png" alt="바로구매">
+						<img src="${pageContext.request.contextPath}/image/buyitem.png" alt="바로구매">
 					</button>
 	
 					<button type = "submit" id = "submit-basket">
-						<img src="/image/addcart.png" alt="장바구니">
+						<img src="${pageContext.request.contextPath}/image/addcart.png" alt="장바구니">
 					</button>
 	            </div> <!--//inner-->
 			</div> <!--//itembox-->
@@ -196,7 +196,7 @@
 	<div class="inner">
   		<div class="itemimage">
   			<c:forEach var="productDetailList" items="${productDetailList}">
-				<img src="/attachment/download/productDetail?attachmentNo=${productDetailList.attachmentNo}" alt="상품설명">
+				<img src="${pageContext.request.contextPath}/attachment/download/productDetail?attachmentNo=${productDetailList.attachmentNo}" alt="상품설명">
 			</c:forEach>
 		</div> <!--//itemimage-->
 	</div> <!--//inner-->
@@ -217,7 +217,7 @@
        			<td class="img center" width="100">
        				<c:choose>
        					<c:when test = "${productReviewList.reviewAttachmentNo != ''}">
-       						<img width=90 height=90 src="/attachment/download/reviewImg?attachmentNo=${productReviewList.reviewAttachmentNo}">
+       						<img width=90 height=90 src="${pageContext.request.contextPath}/attachment/download/reviewImg?attachmentNo=${productReviewList.reviewAttachmentNo}">
        					</c:when>
        					<c:otherwise>
        						<div style = "background-color : white; width : 90px; height : 90px;"></div>

@@ -9,7 +9,7 @@
 
 <script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.js"></script>
 
-<link rel = "stylesheet" type = "text/css" href = "/css/SANGMIN_category.css">
+<link rel = "stylesheet" type = "text/css" href = "${pageContext.request.contextPath}/css/SANGMIN_category.css">
 
 <style> /* 스타일 */
 
@@ -58,10 +58,10 @@
                 			<a href= "detail?productNo=${productList.productNo}&categoryHighSub=${productList.categoryHighSub}">
 								<c:choose>
 									<c:when test = "${productList.productInactive}">
-										<img src="/attachment/download/productTumbnail?attachmentNo=${productList.productAttachmentNo}" id = "img-inactive">
+										<img src="${pageContext.request.contextPath}/attachment/download/productTumbnail?attachmentNo=${productList.productAttachmentNo}" id = "img-inactive">
 									</c:when>
 									<c:otherwise>
-										<img src="/attachment/download/productTumbnail?attachmentNo=${productList.productAttachmentNo}">
+										<img src="${pageContext.request.contextPath}/attachment/download/productTumbnail?attachmentNo=${productList.productAttachmentNo}">
 									</c:otherwise>
 								</c:choose>
 							</a>
