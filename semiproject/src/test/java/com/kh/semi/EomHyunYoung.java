@@ -34,7 +34,6 @@ public class EomHyunYoung {
 //																	.keyword("테")
 //																.build(), 
 //																"hello1234");
-//		System.out.println(result);
 //	}
 	
 	// 문의글 통합 조회(SELECT) 관리자용
@@ -44,7 +43,6 @@ public class EomHyunYoung {
 //																	.type("inquire_title")
 //																	.keyword("테")
 //																.build());
-//		System.out.println(result);
 //	}
 	
 	// 문의글 수정(UPDATE)
@@ -55,7 +53,6 @@ public class EomHyunYoung {
 //				.inquireContent("테스트내용")
 //				.inquireNo(312)
 //				.build());
-//		System.out.println(result);
 //	}
 
 //	// 문의글 등록(INSERT)
@@ -77,7 +74,6 @@ public class EomHyunYoung {
 //	@Test
 //	public void test() {	
 //		InquireDto result = inquireDao.selectOneInquire(12);
-//		System.out.println(result);
 //	}
 	
 	// 문의글 수정(UPDATE)
@@ -88,21 +84,18 @@ public class EomHyunYoung {
 //				.inquireContent("테스트내용")
 //				.inquireNo(312)
 //				.build());
-//		System.out.println(result);
 //	}
 	
 //	// 문의글 삭제(DELETE)
 //	@Test
 //	public void test() {	
 //		boolean result = inquireDao.deleteInquire(309);
-//		System.out.println(result);
 //	}
 	
 	// 문의글 삭제(UPDATE)
 //	@Test
 //	public void test() {	
 //		boolean result = inquireDao.inactiveInquire(304);
-//		System.out.println(result);
 //	}
 
 	// 관리자 상품 등록(INSERT)
