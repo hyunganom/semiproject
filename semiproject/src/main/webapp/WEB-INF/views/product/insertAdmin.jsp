@@ -21,7 +21,7 @@
 
 				$.ajax({
 					// 상위 카테고리 번호를 매개변수로 전체 조회 수행
-					url:"http://localhost:8888/rest/product/categoryLow?categoryHighNo="+categoryHighNo,
+					url:"${pageContext.request.contextPath}/rest/product/categoryLow?categoryHighNo="+categoryHighNo,
                     method:"get",
                     success:function(resp){
 
