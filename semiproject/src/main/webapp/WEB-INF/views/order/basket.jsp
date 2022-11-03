@@ -260,7 +260,7 @@
         <div class="row left">
             <h1>장바구니</h1>
         </div>
-	<form action="/order/order_ck" method="get">
+	<form action="${pageContext.request.contextPath}/order/order_ck" method="get">
         <div class="row mt-30">
             <table class="table table-basket">
                 <thead>
@@ -291,7 +291,7 @@
 		                        	<input type="checkbox" class="checked" name="basketNo" value="${vo.basketNo}">
 		                        </td>
 		                        <td>
-		                        	<img class="img" width=100 height=100 src="/attachment/download/productTumbnail?attachmentNo=${vo.productAttachmentNo}">
+		                        	<img class="img" width=100 height=100 src="${pageContext.request.contextPath}/attachment/download/productTumbnail?attachmentNo=${vo.productAttachmentNo}">
 		                        </td>
 		                        <td>
 		                        	<span>${vo.productName}<br></span>
