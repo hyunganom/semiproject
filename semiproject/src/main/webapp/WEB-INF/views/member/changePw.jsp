@@ -32,7 +32,7 @@
 	</div>
 	
 	<div class="row right mt-10">
-		<a href="/member/detail?memberId=${memberDto.memberId}" class="btn btn-neutral">취소</a>
+		<a href="${pageContext.request.contextPath}/member/detail?memberId=${memberDto.memberId}" class="btn btn-neutral">취소</a>
 		<button class="btn btn-negative" type="submit">변경하기</button>
 	</div>
 </div>
