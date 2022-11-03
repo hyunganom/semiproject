@@ -25,10 +25,10 @@
 	</title>
 	
 	<%-- static의 CSS 적용 --%>
-	<link rel = "stylesheet" type = "text/css" href = "/css/reset.css">
-    <link rel = "stylesheet" type = "text/css" href = "/css/commons.css">
-    <link rel = "stylesheet" type = "text/css" href = "/css/SANGMIN_commons.css">
-    <link rel = "stylesheet" type = "text/css" href = "/css/SANGMIN_admin.css">
+	<link rel = "stylesheet" type = "text/css" href = "${pageContext.request.contextPath}/css/reset.css">
+    <link rel = "stylesheet" type = "text/css" href = "${pageContext.request.contextPath}/css/commons.css">
+    <link rel = "stylesheet" type = "text/css" href = "${pageContext.request.contextPath}/css/SANGMIN_commons.css">
+    <link rel = "stylesheet" type = "text/css" href = "${pageContext.request.contextPath}/css/SANGMIN_admin.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
     
     <%-- Font Awesome CDN --%>
@@ -48,7 +48,7 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
     
     <%--script 링크 --%>
-    <script src="/script/main.js"></script>
+    <script src="${pageContext.request.contextPath}/script/main.js"></script>
 	
 </head>
 
@@ -60,14 +60,14 @@
             <div class="inner">
                 <ul class="log2">
 					<li>${loginId} 님<li>	
-					<li><a href="/member/logout" title="로그아웃">로그아웃</a><li>
+					<li><a href="${pageContext.request.contextPath}/member/logout" title="로그아웃">로그아웃</a><li>
                 </ul> <!--//log1-->
             </div> <!--//inner-->
         <div class="adminheader2">
             <div class="inner">
-                <h1><a href="/admin/home" class="logo"><img class="image" width="200px;" height="150px" src="/image/adminlogo.png" alt="로고"></a></h1>
+                <h1><a href="${pageContext.request.contextPath}/admin/home" class="logo"><img class="image" width="200px;" height="150px" src="${pageContext.request.contextPath}/image/adminlogo.png" alt="로고"></a></h1>
                 <div class="admintitle">
-                    <a href="/admin/home" title="관리자 홈">관리자 모드</a>
+                    <a href="${pageContext.request.contextPath}/admin/home" title="관리자 홈">관리자 모드</a>
                 </div> <!-- //admintitle -->
             </div> <!--//inner-->
         </div> <!--//adminheader2-->
@@ -75,27 +75,27 @@
             <div class="inner">
                     <ul>                    
                         <li>
-                        	<a href="/admin/product/list">
+                        	<a href="${pageContext.request.contextPath}/admin/product/list">
                         		상품 관리
                         	</a>
                         </li>
                         <li>
-                        	<a href="/member/list">
+                        	<a href="${pageContext.request.contextPath}/member/list">
                         		회원 관리
                         	</a>
                        	</li>
                         <li>
-                        	<a href="/review/adminList">
+                        	<a href="${pageContext.request.contextPath}/review/adminList">
                         		리뷰 관리
                         	</a>
                        	</li>
                         <li>
-	                        <a href="/inquire/listAdmin">
+	                        <a href="${pageContext.request.contextPath}/inquire/listAdmin">
 	                        	문의 관리
 	                        </a>
                         </li>
                         <li>
-                        	<a href="/admin/notice/adminlist">
+                        	<a href="${pageContext.request.contextPath}/admin/notice/adminlist">
                         		공지 관리
                         	</a>
                         </li>
