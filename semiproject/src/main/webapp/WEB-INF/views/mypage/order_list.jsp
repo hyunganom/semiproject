@@ -96,11 +96,11 @@
 						</div>
 						<hr>
 						<div class="font-menu">
-							<h3><a href="/mypage/order_list">주문내역</a></h3>
-							<h3><a href="/review/list">상품후기</a></h3>
-							<h3><a href="/mypage/coupon">쿠폰</a></h3>
-							<h3><a href="/member/detail?memberId=${memberDto.memberId}">내정보수정</a></h3>
-							<h3>도움이 필요하신가요?<br><a href="/inquire/list">1:1문의하기</a></h3>
+							<h3><a href="${pageContext.request.contextPath}/mypage/order_list">주문내역</a></h3>
+							<h3><a href="${pageContext.request.contextPath}/review/list">상품후기</a></h3>
+							<h3><a href="${pageContext.request.contextPath}/mypage/coupon">쿠폰</a></h3>
+							<h3><a href="${pageContext.request.contextPath}/member/detail?memberId=${memberDto.memberId}">내정보수정</a></h3>
+							<h3>도움이 필요하신가요?<br><a href="${pageContext.request.contextPath}/inquire/list">1:1문의하기</a></h3>
 						</div>	
 					</div>	
 				</div>
@@ -152,20 +152,5 @@
 	</div>
 </div>
 
-	
-<!-- 	<div class="row left">
-	<h2><a href="/mypage/order_list">주문내역</a></h2>
-	<h2><a href="/mypage/wish_list">찜한상품</a></h2>
-	<h2><a href="/mypage/delivery_list">배송지관리</a></h2>
-	<h2><a href="">상품후기</a></h2>	
-	<h2><a href="/mypage/point">적립금</a></h2>
-	<h2><a href="/mypage/coupon">쿠폰</a></h2>
-	<h2><a href="/member/change">내정보수정</a></h2>
-	<hr>
-	<h3>도움이 필요하신가요?</h3>
-	<h4><a href="/mypage/qna">1:1문의하기</a></h4>
-	</div>
-	</div> -->
-	
     
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
