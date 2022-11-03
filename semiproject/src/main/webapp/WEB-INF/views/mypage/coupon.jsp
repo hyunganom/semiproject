@@ -84,11 +84,11 @@
 						</div>
 						<hr>
 						<div class="font-menu">
-							<h3><a href="/mypage/order_list">주문내역</a></h3>
-							<h3><a href="/review/list">상품후기</a></h3>
-							<h3><a href="/mypage/coupon">쿠폰</a></h3>
-							<h3><a href="/member/detail?memberId=${memberDto.memberId}">내정보수정</a></h3>
-							<h3>도움이 필요하신가요?<br><a href="/inquire/list">1:1문의하기</a></h3>
+							<h3><a href=" ${pageContext.request.contextPath}/mypage/order_list">주문내역</a></h3>
+							<h3><a href="${pageContext.request.contextPath}/review/list">상품후기</a></h3>
+							<h3><a href="${pageContext.request.contextPath}/mypage/coupon">쿠폰</a></h3>
+							<h3><a href="${pageContext.request.contextPath}/member/detail?memberId=${memberDto.memberId}">내정보수정</a></h3>
+							<h3>도움이 필요하신가요?<br><a href="${pageContext.request.contextPath}/inquire/list">1:1문의하기</a></h3>
 						</div>	
 					</div>	
 				</div>

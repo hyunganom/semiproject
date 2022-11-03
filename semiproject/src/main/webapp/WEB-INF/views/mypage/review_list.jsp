@@ -78,12 +78,12 @@
 						</div>
 						<hr>
 						<div class="font-menu">
-							<h3><a href="/mypage/order_list">주문내역</a></h3>
-							<h3><a href="/mypage/delivery_list">배송지관리</a></h3>
-							<h3><a href="/mypage/review_list">상품후기</a></h3>
-							<h3><a href="/mypage/point" >적립금</a></h3>
-							<h3><a href="/mypage/coupon">쿠폰</a></h3>
-							<h3><a href="/member/detail?memberId=${memberDto.memberId}">내정보수정</a></h3>
+							<h3><a href="${pageContext.request.contextPath}/mypage/order_list">주문내역</a></h3>
+							<h3><a href="${pageContext.request.contextPath}/mypage/delivery_list">배송지관리</a></h3>
+							<h3><a href="${pageContext.request.contextPath}/mypage/review_list">상품후기</a></h3>
+							<h3><a href="${pageContext.request.contextPath}/mypage/point" >적립금</a></h3>
+							<h3><a href="${pageContext.request.contextPath}/mypage/coupon">쿠폰</a></h3>
+							<h3><a href="${pageContext.request.contextPath}/member/detail?memberId=${memberDto.memberId}">내정보수정</a></h3>
 							<h3>도움이 필요하신가요?<br><a href="/inquire/list">1:1문의하기</a></h3>
 						</div>	
 					</div>	
@@ -117,8 +117,8 @@
 										</div>
 									</td>
 									<td class="row center" width="100">
-										<a class="btn btn-neutral" style="padding:4px;" href="/review/edit?reviewNo=${reviewList.reviewNo}">수정</a>
-										<a class="btn btn-neutral" style="padding:4px;" href="/review/delete?reviewNo=${reviewList.reviewNo}">삭제</a>
+										<a class="btn btn-neutral" style="padding:4px;" href="${pageContext.request.contextPath}/review/edit?reviewNo=${reviewList.reviewNo}">수정</a>
+										<a class="btn btn-neutral" style="padding:4px;" href="${pageContext.request.contextPath}/review/delete?reviewNo=${reviewList.reviewNo}">삭제</a>
 									</td>
 								</tr>
 							</table>
