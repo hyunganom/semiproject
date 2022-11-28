@@ -142,7 +142,7 @@
 							<c:forEach var = "inquireList" items = "${inquireList}">
 								<c:if test = "${!inquireList.inquireInactive}">
 									<tr align="center">
-										<td><a href = "${pageContext.request.contextPath}/detail?inquireNo=${inquireList.inquireNo}">${inquireList.inquireTitle}</a></td>
+										<td><a href = "${pageContext.request.contextPath}/inquire/detail?inquireNo=${inquireList.inquireNo}">${inquireList.inquireTitle}</a></td>
 										<td>${inquireList.inquireWritetime}</td>
 										<td>${inquireList.inquireUpdatetime}</td>
 										<td>
@@ -155,8 +155,8 @@
 												</c:otherwise>
 											</c:choose>
 										</td>
-										<td><a href = "${pageContext.request.contextPath}/edit?inquireNo=${inquireList.inquireNo}">수정</a></td>
-										<td><a href = "${pageContext.request.contextPath}/delete?inquireNo=${inquireList.inquireNo}">삭제</a></td>
+										<td><a href = "${pageContext.request.contextPath}/inquire/edit?inquireNo=${inquireList.inquireNo}">수정</a></td>
+										<td><a href = "${pageContext.request.contextPath}/inquire/delete?inquireNo=${inquireList.inquireNo}">삭제</a></td>
 									</tr>
 								</c:if>
 							</c:forEach>
@@ -164,7 +164,7 @@
 					</table>
 	
 					<div class = "row right">
-						<a href = "write">1:1문의하기</a>
+						<a href = "${pageContext.request.contextPath}/inquire/write">1:1문의하기</a>
 					</div>
 				</div>
 	
