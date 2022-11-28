@@ -117,10 +117,10 @@
 								<thead>
 									<tr>
 										<th colspan="2">${paymentListVO.orderDate} &nbsp; 상품정보</th>
-										<th>구매갯수</th>
+										<th>구매갯수</th> 
 										<th>결제금액</th>
 									</tr>
-								</thead>
+								</thead> 
 								<tbody>
 								    <tr>
 								    	<td class="img" width="100" colspan="">
