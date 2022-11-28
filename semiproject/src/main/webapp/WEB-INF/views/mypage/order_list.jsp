@@ -120,7 +120,7 @@
 										<th>구매갯수</th> 
 										<th>결제금액</th>
 									</tr>
-								</thead>
+								</thead> 
 								<tbody>
 								    <tr>
 								    	<td class="img" width="100" colspan="">
