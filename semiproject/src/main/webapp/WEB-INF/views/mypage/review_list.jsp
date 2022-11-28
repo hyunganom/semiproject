@@ -108,7 +108,7 @@
 										<br>
 									</td>
 									<td class="img right" width="100">
-										<img width=80 height=80 src="/attachment/download/reviewImg?attachmentNo=${reviewList.reviewAttachmentNo}"><br>
+										<img width=80 height=80 src="${pageContext.request.contextPath}/attachment/download/reviewImg?attachmentNo=${reviewList.reviewAttachmentNo}"><br>
 									</td>
 									<td class="row center" width="100">
 										상품 갯수 : ${reviewList.paymentCount}
