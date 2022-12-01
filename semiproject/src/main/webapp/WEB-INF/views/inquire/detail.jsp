@@ -71,7 +71,16 @@
 				</tr>
 				<tr>
 					<th id="th-color">문의글 답변 상태</th>
-					<td>${inquireDto.inquireHasReply}</td>
+					<td>
+						<c:choose>
+							<c:when test = "${inquireDto.inquireHasReply}">
+								답변 완료
+							</c:when>
+							<c:otherwise>
+								대기중
+							</c:otherwise>
+						</c:choose>
+					</td>
 				</tr>
 				<tr>
 					<th id="th-color">문의글 첨부파일</th>
