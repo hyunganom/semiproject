@@ -37,7 +37,7 @@ public class AttachmentController {
 			return ResponseEntity.notFound().build();//404 error 전송
 		}
 		//[2]파일 불러오기
-		File directory = new File("D:\\upload\\kh10a\\productTumbnail");
+		File directory = new File("D:/upload/kh10a/productTumbnail");
 		File target = new File(directory, String.valueOf(attachmentNo));
 		directory.mkdir();//폴더 생성 명령
 		byte[] data = FileUtils.readFileToByteArray(target);
@@ -71,7 +71,7 @@ public class AttachmentController {
 			return ResponseEntity.notFound().build();//404 error 전송
 		}
 		//[2]파일 불러오기
-		File directory = new File("D:\\upload\\kh10a\\productDeatail");
+		File directory = new File("D:/upload/kh10a/productDeatail");
 		File target = new File(directory, String.valueOf(attachmentNo));
 		directory.mkdir();//폴더 생성 명령
 		byte[] data = FileUtils.readFileToByteArray(target);
@@ -109,7 +109,7 @@ public class AttachmentController {
 		}
 		
 		// 문의글 이미지 첨부파일이 존재하는 상위 경로(parent) 설정(상위 경로에 대한 File 클래스의 인스턴스 추가)
-		File directory = new File("D:\\upload\\kh10a\\inquireImg");
+		File directory = new File("D:/upload/kh10a/inquireImg");
 		
 		// 상위 경로(parent)의 File 클래스 인스턴스와 하위 경로(child)의 문자열을 이용하여 파일 다운로드 경로 설정
 		// - 첨부파일 업로드시 파일 이름을 첨부파일 번호(attchmentNo)로 설정했으므로 다운로드 시 하위 경로 이름은 해당 첨부파일 번호(attchmentNo)가 된다
@@ -144,7 +144,7 @@ public class AttachmentController {
 		}
 		//[2]파일 불러오기
 		//D드라이브에 있는 리뷰이미지 파일에 
-		File directory = new File("D:\\upload\\kh10a\\reviewImg");
+		File directory = new File("D:/upload/kh10a/reviewImg");
 		File target = new File(directory, String.valueOf(attachmentNo));
 		directory.mkdir();//폴더 생성 명령
 		byte[] data = FileUtils.readFileToByteArray(target);
