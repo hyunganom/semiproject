@@ -160,7 +160,7 @@ public class NoticeController {
 		// 공지글 삭제 후 공지글 목록 Mapping으로 강제 이동(redirect)
 		return "redirect:list";
 	}
-	
+	     
 
 }
 
