@@ -37,6 +37,7 @@ public class Hyunjae {
 			.build());
 	
 	inquireReplyDao.selectList(1);
+	//
 	
 		
 	}
