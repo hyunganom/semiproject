@@ -48,8 +48,8 @@ public class AdminController {
 	private NoticeDao noticeDao;	
 	
 	//첨부파일 업로드 경로
-	private final File tumbnailDirectory = new File("D:\\kh10A\\saluv\\productTumbnail");
-	private final File detailDirectory = new File("D:\\kh10A\\productDeatail");
+	private final File tumbnailDirectory = new File("D:\\upload\\KH10A\\productTumbnail");
+	private final File detailDirectory = new File("D:\\upload\\KH10A\\productDeatail");
 	
 	// 상위 카테고리 생셩 Mapping
 	@PostMapping("/product/createCategoryHigh")

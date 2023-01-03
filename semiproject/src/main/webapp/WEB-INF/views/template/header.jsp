@@ -148,28 +148,3 @@
                  </div> <!--//inner-->
         </nav> <!--//nav-->
         </header> <!--//header-->
-
-		
-			
-		<%-- 		
-		
-		문의글 관련
-		<div class = "row mt-20 center">
-			<a href = "/inquire/list">문의글 목록(회원용 - 내가 쓴 문의글)</a>
-			<a href = "/inquire/listAdmin">문의글 목록(관리자용)</a>
-		</div>
-		
-		<div class = "row center mt-20">
-			<a href = "/product/list">전체 상품 목록(관리자용 - 상품의 모든 정보가 나옴)</a> 
-		</div>
-		
-		
-		
-		<div class = "row center mt-20">
-			<a href = "/mypage/order_list">마이페이지</a>
-		</div>
-	
-	</div> --%>
-		
-
-

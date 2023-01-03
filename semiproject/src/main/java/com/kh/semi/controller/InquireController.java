@@ -48,7 +48,7 @@ public class InquireController {
 	private MemberDao memberDao; 
 	
 	// 문의글 이미지 첨부파일 업로드를 위한 상위 경로(parent) 설정(상위 경로에 대한 File 클래스의 인스턴스 추가)
-	private final File inquireDirectory = new File("D:\\KH10A\\saluv\\inquireImg");
+	private final File inquireDirectory = new File("D:\\upload\\KH10A\\inquireImg");
 	
 	// 상위 경로 생성
 	// - 상위 경로 설정(File 클래스의 인스턴스 생성 = 의존성 주입) 후 설정한 상위 경로를 실제로 생성

@@ -117,20 +117,20 @@
 								<thead>
 									<tr>
 										<th colspan="2">${paymentListVO.orderDate} &nbsp; 상품정보</th>
-										<th>구매갯수</th>
+										<th>구매갯수</th> 
 										<th>결제금액</th>
 									</tr>
-								</thead>
+								</thead> 
 								<tbody>
 								    <tr>
 								    	<td class="img" width="100" colspan="">
 									    	<img width=100 height=100 src="${pageContext.request.contextPath}/attachment/download/productTumbnail?attachmentNo=${paymentListVO.productAttachmentNo}">
 									    	<c:choose>
 										    	<c:when test = "${paymentListVO.paymentReview}">
-										    		<button type = "submit" class="row w-80" id = "reviewred" onclick = "location.href='/review/edit?paymentNo=${paymentListVO.paymentNo}&paymentProductNo=${paymentListVO.productOriginNo}&orderNo=${paymentListVO.paymentOrderNo}';">리뷰수정</button>
+										    		<button type = "submit" class="row w-80" id = "reviewred" onclick = "location.href='${pageContext.request.contextPath}/review/edit?paymentNo=${paymentListVO.paymentNo}&paymentProductNo=${paymentListVO.productOriginNo}&orderNo=${paymentListVO.paymentOrderNo}';">리뷰수정</button>
 										    	</c:when>
 										    	<c:otherwise>
-										    		<button type = "submit" class="row w-80" id="reviewblue" onclick = "location.href='/review/write?paymentNo=${paymentListVO.paymentNo}&paymentProductNo=${paymentListVO.productOriginNo}&orderNo=${paymentListVO.paymentOrderNo}';">리뷰작성</button>
+										    		<button type = "submit" class="row w-80" id="reviewblue" onclick = "location.href='${pageContext.request.contextPath}/review/write?paymentNo=${paymentListVO.paymentNo}&paymentProductNo=${paymentListVO.productOriginNo}&orderNo=${paymentListVO.paymentOrderNo}';">리뷰작성</button>
 										    	</c:otherwise>
 									    	</c:choose>
 									    </td>
