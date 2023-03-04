@@ -1,6 +1,7 @@
 # Saluv
 
-<img src="dang/src/main/resources/static/images/logo.png" width="40%"/>
+![20230304_182200](https://user-images.githubusercontent.com/104957944/222890281-28f87b1e-9dcd-4447-b7f6-8b3c4b01fb72.png)
+
 
 :information_desk_person: Saluv 소개
 ------------------------------
