@@ -1,19 +1,20 @@
-# TeamDang
+# Saluv
 
 <img src="dang/src/main/resources/static/images/logo.png" width="40%"/>
 
-:information_desk_person: TeamDang 소개
+:information_desk_person: Saluv 소개
 ------------------------------
 #### :bulb: 개발 목적   
-* 반려인들의 친목 댕모임 개설, 정기 모임장소 맞춤 콘텐츠 추천
+* 1인 가구를 위한 건강한 식단 샐러드 정기배송
 
 #### :moneybag: 시장 조사 
   - 출처 : 
-     1) 반려동물과 함께 할 수 있는 장소 추천 플랫폼 '펫온'
-     2) 공통 관심사/취미를 가진 사람들을 만나는 지역기반 커뮤니티 '소모임'
+     1) 새벽배송의 선두주자 "마켓컬리"
+     2) 주수에 맞춘 식단관리 "밀앤데일리"
+     3) 간편한 다이어트 도시락 "포켓샐러드"
 
 #### :calendar: 개발 일정   
-* 기간 : 12/31 ~ 2/22 (약 54일)
+* 기간 : 10/12 ~ 11/1 (약 19일)
 
 #### :computer: 개발 환경   
 * Windows 10, 11
